@@ -1,9 +1,7 @@
 package controller;
 
-import bean.About;
-import bean.Product;
+import model.About;
 import service.AboutService;
-import service.ProductService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

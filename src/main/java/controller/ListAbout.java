@@ -1,6 +1,6 @@
 package controller;
 
-import bean.About;
+import model.About;
 import service.AboutService;
 
 import javax.servlet.*;

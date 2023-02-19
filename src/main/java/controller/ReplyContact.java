@@ -1,6 +1,6 @@
 package controller;
 
-import bean.Contact;
+import model.Contact;
 import service.ContactService;
 import tool.SendToMail;
 

@@ -1,8 +1,7 @@
 package service;
 
-import bean.Order;
-import bean.OrderDetail;
-import bean.Product;
+import model.Order;
+import model.OrderDetail;
 import database.ConnectDB;
 
 import java.sql.Date;

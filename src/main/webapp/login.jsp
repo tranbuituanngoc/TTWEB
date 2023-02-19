@@ -84,7 +84,8 @@
                         <div class="return-customer">
                             <h3 class="mb-10 custom-title">ĐĂNG NHẬP</h3>
                             <br>
-                            <form action="Login" method="post">
+                            <form action="/nguoi-dung" method="post">
+                                <input type="hidden" name="action" value="dang-nhap">
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes0")==null ?" ":request.getAttribute("errMes0")%></p>
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes1")==null ?" ":request.getAttribute("errMes1")%></p>
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes2")==null ?" ":request.getAttribute("errMes2")%></p>
@@ -94,7 +95,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input type="password"value="<%=request.getParameter("password")==null ? "":request.getParameter("password")%>" name="password" placeholder="Mật khẩu" id="input-password" class="form-control">
+                                    <input type="password" name="password" placeholder="Mật khẩu" id="input-password" class="form-control">
                                 </div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <input type="submit" value="Đăng nhập" class="return-customer-btn">

@@ -1,8 +1,7 @@
 package controller;
 
 
-import bean.Contact;
-import bean.User;
+import model.Contact;
 import service.ContactService;
 
 import javax.servlet.ServletException;
@@ -10,14 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Random;
 
 @WebServlet(name = "AddContact", urlPatterns = "/contact")
 
 public class AddContact extends HttpServlet {
-    private bean.Contact contact;
+    private model.Contact contact;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);

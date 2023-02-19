@@ -1,11 +1,8 @@
 package service;
 
-import bean.About;
-import bean.Contact;
-import bean.Product;
+import model.About;
 import database.ConnectDB;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

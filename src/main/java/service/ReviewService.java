@@ -1,7 +1,6 @@
 package service;
 
-import bean.Reviews;
-import controller.ProductDetail;
+import model.Reviews;
 import database.ConnectDB;
 
 import java.sql.Date;

@@ -1,8 +1,6 @@
 package controller;
 
-import bean.OrderDetail;
 import service.OrderDetailService;
-import service.OrderService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

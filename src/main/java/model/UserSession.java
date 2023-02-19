@@ -1,6 +1,5 @@
 package model;
 
-import bean.User;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;

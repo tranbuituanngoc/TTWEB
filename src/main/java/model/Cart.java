@@ -1,7 +1,7 @@
 package model;
 
-import bean.Product;
-import bean.User;
+import model.Product;
+import model.User;
 
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;

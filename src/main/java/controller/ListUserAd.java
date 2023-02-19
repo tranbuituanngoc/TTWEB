@@ -1,6 +1,6 @@
 package controller;
 
-import bean.User;
+import model.User;
 import service.UserService;
 
 import javax.servlet.*;
@@ -13,7 +13,8 @@ import java.util.List;
 public class ListUserAd extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<User> list = UserService.getAll();
+        UserService us= new UserService();
+        List<User> list = us.selectAll();
         request.setAttribute("listUser", list);
         request.getRequestDispatcher("admin/ManageUser.jsp").forward(request, response);
     }

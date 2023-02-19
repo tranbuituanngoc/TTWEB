@@ -1,71 +1,116 @@
 package service;
 
-import bean.Product;
-import bean.User;
+import database.JDBCUtil;
+import model.User;
 import database.ConnectDB;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class UserService {
-    public static List<User> getAll() {
-        PreparedStatement s = null;
-        List<User> listUsers;
-        try {
-            String sql = "select  * from user";
-            s = ConnectDB.connect(sql);
-            ResultSet rs = s.executeQuery();
-            listUsers = new LinkedList<>();
-            while (rs.next()) {
-                listUsers.add(new User(
-                        rs.getString(1), rs.getString(2), rs.getString(3)
-                        , rs.getString(4),
-                        rs.getInt(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getString(9)
-                ));
-            }
+    private final ArrayList<User> data = new ArrayList<User>();
 
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return listUsers;
+    public static UserService getInstance() {
+        return new UserService();
     }
 
-    public static User getByIdUser(String id) {
-        PreparedStatement s = null;
-        User user = null;
+    public ArrayList selectAll() {
+        ArrayList<User> res = new ArrayList<User>();
         try {
-            String sql = "select  * from user where id = ?";
-            s = ConnectDB.connect(sql);
-            s.setString(1, id);
-            ResultSet rs = s.executeQuery();
-            rs.first();
-            user = new User(
-                    rs.getString(1), rs.getString(2), rs.getString(3)
-                    , rs.getString(4),
-                    rs.getInt(5),
-                    rs.getString(6),
-                    rs.getString(7),
-                    rs.getInt(8),
-                    rs.getString(9)
-            );
-            rs.close();
-            s.close();
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user";
+            PreparedStatement statement = connection.prepareStatement(sql);
 
-        } catch (ClassNotFoundException |
-                 SQLException e) {
-            e.printStackTrace();
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String id_user = resultSet.getString("id_user");
+                String userName = resultSet.getString("username");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String pass = resultSet.getString("pass");
+                int role = resultSet.getInt("role");
+
+                User user = new User(id_user, userName, email, phone, address, pass, role);
+                res.add(user);
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return user;
+        return res;
+    }
+
+    public User selectById(User o) {
+        User res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user WHERE id_user=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, o.getId_User());
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String id_user = resultSet.getString("id_user");
+                String userName = resultSet.getString("userName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String pass = resultSet.getString("pass");
+                String verificationCode = resultSet.getString("verifycation_code");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
+                boolean verified = resultSet.getBoolean("verified");
+                int role = resultSet.getInt("role");
+
+                res = new User(id_user, userName, email, phone, address, pass, verificationCode, timeValid, verified,role);
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public User selectByUserNameAndPass(User o) {
+        User res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user WHERE username=? AND password=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, o.getUserName());
+            statement.setString(2, o.getPass());
+            System.out.println(o.getUserName());
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String id_user = resultSet.getString("id_user");
+                String userName = resultSet.getString("userName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String pass = resultSet.getString("password");
+                String verificationCode = resultSet.getString("verifycation_code");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
+                boolean verified = resultSet.getBoolean("verified");
+                int role = resultSet.getInt("role");
+
+                res = new User(id_user, userName, email, phone, address, pass, verificationCode, timeValid, verified,role);
+                System.out.println(res.toString());
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
     }
 
     public static boolean existUserName(String uname) {
@@ -83,78 +128,133 @@ public class UserService {
         return false;
     }
 
-    public static boolean addUser(User user) {
-        PreparedStatement preSta = null;
-        Random rd = new Random();
+    public int insert(User o) {
+        int res = 0;
         try {
-            String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?);";
-            preSta = ConnectDB.connect(sql);
-            preSta.setString(1, user.getIdUser());
-            preSta.setString(2, user.getUserName());
-            preSta.setString(3, user.getEmail());
-            preSta.setString(4, user.getPassWord());
-            preSta.setInt(5, user.getIsAdmin());
-            preSta.setString(6, user.getName());
-            preSta.setString(7, user.getPhone());
-            preSta.setInt(8, user.getStatus());
-            preSta.setString(9, user.getDay_register());
-            int rs = preSta.executeUpdate();
-            preSta.close();
-            return true;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "INSERT INTO user (id_user,username,email,phone,address,pass,role) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, o.getId_User());
+            statement.setString(2, o.getUserName());
+            statement.setString(3, o.getEmail());
+            statement.setString(4, o.getPhone());
+            statement.setString(5, o.getAddress());
+            statement.setString(6, o.getPass());
+            statement.setInt(7, o.getRole());
+            System.out.println(sql);
+            res = statement.executeUpdate();
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+        return res;
     }
 
-    public static boolean register(User user) {
-        PreparedStatement preSta = null;
-        Random rd = new Random();
+    public int update(User o) {
+        int res = 0;
         try {
-            String sql = "INSERT INTO user(id,username,email,password,role,name,phone,status,day_register) VALUES (?,?,?,?,?,?,?,?,?);";
-            preSta = ConnectDB.connect(sql);
-            preSta.setString(1, "user" + rd.nextInt(1000000) + rd.nextInt(100000));
-            preSta.setString(2, user.getUserName());
-            preSta.setString(3, user.getEmail());
-            preSta.setString(4, user.getPassWord());
-            preSta.setInt(5, user.getIsAdmin());
-            preSta.setString(6, user.getName());
-            preSta.setString(7, user.getPhone());
-            preSta.setInt(8, user.getStatus());
-            preSta.setString(9, user.getDay_register());
-            int rs = preSta.executeUpdate();
-            preSta.close();
-            return true;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE User " +
+                    " SET " +
+                    " pass=?" +
+                    ", email=?" +
+                    ", phone=?" +
+                    ", address=?" +
+                    " WHERE id_user=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, o.getPass());
+            st.setString(2, o.getEmail());
+            st.setString(3, o.getPhone());
+            st.setString(4, o.getAddress());
+            st.setString(5, o.getId_User());
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+        return res;
     }
 
-    public static boolean updateUser(String id, User user) {
-        PreparedStatement preSta = null;
-        Random rd = new Random();
+    public int updateVerifyInfo(User o) {
+        int res = 0;
         try {
-            String sql = "UPDATE user set username=? ,email=?,password=?,role,=?,name=?,phone=?,status=? where id = ?";
-            preSta = ConnectDB.connect(sql);
-            preSta.setString(1, user.getUserName());
-            preSta.setString(2, user.getEmail());
-            preSta.setString(3, user.getPassWord());
-            preSta.setInt(4, user.getIsAdmin());
-            preSta.setString(5, user.getName());
-            preSta.setString(6, user.getPhone());
-            preSta.setInt(7, user.getStatus());
-            preSta.setString(9, id);
-            int rs = preSta.executeUpdate();
-            preSta.close();
-            return true;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE user " +
+                    " SET " +
+                    " verifycation_code=?" +
+                    ", time_valid=?" +
+                    ", verified=?" +
+                    " WHERE id_user=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, o.getVerificationCode());
+            st.setTimestamp(2, o.getTimeValid());
+            st.setBoolean(3, o.isVerified());
+            st.setString(4, o.getId_User());
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return false;
+        return res;
     }
 
-    //
+    public boolean changePass(User o) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE User " +
+                    " SET " +
+                    " pass=?" +
+                    " WHERE id_user=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, o.getPass());
+            st.setString(2, o.getId_User());
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res > 0;
+    }
+
+    public int updateAll(ArrayList<User> arrayList) {
+        int temp = 0;
+        for (User u : arrayList) {
+            temp += this.update(u);
+
+
+        }
+        return temp;
+    }
+
+    public int insertAll(ArrayList<User> arrayList) {
+        int temp = 0;
+        for (User u : arrayList) {
+            temp += this.insert(u);
+        }
+        return temp;
+    }
+
+    public boolean checkUserName(String s) {
+        boolean res = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user WHERE username=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, s);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res = true;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static void deleteUser(String idUser) {
         PreparedStatement s = null;
         try {
@@ -265,105 +365,107 @@ public class UserService {
         }
     }
 
-    public static User checkUser(String username, String password) {
-        PreparedStatement preSta = null;
-        try {
-            String sql = "select * from user where username = ? and password = ?";
-            preSta = ConnectDB.connect(sql);
-            preSta.setString(1, username);
-            preSta.setString(2, password);
-            ResultSet rs = preSta.executeQuery();
-            User user =null;
-            if (rs.next()) {
-                user = new User(
-                        rs.getString(1), rs.getString(2), rs.getString(3)
-                        , rs.getString(4),
-                        rs.getInt(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getString(9)
-                );
-                return user;
-            }
-            rs.close();
-            preSta.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static int getStatus(String username) {
-        int status=0;
-        PreparedStatement pre = null;
-        try {
-            String sql = "select status from user where username=? ";
-            pre = ConnectDB.connect(sql);
-            pre.setString(1, username);
-            ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
-                return status = rs.getInt(1);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
-
-    public static User getUser(String username) {
-        PreparedStatement preSta = null;
-        try {
-            String sql = "select * from user where username = ? ";
-            preSta = ConnectDB.connect(sql);
-            preSta.setString(1, username);
-            ResultSet rs = preSta.executeQuery();
-            while (rs.next()) {
-                User user = new User(
-                        rs.getString(1), rs.getString(2), rs.getString(3)
-                        , rs.getString(4),
-                        rs.getInt(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getString(9)
-                );
-                return user;
-            }
-            rs.close();
-            preSta.close();
-            return null;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static int getRoleDB(String username){
-        int res = 0;
-        PreparedStatement pre = null;
-        try {
-            String sql = "select role from user where username=? ";
-            pre = ConnectDB.connect(sql);
-            pre.setString(1, username);
-            ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
-                return res = rs.getInt(1);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-    public static void main(String[] args) {
-        UserService service = new UserService();
-        boolean u = existUserName("quanghuy.fs");
-        User user = new User("user10000000", "quahuysuper", "qy0029a@gmail.com", "212002", 1, "Bùi Quang Huy", "0981722033", 1, "12/12/2002");
-//        register(user);
-        System.out.println(getByIdUser("user65428064694"));
-//        System.out.println(u);
-//        System.out.println(register(user));
-//        UserService u = new UserService();
-//        System.out.println(u.register(new User("2","trung2", "trung2@gmail.com", "0912271440", "đl" , "1234")));
-    }
+//
+//    public static User checkUser(String username, String password) {
+//        PreparedStatement preSta = null;
+//        try {
+//            String sql = "select * from user where username = ? and password = ?";
+//            preSta = ConnectDB.connect(sql);
+//            preSta.setString(1, username);
+//            preSta.setString(2, password);
+//            ResultSet rs = preSta.executeQuery();
+//            User user = null;
+//            if (rs.next()) {
+//                user = new User(
+//                        rs.getString(1), rs.getString(2), rs.getString(3)
+//                        , rs.getString(4),
+//                        rs.getInt(5),
+//                        rs.getString(6),
+//                        rs.getString(7),
+//                        rs.getInt(8),
+//                        rs.getString(9)
+//                );
+//                return user;
+//            }
+//            rs.close();
+//            preSta.close();
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    public static int getStatus(String username) {
+//        int status = 0;
+//        PreparedStatement pre = null;
+//        try {
+//            String sql = "select status from user where username=? ";
+//            pre = ConnectDB.connect(sql);
+//            pre.setString(1, username);
+//            ResultSet rs = pre.executeQuery();
+//            if (rs.next()) {
+//                return status = rs.getInt(1);
+//            }
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return status;
+//    }
+//
+//    public static User getUser(String username) {
+//        PreparedStatement preSta = null;
+//        try {
+//            String sql = "select * from user where username = ? ";
+//            preSta = ConnectDB.connect(sql);
+//            preSta.setString(1, username);
+//            ResultSet rs = preSta.executeQuery();
+//            while (rs.next()) {
+//                User user = new User(
+//                        rs.getString(1), rs.getString(2), rs.getString(3)
+//                        , rs.getString(4),
+//                        rs.getInt(5),
+//                        rs.getString(6),
+//                        rs.getString(7),
+//                        rs.getInt(8),
+//                        rs.getString(9)
+//                );
+//                return user;
+//            }
+//            rs.close();
+//            preSta.close();
+//            return null;
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+//
+//    public static int getRoleDB(String username) {
+//        int res = 0;
+//        PreparedStatement pre = null;
+//        try {
+//            String sql = "select role from user where username=? ";
+//            pre = ConnectDB.connect(sql);
+//            pre.setString(1, username);
+//            ResultSet rs = pre.executeQuery();
+//            if (rs.next()) {
+//                return res = rs.getInt(1);
+//            }
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return res;
+//    }
+//
+//    public static void main(String[] args) {
+//        UserService service = new UserService();
+//        boolean u = existUserName("quanghuy.fs");
+//        User user = new User("user10000000", "quahuysuper", "qy0029a@gmail.com", "212002", 1, "Bùi Quang Huy", "0981722033", 1, "12/12/2002");
+////        register(user);
+//        System.out.println(getByIdUser("user65428064694"));
+////        System.out.println(u);
+////        System.out.println(register(user));
+////        UserService u = new UserService();
+////        System.out.println(u.register(new User("2","trung2", "trung2@gmail.com", "0912271440", "đl" , "1234")));
+//    }
 }

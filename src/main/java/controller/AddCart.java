@@ -1,6 +1,6 @@
 package controller;
 
-import bean.Product;
+import model.Product;
 import model.Cart;
 import service.ProductService;
 
@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {

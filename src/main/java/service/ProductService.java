@@ -1,7 +1,6 @@
 package service;
 
-import bean.Product;
-import controller.ListProduct;
+import model.Product;
 import database.ConnectDB;
 
 import java.sql.PreparedStatement;

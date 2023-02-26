@@ -1,6 +1,6 @@
 package controller;
 
-import bean.Product;
+import model.Product;
 import model.Cart;
 import service.ProductService;
 

@@ -14,7 +14,7 @@ import java.util.List;
 public class About extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<bean.About> list = AboutService.getAll();
+        List<model.About> list = AboutService.getAll();
         request.setAttribute("listA", list);
         request.getRequestDispatcher("about.jsp").forward(request, response);
     }

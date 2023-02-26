@@ -147,7 +147,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <%--@elvariable id="product" type="bean.Product"--%>
+                                        <%--@elvariable id="product" type="model.Product"--%>
                                     <c:forEach items="${listCart}" var="product">
                                     <tr class="cart_item">
                                         <td class="product-name">

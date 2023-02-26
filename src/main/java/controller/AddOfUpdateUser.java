@@ -1,6 +1,6 @@
 package controller;
 
-import bean.User;
+import model.User;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -28,22 +28,29 @@ public class AddOfUpdateUser extends HttpServlet {
         String fullname = request.getParameter("fullname");
         String phone = request.getParameter("phone");
         String status = request.getParameter("status");
+        User u= new User();
+        u.setId_User(id);
+        u.setUserName(u.getUserName());
+        u.setPass(password);
+        u.setEmail(email);
+        u.setPhone(phone);
         request.setCharacterEncoding("UTF-8");
+        UserService us= new UserService();
         if (action != null) {
             if (action.equals("getadd")) {
                 request.setAttribute("err", "");
                 request.getRequestDispatcher("admin/AddUser.jsp").forward(request, response);
             }
             if (action.equals("getupdate")) {
-                User user = UserService.getByIdUser(id);
+                User user = us.selectById(u);
                 String forward = "admin/AddUser.jsp?";
                 forward += "username=" + user.getUserName();
                 forward += "&email=" + user.getEmail();
                 forward += "&phone=" + user.getPhone();
-                forward += "&password=" + user.getPassWord();
-                forward += "&permission=" + user.getIsAdmin();
-                forward += "&password=" + user.getPassWord();
-                forward += "&fullname=" + user.getName();
+                forward += "&password=" + user.getPass();
+                forward += "&permission=" + user.getRole();
+                forward += "&password=" + user.getPass();
+                forward += "&fullname=" + user.getFullname();
                 forward += "&status=" + user.getStatus();
                 request.getRequestDispatcher(forward).forward(request, response);
             }
@@ -76,8 +83,8 @@ public class AddOfUpdateUser extends HttpServlet {
                     Timestamp timestamp = new Timestamp(new Date().getTime());
                     String timeRegister = String.valueOf(timestamp);
                     String idUser = "user" + rd.nextInt(1000000)+rd.nextInt(100000);
-                    User u = new User(idUser, username, email, password, Integer.parseInt(isAdmin), fullname, phone, Integer.parseInt(status), timeRegister);
-                    UserService.register(u);
+//                    User u = new User(idUser, username, email, password, fullname, phone, Integer.parseInt(status), timeRegister);
+//                    us.insert(u);
                     request.setAttribute("err", "Thêm tài khoản thành công");
                     response.sendRedirect("ListUserAd");
                 }
@@ -99,8 +106,8 @@ public class AddOfUpdateUser extends HttpServlet {
                 if (!isErr) {
                     Timestamp timestamp = new Timestamp(new Date().getTime());
                     String timeRegister = String.valueOf(timestamp);
-                    User u = new User(id, username, email, password, Integer.parseInt(isAdmin), fullname, phone, Integer.parseInt(status), timeRegister);
-                    UserService.updateUser(id, u);
+//                    User u = new User(id, username, email, password, Integer.parseInt(isAdmin), fullname, phone, Integer.parseInt(status), timeRegister);
+//                    UserService.updateUser(id, u);
                     request.setAttribute("err", "Chỉnh sửa tài khoản thành công");
                     response.sendRedirect("ListUserAd");
                 }

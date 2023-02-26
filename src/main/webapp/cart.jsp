@@ -1,9 +1,9 @@
-﻿<%--@elvariable id="product" type="bean.Product"--%>
+﻿<%--@elvariable id="product" type="model.Product"--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="model.Cart" %>
-<%@ page import="bean.Product" %>
+<%@ page import="model.Product" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="javax.swing.text.Document" %>
 <%--@elvariable id="cart" type="model.Cart"--%>

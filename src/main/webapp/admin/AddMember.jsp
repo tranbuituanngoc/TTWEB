@@ -1,4 +1,4 @@
-<%@ page import="bean.User" %>
+<%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="model.UserSession" %>
 

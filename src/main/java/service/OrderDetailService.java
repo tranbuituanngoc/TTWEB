@@ -1,13 +1,12 @@
 package service;
 
-import bean.OrderDetail;
-import bean.Product;
+import model.OrderDetail;
+import model.Product;
 import database.ConnectDB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

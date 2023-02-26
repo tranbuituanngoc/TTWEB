@@ -1,6 +1,6 @@
 package service;
 
-import bean.Contact;
+import model.Contact;
 import database.ConnectDB;
 
 import java.sql.Date;

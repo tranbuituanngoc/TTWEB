@@ -1,11 +1,8 @@
 <%@ page import="javax.mail.Session" %>
-<%@ page import="model.UserSession" %>
+<%@ page import="model.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% UserSession u = UserSession.getUS(session);
-    int role = u.getRole();
-%>
 <jsp:useBean id="cart" class="model.Cart" scope="session"></jsp:useBean>
 <script scr="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <header>
@@ -40,24 +37,30 @@
                             <%--                            <li><a href="login.jsp"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span></a>--%>
                             <%--                            </li>--%>
                             <%--                            <%}%>--%>
-                            <%if (session.getAttribute("userID") != null) {%>
-
-                            <li><a href="logout"><i class="lnr lnr-user"></i><span
-                                    class="my-cart"><span><strong><%=session.getAttribute("userN")%></strong></span><span>đăng xuất</span></span></a>
-
-                            </li>
-                            <%}%>
-                            <% if (role != 0) {%>
-
-                            <li><a href="ListProductAd"><i class="lnr lnr-pointer-right"></i><span
-                                    class="my-cart"><span><strong><%=session.getAttribute("userN")%></strong></span><span>vào admin</span></span></a>
-
-                            </li>
-                            <%}%>
-                            <%if (session.getAttribute("userID") == null) {%>
+                            <%
+                                User user = (User) session.getAttribute("user");
+                                if(user==null){
+                            %>
                             <li><a href="login.jsp"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span></a>
                             </li>
-                            <%}%>
+                            <%
+                                }else if(user.getRole()==2){
+                            %>
+                            <li><a href="nguoi-dung?action=dang-xuat"><i class="lnr lnr-user"></i><span
+                                    class="my-cart"><span><strong><%=user.getUserName()%></strong></span><span>đăng xuất</span></span></a>
+
+                            </li>
+                            <%
+                                } else if (user.getRole() == 1) {
+
+                            %>
+                            <li><a href="ListProductAd"><i class="lnr lnr-pointer-right"></i><span
+                                    class="my-cart"><span><strong><%=user.getUserName()%></strong></span><span>vào admin</span></span></a>
+
+                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </div>
                 </div>

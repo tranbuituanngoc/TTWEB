@@ -75,7 +75,8 @@
             <!-- Row End -->
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="form-register" method="post" action="register">
+                    <form class="form-register" method="post" action="/nguoi-dung">
+                            <input type="hidden" name="action" value="dang-ki">
                         <fieldset>
                             <legend>Thông tin cá nhân</legend>
                             <div class="form-group d-md-flex align-items-md-center">
@@ -108,13 +109,13 @@
                             <div class="form-group d-md-flex align-items-md-center">
                                 <label class="control-label col-md-2" for="pwd"><span class="require">*</span>Mật khẩu:</label>
                                 <div class="col-md-10">
-                                    <input type="password" class="form-control" value="<%=request.getParameter("password")==null ? "":request.getParameter("password")%>" name="password" id="pwd" placeholder="Mật khẩu">
+                                    <input type="password" class="form-control" name="password" id="pwd" placeholder="Mật khẩu">
                                 </div>
                             </div>
                             <div class="form-group d-md-flex align-items-md-center">
                                 <label class="control-label col-md-2" for="pwd-confirm"><span class="require">*</span>Xác nhận mật khẩu</label>
                                 <div class="col-md-10">
-                                    <input type="password" class="form-control" id="pwd-confirm" placeholder="Nhập lại mật khẩu...">
+                                    <input type="password" class="form-control" name="confirm-password" id="pwd-confirm" placeholder="Nhập lại mật khẩu...">
                                 </div>
                             </div>
                             <p style="color:#62ab00; display:block; margin: auto"><%=request.getAttribute("success") == null ? " " : request.getAttribute("success")%>

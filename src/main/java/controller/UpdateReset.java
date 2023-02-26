@@ -24,7 +24,7 @@ public class UpdateReset extends HttpServlet {
                 request.setAttribute("inputEmpty", "Vui lòng nhập dữ liệu");
                 request.getRequestDispatcher("reset-password.jsp").forward(request, response);
             } else if (UserService.existEmail(email)) {
-                UserService.updatePassword(email, password);
+//                UserService.updatePassword(email, password);
                 request.setAttribute("changePassSuccess", "Thành công.<br>Thử đăng nhập bằng mật khẩu mới");
                 request.getRequestDispatcher("send-mail-success.jsp").forward(request, response);
             } else {

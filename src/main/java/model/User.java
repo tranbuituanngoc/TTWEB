@@ -13,6 +13,8 @@ public class User {
     private Timestamp timeValid;
     private boolean verified;
     private int role;
+    private String fullname;
+    private int status;
 
     public User() {
     }
@@ -30,7 +32,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String id_User, String userName, String email, String phone, String address, String pass, int role) {
+    public User(String id_User, String userName,String fullname, String email, String phone, String address, String pass, int role) {
         this.id_User = id_User;
         this.userName = userName;
         this.email = email;
@@ -38,6 +40,7 @@ public class User {
         this.address = address;
         this.pass = pass;
         this.role = role;
+        this.fullname=fullname;
     }
 
     public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
@@ -50,6 +53,18 @@ public class User {
         this.verificationCode = verificationCode;
         this.timeValid = timeValid;
         this.verified = verified;
+    }
+
+    public User(String id_User, String userName, String email, String phone, String address, String pass, int role, String fullname, int status) {
+        this.id_User = id_User;
+        this.userName = userName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.pass = pass;
+        this.role = role;
+        this.fullname = fullname;
+        this.status = status;
     }
 
     public String getId_User() {
@@ -130,6 +145,22 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

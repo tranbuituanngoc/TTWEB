@@ -1,9 +1,8 @@
 package controller;
 
-import bean.Product;
-import bean.User;
+import model.Product;
+import model.User;
 import model.Cart;
-import model.UserSession;
 import service.OrderDetailService;
 import service.OrderService;
 import tool.SendToMail;
@@ -28,19 +27,19 @@ public class CreateOrder extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 
-        UserSession u = (UserSession) request.getSession().getAttribute("user");
+        HttpSession session= request.getSession();
+        User u = (User) session.getAttribute("user");
         if (u == null) {
             request.setAttribute("err", "Vui lòng đăng nhập trước khi đặt hàng *");
             request.getRequestDispatcher("Payment").forward(request, response);
         } else {
-            Collection<User> user = u.getUser();
-            String idUser = u.getUserId();
+            String idUser = u.getId_User();
             if (fullname.equals("") || address.equals("") || email.equals("") || phone.equals("")) {
                 request.setAttribute("err", "Vui lòng điền đầy đủ vào những mục có đánh *");
                 request.getRequestDispatcher("Payment").forward(request, response);
 
             } else {
-                HttpSession session = request.getSession();
+                session = request.getSession();
                 session.getAttribute("cart");
                 Cart c = Cart.getCart(session);
                 Collection<Product> products = c.getData();
@@ -51,7 +50,7 @@ public class CreateOrder extends HttpServlet {
                 response.sendRedirect("ProductLists");
                 OrderDetailService.insertOrderDetail(pro);
                 SendToMail mail = new SendToMail();
-                mail.sendEmail(email,"TrueMart-Order","TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
+                mail.sendEmail(email, "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
                 Cart newCart = new Cart();
                 newCart.commit(session);
             }

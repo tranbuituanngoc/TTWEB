@@ -83,7 +83,7 @@ public class UserService {
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE username=? AND passwordword=?";
+            String sql = "SELECT * FROM user WHERE username=? AND password=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getPass());
@@ -97,7 +97,7 @@ public class UserService {
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
-                String password = resultSet.getString("passwordword");
+                String password = resultSet.getString("password");
                 String verificationCode = resultSet.getString("verification_code");
                 Timestamp timeValid = resultSet.getTimestamp("time_valid");
                 boolean verified = resultSet.getBoolean("verified");
@@ -353,12 +353,12 @@ public class UserService {
 
     // tìm kiếm theo tên sản phẩm
 
-    public static void updatepasswordword(String email, String passwordword) {
+    public static void updatepassword(String email, String password) {
         PreparedStatement preSta = null;
         try {
-            String sql = "UPDATE user SET passwordword=? WHERE email=? ";
+            String sql = "UPDATE user SET password=? WHERE email=? ";
             preSta = ConnectDB.connect(sql);
-            preSta.setString(1, passwordword);
+            preSta.setString(1, password);
             preSta.setString(2, email);
             preSta.executeUpdate();
 
@@ -368,13 +368,13 @@ public class UserService {
     }
 
 //
-//    public static User checkUser(String username, String passwordword) {
+//    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;
 //        try {
-//            String sql = "select * from user where username = ? and passwordword = ?";
+//            String sql = "select * from user where username = ? and password = ?";
 //            preSta = ConnectDB.connect(sql);
 //            preSta.setString(1, username);
-//            preSta.setString(2, passwordword);
+//            preSta.setString(2, password);
 //            ResultSet rs = preSta.executeQuery();
 //            User user = null;
 //            if (rs.next()) {

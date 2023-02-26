@@ -30,6 +30,8 @@ public class UserController extends HttpServlet {
             Logout(request, response);
         } else if (action.equals("dang-ki")) {
             Register(request,response);
+        } else if (action.equals("xac-thuc")) {
+            verifyAccount(request, response);
         }
     }
 
@@ -133,8 +135,8 @@ public class UserController extends HttpServlet {
                     Date todaysDate = new Date(new java.util.Date().getTime());
                     Calendar c = Calendar.getInstance();
                     c.setTime(todaysDate);
-                    //set time valid is 1 day
-                    c.add(Calendar.DATE, 1);
+                    //set time valid is 5 minute
+                    c.add(Calendar.MINUTE, 5);
                     Timestamp timeValid = new Timestamp(c.getTimeInMillis());
 
                     //set verified
@@ -154,6 +156,55 @@ public class UserController extends HttpServlet {
             }
             request.setAttribute("error", error);
             RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void verifyAccount(HttpServletRequest request, HttpServletResponse response) {
+        String idUser = request.getParameter("id_User");
+        String verificationCode = request.getParameter("verificationCode");
+
+        UserService userService = new UserService();
+
+        String url = "";
+
+        User user = new User();
+        user.setId_User(idUser);
+        User us = userService.selectById(user);
+
+        String msg = "";
+        if (us != null) {
+            Calendar c = Calendar.getInstance();
+            Date todaysDate = new Date(new java.util.Date().getTime());
+            c.setTime(todaysDate);
+            Timestamp timestamp = new Timestamp(c.getTimeInMillis());
+
+            if (us.getVerificationCode().equals(verificationCode)) {
+                if (timestamp.before(us.getTimeValid())) {
+                    //success
+                    us.setVerified(true);
+                    userService.updateVerifyInfo(us);
+                    msg = "Xác thực tài khoản thành công";
+                } else {
+                    //error time not valid
+                    msg = "Xác thực tài khoản không thành công";
+                }
+            } else {
+                //error verification code
+                msg = "Xác thực tài khoản thành công";
+            }
+        } else {
+            msg = "Tài khoản không tồn tại!";
+        }
+        url = "/index.jsp";
+        request.setAttribute("msg", msg);
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+        try {
             requestDispatcher.forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);

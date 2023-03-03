@@ -46,10 +46,15 @@
                             <%
                                 }else if(user.getRole()==2){
                             %>
-                            <li><a href="nguoi-dung?action=dang-xuat"><i class="lnr lnr-user"></i><span
-                                    class="my-cart"><span><strong><%=user.getUserName()%></strong></span><span>đăng xuất</span></span></a>
+                            <i class="lnr lnr-user" style="font-size: 25pt; margin-left: 10px;"></i><span class="dropdown"><a class="dropdown-toggle" style="cursor: pointer;" data-toggle="dropdown" ><%=user.getUserName()%> <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="changePass.jsp">Đổi mật khẩu</a></li>
+                                        <li><a href="nguoi-dung?action=dang-xuat">Đăng xuất</a></li>
+                                    </ul>
+<%--                            <li><a href="nguoi-dung?action=dang-xuat"><i class="lnr lnr-user"></i><span--%>
+<%--                                    class="my-cart"><span><strong><%=user.getUserName()%></strong></span><span>đăng xuất</span></span></a>--%>
 
-                            </li>
+<%--                            </li>--%>
                             <%
                                 } else if (user.getRole() == 1) {
 

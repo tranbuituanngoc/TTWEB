@@ -372,8 +372,11 @@
             <script src="js\plugins.js"></script>
             <!-- Main activaion js -->
             <script src="js\main.js"></script>
-
         </div>
 </body>
-
+<%--<script>--%>
+<%--    setTimeout(function (){--%>
+<%--        window.location.href="Home";--%>
+<%--    },0)--%>
+<%--</script>--%>
 </html>

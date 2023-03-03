@@ -32,6 +32,8 @@ public class UserController extends HttpServlet {
             Register(request,response);
         } else if (action.equals("xac-thuc")) {
             verifyAccount(request, response);
+        }else if (action.equals("doi-mat-khau")) {
+            ChangePass(request, response);
         }
     }
 
@@ -102,6 +104,7 @@ public class UserController extends HttpServlet {
             String com_pass = request.getParameter("confirm-password");
             String address= "";
             int role = 2;
+            boolean status= true;
 
             request.setAttribute("name", name);
             request.setAttribute("username", username);
@@ -126,7 +129,7 @@ public class UserController extends HttpServlet {
                 Random rd = new Random();
                 String random = System.currentTimeMillis() + rd.nextInt(100) + "";
                 String id_user = "kh" + random.substring(random.length() - 8);
-                User user= new User(id_user,username,name,email,phone,address,password,role);
+                User user= new User(id_user,username,name,email,phone,address,password,role,status);
                 if (UserService.insert(user) > 0) {
                     //Create salt string(random string)
                     String saltString = SaltString.getSaltString();
@@ -209,6 +212,50 @@ public class UserController extends HttpServlet {
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void ChangePass(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String oldPass = request.getParameter("oldPassword");
+            String newPassword = request.getParameter("newPassword");
+            String comNewPass = request.getParameter("comNewPass");
+
+            String oldPass_Encode = Encode.encodeToSHA1(oldPass);
+            String error = "";
+            String url = "/changePass.jsp";
+
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            if (user == null) {
+                response.sendRedirect("/404.jsp");
+            } else {
+                if (!oldPass_Encode.equals(user.getPass())) {
+                    error = "Mật khẩu hiện tại không chính xác!";
+                } else {
+                    if (!newPassword.equals(comNewPass)) {
+                        error = "Mật khẩu nhập lại không khớp!";
+                    } else {
+                        String newPass_Encode = Encode.encodeToSHA1(newPassword);
+                        if (newPass_Encode.equals(oldPass_Encode)) {
+                            error = "Mật khẩu mới không được trùng với mật khẩu cũ!";
+                        } else {
+                            user.setPass(newPass_Encode);
+                            user.setOldPass(oldPass_Encode);
+                            UserService userDAO = new UserService();
+                            if (userDAO.changePass(user)) {
+                                error = "Thay đổi mật khẩu thành công!";
+                            } else error = "Thay đổi mật khẩu thất bại!";
+                        }
+                    }
+                }
+            }
+            request.setAttribute("error", error);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+            requestDispatcher.forward(request, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }

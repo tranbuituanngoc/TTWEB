@@ -14,8 +14,8 @@ public class User {
     private boolean verified;
     private int role;
     private String fullname;
-    private int status;
-
+    private boolean status;
+    private String oldPass;
     public User() {
     }
 
@@ -32,7 +32,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String id_User, String userName,String fullname, String email, String phone, String address, String pass, int role) {
+    public User(String id_User, String userName,String fullname, String email, String phone, String address, String pass, int role, boolean status) {
         this.id_User = id_User;
         this.userName = userName;
         this.email = email;
@@ -41,6 +41,7 @@ public class User {
         this.pass = pass;
         this.role = role;
         this.fullname=fullname;
+        this.status=status;
     }
 
     public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
@@ -55,7 +56,7 @@ public class User {
         this.verified = verified;
     }
 
-    public User(String id_User, String userName, String email, String phone, String address, String pass, int role, String fullname, int status) {
+    public User(String id_User, String userName, String email, String phone, String address, String pass, int role, String fullname, boolean status) {
         this.id_User = id_User;
         this.userName = userName;
         this.email = email;
@@ -65,6 +66,18 @@ public class User {
         this.role = role;
         this.fullname = fullname;
         this.status = status;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getOldPass() {
+        return oldPass;
+    }
+
+    public void setOldPass(String oldPass) {
+        this.oldPass = oldPass;
     }
 
     public String getId_User() {
@@ -155,11 +168,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

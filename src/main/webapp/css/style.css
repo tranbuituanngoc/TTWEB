@@ -4536,3 +4536,21 @@ a.shipping-calculator-button:hover {
     top: 6px;
     transition: all 0.3s ease-in 0s;
 }
+.center {
+    width: 100%;
+    margin: 0 auto;
+}
+.dropdown-menu li {
+    text-align: center;
+    font-size: 14pt;
+    padding: 5px;
+}
+.dropdown-menu li:hover {
+    background-color: #f5f5f5;
+}
+.dropdown-menu>li>a {
+    color: #575353;
+}
+.dropdown-menu>li>a:hover {
+    color: #151515;
+}

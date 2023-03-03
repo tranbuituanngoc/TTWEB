@@ -30,14 +30,15 @@ public class UserService {
             while (resultSet.next()) {
                 String id_user = resultSet.getString("id_user");
                 String userName = resultSet.getString("username");
-                String fullname= resultSet.getString("fullname");
+                String fullname = resultSet.getString("fullname");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
                 int role = resultSet.getInt("role");
+                boolean status = resultSet.getBoolean("status");
 
-                User user = new User(id_user, userName,fullname, email, phone, address, password, role);
+                User user = new User(id_user, userName, fullname, email, phone, address, password, role, status);
                 res.add(user);
             }
             JDBCUtil.disconection(connection);
@@ -69,7 +70,7 @@ public class UserService {
                 boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified,role);
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -103,7 +104,7 @@ public class UserService {
                 boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified,role);
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
                 System.out.println(res.toString());
                 break;
             }
@@ -133,7 +134,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "INSERT INTO user (id_user,username,fullname,email,phone,address,password,role) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO user (id_user,username,fullname,email,phone,address,password,role,status) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getId_User());
             statement.setString(2, o.getUserName());
@@ -143,6 +144,7 @@ public class UserService {
             statement.setString(6, o.getAddress());
             statement.setString(7, o.getPass());
             statement.setInt(8, o.getRole());
+            statement.setBoolean(9, o.getStatus());
             System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
@@ -281,6 +283,26 @@ public class UserService {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean changePass(User o) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE User " +
+                    " SET " +
+                    " password=?, changedPassword=?" +
+                    " WHERE id_user=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, o.getPass());
+            st.setString(2, o.getOldPass());
+            st.setString(3, o.getId_User());
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res > 0;
     }
 
     public static void unlockUser(String idUser) {

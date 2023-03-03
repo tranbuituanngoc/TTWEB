@@ -65,34 +65,44 @@
     </div>
     <!-- Breadcrumb End -->
     <!-- Register Account Start -->
-    <div class="Lost-pass ptb-100 ptb-sm-60" >
+    <div class="log-in ptb-100 ptb-sm-60">
         <div class="container">
-            <div class="register-title">
-                <h3 class="mb-10 custom-title">Lấy lại mật khẩu</h3>
-                <p class="mb-10">Nếu bạn quên mật khẩu, vui lòng nhập tài khoản email.</p>
-            </div>
-                <form action="sendMail" method="post">
-                    <fieldset>
-                        <br>
-                        <div  class="form-group d-md-flex">
-                            <label class="control-label col-md-2" for="email"><span
-                                    class="require">*</span>Email</label>
-                            <div class="col-md-10">
-                                <input type="email" class="form-control" name="email" id="email"
-                                       placeholder="Nhập địa chỉ email...">
-                            </div>
-                        </div>
-                    </fieldset>
-                    <p style="color: blue"><%=request.getAttribute("msg")==null?"":request.getAttribute("msg")%></p>
-                    <div class="buttons newsletter-input">
-                        <div class="float-left float-sm-left">
-                            <a class="customer-btn mr-20" href="login.jsp">Quay lại</a>
-                        </div>
-                        <div class="float-right float-sm-right">
-                            <input type="submit" value="Tiếp tục" class="return-customer-btn">
+            <div class="row">
+                <!-- Returning Customer Start -->
+                <div class="col-md-6 center">
+                    <div class="well">
+                        <div class="return-customer">
+                            <h3 class="mb-10 custom-title">Quên mật khẩu</h3>
+                            <br>
+                            <form action="/nguoi-dung" method="post">
+                                <input type="hidden" name="action" value="quen-mat-khau">
+                                <p style="color:red; display:block"><%=request.getAttribute("errMes0")==null ?" ":request.getAttribute("errMes0")%></p>
+                                <p style="color:red; display:block"><%=request.getAttribute("errMes1")==null ?" ":request.getAttribute("errMes1")%></p>
+                                <p style="color:red; display:block"><%=request.getAttribute("errMes2")==null ?" ":request.getAttribute("errMes2")%></p>
+                                <div class="form-group">
+                                    <label>Tên đăng nhập*</label>
+                                    <input type="text" name=username id="input-email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email*</label>
+                                    <input type="email" name="email" id="input-password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu cũ</label>
+                                    <input type="password" name="oldPass" id="pwd-confirm" class="form-control" placeholder="Nếu bạn chưa từng thay đổi mật khẩu hãy bỏ qua dòng này!">
+                                </div>
+                                <div class="aa-single-submit" style="text-align: center">
+                                    <input type="submit" value="Xác Nhận" class="return-customer-btn" name="submit">
+                                    <p style="margin-top:10px">  Bạn đã nhớ mật khẩu? <a href="login.jsp" style="color: #e62e13;">Đăng nhập tại đây!</a></p>
+                                </div>
+                                <br/>
+                            </form>
                         </div>
                     </div>
-            </form>
+                </div>
+                <!-- Returning Customer End -->
+            </div>
+            <!-- Row End -->
         </div>
         <!-- Container End -->
     </div>

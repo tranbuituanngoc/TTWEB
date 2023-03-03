@@ -80,6 +80,76 @@ public class UserService {
         return res;
     }
 
+    public User selectByUnameNEmail(User o) {
+        User res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user WHERE username=? AND email=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, o.getUserName());
+            statement.setString(2, o.getEmail());
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String id_user = resultSet.getString("id_user");
+                String userName = resultSet.getString("userName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String password = resultSet.getString("password");
+                String verificationCode = resultSet.getString("verification_code");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
+                boolean verified = resultSet.getBoolean("verified");
+                int role = resultSet.getInt("role");
+
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
+                System.out.println(res.toString());
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+    public User selectByUnameNEmailNOldPass(User o) {
+        User res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM user WHERE username=? AND email=? AND changedPassword=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, o.getUserName());
+            statement.setString(2, o.getEmail());
+            statement.setString(3, o.getOldPass());
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String id_user = resultSet.getString("id_user");
+                String userName = resultSet.getString("userName");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String password = resultSet.getString("password");
+                String oldPssword = resultSet.getString("changedPassword");
+                String verificationCode = resultSet.getString("verification_code");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
+                boolean verified = resultSet.getBoolean("verified");
+                int role = resultSet.getInt("role");
+
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role,oldPssword);
+                System.out.println(res.toString());
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+
     public User selectByUserNameAndpassword(User o) {
         User res = null;
         try {

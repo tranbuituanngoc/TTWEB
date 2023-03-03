@@ -19,6 +19,20 @@ public class User {
     public User() {
     }
 
+    public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified, int role, String oldPass) {
+        this.id_User = id_User;
+        this.userName = userName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.pass = pass;
+        this.verificationCode = verificationCode;
+        this.timeValid = timeValid;
+        this.verified = verified;
+        this.role = role;
+        this.oldPass = oldPass;
+    }
+
     public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified, int role) {
         this.id_User = id_User;
         this.userName = userName;

@@ -1,12 +1,13 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+﻿<%@ page import="model.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Quên mật khẩu || Truemart Gạch men cao cấp</title>
+    <title>Đăng nhập || Truemart Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
     <link rel="shortcut icon" href="img\favicon.ico">
@@ -42,29 +43,34 @@
 </head>
 
 <body>
+<%
+    String url = "";
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect(url + "/404.jsp");
+    }
+%>
 <!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
-    your browser</a> to improve your experience and security.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 <![endif]-->
 
 <!-- Main Wrapper Start Here -->
 <div class="wrapper">
     <jsp:include page="header.jsp"/>
-    <!-- Categorie Menu & Slider Area End Here -->
     <!-- Breadcrumb Start -->
     <div class="breadcrumb-area mt-30">
         <div class="container">
             <div class="breadcrumb">
                 <ul class="d-flex align-items-center">
-                    <li><a href="Home">Trang chủ</a></li>
-                    <li class="active"><a href="forgot-password.jsp">Quên mật khẩu</a></li>
+                    <li><a href="index.jsp">Trang chủ</a></li>
+                    <li class="active"><a href="changePass.jsp">Đổi mật khẩu</a></li>
                 </ul>
             </div>
         </div>
         <!-- Container End -->
     </div>
     <!-- Breadcrumb End -->
-    <!-- Register Account Start -->
+    <!-- LogIn Page Start -->
     <div class="log-in ptb-100 ptb-sm-60">
         <div class="container">
             <div class="row">
@@ -72,30 +78,33 @@
                 <div class="col-md-6 center">
                     <div class="well">
                         <div class="return-customer">
-                            <h3 class="mb-10 custom-title">Quên mật khẩu</h3>
+                            <h3 class="mb-10 custom-title">Đổi mật khẩu</h3>
                             <br>
                             <form action="/nguoi-dung" method="post">
-                                <input type="hidden" name="action" value="quen-mat-khau">
+                                <input type="hidden" name="action" value="doi-mat-khau">
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes0")==null ?" ":request.getAttribute("errMes0")%></p>
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes1")==null ?" ":request.getAttribute("errMes1")%></p>
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes2")==null ?" ":request.getAttribute("errMes2")%></p>
                                 <div class="form-group">
-                                    <label>Tên đăng nhập*</label>
-                                    <input type="text" name=username id="input-email" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email*</label>
-                                    <input type="email" name="email" id="input-password" class="form-control" required>
-                                </div>
-                                <div class="form-group">
                                     <label>Mật khẩu cũ</label>
-                                    <input type="password" name="oldPass" id="pwd-confirm" class="form-control" placeholder="Nếu bạn chưa từng thay đổi mật khẩu hãy bỏ qua dòng này!">
+                                    <input type="password" name="oldPassword" id="input-email" class="form-control">
                                 </div>
-                                <div class="aa-single-submit" style="text-align: center">
-                                    <input type="submit" value="Xác Nhận" class="return-customer-btn" name="submit">
-                                    <p style="margin-top:10px">  Bạn đã nhớ mật khẩu? <a href="login.jsp" style="color: #e62e13;">Đăng nhập tại đây!</a></p>
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" name="newPassword" id="input-password" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label>Nhập lại mật khẩu mới</label>
+                                    <input type="password" name="comNewPass" id="pwd-confirm" class="form-control">
+                                </div>
+                                <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
+                                <input type="submit" value="Đổi mật khẩu" class="return-customer-btn">
                                 <br/>
+                                <%--                                <% if(session.getAttribute("errmsg")!=null){--%>
+                                <%--                                    String msg = (String)session.getAttribute("errmsg");--%>
+                                <%--                                %>--%>
+                                <%--                                <font color="red"><%=msg%></font>--%>
+                                <%--                                <%}%>--%>
                             </form>
                         </div>
                     </div>
@@ -106,10 +115,9 @@
         </div>
         <!-- Container End -->
     </div>
-    <!-- Register Account End -->
+    <!-- LogIn Page End -->
     <!-- Support Area Start Here -->
     <jsp:include page="footer.jsp"/>
-    <!-- Footer Area End Here -->
     <!-- Quick View Content Start -->
 
     <!-- Quick View Content End -->

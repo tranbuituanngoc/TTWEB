@@ -30,6 +30,12 @@ public class UserController extends HttpServlet {
             Logout(request, response);
         } else if (action.equals("dang-ki")) {
             Register(request,response);
+        } else if (action.equals("xac-thuc")) {
+            verifyAccount(request, response);
+        }else if (action.equals("doi-mat-khau")) {
+            ChangePass(request, response);
+        }else if (action.equals("quen-mat-khau")) {
+            forgetPass(request, response);
         }
     }
 
@@ -100,6 +106,7 @@ public class UserController extends HttpServlet {
             String com_pass = request.getParameter("confirm-password");
             String address= "";
             int role = 2;
+            boolean status= true;
 
             request.setAttribute("name", name);
             request.setAttribute("username", username);
@@ -124,7 +131,7 @@ public class UserController extends HttpServlet {
                 Random rd = new Random();
                 String random = System.currentTimeMillis() + rd.nextInt(100) + "";
                 String id_user = "kh" + random.substring(random.length() - 8);
-                User user= new User(id_user,username,name,email,phone,address,password,role);
+                User user= new User(id_user,username,name,email,phone,address,password,role,status);
                 if (UserService.insert(user) > 0) {
                     //Create salt string(random string)
                     String saltString = SaltString.getSaltString();
@@ -133,8 +140,8 @@ public class UserController extends HttpServlet {
                     Date todaysDate = new Date(new java.util.Date().getTime());
                     Calendar c = Calendar.getInstance();
                     c.setTime(todaysDate);
-                    //set time valid is 1 day
-                    c.add(Calendar.DATE, 1);
+                    //set time valid is 5 minute
+                    c.add(Calendar.MINUTE, 5);
                     Timestamp timeValid = new Timestamp(c.getTimeInMillis());
 
                     //set verified
@@ -158,6 +165,146 @@ public class UserController extends HttpServlet {
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void verifyAccount(HttpServletRequest request, HttpServletResponse response) {
+        String idUser = request.getParameter("id_User");
+        String verificationCode = request.getParameter("verificationCode");
+
+        UserService userService = new UserService();
+
+        String url = "";
+
+        User user = new User();
+        user.setId_User(idUser);
+        User us = userService.selectById(user);
+
+        String msg = "";
+        if (us != null) {
+            Calendar c = Calendar.getInstance();
+            Date todaysDate = new Date(new java.util.Date().getTime());
+            c.setTime(todaysDate);
+            Timestamp timestamp = new Timestamp(c.getTimeInMillis());
+
+            if (us.getVerificationCode().equals(verificationCode)) {
+                if (timestamp.before(us.getTimeValid())) {
+                    //success
+                    us.setVerified(true);
+                    userService.updateVerifyInfo(us);
+                    msg = "Xác thực tài khoản thành công";
+                } else {
+                    //error time not valid
+                    msg = "Xác thực tài khoản không thành công";
+                }
+            } else {
+                //error verification code
+                msg = "Xác thực tài khoản thành công";
+            }
+        } else {
+            msg = "Tài khoản không tồn tại!";
+        }
+        url = "/index.jsp";
+        request.setAttribute("msg", msg);
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void ChangePass(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String oldPass = request.getParameter("oldPassword");
+            String newPassword = request.getParameter("newPassword");
+            String comNewPass = request.getParameter("comNewPass");
+
+            String oldPass_Encode = Encode.encodeToSHA1(oldPass);
+            String error = "";
+            String url = "/changePass.jsp";
+
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            if (user == null) {
+                response.sendRedirect("/404.jsp");
+            } else {
+                if (!oldPass_Encode.equals(user.getPass())) {
+                    error = "Mật khẩu hiện tại không chính xác!";
+                } else {
+                    if (!newPassword.equals(comNewPass)) {
+                        error = "Mật khẩu nhập lại không khớp!";
+                    } else {
+                        String newPass_Encode = Encode.encodeToSHA1(newPassword);
+                        if (newPass_Encode.equals(oldPass_Encode)) {
+                            error = "Mật khẩu mới không được trùng với mật khẩu cũ!";
+                        } else {
+                            user.setPass(newPass_Encode);
+                            user.setOldPass(oldPass_Encode);
+                            UserService userDAO = new UserService();
+                            if (userDAO.changePass(user)) {
+                                error = "Thay đổi mật khẩu thành công!";
+                            } else error = "Thay đổi mật khẩu thất bại!";
+                        }
+                    }
+                }
+            }
+            request.setAttribute("error", error);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+            requestDispatcher.forward(request, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void forgetPass(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String uname = request.getParameter("username");
+            String email = request.getParameter("email");
+            String oldPass = request.getParameter("oldPass");
+
+            UserService userDAO = new UserService();
+
+            User u = new User();
+            u.setUserName(uname);
+            u.setEmail(email);
+            String error = "";
+            String url = "";
+
+            String oldPass_Encode="0";
+
+            User user= null;
+            if(oldPass==""){
+            user = userDAO.selectByUnameNEmail(u);
+            }else{
+                oldPass_Encode = Encode.encodeToSHA1(oldPass);
+                u.setOldPass(oldPass_Encode);
+                user= userDAO.selectByUnameNEmailNOldPass(u);
+            }
+
+
+            String saltString = SaltString.getSaltString();
+            String newPass_Encode = Encode.encodeToSHA1(saltString);
+            if (user != null) {
+                user.setPass(newPass_Encode);
+                    user.setOldPass(oldPass_Encode);
+                url = "/login.jsp";
+                userDAO.changePass(user);
+                Email.sendMail(user.getEmail(), getContentEmailFogetPass(user, saltString), "Mật Khẩu Mới Của Bạn Là " + saltString);
+            } else {
+                error = "Tài khoản không tồn tại";
+                url = "/forgot-password.jsp";
+            }
+            request.setAttribute("error", error);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
+            requestDispatcher.forward(request, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }
@@ -370,4 +517,272 @@ public class UserController extends HttpServlet {
                 "</html>";
         return content;
     }
+    private static String getContentEmailFogetPass(User user, String saltStirng) {
+        String content = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Document</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>\n" +
+                "    <div class=\"\">\n" +
+                "        <div class=\"aHl\"></div>\n" +
+                "        <div id=\":p9\" tabindex=\"-1\"></div>\n" +
+                "        <div id=\":oy\" class=\"ii gt\" jslog=\"20277; u014N:xr6bB; 4:W251bGwsbnVsbCxbXV0.\">\n" +
+                "            <div id=\":ox\" class=\"a3s aiL msg5521148090717455275\"><u></u>\n" +
+                "                <div style=\"width:100%;font-family:arial,'helvetica neue',helvetica,sans-serif;padding:0;Margin:0\">\n" +
+                "                    <div style=\"background-color:#fafafa\">\n" +
+                "                        <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#fafafa\">\n" +
+                "                            <tbody>\n" +
+                "                                <tr>\n" +
+                "                                    <td valign=\"top\" style=\"padding:0;Margin:0\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"m_5521148090717455275es-header\" align=\"center\" style=\"border-collapse:collapse;border-spacing:0px;table-layout:fixed!important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top\">\n" +
+                "                                            <tbody>\n" +
+                "                                                <tr>\n" +
+                "                                                    <td align=\"center\" style=\"padding:0;Margin:0\">\n" +
+                "                                                        <table bgcolor=\"#ffffff\" class=\"m_5521148090717455275es-header-body\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px\">\n" +
+                "                                                            <tbody>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td class=\"m_5521148090717455275es-m-p0r\" valign=\"top\" align=\"center\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-bottom:20px;font-size:0px\">\n" +
+                "                                                                                                        <a href=\"http://localhost:8080/index.jsp\" style=\"text-decoration:underline;color:#666666;font-size:14px\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=http://localhost:8080/index.jsp&amp;source=gmail&amp;ust=1672500692710000&amp;usg=AOvVaw1-Zucl5X8q4yh_1eRzU_T4\"><img src=\"https://ci3.googleusercontent.com/proxy/tJKR2NM5_xiKF608q9k1bL2ujojBGD5Y76ucuMrmJ_u0mzZEnPaO-3GWMwC-lbtTot-LxqoANAWvsqLiblCbl3sm1uveGfNNjbEqc_gLHEy0x3OijURPqT1yZBDrCxm1KkS_YMFsTaEM8lHbv1rv1_RahQVEOfQf3aUnMYrwDn82zrkin2rip2PUiwMX9A6yDCCGXH8=s0-d-e1-ft#https://atiech.stripocdn.email/content/guids/CABINET_5e6436a83c38621a4bc4e7bbfea401c5/images/bannerwealthuringremovebgpreview.png\"\n" +
+                "                                                                                                                alt=\"Logo\" style=\"display:block;border:0;outline:none;text-decoration:none\" width=\"200\" title=\"Logo\" class=\"CToWUd\" data-bit=\"iit\"></a>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                            </tbody>\n" +
+                "                                                        </table>\n" +
+                "                                                    </td>\n" +
+                "                                                </tr>\n" +
+                "                                            </tbody>\n" +
+                "                                        </table>\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"m_5521148090717455275es-content\" align=\"center\" style=\"border-collapse:collapse;border-spacing:0px;table-layout:fixed!important;width:100%\">\n" +
+                "                                            <tbody>\n" +
+                "                                                <tr>\n" +
+                "                                                    <td align=\"center\" style=\"padding:0;Margin:0\">\n" +
+                "                                                        <table bgcolor=\"#ffffff\" class=\"m_5521148090717455275es-content-body\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0px;background-color:#ffffff;width:600px\">\n" +
+                "                                                            <tbody>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"Margin:0;padding-bottom:10px;padding-left:20px;padding-right:20px;padding-top:30px\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-top:10px;padding-bottom:10px;font-size:0px\"><img src=\"https://ci4.googleusercontent.com/proxy/rZ3AJfnf6f1Mibse9ejNIld6yFsW9K9BzRHgT62aSFrB__dtW3tOUS8zo6RGnGlA1xJDFtyhDVp-F4csazS4l9i9KBFCn8z-nQG5gApE0GtE-twvj2Fpr7wt824Yfzk-YAnosS_Iw88Dc6Cyi0CGwopOkOcG8PjVoUQvmZs=s0-d-e1-ft#https://atiech.stripocdn.email/content/guids/CABINET_5e6436a83c38621a4bc4e7bbfea401c5/images/encrypted.png\"\n" +
+                "                                                                                                            alt=\"\" style=\"display:block;border:0;outline:none;text-decoration:none\" width=\"100\" class=\"CToWUd\" data-bit=\"iit\"></td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" class=\"m_5521148090717455275es-m-txt-c m_5521148090717455275h-auto\" height=\"120\" style=\"padding:0;Margin:0;padding-left:20px;padding-right:20px\">\n" +
+                "                                                                                                        <h1 style=\"Margin:0;line-height:46px;font-family:arial,'helvetica neue',helvetica,sans-serif;font-size:23px;font-style:normal;font-weight:bold;color:#333333\">Xin Chào</h1>\n" +
+                "                                                                                                        <h1 style=\"Margin:0;line-height:46px;font-family:arial,'helvetica neue',helvetica,sans-serif;font-size:46px;font-style:normal;font-weight:bold;color:#333333\">" + user.getUserName() + "</h1>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" class=\"m_5521148090717455275es-m-p0r m_5521148090717455275es-m-p0l\" style=\"Margin:0;padding-top:5px;padding-bottom:5px;padding-left:40px;padding-right:40px\">\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:21px;color:#333333;font-size:14px\">Đây là mật khẩu mới của bạn vui lòng đăng nhập lại với mật khẩu này và đổi lại thành một mật khẩu khác.&nbsp;</p>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:separate;border-spacing:0px;border-left:2px dashed #cccccc;border-right:2px dashed #cccccc;border-top:2px dashed #cccccc;border-bottom:2px dashed #cccccc;border-radius:5px\" role=\"presentation\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-top:10px;padding-bottom:10px\"><span class=\"m_5521148090717455275es-button-border\" style=\"border-style:solid;border-color:#2cb543;background:#004aad;border-width:0px;display:inline-block;border-radius:6px;width:auto\"><a style=\"text-decoration:none;color:#ffffff;font-size:36px;border-style:solid;border-color:#004aad;border-width:10px 30px 10px 30px;display:inline-block;background:#004aad;border-radius:6px;font-family:arial,'helvetica neue',helvetica,sans-serif;font-weight:normal;font-style:normal;line-height:43px;width:auto;text-align:center;border-left-width:30px;border-right-width:30px\" target=\"_blank\">" + saltStirng + "</a></span></td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"padding:0;Margin:0;padding-left:20px;padding-right:20px;padding-bottom:30px\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:separate;border-spacing:0px;border-radius:5px\" role=\"presentation\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-left:40px;padding-right:40px\">\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:21px;color:#999999;font-size:14px\">Nếu không phải là bạn, hãy thay đổi mật khẩu tài khoản GOOGLE của bạn để bảo về thông tin của mình.</p>\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:21px;color:#999999;font-size:14px\">Email này có thông báo đến bạn khi mật khẩu của bạn đã được thay đổi.</p>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                            </tbody>\n" +
+                "                                                        </table>\n" +
+                "                                                    </td>\n" +
+                "                                                </tr>\n" +
+                "                                            </tbody>\n" +
+                "                                        </table>\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"m_5521148090717455275es-footer\" align=\"center\" style=\"border-collapse:collapse;border-spacing:0px;table-layout:fixed!important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top\">\n" +
+                "                                            <tbody>\n" +
+                "                                                <tr>\n" +
+                "                                                    <td align=\"center\" style=\"padding:0;Margin:0\">\n" +
+                "                                                        <table class=\"m_5521148090717455275es-footer-body\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0px;background-color:transparent;width:640px\">\n" +
+                "                                                            <tbody>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"Margin:0;padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td align=\"left\" style=\"padding:0;Margin:0;width:600px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-top:15px;padding-bottom:15px;font-size:0\">\n" +
+                "                                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"m_5521148090717455275es-table-not-adapt m_5521148090717455275es-social\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                                            <tbody>\n" +
+                "                                                                                                                <tr>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;padding-right:40px\"><img title=\"Facebook\" src=\"https://ci5.googleusercontent.com/proxy/qSVLPyWLS6cnB-FBCQqpzD2y4K0bHdNo6NLTNfdTXul_pfPlPvwiM-tpNeGe_Yw761aXV4_sKflFndZtRwBTIExZvHDbyfLGiP2fQou5Qyk9bmaRBJDlIEWCBunPDWUvCJd3lKreHXdl59Db49UmjVPhAr4=s0-d-e1-ft#https://atiech.stripocdn.email/content/assets/img/social-icons/logo-black/facebook-logo-black.png\"\n" +
+                "                                                                                                                            alt=\"Fb\" width=\"32\" style=\"display:block;border:0;outline:none;text-decoration:none\" class=\"CToWUd\" data-bit=\"iit\"></td>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;padding-right:40px\"><img title=\"Twitter\" src=\"https://ci5.googleusercontent.com/proxy/_g52Yt8frRsk8f3Es1wT5LNX7aTFLKaxEu1lE1zu4Q3p9wrxApgF93QFhexy40_s7KZMK8gHPbGKjKjBn_LMGRfIOtJK4wSQxAGJR5X0YCp4yFqG_ms0BvpqzHhLls1OCXvSuFKeYIrO2WOq-mD0duvpFg=s0-d-e1-ft#https://atiech.stripocdn.email/content/assets/img/social-icons/logo-black/twitter-logo-black.png\"\n" +
+                "                                                                                                                            alt=\"Tw\" width=\"32\" style=\"display:block;border:0;outline:none;text-decoration:none\" class=\"CToWUd\" data-bit=\"iit\"></td>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;padding-right:40px\"><img title=\"Instagram\" src=\"https://ci3.googleusercontent.com/proxy/FX5UEPqcpfCTCvXCF0xiU4hVBVTFm-ZXqbBxSmbzPj9pJrdRy6C2ADo8iSYoWmifpcBZicRLA7KhmXnbwdYG7w9n-eO_rlRUOAtbSFNCQz2XSnID1ndhBNiYuwHecLbXjEy1om8rTJeTXGEgouoiD5kV8MuT=s0-d-e1-ft#https://atiech.stripocdn.email/content/assets/img/social-icons/logo-black/instagram-logo-black.png\"\n" +
+                "                                                                                                                            alt=\"Inst\" width=\"32\" style=\"display:block;border:0;outline:none;text-decoration:none\" class=\"CToWUd\" data-bit=\"iit\"></td>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0\"><img title=\"Youtube\" src=\"https://ci5.googleusercontent.com/proxy/e3LbYYcF-VV3niBap3PiwA0B47DkjNOnRr6PvfXRco5LPEBdLQBSHyUMyQFtwNbWD6S8OFDzXrhh81qRbMtX8xKxnWSzUk7ALyFNx8qJ55kMZQjTvSEYGFNXtjOEhnZW5E1_7ssJCI15h8XB0-SLoPRD9g=s0-d-e1-ft#https://atiech.stripocdn.email/content/assets/img/social-icons/logo-black/youtube-logo-black.png\"\n" +
+                "                                                                                                                            alt=\"Yt\" width=\"32\" style=\"display:block;border:0;outline:none;text-decoration:none\" class=\"CToWUd\" data-bit=\"iit\"></td>\n" +
+                "                                                                                                                </tr>\n" +
+                "                                                                                                            </tbody>\n" +
+                "                                                                                                        </table>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" style=\"padding:0;Margin:0;padding-bottom:35px\">\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:18px;color:#333333;font-size:12px\">Wealthuring © 2022, Inc.&nbsp;All Rights Reserved .</p>\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:18px;color:#333333;font-size:12px\">Khu Phố 6, Phường Linh Trung, Thành Phố Thủ Đức.</p>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td style=\"padding:0;Margin:0\">\n" +
+                "                                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"m_5521148090717455275es-menu\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                                            <tbody>\n" +
+                "                                                                                                                <tr>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" width=\"33.33%\" style=\"Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0\"><a style=\"text-decoration:none;display:block;font-family:arial,'helvetica neue',helvetica,sans-serif;color:#999999;font-size:12px\">Visit Us </a></td>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" width=\"33.33%\" style=\"Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0;border-left:1px solid #cccccc\"><a style=\"text-decoration:none;display:block;font-family:arial,'helvetica neue',helvetica,sans-serif;color:#999999;font-size:12px\">Privacy Policy</a></td>\n" +
+                "                                                                                                                    <td align=\"center\" valign=\"top\" width=\"33.33%\" style=\"Margin:0;padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px;border:0;border-left:1px solid #cccccc\"><a style=\"text-decoration:none;display:block;font-family:arial,'helvetica neue',helvetica,sans-serif;color:#999999;font-size:12px\">Terms of Use</a></td>\n" +
+                "                                                                                                                </tr>\n" +
+                "                                                                                                            </tbody>\n" +
+                "                                                                                                        </table>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                            </tbody>\n" +
+                "                                                        </table>\n" +
+                "                                                    </td>\n" +
+                "                                                </tr>\n" +
+                "                                            </tbody>\n" +
+                "                                        </table>\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"m_5521148090717455275es-content\" align=\"center\" style=\"border-collapse:collapse;border-spacing:0px;table-layout:fixed!important;width:100%\">\n" +
+                "                                            <tbody>\n" +
+                "                                                <tr>\n" +
+                "                                                    <td align=\"center\" style=\"padding:0;Margin:0\">\n" +
+                "                                                        <table class=\"m_5521148090717455275es-content-body\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px\" bgcolor=\"#FFFFFF\">\n" +
+                "                                                            <tbody>\n" +
+                "                                                                <tr>\n" +
+                "                                                                    <td align=\"left\" style=\"padding:20px;Margin:0\">\n" +
+                "                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                            <tbody>\n" +
+                "                                                                                <tr>\n" +
+                "                                                                                    <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                                                            <tbody>\n" +
+                "                                                                                                <tr>\n" +
+                "                                                                                                    <td align=\"center\" class=\"m_5521148090717455275es-infoblock\" style=\"padding:0;Margin:0;line-height:14px;font-size:12px;color:#cccccc\">\n" +
+                "                                                                                                        <p style=\"Margin:0;font-family:arial,'helvetica neue',helvetica,sans-serif;line-height:14px;color:#cccccc;font-size:12px\">\n" +
+                "                                                                                                            <a style=\"text-decoration:underline;color:#cccccc;font-size:12px\"></a>No longer want to receive these emails?&nbsp;<a style=\"text-decoration:underline;color:#cccccc;font-size:12px\">Unsubscribe</a>.\n" +
+                "                                                                                                            <a style=\"text-decoration:underline;color:#cccccc;font-size:12px\"></a>\n" +
+                "                                                                                                        </p>\n" +
+                "                                                                                                    </td>\n" +
+                "                                                                                                </tr>\n" +
+                "                                                                                            </tbody>\n" +
+                "                                                                                        </table>\n" +
+                "                                                                                    </td>\n" +
+                "                                                                                </tr>\n" +
+                "                                                                            </tbody>\n" +
+                "                                                                        </table>\n" +
+                "                                                                    </td>\n" +
+                "                                                                </tr>\n" +
+                "                                                            </tbody>\n" +
+                "                                                        </table>\n" +
+                "                                                    </td>\n" +
+                "                                                </tr>\n" +
+                "                                            </tbody>\n" +
+                "                                        </table>\n" +
+                "                                    </td>\n" +
+                "                                </tr>\n" +
+                "                            </tbody>\n" +
+                "                        </table>\n" +
+                "                        <div class=\"yj6qo\"></div>\n" +
+                "                        <div class=\"adL\">\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"adL\">\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"adL\">\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "        <div id=\":pd\" class=\"ii gt\" style=\"display:none\">\n" +
+                "            <div id=\":pe\" class=\"a3s aiL \"></div>\n" +
+                "        </div>\n" +
+                "        <div class=\"hi\"></div>\n" +
+                "    </div>\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return content;
+    }
+
 }

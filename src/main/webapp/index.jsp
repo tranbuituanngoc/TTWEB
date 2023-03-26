@@ -108,272 +108,272 @@
                 <div class="tab-content">
                     <!-- Arrivals Product Activation Start Here -->
                     <div class="electronics-pro-active owl-carousel">
-                                <jsp:useBean id="homeProduct" scope="request" type="java.util.List"/>
-                                <c:forEach items="${homeProduct}" var="p">
-                                    <div class="col-lg-12 col-md-12 col-sm-10 col-10">
-                                        <div class="single-product">
-                                            <!-- Product Image Start -->
-                                            <div class="pro-img">
-                                                <a href="ProductDetail?productID=${p.productID}">
-                                                    <img class="primary-img"
-                                                         src="${p.image1}"
-                                                         alt="single-product">
-                                                    <img class="secondary-img"
-                                                         src="${p.image2}"
-                                                         alt="single-product">
-                                                </a>
+                        <jsp:useBean id="homeProduct" scope="request" type="java.util.List"/>
+                        <c:forEach items="${homeProduct}" var="p">
+                            <div class="col-lg-12 col-md-12 col-sm-10 col-10">
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p.productID}">
+                                            <img class="primary-img"
+                                                 src="${p.image[0].image}"
+                                                 alt="single-product">
+                                            <img class="secondary-img"
+                                                 src="${p.image[1].image}"
+                                                 alt="single-product">
+                                        </a>
 
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4>
+                                                <a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p.salePrice>0}">
+                                                <div class="label-product l_sale">${p.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                             </div>
-                                            <!-- Product Image End -->
-                                            <!-- Product Content Start -->
-                                            <div class="pro-content">
-                                                <div class="pro-info">
-                                                    <h4>
-                                                        <a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
-                                                    </h4>
-                                                    <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                             currencySymbol=""
-                                                                                             minFractionDigits="0"
-                                                                                             value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
-                                                        <c:if test="${p.salePrice>0}">
-                                                            <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                                      currencySymbol=""
-                                                                                                      minFractionDigits="0"
-                                                                                                      value="${p.price}"/>
-                                                                VNĐ
-                                                            </del>
-                                                        </c:if>
-                                                    </p>
-                                                    <c:if test="${p.salePrice>0}">
-                                                        <div class="label-product l_sale">${p.salePrice}<span
-                                                                class="symbol-percent">%</span></div>
-                                                    </c:if>
-                                                </div>
-                                                <div class="pro-actions">
-                                                    <div class="actions-primary">
-                                                        <c:url value="/addCart?productID=${p.productID}"
-                                                               var="addCart"/>
-                                                        <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                                    </div>
-                                                    <div class="actions-primary">
-                                                        <c:url value="/buyNow?productID=${p.productID}"
-                                                               var="buyNow"/>
-                                                        <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
-                                                    </div>
+                                            <div class="actions-primary">
+                                                <c:url value="/buyNow?productID=${p.productID}"
+                                                       var="buyNow"/>
+                                                <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
+                                            </div>
 
-                                                </div>
-                                            </div>
-                                            <!-- Product Content End -->
-                                            <!-- <span class="sticker-new">Mới</span> -->
                                         </div>
                                     </div>
-                                </c:forEach>
-                                <!-- Single Product End -->
-                                <!-- Single Product Start -->
-
-
-                                <!-- Single Product End -->
+                                    <!-- Product Content End -->
+                                    <!-- <span class="sticker-new">Mới</span> -->
+                                </div>
                             </div>
-                        </div>
+                        </c:forEach>
+                        <!-- Single Product End -->
+                        <!-- Single Product Start -->
+
+
+                        <!-- Single Product End -->
                     </div>
-                    <!-- main-product-tab-area-->
                 </div>
             </div>
-            <!-- Arrivals Products Area Start Here -->
-            <div class="second-arrivals-product pb-45 pb-sm-5">
-                <div class="container">
-                    <div class="main-product-tab-area">
-                        <div class="tab-menu mb-25">
-                            <div class="section-ttitle">
-                                <h2>Bán chạy</h2>
-                            </div>
-                        </div>
-                        <!-- Tab Contetn Start -->
-                        <div class="tab-content">
-                            <!-- Arrivals Product Activation Start Here -->
-                            <div class="electronics-pro-active owl-carousel">
-                                <jsp:useBean id="homeProduct1" scope="request" type="java.util.List"/>
-                                <c:forEach items="${homeProduct1}" var="p1">
-                                    <div class="col-lg-12 col-md-12 col-sm-10 col-10">
-                                        <div class="single-product">
-                                            <!-- Product Image Start -->
-                                            <div class="pro-img">
-                                                <a href="ProductDetail?productID=${p1.productID}">
-                                                    <img class="primary-img"
-                                                         src="${p1.image1}"
-                                                         alt="single-product">
-                                                    <img class="secondary-img"
-                                                         src="${p1.image2}"
-                                                         alt="single-product">
-                                                </a>
-
-                                            </div>
-                                            <!-- Product Image End -->
-                                            <!-- Product Content Start -->
-                                            <div class="pro-content">
-                                                <div class="pro-info">
-                                                    <h4>
-                                                        <a href="ProductDetail?productID=${p1.productID}">${p1.productName}</a>
-                                                    </h4>
-                                                    <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                             currencySymbol=""
-                                                                                             minFractionDigits="0"
-                                                                                             value="${p1.price-Math.round(p1.price*(p1.salePrice/100))}"/> VNĐ </span>
-                                                        <c:if test="${p1.salePrice>0}">
-                                                            <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                                      currencySymbol=""
-                                                                                                      minFractionDigits="0"
-                                                                                                      value="${p1.price}"/>
-                                                                VNĐ
-                                                            </del>
-                                                        </c:if>
-                                                    </p>
-                                                    <c:if test="${p1.salePrice>0}">
-                                                        <div class="label-product l_sale">${p1.salePrice}<span
-                                                                class="symbol-percent">%</span></div>
-                                                    </c:if>
-                                                </div>
-                                                <div class="pro-actions">
-                                                    <div class="actions-primary">
-                                                        <c:url value="/addCart?productID=${p1.productID}"
-                                                               var="addCart"/>
-                                                        <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                                    </div>
-                                                    <div class="actions-primary">
-                                                        <c:url value="/buyNow?productID=${p1.productID}"
-                                                               var="buyNow"/>
-                                                        <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!-- Product Content End -->
-                                            <!-- <span class="sticker-new">Mới</span> -->
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                                <!-- Single Product End -->
-                                <!-- Single Product Start -->
-
-
-                                <!-- Single Product End -->
-                            </div>
-                        </div>
-                        <!-- main-product-tab-area-->
-                    </div>
-                </div>
-                <!-- Like Products Area Start Here -->
-                <div class="like-product ptb-95 off-white-bg pt-sm-50 pb-sm-55 ">
-                    <div class="container">
-                        <div class="like-product-area">
-                            <h2 class="section-ttitle2 mb-30">Gợi ý cho bạn</h2>
-                            <!-- Arrivals Product Activation Start Here -->
-                                <div class="like-pro-active owl-carousel">
-                                <jsp:useBean id="homeProduct2" scope="request" type="java.util.List"/>
-                                <c:forEach items="${homeProduct2}" var="p2">
-                                    <div class="col-lg-12 col-md-12 col-sm-10 col-10">
-                                        <div class="single-product">
-                                            <!-- Product Image Start -->
-                                            <div class="pro-img">
-                                                <a href="ProductDetail?productID=${p2.productID}">
-                                                    <img class="primary-img"
-                                                         src="${p2.image1}"
-                                                         alt="single-product">
-                                                    <img class="secondary-img"
-                                                         src="${p2.image2}"
-                                                         alt="single-product">
-                                                </a>
-
-                                            </div>
-                                            <!-- Product Image End -->
-                                            <!-- Product Content Start -->
-                                            <div class="pro-content">
-                                                <div class="pro-info">
-                                                    <h4>
-                                                        <a href="ProductDetail?productID=${p2.productID}">${p2.productName}</a>
-                                                    </h4>
-                                                    <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                             currencySymbol=""
-                                                                                             minFractionDigits="0"
-                                                                                             value="${p2.price-Math.round(p2.price*(p2.salePrice/100))}"/> VNĐ </span>
-                                                        <c:if test="${p2.salePrice>0}">
-                                                            <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                                      currencySymbol=""
-                                                                                                      minFractionDigits="0"
-                                                                                                      value="${p2.price}"/>
-                                                                VNĐ
-                                                            </del>
-                                                        </c:if>
-                                                    </p>
-                                                    <c:if test="${p2.salePrice>0}">
-                                                        <div class="label-product l_sale">${p2.salePrice}<span
-                                                                class="symbol-percent">%</span></div>
-                                                    </c:if>
-                                                </div>
-                                                <div class="pro-actions">
-                                                    <div class="actions-primary">
-                                                        <c:url value="/addCart?productID=${p2.productID}"
-                                                               var="addCart"/>
-                                                        <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                                    </div>
-                                                    <div class="actions-primary">
-                                                        <c:url value="/buyNow?productID=${p2.productID}"
-                                                               var="buyNow"/>
-                                                        <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!-- Product Content End -->
-                                            <!-- <span class="sticker-new">Mới</span> -->
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                                <!-- Single Product End -->
-                                <!-- Single Product Start -->
-
-
-                                <!-- Single Product End -->
-                            </div>
-                        </div>
-                        </div>
-                        <!-- main-product-tab-area-->
-                    </div>
-                </div>
-                <!-- Support Area Start Here -->
-                <jsp:include page="footer.jsp"/>
-                <!-- Quick View Content Start -->
-
-            </div>
-
-            <!-- jquery 3.2.1 -->
-            <script src="js\vendor\jquery-3.2.1.min.js"></script>
-            <!-- Countdown js -->
-            <script src="js\jquery.countdown.min.js"></script>
-            <!-- Mobile menu js -->
-            <script src="js\jquery.meanmenu.min.js"></script>
-            <!-- ScrollUp js -->
-            <script src="js\jquery.scrollUp.js"></script>
-            <!-- Nivo slider js -->
-            <script src="js\jquery.nivo.slider.js"></script>
-            <!-- Fancybox js -->
-            <script src="js\jquery.fancybox.min.js"></script>
-            <!-- Jquery nice select js -->
-            <script src="js\jquery.nice-select.min.js"></script>
-            <!-- Jquery ui price slider js -->
-            <script src="js\jquery-ui.min.js"></script>
-            <!-- Owl carousel -->
-            <script src="js\owl.carousel.min.js"></script>
-            <!-- Bootstrap popper js -->
-            <script src="js\popper.min.js"></script>
-            <!-- Bootstrap js -->
-            <script src="js\bootstrap.min.js"></script>
-            <!-- Plugin js -->
-            <script src="js\plugins.js"></script>
-            <!-- Main activaion js -->
-            <script src="js\main.js"></script>
-
+            <!-- main-product-tab-area-->
         </div>
+    </div>
+    <!-- Arrivals Products Area Start Here -->
+    <div class="second-arrivals-product pb-45 pb-sm-5">
+        <div class="container">
+            <div class="main-product-tab-area">
+                <div class="tab-menu mb-25">
+                    <div class="section-ttitle">
+                        <h2>Bán chạy</h2>
+                    </div>
+                </div>
+                <!-- Tab Contetn Start -->
+                <div class="tab-content">
+                    <!-- Arrivals Product Activation Start Here -->
+                    <div class="electronics-pro-active owl-carousel">
+                        <jsp:useBean id="homeProduct1" scope="request" type="java.util.List"/>
+                        <c:forEach items="${homeProduct1}" var="p1">
+                            <div class="col-lg-12 col-md-12 col-sm-10 col-10">
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p1.productID}">
+                                            <img class="primary-img"
+                                                 src="${p1.image[0].image}"
+                                                 alt="single-product">
+                                            <img class="secondary-img"
+                                                 src="${p1.image[1].image}"
+                                                 alt="single-product">
+                                        </a>
+
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4>
+                                                <a href="ProductDetail?productID=${p1.productID}">${p1.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p1.price-Math.round(p1.price*(p1.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p1.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p1.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p1.salePrice>0}">
+                                                <div class="label-product l_sale">${p1.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p1.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <div class="actions-primary">
+                                                <c:url value="/buyNow?productID=${p1.productID}"
+                                                       var="buyNow"/>
+                                                <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                    <!-- <span class="sticker-new">Mới</span> -->
+                                </div>
+                            </div>
+                        </c:forEach>
+                        <!-- Single Product End -->
+                        <!-- Single Product Start -->
+
+
+                        <!-- Single Product End -->
+                    </div>
+                </div>
+                <!-- main-product-tab-area-->
+            </div>
+        </div>
+        <!-- Like Products Area Start Here -->
+        <div class="like-product ptb-95 off-white-bg pt-sm-50 pb-sm-55 ">
+            <div class="container">
+                <div class="like-product-area">
+                    <h2 class="section-ttitle2 mb-30">Gợi ý cho bạn</h2>
+                    <!-- Arrivals Product Activation Start Here -->
+                    <div class="like-pro-active owl-carousel">
+                        <jsp:useBean id="homeProduct2" scope="request" type="java.util.List"/>
+                        <c:forEach items="${homeProduct2}" var="p2">
+                            <div class="col-lg-12 col-md-12 col-sm-10 col-10">
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p2.productID}">
+                                            <img class="primary-img"
+                                                 src="${p2.image[0].image}"
+                                                 alt="single-product">
+                                            <img class="secondary-img"
+                                                 src="${p2.image[1].image}"
+                                                 alt="single-product">
+                                        </a>
+
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4>
+                                                <a href="ProductDetail?productID=${p2.productID}">${p2.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p2.price-Math.round(p2.price*(p2.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p2.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p2.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p2.salePrice>0}">
+                                                <div class="label-product l_sale">${p2.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p2.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <div class="actions-primary">
+                                                <c:url value="/buyNow?productID=${p2.productID}"
+                                                       var="buyNow"/>
+                                                <a href="${buyNow}" title="Mua ngay"> Mua ngay</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                    <!-- <span class="sticker-new">Mới</span> -->
+                                </div>
+                            </div>
+                        </c:forEach>
+                        <!-- Single Product End -->
+                        <!-- Single Product Start -->
+
+
+                        <!-- Single Product End -->
+                    </div>
+                </div>
+            </div>
+            <!-- main-product-tab-area-->
+        </div>
+    </div>
+    <!-- Support Area Start Here -->
+    <jsp:include page="footer.jsp"/>
+    <!-- Quick View Content Start -->
+
+</div>
+
+<!-- jquery 3.2.1 -->
+<script src="js\vendor\jquery-3.2.1.min.js"></script>
+<!-- Countdown js -->
+<script src="js\jquery.countdown.min.js"></script>
+<!-- Mobile menu js -->
+<script src="js\jquery.meanmenu.min.js"></script>
+<!-- ScrollUp js -->
+<script src="js\jquery.scrollUp.js"></script>
+<!-- Nivo slider js -->
+<script src="js\jquery.nivo.slider.js"></script>
+<!-- Fancybox js -->
+<script src="js\jquery.fancybox.min.js"></script>
+<!-- Jquery nice select js -->
+<script src="js\jquery.nice-select.min.js"></script>
+<!-- Jquery ui price slider js -->
+<script src="js\jquery-ui.min.js"></script>
+<!-- Owl carousel -->
+<script src="js\owl.carousel.min.js"></script>
+<!-- Bootstrap popper js -->
+<script src="js\popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js\bootstrap.min.js"></script>
+<!-- Plugin js -->
+<script src="js\plugins.js"></script>
+<!-- Main activaion js -->
+<script src="js\main.js"></script>
+
+</div>
 </body>
 
 </html>

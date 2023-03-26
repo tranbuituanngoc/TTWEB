@@ -13,4 +13,8 @@ public class ConnectDB {
             return con.prepareStatement(sql);
         }
     }
+
+    public static void main(String[] args) {
+
+    }
 }

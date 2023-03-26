@@ -1,77 +1,59 @@
 package bean;
 
+import model.ImageProduct;
+import model.ProductColor;
+import model.ProductSize;
+
+import java.util.List;
+
 public class Product {
     private String productID;
     private String productName;
     private String description;
-    private String size;
-    private String category;
+    private List<ProductSize> size;
+    private List<ProductCategory> category;
+    private List<ProductColor> color;
+
     private int price;
     private int salePrice;
-    private String image1;
-    private String image2;
+    private List<ImageProduct> image;
     private int quantity;
-
-
     private int isNew;
     private int status;
+    private int cost;
+
     private int quantityCart;
 
-    public Product(String productID, String productName, String description, String size, String category, int price, int salePrice, String image1, String image2, int quantity, int isNew, int status, int quantityCart) {
+    public Product() {
+    }
+
+    public Product(String productID, String productName, String description, List<ProductSize> size, List<ProductCategory> category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
         this.size = size;
         this.category = category;
+        this.color = color;
         this.price = price;
         this.salePrice = salePrice;
-        this.image1 = image1;
-        this.image2 = image2;
+        this.image = image;
         this.quantity = quantity;
         this.isNew = isNew;
         this.status = status;
+        this.cost = cost;
         this.quantityCart = quantityCart;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productID='" + productID + '\'' +
-                ", productName='" + productName + '\'' +
-                ", size='" + size + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", quantityCart=" + quantityCart +
-                '}';
-    }
-
-    public void add() {
-        this.setQuantityCart(this.quantityCart++);
-    }
-    public String getKey(){
-        return productID;
-    }
-    public double getPriceAfterSale(){
-        return price-(price*(salePrice/100.0));
-    }
-    public void add2(int quantity) {
-        this.setQuantityCart(this.quantityCart + quantity);
     }
 
     public String getProductID() {
         return productID;
     }
 
-    public void setProductID(String C) {
+    public String getKey() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
         this.productID = productID;
-    }
-
-    public int getQuantityCart() {
-        return quantityCart;
-    }
-
-    public void setQuantityCart(int quantityCart) {
-        this.quantityCart = quantityCart;
     }
 
     public String getProductName() {
@@ -90,20 +72,28 @@ public class Product {
         this.description = description;
     }
 
-    public String getSize() {
+    public List<ProductSize> getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(List<ProductSize> size) {
         this.size = size;
     }
 
-    public String getCategory() {
+    public List<ProductCategory> getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(List<ProductCategory> category) {
         this.category = category;
+    }
+
+    public List<ProductColor> getColor() {
+        return color;
+    }
+
+    public void setColor(List<ProductColor> color) {
+        this.color = color;
     }
 
     public int getPrice() {
@@ -122,23 +112,13 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    public String getImage1() {
-        return image1;
+    public List<ImageProduct> getImage() {
+        return image;
     }
 
-    public void setImage1(String image1) {
-        this.image1 = image1;
+    public void setImage(List<ImageProduct> image) {
+        this.image = image;
     }
-
-    public String getImage2() {
-        return image2;
-    }
-
-    public void setImage2(String image2) {
-        this.image2 = image2;
-    }
-
-
 
     public int getQuantity() {
         return quantity;
@@ -164,7 +144,26 @@ public class Product {
         this.status = status;
     }
 
-    public static void main(String[] args) {
+    public int getCost() {
+        return cost;
+    }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public int getQuantityCart() {
+        return quantityCart;
+    }
+
+    public void setQuantityCart(int quantityCart) {
+        this.quantityCart = quantityCart;
+    }
+    public double getPriceAfterSale(){
+        return price-(price*(salePrice/100.0));
+    }
+    @Override
+    public String toString() {
+        return "Product{" + "productID='" + productID + '\'' + ", productName='" + productName + '\'' + ", description='" + description + '\'' + ", size=" + size + ", category=" + category + ", color=" + color + ", price=" + price + ", salePrice=" + salePrice + ", image=" + image + ", quantity=" + quantity + ", isNew=" + isNew + ", status=" + status + ", cost=" + cost + ", quantityCart=" + quantityCart + '}';
     }
 }

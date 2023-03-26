@@ -116,7 +116,7 @@ public class OrderDetailService {
                 ps.setString(1, product.getProductID());
                 ps.setString(2, orderID);
                 ps.setInt(3, product.getQuantityCart());
-                ps.setInt(4, ((int) (product.getPriceAfterSale() * product.getQuantityCart())));
+//                ps.setInt(4, ((int) (product.getPriceAfterSale() * product.getQuantityCart())));
                 ps.executeUpdate();
             }
             ps.close();

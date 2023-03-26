@@ -42,8 +42,8 @@ public class AddOrUpdateProduct extends HttpServlet {
                 forward += "&price=" + product.getPrice();
                 forward += "&quantity=" + product.getQuantity();
                 forward += "&sale=" + product.getSalePrice();
-                forward += "&link1=" + product.getImage1();
-                forward += "&link2=" + product.getImage2();
+//                forward += "&link1=" + product.getImage1();
+//                forward += "&link2=" + product.getImage2();
                 forward += "&new=" + product.getIsNew();
                 forward += "&description=" + product.getDescription();
                 request.getRequestDispatcher(forward).forward(request, response);
@@ -65,8 +65,9 @@ public class AddOrUpdateProduct extends HttpServlet {
                 if (!isErr) {
                     Random rd = new Random();
                     String idPro = "sp" + (rd.nextInt(1000000) / 2 + 1);
-                    Product p = new Product(idPro, name, description, size, type, Integer.parseInt(price), Integer.parseInt(sale), link1, link2, Integer.parseInt(quantity), Integer.parseInt(newProduct), 1, 1);
-                    ProductService.addProduct(p);
+//                    Product p = new Product(idPro, name, description, size, type, Integer.parseInt(price), Integer.parseInt(sale), link1, link2, Integer.parseInt(quantity), Integer.parseInt(newProduct), 1, 1);
+
+//                    ProductService.addProduct(p);
                     request.setAttribute("err", "Thêm sản phẩm thành công");
                     response.sendRedirect("ListProductAd");
                 }
@@ -86,8 +87,8 @@ public class AddOrUpdateProduct extends HttpServlet {
                     isErr = true;
                 }
                 if (!isErr) {
-                    Product p = new Product(id, name, description, size, type, Integer.parseInt(price), Integer.parseInt(sale), link1, link2, Integer.parseInt(quantity), Integer.parseInt(newProduct), 1, 1);
-                    ProductService.updateProduct(id, p);
+//                    Product p = new Product(id, name, description, size, type, Integer.parseInt(price), Integer.parseInt(sale), link1, link2, Integer.parseInt(quantity), Integer.parseInt(newProduct), 1, 1);
+//                    ProductService.updateProduct(id, p);
                     request.setAttribute("err", "Chỉnh sửa thành công");
                     response.sendRedirect("ListProductAd");
                 }

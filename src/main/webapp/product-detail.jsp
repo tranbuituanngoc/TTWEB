@@ -78,11 +78,11 @@
                         <!-- Thumbnail Large Image start -->
                         <div class="tab-content">
                             <div id="thumb1" class="tab-pane fade show active">
-                                <a data-fancybox="images" href="${product.image1}"><img src="${product.image1}"
+                                <a data-fancybox="images" href="${product.image[0].image}"><img src="${product.image[0].image}"
                                                                                         alt="product-view"></a>
                             </div>
                             <div id="thumb2" class="tab-pane fade">
-                                <a data-fancybox="images" href="${product.image2}"><img src="${product.image2}"
+                                <a data-fancybox="images" href="${product.image[1].image}"><img src="${product.image[1].image}"
                                                                                         alt="product-view"></a>
                             </div>
 
@@ -91,9 +91,9 @@
                         <!-- Thumbnail Image End -->
                         <div class="product-thumbnail mt-15">
                             <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                                <a class="active" data-toggle="tab" href="#thumb1"><img src="${product.image1}"
+                                <a class="active" data-toggle="tab" href="#thumb1"><img src="${product.image[0].image}"
                                                                                         alt="product-thumbnail"></a>
-                                <a data-toggle="tab" href="#thumb2"><img src="${product.image2}"
+                                <a data-toggle="tab" href="#thumb2"><img src="${product.image[1].image}"
                                                                          alt="product-thumbnail"></a>
 
                             </div>

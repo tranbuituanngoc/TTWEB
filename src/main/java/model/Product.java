@@ -1,5 +1,9 @@
 package model;
 
+import model.ImageProduct;
+import model.ProductColor;
+import model.ProductSize;
+
 import java.util.List;
 
 public class Product {
@@ -7,7 +11,8 @@ public class Product {
     private String productName;
     private String description;
     private List<ProductSize> size;
-    private List<ProductCategory> category;
+
+    private String category;
     private List<ProductColor> color;
 
     private int price;
@@ -23,7 +28,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productID, String productName, String description, List<ProductSize> size, List<ProductCategory> category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart) {
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -76,11 +81,11 @@ public class Product {
         this.size = size;
     }
 
-    public List<ProductCategory> getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(List<ProductCategory> category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

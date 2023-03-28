@@ -45,7 +45,7 @@ public class OrderService {
     public static List<OrderDetail> getOrderNotDeliver(String id) {
             PreparedStatement s = null;
             try {
-                String sql = "SELECT o.id_product,o.id_order,p.`name`,p.price-p.price*(p.sale/100),o.quantity,o.totalPrice FROM products p join order_detail o on p.id=o.id_product JOIN `order` d on o.id_order=d.id WHERE d.id_user=? AND d.`status`=?;";
+                String sql = "SELECT o.id_product,o.id_order,p.`name`,p.price-p.price*(p.sale/100),o.quantity,o.totalPrice FROM products p join order_detail o on p.id_product=o.id_product JOIN order d on o.id_order=d.id_order WHERE d.id_user=? AND d.`status`=?;";
                 s = ConnectDB.connect(sql);
                 s.setString(1, id);
                 s.setInt(2, 0);

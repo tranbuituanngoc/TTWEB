@@ -20,7 +20,6 @@
                 <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
                     <div class="categorie-search-box">
                         <form action="search" method="post">
-
                             <input type="text" name="txt" placeholder="Bạn muốn mua gì...">
                             <button><i class="lnr lnr-magnifier"></i></button>
                         </form>

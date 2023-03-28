@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css\ionicons.min.css">
     <!-- linearicons css -->
     <link rel="stylesheet" href="css\linearicons.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css\styles.css">
     <!-- Nice select css -->
     <link rel="stylesheet" href="css\nice-select.css">
     <!-- Jquery fancybox css -->
@@ -86,17 +86,17 @@
                                     <a href="ProductLists?page=1">+ Tất cả</a>
                                 </li>
                                 <li class="form-check" style="color: black">
-                                    <a href="ListByType?type=Gạch lát nền&page=1">+ Gạch lát nền</a>
+                                    <a href="ListByType?type=2&page=1">+ Gạch lát nền</a>
                                 </li>
 
                                 <li class="form-check">
-                                    <a href="ListByType?type=Gạch ốp tường&page=1">+ Gạch ốp tường</a>
+                                    <a href="ListByType?type=3&page=1">+ Gạch ốp tường</a>
                                 </li>
                                 <li class="form-check">
-                                    <a href="ListByType?type=Gạch trang trí&page=1">+ Gạch trang trí</a>
+                                    <a href="ListByType?type=4&page=1">+ Gạch trang trí</a>
                                 </li>
                                 <li class="form-check">
-                                    <a href="ListByType?type=Gạch giả gỗ&page=1">+ Gạch giả gỗ</a>
+                                    <a href="ListByType?type=1&page=1">+ Gạch giả gỗ</a>
                                 </li>
 
                             </ul>
@@ -150,10 +150,10 @@
                                                         <div class="pro-img">
                                                             <a href="ProductDetail?productID=${p.productID}">
                                                                 <img class="primary-img"
-                                                                     src="${p.image1}"
+                                                                     src="${p.image[0].image}"
                                                                      alt="single-product">
                                                                 <img class="secondary-img"
-                                                                     src="${p.image2}"
+                                                                     src="${p.image[1].image}"
                                                                      alt="single-product">
                                                             </a>
 
@@ -296,7 +296,7 @@
         <script src="js\plugins.js"></script>
         <!-- Main activaion js -->
         <script src="js\main.js"></script>
-
+    </div>
 </body>
 
 </html>

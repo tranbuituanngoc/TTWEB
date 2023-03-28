@@ -103,7 +103,7 @@
                                     <tr>
                                         <td class="product-thumbnail">
                                             <a href="avascript:void(0)"><img
-                                                    src="${product.image2}"
+                                                    src="${product.image[1].image}"
                                                     alt="cart-image"></a>
                                             <input name="productID" value="${product.productID}" type="hidden">
                                         </td>

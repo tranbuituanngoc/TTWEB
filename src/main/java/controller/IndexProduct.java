@@ -19,9 +19,9 @@ public class IndexProduct extends HttpServlet {
         List<Product>listNewProduct= ProductService.listNewProduct();
         List<Product>listBestSeller=ProductService.listBestSeller();
         List<Product>listHintForYou=ProductService.listHintForYou();
-        System.out.println(listNewProduct);
-        System.out.println(listBestSeller);
-        System.out.println(listHintForYou);
+//        System.out.println(listNewProduct);
+//        System.out.println(listBestSeller);
+//        System.out.println(listHintForYou);
 
         request.setAttribute("homeProduct",listNewProduct);
         request.setAttribute("homeProduct1",listBestSeller);

@@ -13,10 +13,13 @@ import java.util.List;
 public class ListByType extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String type = request.getParameter("type");
+        String type_raw = request.getParameter("type");
+        int type = Integer.parseInt(type_raw);
+//        System.out.println(type);
         List<Product>list = ProductService.getByType(type);
+//        System.out.println(list);
         int page,show=12;
-        int size = list.size();;
+        int size = list.size();
         int numberPage = size%show==0?size/show :(size/show+1);
         String currentPage=request.getParameter("page");
         if(currentPage==null){
@@ -27,7 +30,7 @@ public class ListByType extends HttpServlet {
         int start,end;
         start= (page-1)*show;
         end=Math.min(page*show, list.size());
-        List<Product>listP= ProductService.getByPage(list,start,end);
+        List<Product> listP= ProductService.getByPage(list,start,end);
         request.setAttribute("listP",listP);
         request.setAttribute("page",page);
         request.setAttribute("numberPage",numberPage);

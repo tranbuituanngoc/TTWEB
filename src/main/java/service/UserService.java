@@ -17,7 +17,7 @@ public class UserService {
         return new UserService();
     }
 
-    public ArrayList selectAll() {
+    public ArrayList<User> selectAll() {
         ArrayList<User> res = new ArrayList<User>();
         try {
             Connection connection = JDBCUtil.getConnection();
@@ -551,15 +551,10 @@ public class UserService {
 //        return res;
 //    }
 //
-//    public static void main(String[] args) {
-//        UserService service = new UserService();
-//        boolean u = existUserName("quanghuy.fs");
-//        User user = new User("user10000000", "quahuysuper", "qy0029a@gmail.com", "212002", 1, "Bùi Quang Huy", "0981722033", 1, "12/12/2002");
-////        register(user);
-//        System.out.println(getByIdUser("user65428064694"));
-////        System.out.println(u);
-////        System.out.println(register(user));
-////        UserService u = new UserService();
-////        System.out.println(u.register(new User("2","trung2", "trung2@gmail.com", "0912271440", "đl" , "1234")));
-//    }
+    public static void main(String[] args) {
+        UserService service = new UserService();
+        for(User u:service.selectAll()){
+            System.out.println(u);
+        }
+    }
 }

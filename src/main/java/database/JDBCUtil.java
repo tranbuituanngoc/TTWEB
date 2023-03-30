@@ -17,7 +17,7 @@ public class JDBCUtil {
             DriverManager.registerDriver(driver);
 
             //link
-            String urlString = "jdbc:mysql://localhost:3306/gachmen_model";
+            String urlString = "jdbc:mysql://localhost:3306/gachmen_shop";
             //tên database
             String usernameString = "root";
             //mật khẩu database

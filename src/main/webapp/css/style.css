@@ -4554,3 +4554,6 @@ a.shipping-calculator-button:hover {
 .dropdown-menu>li>a:hover {
     color: #151515;
 }
+.required {
+    color: red;
+}

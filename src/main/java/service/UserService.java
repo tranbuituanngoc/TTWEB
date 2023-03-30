@@ -21,7 +21,7 @@ public class UserService {
         ArrayList<User> res = new ArrayList<User>();
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM users";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             System.out.println(sql);
@@ -52,7 +52,7 @@ public class UserService {
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE id_user=?";
+            String sql = "SELECT * FROM users WHERE id_user=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getId_User());
             System.out.println(sql);
@@ -84,7 +84,7 @@ public class UserService {
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE username=? AND email=?";
+            String sql = "SELECT * FROM users WHERE username=? AND email=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
@@ -117,7 +117,7 @@ public class UserService {
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE username=? AND email=? AND changedPassword=?";
+            String sql = "SELECT * FROM users WHERE username=? AND email=? AND changedPassword=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
@@ -154,7 +154,7 @@ public class UserService {
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE username=? AND password=?";
+            String sql = "SELECT * FROM users WHERE username=? AND password=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getPass());
@@ -188,7 +188,7 @@ public class UserService {
     public static boolean existUserName(String uname) {
         PreparedStatement s = null;
         try {
-            String sql = "select * from user where username = ?";
+            String sql = "select * FROM users where username = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, uname);
             ResultSet rs = s.executeQuery();
@@ -204,7 +204,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "INSERT INTO user (id_user,username,fullname,email,phone,address,password,role,status) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (id_user,username,fullname,email,phone,address,password,role,status) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getId_User());
             statement.setString(2, o.getUserName());
@@ -228,7 +228,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "UPDATE User " +
+            String sql = "UPDATE Users " +
                     " SET " +
                     " password=?" +
                     ", email=?" +
@@ -253,7 +253,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "UPDATE user " +
+            String sql = "UPDATE Users " +
                     " SET " +
                     " verification_code=?" +
                     ", time_valid=?" +
@@ -276,7 +276,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "UPDATE User " +
+            String sql = "UPDATE Users " +
                     " SET " +
                     " password=?" +
                     " WHERE id_user=?";
@@ -313,7 +313,7 @@ public class UserService {
         boolean res = false;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM user WHERE username=?";
+            String sql = "SELECT * FROM users WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, s);
             System.out.println(sql);
@@ -332,7 +332,7 @@ public class UserService {
     public static void deleteUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "DELETE  from user where id = ?";
+            String sql = "DELETE  FROM users where id = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -345,7 +345,7 @@ public class UserService {
     public static void lockUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "UPDATE user set status = 0 where id = ?";
+            String sql = "UPDATE Users set status = 0 where id = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -359,7 +359,7 @@ public class UserService {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "UPDATE User " +
+            String sql = "UPDATE Users " +
                     " SET " +
                     " password=?, changedPassword=?" +
                     " WHERE id_user=?";
@@ -378,7 +378,7 @@ public class UserService {
     public static void unlockUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "UPDATE user set status = 1 where id = ?";
+            String sql = "UPDATE Users set status = 1 where id = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -392,7 +392,7 @@ public class UserService {
     public static boolean existEmail(String email) {
         PreparedStatement s = null;
         try {
-            String sql = "select * from user where email = ?";
+            String sql = "select * FROM users where email = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, email);
             ResultSet rs = s.executeQuery();
@@ -408,7 +408,7 @@ public class UserService {
     public static boolean checkUsernameEmail(String userName, String email) {
         PreparedStatement preSta = null;
         try {
-            String sql = "select username,email from user where username=? and email =?";
+            String sql = "select username,email FROM users where username=? and email =?";
             preSta = ConnectDB.connect(sql);
             preSta.setString(1, userName);
             preSta.setString(2, email);
@@ -431,7 +431,7 @@ public class UserService {
         PreparedStatement pre = null;
         int count = 0;
         try {
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM users";
             pre = ConnectDB.connect(sql);
             ResultSet rs = pre.executeQuery();
             rs.last();
@@ -448,7 +448,7 @@ public class UserService {
     public static void updatepassword(String email, String password) {
         PreparedStatement preSta = null;
         try {
-            String sql = "UPDATE user SET password=? WHERE email=? ";
+            String sql = "UPDATE Users SET password=? WHERE email=? ";
             preSta = ConnectDB.connect(sql);
             preSta.setString(1, password);
             preSta.setString(2, email);
@@ -463,7 +463,7 @@ public class UserService {
 //    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;
 //        try {
-//            String sql = "select * from user where username = ? and password = ?";
+//            String sql = "select * FROM users where username = ? and password = ?";
 //            preSta = ConnectDB.connect(sql);
 //            preSta.setString(1, username);
 //            preSta.setString(2, password);
@@ -493,7 +493,7 @@ public class UserService {
 //        int status = 0;
 //        PreparedStatement pre = null;
 //        try {
-//            String sql = "select status from user where username=? ";
+//            String sql = "select status FROM users where username=? ";
 //            pre = ConnectDB.connect(sql);
 //            pre.setString(1, username);
 //            ResultSet rs = pre.executeQuery();
@@ -509,7 +509,7 @@ public class UserService {
 //    public static User getUser(String username) {
 //        PreparedStatement preSta = null;
 //        try {
-//            String sql = "select * from user where username = ? ";
+//            String sql = "select * FROM users where username = ? ";
 //            preSta = ConnectDB.connect(sql);
 //            preSta.setString(1, username);
 //            ResultSet rs = preSta.executeQuery();
@@ -538,7 +538,7 @@ public class UserService {
 //        int res = 0;
 //        PreparedStatement pre = null;
 //        try {
-//            String sql = "select role from user where username=? ";
+//            String sql = "select role FROM users where username=? ";
 //            pre = ConnectDB.connect(sql);
 //            pre.setString(1, username);
 //            ResultSet rs = pre.executeQuery();

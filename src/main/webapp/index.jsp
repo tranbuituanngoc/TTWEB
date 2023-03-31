@@ -375,5 +375,9 @@
 
 </div>
 </body>
-
+<%--<script>--%>
+<%--    setTimeout(function (){--%>
+<%--        window.location.href="Home";--%>
+<%--    },0)--%>
+<%--</script>--%>
 </html>

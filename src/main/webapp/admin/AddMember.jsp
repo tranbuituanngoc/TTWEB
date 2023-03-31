@@ -1,15 +1,14 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="model.UserSession" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
-    UserSession u = UserSession.getUS(session);
-    Collection<User> user = u.getUser();
+    User u= (User) session.getAttribute("user");
     String username = u.getUserName();
-    if(username.equalsIgnoreCase("")||!user.iterator().next().accept("admin.index")) response.sendRedirect("http://localhost:8080/project_BookStore/Home");
+    int role = u.getRole();
+    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
 %>
 <c:set var="username" value="<%=username%>"/>
 <!DOCTYPE html>

@@ -80,7 +80,7 @@ public class ProductService {
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
+//                product.setImage(listImage);
                 listProducts.add(product);
             }
 

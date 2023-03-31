@@ -12,9 +12,9 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class Email {
-    //    String pass="vpbjxytganaswsiv";
-    static final String form = "wealthuring@gmail.com";
-    static final String password = "vpbjxytganaswsiv";
+    //    String pass="auogzmiqdjuyxbji";
+    static final String form = "tilemarket2022@gmail.com";
+    static final String password = "auogzmiqdjuyxbji";
 
     public static void sendMail(String to, String content, String subject) {
         Properties properties = new Properties();
@@ -37,7 +37,7 @@ public class Email {
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.addHeader("Content-tyoe", "text/HTML; charset=UTF-8");
-            Address address = new InternetAddress(form, "Wealthuring");
+            Address address = new InternetAddress(form, "Tile Market");
             msg.setFrom(address);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
             msg.setSubject(subject);

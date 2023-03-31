@@ -1,15 +1,14 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="model.UserSession" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    UserSession u = UserSession.getUS(session);
-    Collection<User> user = u.getUser();
+    User u= (User) session.getAttribute("user");
     String username = u.getUserName();
-    if(username.equalsIgnoreCase("")||!user.iterator().next().accept("admin.index")) response.sendRedirect("http://localhost:8080/GachMen_Store_war/Home");
+    int role = u.getRole();
+    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
 %>
 <!DOCTYPE html>
 <html>
@@ -89,7 +88,9 @@
                                     <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0" value="${p.price}"/> VNĐ</td>
                                     <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0" value="${p.salePrice}"/> VNĐ</td>
                                     <td>${p.quantity}</td>
-                                    <td><img src="${p.image1}"></td>
+                                    <td><img src="#"></td>
+<%--                                    sửa lại ảnh nhớ sửa lại chỗ này--%>
+<%--                                    <td><img src="${p.image1}"></td>--%>
                                     <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                     <td id="hide-nothide">
                                         <c:if test="${p.status ==1}">

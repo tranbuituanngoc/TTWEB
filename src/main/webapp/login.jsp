@@ -39,6 +39,8 @@
 
     <!-- Modernizer js -->
     <script src="js\vendor\modernizr-3.5.0.min.js"></script>
+    <%--Sweet alert notify--%>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -78,34 +80,44 @@
                     </div>
                 </div>
                 <!-- New Customer End -->
+                <%
+                    String messageResponse= request.getAttribute("messageResponse") +"";
+                    messageResponse= ((messageResponse).equals("null"))?"":messageResponse;
+                    if(messageResponse.equals("error")){
+                %>
+                <script type="text/javascript">
+                    swal({
+                        title: "Error!",
+                        text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",
+                        icon: "error",
+                        button: "Thử lại!",
+                    });
+                </script>
+                <%
+                    }
+                %>
                 <!-- Returning Customer Start -->
                 <div class="col-md-6">
                     <div class="well">
                         <div class="return-customer">
                             <h3 class="mb-10 custom-title">ĐĂNG NHẬP</h3>
                             <br>
-                            <form action="/nguoi-dung" method="post">
+                            <form action="/nguoi-dung" method="post" onsubmit="return signIn(); getAlert()">
                                 <input type="hidden" name="action" value="dang-nhap">
-                                <p style="color:red; display:block"><%=request.getAttribute("errMes0")==null ?" ":request.getAttribute("errMes0")%></p>
-                                <p style="color:red; display:block"><%=request.getAttribute("errMes1")==null ?" ":request.getAttribute("errMes1")%></p>
-                                <p style="color:red; display:block"><%=request.getAttribute("errMes2")==null ?" ":request.getAttribute("errMes2")%></p>
+<%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
                                 <div class="form-group">
                                     <label>Tài khoản</label>
-                                    <input type="text" value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>" name="username" placeholder="Nhập username..." id="input-email" class="form-control">
+                                    <input type="text" value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>" id="username2" name="username" placeholder="Nhập username..." id="input-email" class="form-control">
+                                    <div id="error_username2"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input type="password" name="password" placeholder="Mật khẩu" id="input-password" class="form-control">
+                                    <input type="password" name="password" placeholder="Mật khẩu" id="password2" class="form-control">
+                                    <div id="error_password2"></div>
                                 </div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
-                                <input type="submit" value="Đăng nhập" class="return-customer-btn">
+                                <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();" class="return-customer-btn">
                                 <br/>
-                                <%--                                <% if(session.getAttribute("errmsg")!=null){--%>
-                                <%--                                    String msg = (String)session.getAttribute("errmsg");--%>
-                                <%--                                %>--%>
-                                <%--                                <font color="red"><%=msg%></font>--%>
-                                <%--                                <%}%>--%>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -150,6 +162,8 @@
 <script src="js\plugins.js"></script>
 <!-- Main activaion js -->
 <script src="js\main.js"></script>
+<%--custom script--%>
+<script src="js\script.js"></script>
 </body>
 
 </html>

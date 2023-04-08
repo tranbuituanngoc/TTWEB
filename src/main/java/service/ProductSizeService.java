@@ -63,11 +63,43 @@ public class ProductSizeService {
         }
         return sizeProduct;
     }
+    public static void removeProductSizeById(String id_product){
+        PreparedStatement s = null;
+        String sql = "delete from product_size where id_product = ?";
+        try {
+            s = ConnectDB.connect(sql);
+            s.setString(1, id_product);
+            s.executeUpdate();
+            s.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void addProductSize(int idProductSize, String id_product){
+        PreparedStatement s = null;
+        try {
+            String sql = "insert into product_size(id_size, id_product) values(?, ?)";
+            s = ConnectDB.connect(sql);
+            s.setInt(1, idProductSize);
+            s.setString(2, id_product);
+            s.executeUpdate();
+            s.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
 
+    }
     public static void main(String[] args) {
         List<ProductSize> list =ProductSizeService.getSizeProduct("sp094");
+//        System.out.println(list.toString());
+//        List<ProductSize> list2 = ProductSizeService.getAll();
+//        System.out.println(list2);
+//        ProductSizeService.removeProductSizeById("sp094");
+
+        ProductSizeService.addProductSize(6,"sp094");
+        list =ProductSizeService.getSizeProduct("sp094");
         System.out.println(list.toString());
-        List<ProductSize> list2 = ProductSizeService.getAll();
-        System.out.println(list2);
     }
 }

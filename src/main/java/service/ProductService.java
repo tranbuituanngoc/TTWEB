@@ -407,6 +407,7 @@ public class ProductService {
         return listHintForYou;
     }
 
+
 //    public static void updateProduct(String id, Product product) {
 //        PreparedStatement s = null;
 //        try {

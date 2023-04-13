@@ -1,11 +1,5 @@
 package Util;
 
-import model.ProductColor;
-import model.ProductSize;
-import service.ProductColorService;
-import service.ProductDetailsService;
-import service.ProductSizeService;
-
 import java.util.ArrayList;
 import java.util.Random;
 

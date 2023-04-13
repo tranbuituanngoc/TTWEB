@@ -13,13 +13,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    User u = (User) session.getAttribute("user");
-    String username = u.getUserName();
-    int role = u.getRole();
-    if (username.equalsIgnoreCase("") || role == 2) response.sendRedirect("/Home");
-%>
-<c:set var="username" value="<%=username%>"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -48,6 +42,20 @@
 </head>
 
 <body>
+<%
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
+    String username = u.getUserName();
+    int role = u.getRole();
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
+        return;
+    }
+%>
+<c:set var="username" value="<%=username%>"/>
 <jsp:include page="headerAd.jsp"></jsp:include>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -70,7 +78,8 @@
                     <div class="span12">
                         <h4 style="color: red"><%=request.getAttribute("err") == null ? "" : request.getAttribute("err")%>
                         </h4>
-                        <form class="form-horizontal" action="AddOrUpdateProduct" onsubmit="return checkAddProduct()" method="post" enctype="multipart/form-data">
+                        <form class="form-horizontal" action="AddOrUpdateProduct" onsubmit="return checkAddProduct()"
+                              method="post" enctype="multipart/form-data">
                             <fieldset>
                                 <legend><c:choose>
                                     <c:when test="${param.action eq'getadd'}">Thêm</c:when>
@@ -106,27 +115,6 @@
                                 <div class="control-group">
                                     <label class="control-label" for="type">Loại gạch</label>
                                     <div class="controls">
-                                        <%--                                        <select id="type" class="chzn-select" name="type" style="width:49%;" multiple>--%>
-                                        <%--                                            <option value="Ốp Tường"--%>
-                                        <%--                                                    <c:if test="${param.type eq 'Ốp Tường'}">selected="selected"</c:if>>--%>
-                                        <%--                                                Ốp Tường--%>
-                                        <%--                                            </option>--%>
-                                        <%--                                            <option value="Ốp Tường"--%>
-                                        <%--                                                    <c:if test="${param.type eq 'Ốp Tường'}">selected="selected"</c:if>>--%>
-                                        <%--                                                Ốp Tường--%>
-                                        <%--                                            </option>--%>
-                                        <%--                                            <option value="Trang Trí"--%>
-                                        <%--                                                                                            <c:if test="${param.type eq 'Trang Trí'}">selected="selected"</c:if>>--%>
-                                        <%--                                                Trang Trí--%>
-                                        <%--                                            </option>--%>
-                                        <%--                                            <option value="Vân Gỗ"--%>
-                                        <%--                                                    <c:if test="${param.type eq 'Vân Gỗ'}">selected="selected"</c:if>>--%>
-                                        <%--                                                Vân Gỗ--%>
-                                        <%--                                            </option>--%>
-
-                                        <%--                                        </select>--%>
-                                        <%--                                        <select class="multiple-checkboxes" name="type" style="width:49%;"--%>
-                                        <%--                                                multiple="multiple">--%>
                                         <select id="type" class="chzn-select" name="type" style="width:49%;">
                                             <%
                                                 for (ProductCategory c : categories) {
@@ -166,46 +154,6 @@
                                             <%
                                                 }
                                             %>
-                                            <%--                                            <option value="600x600"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '600x600'}">selected="selected"</c:if>>--%>
-                                            <%--                                                600 x 600--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="800x800"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '800x800'}">selected="selected"</c:if>>--%>
-                                            <%--                                                800 x 800--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="600x1200"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '600x1200'}">selected="selected"</c:if>>--%>
-                                            <%--                                                600 x 1200--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="300x600"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '300x600'}">selected="selected"</c:if>>--%>
-                                            <%--                                                300 x 600--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="300x800"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '300x800'}">selected="selected"</c:if>>--%>
-                                            <%--                                                300 x 800--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="150x900"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '150x900'}">selected="selected"</c:if>>--%>
-                                            <%--                                                150 x 900--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="150x800"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '150x800'}">selected="selected"</c:if>>--%>
-                                            <%--                                                150 x 800--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="200x1200"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '200x1200'}">selected="selected"</c:if>>--%>
-                                            <%--                                                200 x 1200--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="200x200"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '200x200'}">selected="selected"</c:if>>--%>
-                                            <%--                                                200 x 200--%>
-                                            <%--                                            </option>--%>
-                                            <%--                                            <option value="200x230"--%>
-                                            <%--                                                    <c:if test="${param.sizeProduct eq '200x230'}">selected="selected"</c:if>>--%>
-                                            <%--                                                200 x 230--%>
-                                            <%--                                            </option>--%>
                                         </select>
                                     </div>
                                 </div>
@@ -226,7 +174,8 @@
                                             <option value="<%=co.getDescription()%>">
                                                 <%=co.getDescription()%>
                                                 <%
-                                                    //                                                    if()
+
+                                                    //                                                    if ()
                                                 %>
                                             </option>
                                             <%
@@ -235,16 +184,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="quantity">Số lượng (*) </label>
-                                    <div class="controls">
-                                        <input type="number" name="quantity" class="span6" id="quantity"
-                                               placeholder="Nhập số lượng"
-                                               value="<%=request.getParameter("quantity")==null? "":request.getParameter("quantity")%>">
-                                    </div>
-                                    <div class="controls"><p id="err-quantity"></p></div>
-                                    <div class="controls" id="error_quantity"></div>
-                                </div>
+                                <%--                                <div class="control-group">--%>
+                                <%--                                    <label class="control-label" for="quantity">Số lượng (*) </label>--%>
+                                <%--                                    <div class="controls">--%>
+                                <%--                                        <input type="number" name="quantity" class="span6" id="quantity"--%>
+                                <%--                                               placeholder="Nhập số lượng"--%>
+                                <%--                                               value="<%=request.getParameter("quantity")==null? "":request.getParameter("quantity")%>">--%>
+                                <%--                                    </div>--%>
+                                <%--                                    <div class="controls"><p id="err-quantity"></p></div>--%>
+                                <%--                                    <div class="controls" id="error_quantity"></div>--%>
+                                <%--                                </div>--%>
                                 <div class="clearfix"></div>
                                 <div id="form-container"></div>
                                 <div class="clearfix"></div>
@@ -278,7 +227,8 @@
                                 <div class="control-group">
                                     <label class="control-label" for="thumbnail">Chọn ảnh Thumbnail (*) </label>
                                     <div class="controls">
-                                        <input type="file" name="thumbnail" class="span6" id="thumbnail" accept="image/*"
+                                        <input type="file" name="thumbnail" class="span6" id="thumbnail"
+                                               accept="image/*"
                                                placeholder="Nhập link ảnh gạch"
                                                value="<%=request.getParameter("thumbnail")==null? "":request.getParameter("thumbnail")%>">
                                     </div>
@@ -432,7 +382,7 @@
                 input.className = "form-control dynamic-input mb-4 float-left col-3 ";
                 input.name = values1[i] + " " + values2[j]
                 input.style = "padding: 18px !important"
-                input.onkeyup = checkValues;
+                // input.onkeyup = checkValues;
                 div.appendChild(input);
                 container.appendChild(div)
             }
@@ -510,12 +460,12 @@
             error_cost.innerHTML = ''
         }
 
-        if (quantity.length == 0) {
-            error += 1;
-            error_quantity.innerHTML = '<span class="required">Vui lòng không để trống phần số lượng sản phẩm</span>';
-        } else {
-            error_quantity.innerHTML = ''
-        }
+        // if (quantity.length == 0) {
+        //     error += 1;
+        //     error_quantity.innerHTML = '<span class="required">Vui lòng không để trống phần số lượng sản phẩm</span>';
+        // } else {
+        //     error_quantity.innerHTML = ''
+        // }
 
         if (description.length == 0) {
             error += 1;

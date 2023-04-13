@@ -1,11 +1,6 @@
 package controller;
 
 import model.*;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import service.*;
 
 import javax.servlet.ServletContext;
@@ -18,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -92,12 +85,18 @@ public class AddOrUpdateProduct extends HttpServlet {
                 String description = request.getParameter("description");
 
                 Random rd = new Random();
-                String idPro = "sp" + (rd.nextInt(1000000) / 2 + 1);
+                String random = System.currentTimeMillis() + rd.nextInt(100) + "";
+                String idPro = "sp" + random.substring(random.length() - 8);
                 Product p = new Product();
                 p.setProductID(idPro);
 
                 ProductCategory category = ProductCategoryService.selectByDescrip(type);
                 p.setCategory(category.getId_Category() + "");
+
+                java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(todaysDate);
+                Timestamp importDate = new Timestamp(calendar.getTimeInMillis());
 
                 //Insert Product Details Quantity
                 for (String s : sizes) {
@@ -105,20 +104,11 @@ public class AddOrUpdateProduct extends HttpServlet {
                     for (String c : colors) {
                         ProductColor color = ProductColorService.selectByDescrip(c);
                         String quantityDetail = request.getParameter(s + " " + c + "");
-                        ProductDetailsService.insert(p.getProductID(), size.getId_Size(), category.getId_Category(), color.getId_Color(), Integer.parseInt(quantityDetail));
+                        ProductImportedService.insert(p.getProductID(), size.getId_Size(), category.getId_Category(), color.getId_Color(), Integer.parseInt(quantityDetail), importDate);
                     }
                 }
 
-                List<ImageProduct> images = new ArrayList<>();
-//                if (name.equals("") || price.equals("") || quantity.equals("") || sale.equals("") || quantity.equals("") || newProduct.equals(null) || description.equals("")) {
-//                    request.setAttribute("err", "Vui lòng nhập dữ liệu trong các mục có đánh dấu *");
-//                    request.getRequestDispatcher("admin/AddProduct.jsp").forward(request, response);
-//                    isErr = true;
-//                } else if (ProductService.existProductName(name)) {
-//                    request.setAttribute("err", "Tên sản phẩm đã tồn tại");
-//                    request.getRequestDispatcher("admin/AddProduct.jsp").forward(request, response);
-//                    isErr = true;
-//                }
+
                 if (ProductService.existProductName(name)) {
                     request.setAttribute("err", "Tên sản phẩm đã tồn tại");
                     request.setAttribute("type", type);
@@ -136,9 +126,6 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setSalePrice(Integer.parseInt(sale));
                     p.setIsNew(Integer.parseInt(newProduct));
 
-//                    p.setSize(size);
-
-//                    Product p = new Product(idPro, name, description, size, type, Integer.parseInt(price), Integer.parseInt(sale), link1, link2, Integer.parseInt(quantity), Integer.parseInt(newProduct), 1, 1);
 
                     ServletContext servletContext = getServletContext();
                     int majorVersion = servletContext.getMajorVersion();
@@ -149,40 +136,6 @@ public class AddOrUpdateProduct extends HttpServlet {
                     if (!uploadDir.exists()) {
                         uploadDir.mkdir();
                     }
-                    // Process the uploaded items
-//                        Iterator<FileItem> iter = items.iterator();
-//                        while (iter.hasNext()) {
-//                            FileItem item = iter.next();
-//                            if (!item.isFormField()) {
-//                                String field = item.getFieldName();
-////                                String value= item.getString();
-//                                if (field.equalsIgnoreCase("thumb")) {
-//                                    String fileName = item.getString();
-//                                    if (fileName == null || fileName.equals("")) {
-//                                        isErr = true;
-//                                    } else {
-//                                        Path path = Paths.get(fileName);
-//                                        String storePath = servletContext.getRealPath("/UploadImage");
-//                                        File thumb = new File(storePath + "/" + path.getFileName());
-//                                        item.write(thumb);
-//                                        p.setThumb(fileName);
-//
-//                                    }
-//                                } else {
-//                                    String fileName = item.getString();
-//                                    if (fileName == null || fileName.equals("")) {
-//                                        isErr = true;
-//                                    } else {
-//                                        Path path = Paths.get(fileName);
-//                                        String storePath = servletContext.getRealPath("/UploadImage");
-//                                        File image = new File(storePath + "/" + path.getFileName());
-//                                        item.write(image);
-//                                        ImageProduct i = new ImageProduct(fileName);
-//                                        images.add(i);
-//                                    }
-//                                }
-//                            }
-//                        }
 //                  Upload thumbnail file (single file upload)
                     Part thumbnailPart = request.getPart("thumbnail");
                     String thumbnailFileName = getFileName(thumbnailPart);
@@ -193,6 +146,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     }
 
                     // Upload image files (multiple file upload)
+                    List<ImageProduct> images = new ArrayList<>();
                     List<Part> imageParts = (List<Part>) request.getParts();
                     for (Part imagePart : imageParts) {
                         System.out.println(imagePart.getName());
@@ -214,10 +168,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     ProductImageService.insertImageProduct(p);
 
                     //insertquantity
-                    java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(todaysDate);
-                    Timestamp importDate = new Timestamp(c.getTimeInMillis());
+
                     Quantity q = new Quantity(p, importDate);
                     QuantityService.insert(q);
 

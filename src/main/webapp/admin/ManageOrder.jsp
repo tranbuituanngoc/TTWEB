@@ -1,14 +1,21 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    User u= (User) session.getAttribute("user");
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
     String username = u.getUserName();
     int role = u.getRole();
-    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +28,8 @@
     <link href="admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="admin/assets/styles.css" rel="stylesheet" media="screen">
     <link href="admin/assets/DT_bootstrap.css" rel="stylesheet" media="screen">
-    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
+    <!--[if lte IE 8]>
+    <script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,7 +37,8 @@
     <script src="admin/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <style>
 
     </style>
@@ -52,10 +61,13 @@
                         <div class="span12">
                             <div class="table-toolbar">
                                 <div class="btn-group" style="visibility: hidden">
-                                    <a href="#"><button class="btn btn-success"><i class="icon-plus icon-white"></i></button></a>
+                                    <a href="#">
+                                        <button class="btn btn-success"><i class="icon-plus icon-white"></i></button>
+                                    </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <button data-toggle="dropdown" class="btn dropdown-toggle">Công cụ <span class="caret"></span></button>
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle">Công cụ <span
+                                            class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">In</a></li>
                                         <li><a id="exportPDF">Lưu file PDF</a></li>
@@ -63,7 +75,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="example2">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered"
+                                   id="example2">
                                 <thead>
                                 <tr>
                                     <th>Mã đơn hàng</th>
@@ -82,16 +95,22 @@
                                     <tr id="${o.orderID}">
                                         <td>${o.orderID}</td>
                                         <td>${o.fullName}</td>
-                                        <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0" value="${o.totalPrice}"/> VNĐ</td>
+                                        <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0"
+                                                              value="${o.totalPrice}"/> VNĐ
+                                        </td>
                                         <td>${o.createDate}</td>
                                         <td id="orderstatus"><c:if test="${o.status ==1}">Đã xử lý</c:if>
                                             <c:if test="${o.status ==0}">Chưa xử lý</c:if></td>
                                         <td id="rowupdate"><c:if test="${o.status ==1}"></c:if>
-                                            <c:if test="${o.status ==0}"><a id="linkupdate" href="UpdateOrder?action=update&id=${o.orderID}">
+                                            <c:if test="${o.status ==0}"><a id="linkupdate"
+                                                                            href="UpdateOrder?action=update&id=${o.orderID}">
                                                 <span class="fas fa-shipping-fast"></span> Xử lý</a></c:if></td>
-                                        <td><a href="ListOrderDetailAd?id=${o.orderID}&fullName=${o.fullName}&address=${o.address}&phone=${o.phone}&createDate=${o.createDate}&total=${o.totalPrice}">
-                                            <span class="fas fa-address-book"></span> Xem chi tiết</a></td>
-                                        <td><a class="text-danger" href="UpdateOrder?action=delete&id=${o.orderID}" ><span class="far fa-window-close"></span> Xóa</a></td>
+                                        <td>
+                                            <a href="ListOrderDetailAd?id=${o.orderID}&fullName=${o.fullName}&address=${o.address}&phone=${o.phone}&createDate=${o.createDate}&total=${o.totalPrice}">
+                                                <span class="fas fa-address-book"></span> Xem chi tiết</a></td>
+                                        <td><a class="text-danger"
+                                               href="UpdateOrder?action=delete&id=${o.orderID}"><span
+                                                class="far fa-window-close"></span> Xóa</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -102,11 +121,15 @@
                     <span onclick="document.getElementById('id01').style.display='none'"
                           class="close" title="Close Modal">&times;</span>
                                     <div class="header-modal"><h3>Bạn có chắc là muốn xóa đơn hàng này</h3></div>
-<%--                                    <input id="delete" name="action" style="display: none" value="delete">--%>
+                                    <%--                                    <input id="delete" name="action" style="display: none" value="delete">--%>
                                     <input id="deleteval" name="id" style="display: none">
                                     <div class="button-group">
-                                        <button id="btnDelete" class="btn-yes" type="button" onclick="document.getElementById('id01').style.display='none'">Có</button>
-                                        <button class="btn-no" type="button" onclick="document.getElementById('id01').style.display='none'">Không</button>
+                                        <button id="btnDelete" class="btn-yes" type="button"
+                                                onclick="document.getElementById('id01').style.display='none'">Có
+                                        </button>
+                                        <button class="btn-no" type="button"
+                                                onclick="document.getElementById('id01').style.display='none'">Không
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -119,8 +142,12 @@
                                     <%--                                    <input id="delete" name="action" style="display: none" value="delete">--%>
                                     <input id="updateval" name="id" style="display: none">
                                     <div class="button-group">
-                                        <button id="btnUpdate" class="btn-yes" type="button" onclick="document.getElementById('id02').style.display='none'">Có</button>
-                                        <button class="btn-no" type="button" onclick="document.getElementById('id02').style.display='none'">Không</button>
+                                        <button id="btnUpdate" class="btn-yes" type="button"
+                                                onclick="document.getElementById('id02').style.display='none'">Có
+                                        </button>
+                                        <button class="btn-no" type="button"
+                                                onclick="document.getElementById('id02').style.display='none'">Không
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -153,7 +180,7 @@
     var modal = document.getElementById('id01');
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
@@ -162,29 +189,29 @@
     var modal2 = document.getElementById('id02');
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal2) {
             modal2.style.display = "none";
         }
     }
 </script>
 <script>
-    $(document).ready(function (){
-        $(".text-danger").click(function (){
-            var href= $(this).attr("href")
-            $("#deleteval").attr("value",href)
-            document.getElementById('id01').style.display='block'
+    $(document).ready(function () {
+        $(".text-danger").click(function () {
+            var href = $(this).attr("href")
+            $("#deleteval").attr("value", href)
+            document.getElementById('id01').style.display = 'block'
         });
-        $("#linkupdate").click(function (){
-            var href= $(this).attr("href")
-            $("#updateval").attr("value",href)
-            document.getElementById('id02').style.display='block'
+        $("#linkupdate").click(function () {
+            var href = $(this).attr("href")
+            $("#updateval").attr("value", href)
+            document.getElementById('id02').style.display = 'block'
         });
     })
 </script>
 <script>
-    $(document).ready(function (){
-        $("#btnDelete").click(function (){
+    $(document).ready(function () {
+        $("#btnDelete").click(function () {
             var id = $("#deleteval").attr("value");
             $.ajax({
                 type: "GET",
@@ -194,9 +221,9 @@
                 },
                 url: "/project_BookStore/ListOrderAd"
             })
-            $("#"+id).remove();
+            $("#" + id).remove();
         });
-        $("#btnUpdate").click(function (){
+        $("#btnUpdate").click(function () {
             var id = $("#updateval").attr("value");
             $.ajax({
                 type: "GET",
@@ -206,8 +233,8 @@
                 },
                 url: "/project_BookStore/ListOrderAd"
             })
-            $("#"+id).children("#rowupdate").children().remove();
-            $("#"+id).children("#orderstatus").text("Đã xử lý");
+            $("#" + id).children("#rowupdate").children().remove();
+            $("#" + id).children("#orderstatus").text("Đã xử lý");
         });
     })
 </script>
@@ -228,26 +255,26 @@
     });
 </script>
 <script>
-    function exportTableToExcel(tableID, filename = ''){
+    function exportTableToExcel(tableID, filename = '') {
         var downloadLink;
         var dataType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);
         var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
         // Specify file name
-        filename = filename?filename+'.xls':'excel_data.xls';
+        filename = filename ? filename + '.xls' : 'excel_data.xls';
 
         // Create download link element
         downloadLink = document.createElement("a");
 
         document.body.appendChild(downloadLink);
 
-        if(navigator.msSaveOrOpenBlob){
+        if (navigator.msSaveOrOpenBlob) {
             var blob = new Blob(['\ufeff', tableHTML], {
                 type: dataType
             });
-            navigator.msSaveOrOpenBlob( blob, filename);
-        }else{
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
             // Create a link to the file
             downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
 

@@ -1,14 +1,21 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    User u= (User) session.getAttribute("user");
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
     String username = u.getUserName();
     int role = u.getRole();
-    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +27,8 @@
     <link href="admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="admin/assets/styles.css" rel="stylesheet" media="screen">
-    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
+    <!--[if lte IE 8]>
+    <script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,46 +51,56 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <h4 style="color:#62ab00;"> <%=request.getAttribute("err")==null? "":request.getAttribute("err")%></h4>
-                            <h4 style="color:red;"> <%=request.getAttribute("message")==null? "":request.getAttribute("message")%></h4>
+                            <h4 style="color:#62ab00;"><%=request.getAttribute("err") == null ? "" : request.getAttribute("err")%>
+                            </h4>
+                            <h4 style="color:red;"><%=request.getAttribute("message") == null ? "" : request.getAttribute("message")%>
+                            </h4>
                             <form class="form-horizontal" action="ReplyContact" method="get">
                                 <fieldset>
                                     <legend>Phản hồi liên hệ</legend>
-                                    <input style="display: none" name="action" value="<c:choose><c:when test="${param.action eq 'getcontact'}">replycontact</c:when><c:when test="${param.action eq 'replycontact'}">replycontact</c:when></c:choose>">
+                                    <input style="display: none" name="action"
+                                           value="<c:choose><c:when test="${param.action eq 'getcontact'}">replycontact</c:when><c:when test="${param.action eq 'replycontact'}">replycontact</c:when></c:choose>">
                                     <input style="display: none" name="id" value="<%=request.getParameter("id")%>">
                                     <div class="control-group">
                                         <label class="control-label" for="fullname">Họ và tên </label>
                                         <div class="controls">
                                             <input type="text" class="span6" id="fullname" placeholder="Nhập họ và tên"
-                                                   value="<%=request.getParameter("fullname")==null? "":request.getParameter("fullname")%>" readonly>
+                                                   value="<%=request.getParameter("fullname")==null? "":request.getParameter("fullname")%>"
+                                                   readonly>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="email">Email </label>
                                         <div class="controls">
                                             <input type="text" class="span6" id="email" placeholder="Nhập email"
-                                                   value="<%=request.getParameter("email")==null? "":request.getParameter("email")%>" readonly>
+                                                   value="<%=request.getParameter("email")==null? "":request.getParameter("email")%>"
+                                                   readonly>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="usersubject">Tiêu đề liên hệ </label>
                                         <div class="controls">
-                                            <input type="text" name="usersubject" class="span6" id="usersubject" placeholder="Nhập email"
-                                                   value="<%=request.getParameter("usersubject")==null? "":request.getParameter("usersubject")%>" readonly>
+                                            <input type="text" name="usersubject" class="span6" id="usersubject"
+                                                   placeholder="Nhập email"
+                                                   value="<%=request.getParameter("usersubject")==null? "":request.getParameter("usersubject")%>"
+                                                   readonly>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="contactcontent">Chi tiết liên hệ </label>
                                         <div class="controls">
-                                            <textarea rows="100" cols="200"  id="contactcontent" class="description" placeholder="Nhập mô tả" style="width: 810px; height: 200px"
-                                             readonly><%=request.getParameter("contactcontent")==null? "":request.getParameter("contactcontent")%></textarea>
+                                            <textarea rows="100" cols="200" id="contactcontent" class="description"
+                                                      placeholder="Nhập mô tả" style="width: 810px; height: 200px"
+                                                      readonly><%=request.getParameter("contactcontent") == null ? "" : request.getParameter("contactcontent")%></textarea>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <label class="control-label" for="replytext">Phản hồi (*) </label>
                                         <div class="controls">
-                                            <textarea rows="100" cols="200" name="replytext" id="replytext" class="description" placeholder="Nhập phản hồi" style="width: 810px; height: 200px"
-                                            ><%=request.getParameter("replytext")==null? "":request.getParameter("replytext")%></textarea>
+                                            <textarea rows="100" cols="200" name="replytext" id="replytext"
+                                                      class="description" placeholder="Nhập phản hồi"
+                                                      style="width: 810px; height: 200px"
+                                            ><%=request.getParameter("replytext") == null ? "" : request.getParameter("replytext")%></textarea>
                                         </div>
                                     </div>
 
@@ -126,24 +144,25 @@
 <script src="admin/assets/scripts.js"></script>
 <script>
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         FormValidation.init();
     });
 
 
-    $(function() {
+    $(function () {
         $(".datepicker").datepicker();
         $(".uniform_on").uniform();
         $(".chzn-select").chosen();
         $('.textarea').wysihtml5();
 
-        $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+        $('#rootwizard').bootstrapWizard({
+            onTabShow: function (tab, navigation, index) {
                 var $total = navigation.find('li').length;
-                var $current = index+1;
-                var $percent = ($current/$total) * 100;
-                $('#rootwizard').find('.bar').css({width:$percent+'%'});
+                var $current = index + 1;
+                var $percent = ($current / $total) * 100;
+                $('#rootwizard').find('.bar').css({width: $percent + '%'});
                 // If it's the last tab then hide the last button and show the finish instead
-                if($current >= $total) {
+                if ($current >= $total) {
                     $('#rootwizard').find('.pager .next').hide();
                     $('#rootwizard').find('.pager .finish').show();
                     $('#rootwizard').find('.pager .finish').removeClass('disabled');
@@ -151,8 +170,9 @@
                     $('#rootwizard').find('.pager .next').show();
                     $('#rootwizard').find('.pager .finish').hide();
                 }
-            }});
-        $('#rootwizard .finish').click(function() {
+            }
+        });
+        $('#rootwizard .finish').click(function () {
             alert('Finished!, Starting over!');
             $('#rootwizard').find("a[href*='tab1']").trigger('click');
         });

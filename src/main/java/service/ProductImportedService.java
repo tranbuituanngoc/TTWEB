@@ -1,29 +1,24 @@
 package service;
 
 import database.JDBCUtil;
-import model.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class ProductDetailsService {
-    public static int getQuantityDetail(String idProduct, int idSize, int idCate, int idColor) {
+public class ProductImportedService {
+    public static int getQuantityDetail(String idProduct, int idSize, int idColor) {
         int res =0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT quantityDetails FROM productdetails WHERE id_product=? AND id_size=? AND id_category=? AND id_color=?";
+            String sql = "SELECT productimported FROM productdetails WHERE id_product=? AND id_size=?  AND id_color=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
             statement.setInt(2,idSize);
-            statement.setInt(3,idCate);
-            statement.setInt(4,idColor);
+            statement.setInt(3,idColor);
             System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                res = resultSet.getInt("quantityDetails");
+                res = resultSet.getInt("inventoryQuantity");
 
                 break;
             }
@@ -34,17 +29,18 @@ public class ProductDetailsService {
         return res;
     }
 
-    public static int insert(String idProduct, int idSize, int idCate, int idColor, int quantity) {
+    public static int insert(String idProduct, int idSize, int idCate, int idColor, int quantity, Timestamp importDate) {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "INSERT INTO productdetails (id_product,id_size,id_category,id_color,quantityDetails) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO productimported (id_product,id_size,id_color,inventoryQuantity,inputQuantity,importDate) VALUES (?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
             statement.setInt(2, idSize);
-            statement.setInt(3,idCate);
-            statement.setInt(4, idColor);
+            statement.setInt(3, idColor);
+            statement.setInt(4, quantity);
             statement.setInt(5, quantity);
+            statement.setTimestamp(6,importDate);
             System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);

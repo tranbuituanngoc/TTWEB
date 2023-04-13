@@ -1,5 +1,6 @@
 package Util;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SaltString {
@@ -15,9 +16,24 @@ public class SaltString {
         return saltStr;
 
     }
+
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(getSaltString());
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(getSaltString());
+//        }
+        ArrayList<Integer> sizes = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int a = 0; a < 10; a++) {
+            sizes.add(a);
+        }
+        for (int j = 10; j < 20; j++) {
+            colors.add(j);
+        }
+        for (int s : sizes) {
+            for (int c : colors) {
+                System.out.println(s+" "+c);
+            }
         }
     }
 }

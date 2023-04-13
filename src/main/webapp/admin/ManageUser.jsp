@@ -1,14 +1,21 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-    User u= (User) session.getAttribute("user");
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
     String username = u.getUserName();
     int role = u.getRole();
-    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -94,10 +101,10 @@
                                         <td id="lock-unlock">
                                             <c:if test="${user.role!=0}">
                                                 <c:if test="${user.status==false}"><a class="text-unlock text-primary"
-                                                                                  href="AddOfUpdateUser?action=unlock&id=${user.id_User}">
+                                                                                      href="AddOfUpdateUser?action=unlock&id=${user.id_User}">
                                                     <span class="fas fa-lock-open"></span> Mở khóa</a></c:if>
                                                 <c:if test="${user.status==true}"><a class="text-lock text-primary"
-                                                                                  href="AddOfUpdateUser?action=lock&id=${user.id_User}">
+                                                                                     href="AddOfUpdateUser?action=lock&id=${user.id_User}">
                                                     <span class="fas fa-lock"></span> Khóa</a></c:if>
                                             </c:if>
 

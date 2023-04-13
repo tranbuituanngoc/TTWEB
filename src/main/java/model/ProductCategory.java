@@ -1,10 +1,20 @@
 package model;
+
 public class ProductCategory {
-    private int id ;
+    private int id;
     private int id_Category;
     private String description;
+
     public ProductCategory(int id, int id_Category, String description) {
         this.id = id;
+        this.id_Category = id_Category;
+        this.description = description;
+    }
+
+    public ProductCategory() {
+    }
+
+    public ProductCategory(int id_Category, String description) {
         this.id_Category = id_Category;
         this.description = description;
     }

@@ -4,6 +4,8 @@ public class ProductSize {
     private int id ;
     private int id_Size;
     private String description;
+    private  String id_product;
+
 
     public ProductSize(int id, int id_Size, String description) {
         this.id = id;
@@ -11,6 +13,20 @@ public class ProductSize {
         this.description = description;
     }
 
+    public ProductSize(int id, int id_Size, String description, String id_product) {
+        this.id = id;
+        this.id_Size = id_Size;
+        this.description = description;
+        this.id_product = id_product;
+    }
+
+    public ProductSize() {
+    }
+
+    public ProductSize(int id_Size, String description) {
+        this.id_Size = id_Size;
+        this.description = description;
+    }
     public String getDescription() {
         return description;
     }

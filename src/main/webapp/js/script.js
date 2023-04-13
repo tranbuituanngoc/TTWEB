@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedFunction
+
 var errorP = 0;
 
 function showPass() {

@@ -11,10 +11,8 @@ public class Product {
     private String productName;
     private String description;
     private List<ProductSize> size;
-
     private String category;
     private List<ProductColor> color;
-
     private int price;
     private int salePrice;
     private List<ImageProduct> image;
@@ -22,13 +20,13 @@ public class Product {
     private int isNew;
     private int status;
     private int cost;
-
     private int quantityCart;
+    private String thumb;
 
     public Product() {
     }
 
-    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart) {
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart, String thumb) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -38,6 +36,23 @@ public class Product {
         this.price = price;
         this.salePrice = salePrice;
         this.image = image;
+        this.quantity = quantity;
+        this.isNew = isNew;
+        this.status = status;
+        this.cost = cost;
+        this.quantityCart = quantityCart;
+        this.thumb = thumb;
+    }
+
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, int quantity, int isNew, int status, int cost, int quantityCart) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
+        this.size = size;
+        this.category = category;
+        this.color = color;
+        this.price = price;
+        this.salePrice = salePrice;
         this.quantity = quantity;
         this.isNew = isNew;
         this.status = status;
@@ -160,9 +175,19 @@ public class Product {
     public void setQuantityCart(int quantityCart) {
         this.quantityCart = quantityCart;
     }
-    public double getPriceAfterSale(){
-        return price-(price*(salePrice/100.0));
+
+    public double getPriceAfterSale() {
+        return price - (price * (salePrice / 100.0));
     }
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "productID='" + productID + '\'' + ", productName='" + productName + '\'' + ", description='" + description + '\'' + ", size=" + size + ", category=" + category + ", color=" + color + ", price=" + price + ", salePrice=" + salePrice + ", image=" + image + ", quantity=" + quantity + ", isNew=" + isNew + ", status=" + status + ", cost=" + cost + ", quantityCart=" + quantityCart + '}';

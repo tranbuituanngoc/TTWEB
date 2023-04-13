@@ -90,7 +90,7 @@
                                     <td>${p.quantity}</td>
                                     <td><img src="#"></td>
 <%--                                    sửa lại ảnh nhớ sửa lại chỗ này--%>
-<%--                                    <td><img src="${p.image1}"></td>--%>
+<%--                                    <td><img src="${p.thumb}"></td>--%>
                                     <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                     <td id="hide-nothide">
                                         <c:if test="${p.status ==1}">

@@ -119,10 +119,16 @@ public class ProductSizeService {
         }
     }
 
+
     public static void main(String[] args) {
-        List<ProductSize> list = ProductSizeService.getSizeProduct("sp094");
+        List<ProductSize> list =ProductSizeService.getSizeProduct("sp094");
+//        System.out.println(list.toString());
+//        List<ProductSize> list2 = ProductSizeService.getAll();
+//        System.out.println(list2);
+//        ProductSizeService.removeProductSizeById("sp094");
+
+        ProductSizeService.addProductSize(6,"sp094");
+        list =ProductSizeService.getSizeProduct("sp094");
         System.out.println(list.toString());
-        List<ProductSize> list2 = ProductSizeService.getAll();
-        System.out.println(list2);
     }
 }

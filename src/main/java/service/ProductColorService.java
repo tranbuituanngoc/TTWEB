@@ -92,6 +92,7 @@ public class ProductColorService {
         }
         return colorProduct;
     }
+  
     public static void removeProductColorById(String id_product){
         PreparedStatement s = null;
         String sql = "delete from product_color where id_product = ?";
@@ -120,10 +121,18 @@ public class ProductColorService {
         }
 
     }
+
     public static void main(String[] args) {
         List<ProductColor> list =ProductColorService.getColorProduct("sp094");
-        System.out.println(list.toString());
-        List<ProductColor> list2 = ProductColorService.getAll();
-        System.out.println(list2);
+//        System.out.println(list.toString());
+//        ProductColorService.removeProductColorById("sp094");
+//        list =ProductColorService.getColorProduct("sp094");
+//        System.out.println(list.toString());
+//        ProductColorService.addProductColor(6, "sp094");
+//        list =ProductColorService.getColorProduct("sp094");
+//        System.out.println(list.toString());
+//        List<ProductColor> list2 = ProductColorService.getAll();
+//        System.out.println(list2);
+
     }
 }

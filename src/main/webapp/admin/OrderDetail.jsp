@@ -1,16 +1,10 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    User u= (User) session.getAttribute("user");
-    String username = u.getUserName();
-    int role = u.getRole();
-    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
-%>
-<c:set var="username" value="<%=username%>"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -18,11 +12,14 @@
     <title>Chi tiết đơn hàng</title>
     <!-- Bootstrap -->
     <meta charset="utf-8">
-    <link href="${pageContext.request.contextPath}/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="${pageContext.request.contextPath}/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="${pageContext.request.contextPath}/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+          media="screen">
+    <link href="${pageContext.request.contextPath}/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"
+          media="screen">
     <link href="${pageContext.request.contextPath}/admin/assets/styles.css" rel="stylesheet" media="screen">
     <link href="${pageContext.request.contextPath}/admin/assets/DT_bootstrap.css" rel="stylesheet" media="screen">
-    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
+    <!--[if lte IE 8]>
+    <script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -35,6 +32,20 @@
 </head>
 
 <body>
+<%
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
+    String username = u.getUserName();
+    int role = u.getRole();
+    if (username.equalsIgnoreCase("") || role == 2) {
+        response.sendRedirect(request.getContextPath() + "/Home");
+        return;
+    }
+%>
+<c:set var="username" value="<%=username%>"/>
 <jsp:include page="headerAd.jsp"/>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -50,17 +61,24 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                             <div class="info-user">
-                                <h5><a style="color: blue">Họ và tên:</a> <%=request.getParameter("fullName")%></h5>
-                                <h5><a style="color: blue">Địa chỉ:</a> <%=request.getParameter("address")%></h5>
-                                <h5><a style="color: blue">Số điện thoại:</a> <%=request.getParameter("phone")%></h5>
-                                <h5><a style="color: blue">Ngày đặt hàng:</a> <%=request.getParameter("createDate")%></h5>
+                                <h5><a style="color: blue">Họ và tên:</a> <%=request.getParameter("fullName")%>
+                                </h5>
+                                <h5><a style="color: blue">Địa chỉ:</a> <%=request.getParameter("address")%>
+                                </h5>
+                                <h5><a style="color: blue">Số điện thoại:</a> <%=request.getParameter("phone")%>
+                                </h5>
+                                <h5><a style="color: blue">Ngày đặt hàng:</a> <%=request.getParameter("createDate")%>
+                                </h5>
                             </div>
                             <div class="table-toolbar">
                                 <div class="btn-group" style="visibility: hidden">
-                                    <a href="#"><button class="btn btn-success"><i class="icon-plus icon-white"></i></button></a>
+                                    <a href="#">
+                                        <button class="btn btn-success"><i class="icon-plus icon-white"></i></button>
+                                    </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <button data-toggle="dropdown" class="btn dropdown-toggle">Công cụ <span class="caret"></span></button>
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle">Công cụ <span
+                                            class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">In</a></li>
                                         <li><a href="#">Lưu file PDF</a></li>
@@ -68,7 +86,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="example2">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered"
+                                   id="example2">
                                 <thead>
                                 <tr>
                                     <th>Tên Gạch</th>
@@ -80,16 +99,22 @@
                                 <tbody>
                                 <%--@elvariable id="listOrderDetails" type="java.util.List"--%>
                                 <c:forEach items="${listOrderDetails}" var="orderDetail">
-                                <tr>
-                                    <td>${orderDetail.nameProduct}</td>
-                                    <td>${orderDetail.productQuantity}</td>
-                                    <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0" value="${orderDetail.priceProduct}"/> VNĐ</td>
-                                </tr>
+                                    <tr>
+                                        <td>${orderDetail.nameProduct}</td>
+                                        <td>${orderDetail.productQuantity}</td>
+                                        <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0"
+                                                              value="${orderDetail.priceProduct}"/> VNĐ
+                                        </td>
+                                    </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
                             <div class="info-price">
-                                <div><h5><a style="color: blue">Tổng tiền:</a>  <fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0" value="${total}"/> VNĐ</h5></div>
+                                <div><h5><a style="color: blue">Tổng tiền:</a> <fmt:formatNumber type="currency"
+                                                                                                 currencySymbol=""
+                                                                                                 minFractionDigits="0"
+                                                                                                 value="${total}"/> VNĐ
+                                </h5></div>
                             </div>
 
                         </div>
@@ -121,7 +146,7 @@
     var modal = document.getElementById('id01');
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
@@ -130,19 +155,19 @@
     var modal2 = document.getElementById('id02');
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal2) {
             modal2.style.display = "none";
         }
     }
 </script>
 <script>
-    $(document).ready(function (){
-        $(".text-danger").click(function (){
-            document.getElementById('id01').style.display='block'
+    $(document).ready(function () {
+        $(".text-danger").click(function () {
+            document.getElementById('id01').style.display = 'block'
         });
-        $(".text-lock").click(function (){
-            document.getElementById('id02').style.display='block'
+        $(".text-lock").click(function () {
+            document.getElementById('id02').style.display = 'block'
         });
     })
 </script>

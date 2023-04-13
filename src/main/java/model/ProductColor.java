@@ -4,9 +4,25 @@ public class ProductColor {
     private int id ;
     private int id_Color;
     private String description;
+    private String id_product;
 
     public ProductColor(int id, int id_Color, String description) {
         this.id = id;
+        this.id_Color = id_Color;
+        this.description = description;
+    }
+
+    public ProductColor(int id, int id_Color, String description, String id_product) {
+        this.id = id;
+        this.id_Color = id_Color;
+        this.description = description;
+        this.id_product = id_product;
+    }
+
+    public ProductColor() {
+    }
+
+    public ProductColor(int id_Color, String description) {
         this.id_Color = id_Color;
         this.description = description;
     }

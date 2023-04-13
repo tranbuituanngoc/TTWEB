@@ -5,10 +5,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
-    User u= (User) session.getAttribute("user");
+    User u = (User) session.getAttribute("user");
+    if (u == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
     String username = u.getUserName();
     int role = u.getRole();
-    if(username.equalsIgnoreCase("")||role==2) response.sendRedirect("/Home");
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
+        return;
+    }
 %>
 <c:set var="username" value="<%=username%>"/>
 <!DOCTYPE html>

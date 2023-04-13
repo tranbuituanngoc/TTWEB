@@ -4,8 +4,15 @@ public class ImageProduct {
     private int id;
     private String image;
 
+    public ImageProduct() {
+    }
+
     public ImageProduct(int id, String image) {
         this.id = id;
+        this.image = image;
+    }
+
+    public ImageProduct(String image) {
         this.image = image;
     }
 

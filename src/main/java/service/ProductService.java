@@ -1,8 +1,10 @@
 package service;
 
+import database.JDBCUtil;
 import model.*;
 import database.ConnectDB;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +30,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -68,7 +71,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -109,8 +113,8 @@ public class ProductService {
 
             listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
             listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-            listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+            listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
             product.setProductID(rs.getString("id_product"));
             product.setProductName(rs.getString("name"));
             product.setDescription(rs.getString("description"));
@@ -155,8 +159,8 @@ public class ProductService {
             rs.first();
             listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
             listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-            listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+            listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
             product.setProductID(rs.getString("id_product"));
             product.setProductName(rs.getString("name"));
             product.setDescription(rs.getString("description"));
@@ -194,8 +198,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -239,7 +243,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -341,8 +346,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -383,7 +388,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -434,32 +440,30 @@ public class ProductService {
 //        }
 //    }
 
-//    public static void addProduct(Product product) {
-//        PreparedStatement s = null;
-//        try {
-//
-//            String sql = "INSERT into products values (?,?,?,?,?,?,?,?,?,?,?,?);";
-//            s = ConnectDB.connect(sql);
-//            s.setString(1, product.getProductID());
-//            s.setString(2, product.getProductName());
-//            s.setString(3, product.getDescription());
-//            s.setString(4, product.getSize());
-//            s.setString(5, product.getCategory());
-//            s.setInt(6, product.getPrice());
-//            s.setInt(7, product.getSalePrice());
-//            s.setString(8, product.getImage1());
-//            s.setString(9, product.getImage2());
-//            s.setInt(10, product.getQuantity());
-//            s.setInt(11, product.getIsNew());
-//            s.setInt(12, product.getStatus());
-//            int rs = s.executeUpdate();
-//
-//            s.close();
-//        } catch (ClassNotFoundException | SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
+    public static int insert(Product product) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "INSERT INTO products (id_product,name,description,sale,isNew,status,price,cost,id_category) VALUES (?,?,?,?,?,?,?,?,?);";
+            PreparedStatement s = connection.prepareStatement(sql);
+            s.setString(1, product.getProductID());
+            s.setString(2, product.getProductName());
+            s.setString(3, product.getDescription());
+            s.setInt(4, product.getSalePrice());
+            s.setInt(5, product.getIsNew());
+            s.setInt(6, product.getStatus());
+            s.setInt(7, product.getPrice());
+            s.setInt(8, product.getCost());
+            s.setInt(9, Integer.parseInt(product.getCategory()));
+            System.out.println(sql);
+            res = s.executeUpdate();
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static List<Product> searchByName(String txtSearch) {
         List<ProductColor> listColor;
         List<ProductSize> listSize;
@@ -475,7 +479,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -513,7 +518,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -553,8 +559,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -595,7 +601,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -636,8 +643,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -679,7 +686,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -721,8 +729,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -764,7 +772,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -806,7 +815,8 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));

@@ -122,7 +122,8 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setDescription(description);
                     p.setPrice(Integer.parseInt(price));
                     p.setCost(Integer.parseInt(cost));
-                    p.setQuantity(Integer.parseInt(quantity));
+                    p.setStatus(1);
+//                    p.setQuantity(Integer.parseInt(quantity));
                     p.setSalePrice(Integer.parseInt(sale));
                     p.setIsNew(Integer.parseInt(newProduct));
 
@@ -142,7 +143,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
                         thumbnailPart.write(uploadPath + File.separator + thumbnailFileName);
                         System.out.println("Thumbnail file uploaded to: " + uploadPath + File.separator + thumbnailFileName);
-                        p.setThumb(uploadPath + File.separator + thumbnailFileName);
+                        p.setThumb("UploadFileStore/" + thumbnailFileName);
                     }
 
                     // Upload image files (multiple file upload)
@@ -155,7 +156,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                             if (imageFileName != null && !imageFileName.isEmpty()) {
                                 imagePart.write(uploadPath + File.separator + imageFileName);
                                 System.out.println("Image file uploaded to: " + uploadPath + File.separator + imageFileName);
-                                ImageProduct i = new ImageProduct(uploadPath + File.separator + imageFileName);
+                                ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
                                 images.add(i);
                             }
                         }

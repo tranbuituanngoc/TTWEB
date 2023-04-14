@@ -247,12 +247,12 @@
                                     <label class="control-label" for="newProduct">Hàng mới</label>
                                     <div class="controls">
                                         <select id="newProduct" class="chzn-select" name="newProduct">
-                                            <option value="0"
-                                                    <c:if test="${param.newProduct eq '0'}">selected="selected"</c:if>>
-                                                Có
-                                            </option>
                                             <option value="1"
                                                     <c:if test="${param.newProduct eq '1'}">selected="selected"</c:if>>
+                                                Có
+                                            </option>
+                                            <option value="0"
+                                                    <c:if test="${param.newProduct eq '0'}">selected="selected"</c:if>>
                                                 Không
                                             </option>
                                         </select>

@@ -1,5 +1,8 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Product" %>
+<%@ page import="service.ProductImageService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -45,10 +48,11 @@
     }
     String username = u.getUserName();
     int role = u.getRole();
-    if (username.equalsIgnoreCase("") || role == 2){
-        response.sendRedirect(request.getContextPath() +"/Home");
+    if (username.equalsIgnoreCase("") || role == 2) {
+        response.sendRedirect(request.getContextPath() + "/Home");
         return;
     }
+    List<Product> products= (List<Product>) request.getAttribute("listP");
 %>
 <jsp:include page="headerAd.jsp"/>
 <div class="container-fluid">
@@ -108,9 +112,9 @@
                                                               value="${p.salePrice}"/> VNĐ
                                         </td>
                                         <td>${p.quantity}</td>
-                                        <td><img src="#"></td>
-                                            <%--                                    sửa lại ảnh nhớ sửa lại chỗ này--%>
-                                            <%--                                    <td><img src="${p.thumb}"></td>--%>
+<%--                                        <td><img src="${p.thumb}"></td>--%>
+                                        <td><img src="${ProductImageService.getThumbProduct(p.productID)}"></td>
+
                                         <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                         <td id="hide-nothide">
                                             <c:if test="${p.status ==1}">

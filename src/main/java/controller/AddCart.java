@@ -55,7 +55,7 @@ public class AddCart extends HttpServlet {
 
         HttpSession session = request.getSession();
         CartUser cartUser = (CartUser) session.getAttribute( "cartUser");
-        if (cartUser == null) {
+        if (cartUser.getIdUser() == null) {
             cartUser = new CartUser();
             cartUser.setIdUser(user.getId_User());
         }

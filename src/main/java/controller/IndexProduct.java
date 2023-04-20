@@ -39,11 +39,14 @@ public class IndexProduct extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        System.out.print(user);
         if (user != null ){
             CartUser c = CartService.getCartById(user.getId_User());
+            if (c == null) c = new CartUser();
             request.getSession().setAttribute("cartUser",c);
             request.getSession().setAttribute("user", user);
         }
+
         request.setAttribute("listNewProduct", listNewProduct);
         request.setAttribute("listBestSeller", listBestSeller);
         request.setAttribute("listHintForYou", listHintForYou);

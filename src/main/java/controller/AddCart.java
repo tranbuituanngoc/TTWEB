@@ -61,9 +61,8 @@ public class AddCart extends HttpServlet {
         }
         cartUser.addCart(cart, quantity);
         session.setAttribute("cartUser", cartUser);
-//        CartUser cartUser = CartService.getCartById(user.getId_User());
-         response.sendRedirect("SaveCart");
-//        CartService.addCart(cartUser);
+        String url = request.getHeader("referer");
+        response.sendRedirect(url);
     }
 
     @Override

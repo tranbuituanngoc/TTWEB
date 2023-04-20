@@ -107,6 +107,6 @@ public class CartService {
             }
     }
     public static void main(String[] args) {
-        System.out.println(CartService.getCartById("12"));
+        System.out.println(CartService.getCartById("kh01125729").getIdUser() == null);
     }
 }

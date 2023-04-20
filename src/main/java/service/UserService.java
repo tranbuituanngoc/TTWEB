@@ -88,7 +88,7 @@ public class UserService {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
-            System.out.println(sql);
+//            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -122,7 +122,7 @@ public class UserService {
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
             statement.setString(3, o.getOldPass());
-            System.out.println(sql);
+//            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

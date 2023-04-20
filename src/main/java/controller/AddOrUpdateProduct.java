@@ -37,8 +37,8 @@ public class AddOrUpdateProduct extends HttpServlet {
         if (!action.equals(null)) {
             if (action.equals("getadd")) {
                 request.setAttribute("err", "");
-                List<ProductColor> listColor = ProductColorService.getAll();
-                List<ProductSize> listSize = ProductSizeService.getAll();
+                List<Color> listColor = ProductColorService.getAll();
+                List<Size> listSize = ProductSizeService.getAll();
                 List<ProductCategory> listCategory = ProductCategoryService.getAll();
                 request.setAttribute("listColor", listColor);
                 request.setAttribute("listSize", listSize);
@@ -49,8 +49,8 @@ public class AddOrUpdateProduct extends HttpServlet {
             if (action.equals("getupdate")) {
                 Product product = ProductService.getById(id);
                 String forward = "admin/AddProduct.jsp?";
-                List<ProductColor> listColor = ProductColorService.getAll();
-                List<ProductSize> listSize = ProductSizeService.getAll();
+                List<Color> listColor = ProductColorService.getAll();
+                List<Size> listSize = ProductSizeService.getAll();
                 List<ProductCategory> listCategory = ProductCategoryService.getAll();
                 request.setAttribute("listColor", listColor);
                 request.setAttribute("listSize", listSize);
@@ -70,115 +70,115 @@ public class AddOrUpdateProduct extends HttpServlet {
                 request.getRequestDispatcher(forward).forward(request, response);
             }
 
-            if (action.equals("add")) {
-                boolean isErr = false;
-                String name = request.getParameter("productname");
-                String type = request.getParameter("type");
-                List<String> sizes = new ArrayList<>(Arrays.asList(request.getParameterValues("sizeProduct")));
-                List<String> colors = new ArrayList<>(Arrays.asList(request.getParameterValues("colorProduct")));
-                String price = request.getParameter("price");
-                String cost = request.getParameter("cost");
-                String quantity = request.getParameter("quantity");
-                String sale = request.getParameter("sale");
-                sale = sale.equals("") ? "0" : sale;
-                String newProduct = request.getParameter("newProduct");
-                String description = request.getParameter("description");
-
-                Random rd = new Random();
-                String random = System.currentTimeMillis() + rd.nextInt(100) + "";
-                String idPro = "sp" + random.substring(random.length() - 8);
-                Product p = new Product();
-                p.setProductID(idPro);
-
-                ProductCategory category = ProductCategoryService.selectByDescrip(type);
-                p.setCategory(category.getId_Category() + "");
-
-                java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(todaysDate);
-                Timestamp importDate = new Timestamp(calendar.getTimeInMillis());
-
-                //Insert Product Details Quantity
-                for (String s : sizes) {
-                    ProductSize size = ProductSizeService.selectByDescrip(s);
-                    for (String c : colors) {
-                        ProductColor color = ProductColorService.selectByDescrip(c);
-                        String quantityDetail = request.getParameter(s + " " + c + "");
-                        ProductImportedService.insert(p.getProductID(), size.getId_Size(), category.getId_Category(), color.getId_Color(), Integer.parseInt(quantityDetail), importDate);
-                    }
-                }
-
-
-                if (ProductService.existProductName(name)) {
-                    request.setAttribute("err", "Tên sản phẩm đã tồn tại");
-                    request.setAttribute("type", type);
-                    request.setAttribute("sizeSelect", sizes);
-                    request.setAttribute("colorSelect", colors);
-                    request.getRequestDispatcher("admin/AddProduct.jsp").forward(request, response);
-                    isErr = true;
-                }
-                if (!isErr) {
-                    p.setProductName(name);
-                    p.setDescription(description);
-                    p.setPrice(Integer.parseInt(price));
-                    p.setCost(Integer.parseInt(cost));
-                    p.setStatus(1);
-//                    p.setQuantity(Integer.parseInt(quantity));
-                    p.setSalePrice(Integer.parseInt(sale));
-                    p.setIsNew(Integer.parseInt(newProduct));
-
-
-                    ServletContext servletContext = getServletContext();
-                    int majorVersion = servletContext.getMajorVersion();
-                    int minorVersion = servletContext.getMinorVersion();
-                    System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
-                    String uploadPath = getServletContext().getRealPath("/") + "UploadFileStore";
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdir();
-                    }
-//                  Upload thumbnail file (single file upload)
-                    Part thumbnailPart = request.getPart("thumbnail");
-                    String thumbnailFileName = getFileName(thumbnailPart);
-                    if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
-                        thumbnailPart.write(uploadPath + File.separator + thumbnailFileName);
-                        System.out.println("Thumbnail file uploaded to: " + uploadPath + File.separator + thumbnailFileName);
-                        p.setThumb("UploadFileStore/" + thumbnailFileName);
-                    }
-
-                    // Upload image files (multiple file upload)
-                    List<ImageProduct> images = new ArrayList<>();
-                    List<Part> imageParts = (List<Part>) request.getParts();
-                    for (Part imagePart : imageParts) {
-                        System.out.println(imagePart.getName());
-                        if (imagePart.getName().equals("images")) {
-                            String imageFileName = getFileName(imagePart);
-                            if (imageFileName != null && !imageFileName.isEmpty()) {
-                                imagePart.write(uploadPath + File.separator + imageFileName);
-                                System.out.println("Image file uploaded to: " + uploadPath + File.separator + imageFileName);
-                                ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
-                                images.add(i);
-                            }
-                        }
-                    }
-
-                    p.setImage(images);
-
-                    //insert image and thumb
-                    ProductImageService.insertThumbProduct(p);
-                    ProductImageService.insertImageProduct(p);
-
-                    //insertquantity
-
-                    Quantity q = new Quantity(p, importDate);
-                    QuantityService.insert(q);
-
-                    //insert product
-                    ProductService.insert(p);
-                    request.setAttribute("err", "Thêm sản phẩm thành công");
-                    response.sendRedirect("ListProductAd");
-                }
-            }
+//            if (action.equals("add")) {
+//                boolean isErr = false;
+//                String name = request.getParameter("productname");
+//                String type = request.getParameter("type");
+//                List<String> sizes = new ArrayList<>(Arrays.asList(request.getParameterValues("sizeProduct")));
+//                List<String> colors = new ArrayList<>(Arrays.asList(request.getParameterValues("colorProduct")));
+//                String price = request.getParameter("price");
+//                String cost = request.getParameter("cost");
+//                String quantity = request.getParameter("quantity");
+//                String sale = request.getParameter("sale");
+//                sale = sale.equals("") ? "0" : sale;
+//                String newProduct = request.getParameter("newProduct");
+//                String description = request.getParameter("description");
+//
+//                Random rd = new Random();
+//                String random = System.currentTimeMillis() + rd.nextInt(100) + "";
+//                String idPro = "sp" + random.substring(random.length() - 8);
+//                Product p = new Product();
+//                p.setProductID(idPro);
+//
+//                ProductCategory category = ProductCategoryService.selectByDescrip(type);
+//                p.setCategory(category.getId_Category() + "");
+//
+//                java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(todaysDate);
+//                Timestamp importDate = new Timestamp(calendar.getTimeInMillis());
+//
+//                //Insert Product Details Quantity
+//                for (String s : sizes) {
+//                    ProductSize size = ProductSizeService.selectByDescrip(s);
+//                    for (String c : colors) {
+//                        ProductColor color = ProductColorService.selectByDescrip(c);
+//                        String quantityDetail = request.getParameter(s + " " + c + "");
+//                        ProductImportedService.insert(p.getProductID(), size.getId_Size(), category.getId_Category(), color.getId_Color(), Integer.parseInt(quantityDetail), importDate);
+//                    }
+//                }
+//
+//
+//                if (ProductService.existProductName(name)) {
+//                    request.setAttribute("err", "Tên sản phẩm đã tồn tại");
+//                    request.setAttribute("type", type);
+//                    request.setAttribute("sizeSelect", sizes);
+//                    request.setAttribute("colorSelect", colors);
+//                    request.getRequestDispatcher("admin/AddProduct.jsp").forward(request, response);
+//                    isErr = true;
+//                }
+//                if (!isErr) {
+//                    p.setProductName(name);
+//                    p.setDescription(description);
+//                    p.setPrice(Integer.parseInt(price));
+//                    p.setCost(Integer.parseInt(cost));
+//                    p.setStatus(1);
+////                    p.setQuantity(Integer.parseInt(quantity));
+//                    p.setSalePrice(Integer.parseInt(sale));
+//                    p.setIsNew(Integer.parseInt(newProduct));
+//
+//
+//                    ServletContext servletContext = getServletContext();
+//                    int majorVersion = servletContext.getMajorVersion();
+//                    int minorVersion = servletContext.getMinorVersion();
+//                    System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
+//                    String uploadPath = getServletContext().getRealPath("/") + "UploadFileStore";
+//                    File uploadDir = new File(uploadPath);
+//                    if (!uploadDir.exists()) {
+//                        uploadDir.mkdir();
+//                    }
+////                  Upload thumbnail file (single file upload)
+//                    Part thumbnailPart = request.getPart("thumbnail");
+//                    String thumbnailFileName = getFileName(thumbnailPart);
+//                    if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
+//                        thumbnailPart.write(uploadPath + File.separator + thumbnailFileName);
+//                        System.out.println("Thumbnail file uploaded to: " + uploadPath + File.separator + thumbnailFileName);
+//                        p.setThumb("UploadFileStore/" + thumbnailFileName);
+//                    }
+//
+//                    // Upload image files (multiple file upload)
+//                    List<ImageProduct> images = new ArrayList<>();
+//                    List<Part> imageParts = (List<Part>) request.getParts();
+//                    for (Part imagePart : imageParts) {
+//                        System.out.println(imagePart.getName());
+//                        if (imagePart.getName().equals("images")) {
+//                            String imageFileName = getFileName(imagePart);
+//                            if (imageFileName != null && !imageFileName.isEmpty()) {
+//                                imagePart.write(uploadPath + File.separator + imageFileName);
+//                                System.out.println("Image file uploaded to: " + uploadPath + File.separator + imageFileName);
+//                                ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
+//                                images.add(i);
+//                            }
+//                        }
+//                    }
+//
+//                    p.setImage(images);
+//
+//                    //insert image and thumb
+//                    ProductImageService.insertThumbProduct(p);
+//                    ProductImageService.insertImageProduct(p);
+//
+//                    //insertquantity
+//
+//                    Quantity q = new Quantity(p, importDate);
+//                    QuantityService.insert(q);
+//
+//                    //insert product
+//                    ProductService.insert(p);
+//                    request.setAttribute("err", "Thêm sản phẩm thành công");
+//                    response.sendRedirect("ListProductAd");
+//                }
+//            }
 
             if (action.equals("update")) {
                 boolean isErr = false;

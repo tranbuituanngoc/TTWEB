@@ -118,17 +118,16 @@ public class ProductImageService {
         String sql = "UPDATE imagesproduct " +
                 " SET " +
                 " image=?" +
-                " WHERE id_product=? AND id_image=?  AND type='image'";
+                " WHERE id_product=?  AND type='image'";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             for (ImageProduct i : p.getImage()) {
                 st.setString(1, i.getImage());
                 st.setString(2, p.getProductID());
-                st.setInt(3, i.getId());
                 System.out.println(sql);
                 res += st.executeUpdate();
-                JDBCUtil.disconection(connection);
             }
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -149,8 +148,8 @@ public class ProductImageService {
                 st.setString(2, p.getProductID());
                 System.out.println(sql);
                 res += st.executeUpdate();
-                JDBCUtil.disconection(connection);
             }
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

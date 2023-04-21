@@ -112,7 +112,6 @@
                                                               value="${p.salePrice}"/> VNĐ
                                         </td>
                                         <td>${p.quantity}</td>
-<%--                                        <td><img src="${p.thumb}"></td>--%>
                                         <td><img src="${ProductImageService.getThumbProduct(p.productID)}"></td>
 
                                         <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>

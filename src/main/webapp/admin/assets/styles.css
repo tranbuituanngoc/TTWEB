@@ -500,7 +500,7 @@ button, input, optgroup, select, textarea {
     white-space: nowrap;
     background-color: #e9ecef;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: .25rem 0 0 .25rem;
 }
 
 .col-2 {
@@ -516,4 +516,22 @@ button, input, optgroup, select, textarea {
 }
 .required {
     color: red;
+}
+#single-image-preview,
+#multiple-image-preview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#single-image-preview img,
+#multiple-image-preview img {
+    height: 50px;
+    margin: 5px;
+}
+.inputQ, .inputC{
+    border-radius: 0 !important;
+}
+
+.inputP{
+    border-radius: 0 .25rem .25rem 0 !important;
 }

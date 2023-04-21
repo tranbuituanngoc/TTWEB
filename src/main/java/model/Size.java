@@ -1,0 +1,63 @@
+package model;
+
+public class Size {
+    private int idSize;
+    private int height;
+    private int length;
+    private int width;
+    private int weight;
+
+    public Size() {
+    }
+
+    public int getIdSize() {
+        return idSize;
+    }
+
+    public void setIdSize(int idSize) {
+        this.idSize = idSize;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Size{" +
+                "idSize=" + idSize +
+                ", height=" + height +
+                ", length=" + length +
+                ", width=" + width +
+                ", weight=" + weight +
+                '}';
+    }
+}

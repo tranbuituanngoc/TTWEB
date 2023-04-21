@@ -20,10 +20,10 @@ public class BuyNow extends HttpServlet {
 
         p.setQuantityCart(1);
 
-        Cart c = Cart.getCart(session);
-        c.put(p);
-        c.commit(session);
-        response.sendRedirect("Payment");
+//        Cart c = Cart.getCart(session);
+//        c.put(p);
+//        c.commit(session);
+//        response.sendRedirect("Payment");
     }
 
     @Override

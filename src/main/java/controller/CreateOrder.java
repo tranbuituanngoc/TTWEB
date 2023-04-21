@@ -41,18 +41,18 @@ public class CreateOrder extends HttpServlet {
             } else {
                 session = request.getSession();
                 session.getAttribute("cart");
-                Cart c = Cart.getCart(session);
-                Collection<Product> products = c.getData();
-                List<Product> pro = new ArrayList<Product>(products);
-                OrderService.insertOrder(idUser, fullname, (int) c.total(), address, phone, email);
+//                Cart c = Cart.getCart(session);
+//                Collection<Product> products = c.getData();
+//                List<Product> pro = new ArrayList<Product>(products);
+//                OrderService.insertOrder(idUser, fullname, (int) c.total(), address, phone, email);
 
                 request.setAttribute("msg", "Bạn đã đặt hàng thành công");
                 response.sendRedirect("ProductLists");
-                OrderDetailService.insertOrderDetail(pro);
+//                OrderDetailService.insertOrderDetail(pro);
                 SendToMail mail = new SendToMail();
                 mail.sendEmail(email, "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
                 Cart newCart = new Cart();
-                newCart.commit(session);
+//                newCart.commit(session);
             }
         }
     }

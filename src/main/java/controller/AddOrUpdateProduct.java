@@ -253,6 +253,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 if (!isErr) {
                     ProductCategory category = ProductCategoryService.selectByDescrip(type);
 
+                    p.setProductID(id);
                     p.setCategory(category.getId_Category() + "");
                     p.setProductName(name);
                     p.setDescription(description);

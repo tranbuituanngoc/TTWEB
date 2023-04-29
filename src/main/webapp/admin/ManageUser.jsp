@@ -123,6 +123,7 @@
     <jsp:include page="footerAd.jsp"/>
     <!-- Footer END -->
 </div>
+<div class="notification-toast top-right" id="notification-toast"></div>
 <!-- Page Container END -->
 <!-- Core Vendors JS -->
 <script src="admin/assets/js/vendors.min.js"></script>
@@ -137,5 +138,7 @@
 
 <%--Custom JS--%>
 <script src="admin/assets/js/script.js"></script>
+
+
 </body>
 </html>

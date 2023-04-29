@@ -58,8 +58,9 @@ public class User {
         this.status=status;
     }
 
-    public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
+    public User(String id_User, String userName,String fullName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
         this.id_User = id_User;
+        this.fullname = fullName;
         this.userName = userName;
         this.email = email;
         this.phone = phone;

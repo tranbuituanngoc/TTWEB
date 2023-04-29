@@ -131,8 +131,8 @@
                                                    placeholder="Bắt buộc *"
                                                    value="<%=request.getParameter("username")==null? "":request.getParameter("username")%>"
                                             <c:choose>
-                                                   <c:when test="${param.action eq 'getupdate'}">readonly</c:when>
-                                                   <c:when test="${param.action eq 'update'}">readonly</c:when>
+                                                   <c:when test="${param.action eq 'getupdate'}">disabled=""</c:when>
+                                                   <c:when test="${param.action eq 'update'}">disabled=""</c:when>
                                             </c:choose>>
                                         </div>
                                     </div>
@@ -150,6 +150,10 @@
                                         <div class="col-md-5">
                                             <input id="password" type="password" class="form-control" name="password"
                                                    placeholder="Bắt buộc *"
+                                            <c:choose>
+                                                   <c:when test="${param.action eq 'getupdate'}">disabled=""</c:when>
+                                                   <c:when test="${param.action eq 'update'}">disabled=""</c:when>
+                                            </c:choose>
                                                    value="<%=request.getParameter("password")==null? "":request.getParameter("password")%>">
                                         </div>
                                     </div>
@@ -157,7 +161,11 @@
                                         <label class="col-sm-2 col-form-label control-label">Nhập lại mật khẩu *</label>
                                         <div class="col-md-5">
                                             <input type="password" class="form-control" name="inputPasswordConfirm"
-                                                   placeholder="Nhập lại mật khẩu">
+                                            <c:choose>
+                                                   <c:when test="${param.action eq 'getupdate'}">disabled=""</c:when>
+                                                   <c:when test="${param.action eq 'update'}">disabled=""</c:when>
+                                            </c:choose>
+                                            placeholder="Nhập lại mật khẩu">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -187,15 +195,15 @@
                                             <div class="m-b-15">
                                                 <select class="select2" id="permission" name="permission">
                                                     <option value="2"
-                                                            <c:if test="${param.permission eq '2'}">selected="selected"</c:if>>
+                                                            <c:if test="${param.role eq '2'}">selected="selected"</c:if>>
                                                         User
                                                     </option>
                                                     <option value="1"
-                                                            <c:if test="${param.permission eq '1'}">selected="selected"</c:if>>
+                                                            <c:if test="${param.role eq '1'}">selected="selected"</c:if>>
                                                         Admin
                                                     </option>
                                                     <option value="0"
-                                                            <c:if test="${param.permission eq '0'}">selected="selected"
+                                                            <c:if test="${param.role eq '0'}">selected="selected"
                                                             readonly</c:if>>Boss
                                                     </option>
                                                 </select>

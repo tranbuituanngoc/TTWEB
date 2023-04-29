@@ -1,15 +1,19 @@
 package model;
 
 import java.util.ArrayList;
+import model.ImageProduct;
+import model.Color;
+import model.Size;
+
 import java.util.List;
 
 public class Product {
     private String productID;
     private String productName;
     private String description;
-    private List<ProductSize> size;
+    private List<Size> size;
     private String category;
-    private List<ProductColor> color;
+    private List<Color> color;
     private int price;
     private int salePrice;
     private List<ImageProduct> image;
@@ -26,7 +30,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart, String thumb) {
+    public Product(String productID, String productName, String description, List<Size> size, String category, List<Color> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart, String thumb) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -63,6 +67,7 @@ public class Product {
     }
 
     public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, int quantity, int isNew, int status, int cost, int quantityCart) {
+
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -106,11 +111,11 @@ public class Product {
         this.description = description;
     }
 
-    public List<ProductSize> getSize() {
+    public List<Size> getSize() {
         return size;
     }
 
-    public void setSize(List<ProductSize> size) {
+    public void setSize(List<Size> size) {
         this.size = size;
     }
 
@@ -122,11 +127,11 @@ public class Product {
         this.category = category;
     }
 
-    public List<ProductColor> getColor() {
+    public List<Color> getColor() {
         return color;
     }
 
-    public void setColor(List<ProductColor> color) {
+    public void setColor(List<Color> color) {
         this.color = color;
     }
 

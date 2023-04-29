@@ -2,6 +2,7 @@ package service;
 
 import database.ConnectDB;
 import database.JDBCUtil;
+import model.Color;
 import model.ProductColor
 ;
 import model.ProductSize;
@@ -14,23 +15,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductColorService {
-    public static List<ProductColor> getColorProduct(String id){
-        List<ProductColor> colorProduct;
+    public static List<Color> getColorProduct(String id){
+        List<Color> colorProduct;
         try {
             PreparedStatement pState = null;
-            String sql = "select pc.id, pc.id_color, descrip from product_color pc join colors c on pc.id_color = c.id_color where id_product=?";
+            String sql = "select * from product_color pc join colors c on pc.id_color = c.id_color where id_product=?";
             pState = ConnectDB.connect(sql);
             pState.setString(1, id);
             ResultSet rs = pState.executeQuery();
             colorProduct = new LinkedList<>();
             while (rs.next()) {
-                colorProduct.add(
-                        new ProductColor(
-                                rs.getInt(1),
-                                rs.getInt(2),
-                                rs.getString(3)
-                        )
-                );
+                Color color = new Color();
+                color.setId_color(rs.getInt("id_color"));
+                color.setDescrip(rs.getString("descrip"));
+                colorProduct.add(color);
             }
 
         } catch (SQLException e) {
@@ -67,8 +65,8 @@ public class ProductColorService {
         return res;
     }
 
-    public static List<ProductColor> getAll(){
-        List<ProductColor> colorProduct;
+    public static List<Color> getAll(){
+        List<Color> colorProduct;
         try {
             PreparedStatement pState = null;
 //            String sql = "select pc.id, pc.id_color, descrip from product_color pc join colors c on pc.id_color = c.id_color";
@@ -78,7 +76,7 @@ public class ProductColorService {
             colorProduct = new LinkedList<>();
             while (rs.next()) {
                 colorProduct.add(
-                        new ProductColor(
+                        new Color(
                                 rs.getInt(1),
                                 rs.getString(2)
                         )
@@ -122,8 +120,29 @@ public class ProductColorService {
 
     }
 
+    public static Color getColorById(int idColor){
+        Color result = new Color();
+        try {
+            PreparedStatement pState = null;
+            String sql = "select * from colors where id_color = ?";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, idColor);
+            ResultSet rs = pState.executeQuery();
+            while (rs.next()){
+                 result.setId_color(rs.getInt("id_color"));
+                 result.setDescrip(rs.getString("descrip"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        List<ProductColor> list =ProductColorService.getColorProduct("sp094");
+        System.out.println(ProductColorService.getColorById(1));
+//        List<ProductColor> list =ProductColorService.getColorProduct("sp094");
 //        System.out.println(list.toString());
 //        ProductColorService.removeProductColorById("sp094");
 //        list =ProductColorService.getColorProduct("sp094");

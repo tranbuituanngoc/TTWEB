@@ -22,6 +22,8 @@ import java.util.Random;
 
 @WebServlet(name = "UserController", value = "/nguoi-dung")
 public class UserController extends HttpServlet {
+    private static final int MAX_LOGIN_ATTEMPTS = 3; // Số lần đăng nhập sai tối đa
+    private static final long LOCK_TIME = 5 * 60 * 1000; // Thời gian khóa tài khoản (5 phút)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -60,21 +62,56 @@ public class UserController extends HttpServlet {
 
             UserService us = new UserService();
             User u = us.selectByUserNameAndpassword(user);
-            String url = "";
+            HttpSession session = request.getSession(true);
+
+            // Lấy số lần đăng nhập sai đã nhập trong session hoặc tạo session mới nếu chưa có
+            Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
+
+            if (loginAttempts == null) {
+                loginAttempts = 0;
+            }
+
+            // Kiểm tra xem tài khoản đã bị khóa hay chưa
+            Long unlockTime = (Long) session.getAttribute("unlockTime");
+
+            if (unlockTime != null && unlockTime > System.currentTimeMillis()) {
+                // Nếu tài khoản đã bị khóa, hiển thị thông báo và không xử lý việc đăng nhập
+                long timeLeft = (unlockTime - System.currentTimeMillis()) / 1000;
+                request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau " + timeLeft + " giây.");
+                messageResponse="error";
+                request.setAttribute("messageResponse",messageResponse);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+
             if (u != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("user", u);
-                int r = u.getRole();
-                if (u.getRole() == 1) {
+                if (u.getRole() != 2) {
                     response.sendRedirect("ListProductAd");
                 } else if (u.getRole() == 2) {
                     response.sendRedirect("Home");
                 }
             } else {
-                messageResponse="error";
-                request.setAttribute("messageResponse",messageResponse);
-                request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                loginAttempts++;
+                session.setAttribute("loginAttempts", loginAttempts);
+                if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+                    // Nếu đã đạt đến số lần đăng nhập sai tối đa, khóa chức năng đăng nhập trong 5 phút
+                    long unlockTimeSet = System.currentTimeMillis() + LOCK_TIME;
+                    session.setAttribute("unlockTime", unlockTimeSet);
+                    messageResponse="error";
+                    request.setAttribute("messageResponse",messageResponse);
+                    request.setAttribute("error", "Số lần đăng nhập sai của bạn đã vượt quá giới hạn. Vui lòng thử lại sau " + (LOCK_TIME / 1000) + " giây.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                } else {
+                    // Nếu số lần đăng nhập sai chưa đạt tối đa, hiển thị thông báo lỗi và cho phép đăng nhập lại
+                    int remainingAttempts = MAX_LOGIN_ATTEMPTS - loginAttempts;
+                    messageResponse="error";
+                    request.setAttribute("messageResponse",messageResponse);
+                    request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng. Bạn còn " + remainingAttempts + " lần thử.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                }
             }
         } catch (ServletException e) {
             throw new RuntimeException(e);

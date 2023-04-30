@@ -15,8 +15,8 @@ import java.util.List;
 public class ProductService {
     public static List<Product> getAllProduct() {
         List<Product> listProducts;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
             PreparedStatement pState = null;
@@ -57,8 +57,8 @@ public class ProductService {
 
     public static List<Product> getAll() {
         List<Product> listProducts;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
 
         try {
@@ -97,8 +97,8 @@ public class ProductService {
     }
 
     public static Product getProductDetail(String idProduct) {
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         Product product = new Product();
         try {
@@ -144,8 +144,8 @@ public class ProductService {
     }
 
     public static Product getById(String idProduct) {
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         Product product = new Product();
         try {
@@ -185,8 +185,8 @@ public class ProductService {
 
     public static List<Product> listNewProduct() {
         List<Product> listNewProduct;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -229,8 +229,8 @@ public class ProductService {
 
     public static List<Product> getByType(int type) {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -271,51 +271,9 @@ public class ProductService {
         return list;
     }
 
-    public static List<Product> getByType8(int type) {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, type);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                list.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-
     public static void deleteProduct(String idProduct) {
+
+
         PreparedStatement pState = null;
         String sql = "Delete from products where id=?";
         try {
@@ -376,8 +334,8 @@ public class ProductService {
 
     public static List<Product> listBestSeller() {
         List<Product> listBestSeller;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -415,139 +373,11 @@ public class ProductService {
         }
         return listBestSeller;
     }
-    public static List<Product> list10NewProduct() {
-        List<Product> listNewProduct;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products where isNew=? and status=? limit 10";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 1);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            listNewProduct = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                listNewProduct.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return listNewProduct;
-
-    }
-
-    public static List<Product> list10BestSeller() {
-        List<Product> listBestSeller;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "SELECT * FROM products where status =? limit 10;";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 1);
-            ResultSet rs = pState.executeQuery();
-            listBestSeller = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                listBestSeller.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return listBestSeller;
-    }
-    public static List<Product> list6NewProductByType() {
-        List<Product> listNewProduct;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products where isNew=? and status=? where id_category=? limit 6";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 1);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            listNewProduct = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                listNewProduct.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return listNewProduct;
-
-    }
 
     public static List<Product> listHintForYou() {
         List<Product> listHintForYou;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -632,8 +462,8 @@ public class ProductService {
         return res;
     }
     public static List<Product> searchByName(String txtSearch) {
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         PreparedStatement pre = null;
         List<Product> list = new ArrayList<>();
@@ -669,8 +499,8 @@ public class ProductService {
 
     public static List<Product> listProductA_Z() {
         List<Product> listProductA_Z;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -710,8 +540,8 @@ public class ProductService {
 
     public static List<Product> listProductZ_A() {
         List<Product> listProductZ_A;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -751,9 +581,9 @@ public class ProductService {
 
     public static List<Product> listPriceHighToLow() {
         List<Product> listPriceHighToLow;
-        List<Color> listColor;
+        List<ProductColor> listColor;
 
-        List<Size> listSize;
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -793,8 +623,9 @@ public class ProductService {
 
     public static List<Product> listPriceLowToHigh() {
         List<Product> listPriceLowToHigh;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -833,20 +664,19 @@ public class ProductService {
     }
 
     public static List<Product> getCategory1() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<Product> getCategory;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
             PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
+            String sql = "select * from products where category=?";
             pState = ConnectDB.connect(sql);
-            pState.setInt(1, 1);
-            pState.setInt(2, 1);
+            pState.setString(1, "Gạch lát nền");
             ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
+            getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
@@ -865,7 +695,7 @@ public class ProductService {
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
-                list.add(product);
+                getCategory.add(product);
             }
 
         } catch (SQLException e) {
@@ -873,43 +703,42 @@ public class ProductService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return getCategory;
     }
 
     public static List<Product> getCategory2() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<Product> getCategory;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
             PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
+            String sql = "select * from products where category=?";
             pState = ConnectDB.connect(sql);
-            pState.setInt(1, 2);
-            pState.setInt(2, 1);
+            pState.setString(1, "Gạch ốp tường");
             ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
+            getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
-                list.add(product);
+                getCategory.add(product);
             }
 
         } catch (SQLException e) {
@@ -917,28 +746,27 @@ public class ProductService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return getCategory;
     }
 
     public static List<Product> getCategory3() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<Product> getCategory;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
-        try{
+        try {
+
             PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
+            String sql = "select * from products where category=?";
             pState = ConnectDB.connect(sql);
-            pState.setInt(1, 3);
-            pState.setInt(2, 1);
+            pState.setString(1, "Gạch trang trí");
             ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
+            getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
@@ -946,14 +774,14 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
-                list.add(product);
+                getCategory.add(product);
             }
 
         } catch (SQLException e) {
@@ -961,111 +789,23 @@ public class ProductService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return getCategory;
     }
 
     public static List<Product> getCategory4() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+        List<Product> getCategory;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
 
             PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
+            String sql = "select * from products where category=?";
             pState = ConnectDB.connect(sql);
-            pState.setInt(1, 4);
-            pState.setInt(2, 1);
+            pState.setString(1, "Gạch giả gỗ");
             ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
-                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                list.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-
-     public static List<Product> getSeller1() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 1);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                list.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-    public static List<Product> getSeller2() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 2);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
+            getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
@@ -1084,7 +824,7 @@ public class ProductService {
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
-                list.add(product);
+                getCategory.add(product);
             }
 
         } catch (SQLException e) {
@@ -1092,106 +832,16 @@ public class ProductService {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return getCategory;
     }
-
-    public static List<Product> getSeller3() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 3);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                product.setCost(rs.getInt("cost"));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                list.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-
-public static List<Product> getSeller4() {
-        List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
-        try {
-
-            PreparedStatement pState = null;
-            String sql = "select * from products" +
-                    " where id_category=? and status=? and isNew = 1 limit 8";
-            pState = ConnectDB.connect(sql);
-            pState.setInt(1, 4);
-            pState.setInt(2, 1);
-            ResultSet rs = pState.executeQuery();
-            list = new LinkedList<>();
-            while (rs.next()) {
-                Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
-                product.setProductID(rs.getString("id_product"));
-                product.setProductName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setSalePrice(rs.getInt("sale"));
-                product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
-                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
-                product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
-                list.add(product);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-
 
     public static void main(String[] args) {
         ProductService list = new ProductService();
 //        System.out.println(getByType(4));
-//        System.out.println(ProductService.list10NewProduct());
-//        System.out.println(ProductService.list10BestSeller());
-//        System.out.println(ProductService.getCategory2().size());
-        System.out.println(ProductService.getProductDetail("sp002"));
-//        System.out.println(list.searchByName("gach").toString());
+//        System.out.println(list.listNewProduct().toString());
+//        System.out.println(list.listBestSeller().toString());
+//        System.out.println(list.listHintForYou().toString());
+        System.out.println(list.searchByName("gach").toString());
 
         //        System.out.println(2 / 12);
 //        Product p = new Product("sp315945", "Gạch bông F2118", "Gạch bông F2118 là sản phẩm gạch quen thuộc với người Việt Nam, được ứng dụng nhiều trong những không gian bếp, nhà vệ sinh, mảng miếng trang trí bởi tính thẩm mỹ, dễ phối màu, dễ lau " +

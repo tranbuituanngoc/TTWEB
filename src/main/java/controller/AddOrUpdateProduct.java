@@ -79,7 +79,6 @@ public class AddOrUpdateProduct extends HttpServlet {
 
                 request.setAttribute("product", product);
                 request.setAttribute("err", error);
-
                 request.setAttribute("listColor", listColor);
                 request.setAttribute("listSize", listSize);
                 request.setAttribute("listCategory", listCategory);
@@ -225,7 +224,6 @@ public class AddOrUpdateProduct extends HttpServlet {
                     response.sendRedirect("ListProductAd");
                 }
             }
-
 
             if (action.equals("update")) {
                 boolean isErr = false;

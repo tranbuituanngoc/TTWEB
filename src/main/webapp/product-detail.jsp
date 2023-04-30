@@ -146,11 +146,6 @@
                                                    var="addCart"/>
                                             <a href="${addCart}" title="" data-original-title="Thêm vào giỏ"> + Thêm vào
                                                 giỏ</a>
-                                             <div class="actions-primary">
-                                            <c:url value="/addCart?productID=${product.productID}"
-                                                   var="addCart"/>
-                                            <a href="${addCart}" title="" data-original-title="Thêm vào giỏ"> + Thêm vào
-                                                giỏ</a>
                                         </div>
                                         <div class="actions-primary">
                                             <c:url value="/buyNow?productID=${product.productID}"

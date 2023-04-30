@@ -1,10 +1,7 @@
 package controller;
 
-import model.CartUser;
 import model.Product;
 import model.Cart;
-import model.User;
-import service.CartService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,18 +13,13 @@ import java.util.Collection;
 public class CartProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        CartUser c = (CartUser) request.getSession().getAttribute("cartUser");
-        if (c == null){
-            c = CartService.getCartById(user.getId_User());
-        }
+        Cart c = (Cart) request.getSession().getAttribute("cart");
         if(c==null){
             response.sendRedirect("ProductLists");
         }else{
-            request.setAttribute("listCart",c);
-            System.out.println(c);
-            request.getSession().setAttribute("cartUser",c);
+            Collection<Product> list=c.getData();
+            request.setAttribute("listCart",list);
+            request.getSession().setAttribute("cart",c);
             request.getRequestDispatcher("cart.jsp").forward(request,response);
         }
     }

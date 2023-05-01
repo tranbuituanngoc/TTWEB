@@ -52,9 +52,9 @@
 <body>
 <!--[if lte IE 9]>
 <![endif]-->
+
 <!-- Main Wrapper Start Here -->
 <div class="wrapper">
-
     <!-- Banner Popup Start -->
     <jsp:include page="header.jsp"/>
     <!-- Categorie Menu & Slider Area End Here -->
@@ -80,17 +80,15 @@
                     <form action="UpdateCart" method="get">
                         <!-- Table Content Start -->
                         <div class="table-content table-responsive mb-45">
-                            <c:if test="${cartUser.size()==0}">
+                            <c:if test="${listCart.size()==0}">
                                 <h5>Bạn chưa có sản phẩm nào trong giỏ hàng</h5>
                             </c:if>
-                            <c:if test="${cartUser.size()!=0}">
+                            <c:if test="${listCart.size()!=0}">
                             <table>
                                 <thead>
                                 <tr>
                                     <th class="product-thumbnail">Hình ảnh</th>
                                     <th class="product-name">Sản phẩm</th>
-                                    <th class="product-size">Kích thước</th>
-                                    <th class="product-color">Màu sắc</th>
                                     <th class="product-price">Đơn giá</th>
                                     <th class="product-quantity">Số lượng</th>
                                     <th class="product-subtotal">Tổng</th>
@@ -98,47 +96,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    <%--@elvariable id="listCart" type="java.util.List"--%>
 
-                                    <c:forEach items="${cartUser.getCart()}" var ="cart" varStatus="status">
-                                        <tr>
-                                            <c:set value="${cart.product}" var="product"></c:set>
-                                            <c:set value="${cartUser.getValue()[status.index]}" var="quantity"></c:set>
-                                            <td class="product-thumbnail">
-                                                <a href="javascript:void(0)"><img
-                                                        src="${product.image[1].image}"
-                                                        alt="cart-image"></a>
-                                                <input name="product_id" value="${product.productID}" type="hidden">
-                                            </td>
-                                            <td class="product-name"><a target="_blank"
-                                                                        href="ProductDetail?productID=${product.productID}">${product.productName}</a>
-                                            </td>
-<%--                                            <input type="hidden" value="${cart.color.id_color}" name="id_color">--%>
-<%--                                            <input type="hidden" value="${cart.size.idSize}" name="id_size">--%>
-                                            <td class="product-size">${cart.size.width}x${cart.size.length}</td>
-                                            <td class="product-color">${cart.color.descrip}</td>
-                                            <td class="product-price"><span class="amount"><fmt:formatNumber type="currency"
-                                                                                                             currencySymbol=""
-                                                                                                             minFractionDigits="0"
-                                                                                                             value="${product.priceAfterSale}"/> VNĐ</span>
-                                            </td>
-                                            <td class="product-quantity">
-                                                <c:set value="${cart}" var="cartUpdate"></c:set>
-                                                <input min="1" id="quantity" onchange="updateQuantity('${product.productID}', this.value, '${cart.color.id_color}', '${cart.size.idSize}')"
-                                                                                type="number"
-                                                                                value="${quantity}">
+                                <c:forEach items="${listCart}" var="product">
 
-<%--                                                <input type="hidden" id="quantity_value" name="quantity_value">--%>
-                                            </td>
-                                            <td class="product-subtotal"><fmt:formatNumber type="currency" currencySymbol=""
-                                                                                           minFractionDigits="0"
-                                                                                           value="${product.priceAfterSale*quantity}"/>
-                                                VNĐ
-                                            </td>
-                                            <td class="product-remove">
-                                                <a href="/DeleteCart?product_id=${product.productID}&id_color=${cart.color.id_color}&id_size=${cart.size.idSize}"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href="avascript:void(0)"><img
+                                                    src="${product.image[1].image}"
+                                                    alt="cart-image"></a>
+                                            <input name="productID" value="${product.productID}" type="hidden">
+                                        </td>
+                                        <td class="product-name"><a target="_blank"
+                                                                    href="ProductDetail?productID=${product.productID}">${product.productName}</a>
+                                        </td>
+                                        <td class="product-price"><span class="amount"><fmt:formatNumber type="currency"
+                                                                                                         currencySymbol=""
+                                                                                                         minFractionDigits="0"
+                                                                                                         value="${product.priceAfterSale}"/> VNĐ</span>
+                                        </td>
+                                        <td class="product-quantity"><input onblur="/UpdateCart" name="quantityCart"
+                                                                            type="number"
+                                                                            value="${product.quantityCart}"></td>
+                                        <td class="product-subtotal"><fmt:formatNumber type="currency" currencySymbol=""
+                                                                                       minFractionDigits="0"
+                                                                                       value="${product.priceAfterSale*product.quantityCart}"/>
+                                            VNĐ
+                                        </td>
+                                        <td class="product-remove">
+                                            <c:url value="/DeleteCart?productID=${product.productID}" var="deleteCart"/>
+                                            <a href="${deleteCart}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                                 </c:if>
                             </table>
@@ -149,6 +139,7 @@
 
                             <div class="col-md-8 col-sm-12">
                                 <div class="buttons-cart">
+                                    <input type="submit" value="Cập nhật giỏ hàng">
                                     <a href="ProductLists">Tiếp tục mua sắm</a>
                                 </div>
                             </div>
@@ -170,7 +161,7 @@
                                                 <strong><span class="amount"><fmt:formatNumber type="currency"
                                                                                                currencySymbol=""
                                                                                                minFractionDigits="0"
-                                                                                               value="${cartUser.getTotalValue()}"/>VNĐ</span></strong>
+                                                                                               value="${cart.total()}"/>VNĐ</span></strong>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -200,25 +191,7 @@
     <!-- Quick View Content End -->
 </div>
 <!-- Main Wrapper End Here -->
-<script>
 
-</script>
-<script>
-    function updateQuantity(itemId, quantity, colorId, sizeId) {
-        console.log(quantity)
-        // Make an AJAX call to the servlet to update the quantity of the item
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/UpdateCart?"+"product_id=" + itemId + "&quantity_value=" + quantity+ "&id_color="+colorId, "&id_size="+sizeId, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Handle success
-                location.reload(); // Refresh the page after successful update
-            }
-        };
-        xhr.send();
-    }
-</script>
 <!-- jquery 3.2.1 -->
 <script src="js\vendor\jquery-3.2.1.min.js"></script>
 <!-- Countdown js -->

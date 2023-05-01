@@ -17,12 +17,9 @@ public class Payment extends HttpServlet {
         if(c==null){
             response.sendRedirect("ProductLists");
         }else{
-            Collection<Product> list=c.getData();
-            request.setAttribute("listCart",list);
             request.getSession().setAttribute("cart",c);
-            request.getRequestDispatcher("checkout.jsp").forward(request,response);
+            response.sendRedirect("CheckOut");
         }
-
     }
 
     @Override

@@ -1,19 +1,7 @@
 package controller;
 
-<<<<<<< Updated upstream
-import model.Product;
-import model.Cart;
-import service.ProductService;
-=======
-<<<<<<< HEAD
 import model.*;
 import service.*;
-=======
-import model.Product;
-import model.Cart;
-import service.ProductService;
->>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
->>>>>>> Stashed changes
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("productID");
+        String id = request.getParameter("product_id");
+        if (id == null){
+            id = request.getParameter("productID");
+        }
         Product p = ProductService.getById(id);
-<<<<<<< Updated upstream
-        HttpSession session = request.getSession();
-=======
-<<<<<<< HEAD
         String colorId_raw = request.getParameter("color_id");
         User user = (User) request.getSession().getAttribute("user");
         String quantity_raw = request.getParameter("quantity_value");
-        System.out.println("quantity "+ quantity_raw);
         int quantity  =1;
         if (quantity_raw != null){
             quantity = Integer.parseInt(quantity_raw);
@@ -66,25 +54,8 @@ public class AddCart extends HttpServlet {
         }
         cartUser.addCart(cart, quantity);
         session.setAttribute("cartUser", cartUser);
-        CartService.addCart(cartUser);
         String url = request.getHeader("referer");
         response.sendRedirect(url);
-=======
-        HttpSession session = request.getSession();
->>>>>>> Stashed changes
-        session.getAttribute("cart");
-
-        p.setQuantityCart(1);
-
-        Cart c = Cart.getCart(session);
-        c.put(p);
-        c.commit(session);
-        response.sendRedirect("ProductLists");
-
-<<<<<<< Updated upstream
-=======
->>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
->>>>>>> Stashed changes
     }
 
     @Override

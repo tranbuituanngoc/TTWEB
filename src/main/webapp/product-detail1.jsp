@@ -139,10 +139,9 @@
                                 <p class="mb-20 pro-desc-details">${product.description}</p>
                                 <form id="cart-form" action="/addCart" method="get">
                                     <input name="product_id" type="hidden" value="${product.productID}">
-                                    <input name="size" type="hidden" value="${size_id}">
                                     <div class="product-size mb-20 clearfix">
                                         <label>Kích thước</label>
-                                            <select id="sizeSelect" class="size">
+                                            <select id="sizeSelect" name="size" class="size">
                                                 <c:forEach var="size" items="${product.size}">
                                                     <c:if test="${size.idSize == size_id}">
                                                         <c:set var="selected" value="selected"/>
@@ -156,7 +155,7 @@
                                     </div>
                                     <div class="color clearfix mb-20">
                                         <label>Màu</label>
-                                        <input type="hidden" value="${color_id}" name="color_id"/>
+                                        <input name="color_id" type="hidden" value="${color_id}">
                                         <ul class="color-list">
                                             <c:forEach var="color" items="${product.color}" varStatus="loop">
                                                 <c:choose>
@@ -182,7 +181,7 @@
                                         <div class="pro-actions">
                                             <div class="actions-primary">
     <%--                                           <c:url value="addCart?productID=${product.productID}&color=${color_id}" var="addCart"/>--%>
-                                                <a href="#" title="" data-original-title="Thêm vào giỏ" onclick="submitForm()" id="add-cart"> + Thêm vào giỏ</a>
+                                                <a href="addCart?product_id=${product.productID}&color_id=${color_id}&size=${size_id}" title="" data-original-title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                             </div>
                                             <div class="actions-secondary">
     <%--                                            <a href="compare.html" title="" data-original-title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>--%>
@@ -380,7 +379,7 @@
                                     </div>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
-                                            <c:url value="/addCart?productID=${product.productID}" var="addCart"/>
+                                            <c:url value="/addCart?productID=${product.productID}&color=${color_id}&size=${size_id}" var="addCart"/>
                                             <a href="${addCart}" id="add-cart" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                         </div>
                                         <div class="actions-secondary">
@@ -457,11 +456,6 @@
             var quantityValueInput = document.getElementsByName("quantity_value")[0];
             quantityValueInput.value = input.value;
           }
-    </script>
-    <script !src="">
-        function submitForm() {
-                document.getElementById('cart-form').submit();
-            }
     </script>
 </body>
 </html>

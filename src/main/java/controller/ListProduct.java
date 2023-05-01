@@ -1,6 +1,5 @@
 package controller;
 
-import model.CartUser;
 import model.Product;
 import service.ProductService;
 
@@ -29,9 +28,6 @@ public class ListProduct extends HttpServlet {
         start= (page-1)*show;
         end=Math.min(page*show, list.size());
         List<Product>listP= ProductService.getByPage(list,start,end);
-        CartUser c = (CartUser) request.getSession().getAttribute("cartUser");
-//        request.setAttribute("listCart",c);
-        request.getSession().setAttribute("cartUser",c);
         request.setAttribute("listP",listP);
         request.setAttribute("page",page);
         request.setAttribute("numberPage",numberPage);

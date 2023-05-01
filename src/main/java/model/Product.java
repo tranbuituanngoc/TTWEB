@@ -1,18 +1,15 @@
 package model;
 
-import model.ImageProduct;
-import model.Color;
-import model.Size;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
     private String productID;
     private String productName;
     private String description;
-    private List<Size> size;
+    private List<ProductSize> size;
     private String category;
-    private List<Color> color;
+    private List<ProductColor> color;
     private int price;
     private int salePrice;
     private List<ImageProduct> image;
@@ -22,11 +19,14 @@ public class Product {
     private int cost;
     private int quantityCart;
     private String thumb;
+    private List<Integer> priceList;
+    private List<Integer> costList;
+    private List<Integer> quantityList;
 
     public Product() {
     }
 
-    public Product(String productID, String productName, String description, List<Size> size, String category, List<Color> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart, String thumb) {
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status, int cost, int quantityCart, String thumb) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -44,7 +44,25 @@ public class Product {
         this.thumb = thumb;
     }
 
-    public Product(String productID, String productName, String description, List<Size> size, String category, List<Color> color, int price, int salePrice, int quantity, int isNew, int status, int cost, int quantityCart) {
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int salePrice, List<ImageProduct> image, int isNew, int status, int quantityCart, String thumb, List<Integer> priceList, List<Integer> costList, List<Integer> quantityList) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
+        this.size = size;
+        this.category = category;
+        this.color = color;
+        this.salePrice = salePrice;
+        this.image = image;
+        this.isNew = isNew;
+        this.status = status;
+        this.quantityCart = quantityCart;
+        this.thumb = thumb;
+        this.priceList = priceList;
+        this.costList = costList;
+        this.quantityList = quantityList;
+    }
+
+    public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int price, int salePrice, int quantity, int isNew, int status, int cost, int quantityCart) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -88,11 +106,11 @@ public class Product {
         this.description = description;
     }
 
-    public List<Size> getSize() {
+    public List<ProductSize> getSize() {
         return size;
     }
 
-    public void setSize(List<Size> size) {
+    public void setSize(List<ProductSize> size) {
         this.size = size;
     }
 
@@ -104,11 +122,11 @@ public class Product {
         this.category = category;
     }
 
-    public List<Color> getColor() {
+    public List<ProductColor> getColor() {
         return color;
     }
 
-    public void setColor(List<Color> color) {
+    public void setColor(List<ProductColor> color) {
         this.color = color;
     }
 
@@ -180,12 +198,46 @@ public class Product {
         return price - (price * (salePrice / 100.0));
     }
 
+    public List<Double> getListPriceAfterSale(List<Integer> priceList) {
+        List<Double> res= new ArrayList<>();
+        double priceAf;
+        for (int price : priceList) {
+         priceAf=   price - (price * (salePrice / 100.0));
+         res.add(priceAf);
+        }
+        return res;
+    }
+
     public String getThumb() {
         return thumb;
     }
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public List<Integer> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<Integer> priceList) {
+        this.priceList = priceList;
+    }
+
+    public List<Integer> getCostList() {
+        return costList;
+    }
+
+    public void setCostList(List<Integer> costList) {
+        this.costList = costList;
+    }
+
+    public List<Integer> getQuantityList() {
+        return quantityList;
+    }
+
+    public void setQuantityList(List<Integer> quantityList) {
+        this.quantityList = quantityList;
     }
 
     @Override

@@ -1,15 +1,25 @@
 package model;
 
 public class Color {
+    private int id;
     private int id_color;
-    private String descrip;
+    private int id_product;
 
     public Color() {
     }
 
-    public Color(int id_color, String descrip) {
+    public Color(int id, int id_color, int id_product) {
+        this.id = id;
         this.id_color = id_color;
-        this.descrip = descrip;
+        this.id_product = id_product;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId_color() {
@@ -20,19 +30,11 @@ public class Color {
         this.id_color = id_color;
     }
 
-    public String getDescrip() {
-        return descrip;
+    public int getId_product() {
+        return id_product;
     }
 
-    public void setDescrip(String descrip) {
-        this.descrip = descrip;
-    }
-
-    @Override
-    public String toString() {
-        return "Color{" +
-                "id_color=" + id_color +
-                ", descrip='" + descrip + '\'' +
-                '}';
+    public void setId_product(int id_product) {
+        this.id_product = id_product;
     }
 }

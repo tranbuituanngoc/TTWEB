@@ -25,20 +25,30 @@ public class ProductService {
             pState.setInt(1, 1);
             ResultSet rs = pState.executeQuery();
             listProducts = new LinkedList<>();
-
             while (rs.next()) {
                 Product product = new Product();
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+////                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -69,22 +79,35 @@ public class ProductService {
             listProducts = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+//               product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
-//                product.setImage(listImage);
+//               product.setImage(listImage);
                 listProducts.add(product);
             }
 
@@ -113,6 +136,13 @@ public class ProductService {
 
             listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
             listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+=======
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
 //            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
             listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
             product.setProductID(rs.getString("id_product"));
@@ -120,15 +150,23 @@ public class ProductService {
             product.setDescription(rs.getString("description"));
             product.setSalePrice(rs.getInt("sale"));
             product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
             product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
             product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+            product.setPrice(price);
+//            product.setCost(rs.getInt("cost"));
+=======
+            product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+            product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
             product.setStatus(rs.getInt("status"));
             product.setColor(listColor);
             product.setSize(listSize);
             product.setCategory(rs.getString("id_category"));
             product.setImage(listImage);
-
-
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -157,9 +195,22 @@ public class ProductService {
 
             ResultSet rs = pState.executeQuery();
             rs.first();
+<<<<<<< Updated upstream
 
             listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
             listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+=======
+<<<<<<< HEAD
+            listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+            listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+            int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+=======
+
+            listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+            listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
             listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
 
             product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
@@ -168,9 +219,20 @@ public class ProductService {
             product.setDescription(rs.getString("description"));
             product.setSalePrice(rs.getInt("sale"));
             product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
             product.setPriceList(ProductImportedService.getPriceProduct(rs.getString("id_product")));
             product.setCostList(ProductImportedService.getCostProduct(rs.getString("id_product")));
             product.setQuantityList(ProductImportedService.getQuantityProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+            product.setPrice(price);
+//            product.setCost(rs.getInt("cost"));
+=======
+            product.setPriceList(ProductImportedService.getPriceProduct(rs.getString("id_product")));
+            product.setCostList(ProductImportedService.getCostProduct(rs.getString("id_product")));
+            product.setQuantityList(ProductImportedService.getQuantityProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
             product.setStatus(rs.getInt("status"));
             product.setColor(listColor);
             product.setSize(listSize);
@@ -208,8 +270,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -253,8 +325,62 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                list.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    public static List<Product> getByType8(int type) {
+        List<Product> list;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products" +
+                    " where id_category=? and status=? and isNew = 1 limit 8";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, type);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            list = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -349,6 +475,13 @@ public class ProductService {
                 Product product = new Product();
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+=======
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
@@ -356,8 +489,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -373,6 +516,138 @@ public class ProductService {
         }
         return listBestSeller;
     }
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    public static List<Product> list10NewProduct() {
+        List<Product> listNewProduct;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+            PreparedStatement pState = null;
+            String sql = "select * from products where isNew=? and status=? limit 10";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 1);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            listNewProduct = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                listNewProduct.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return listNewProduct;
+
+    }
+
+    public static List<Product> list10BestSeller() {
+        List<Product> listBestSeller;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+            PreparedStatement pState = null;
+            String sql = "SELECT * FROM products where status =? limit 10;";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 1);
+            ResultSet rs = pState.executeQuery();
+            listBestSeller = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                listBestSeller.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return listBestSeller;
+    }
+    public static List<Product> list6NewProductByType() {
+        List<Product> listNewProduct;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products where isNew=? and status=? where id_category=? limit 6";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 1);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            listNewProduct = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                listNewProduct.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return listNewProduct;
+
+    }
+=======
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
 
     public static List<Product> listHintForYou() {
         List<Product> listHintForYou;
@@ -392,14 +667,25 @@ public class ProductService {
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -483,6 +769,14 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -520,8 +814,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -561,8 +865,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -603,8 +917,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -645,8 +969,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(rs.getInt("price"));
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -682,14 +1016,25 @@ public class ProductService {
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -722,8 +1067,20 @@ public class ProductService {
             getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
+<<<<<<< Updated upstream
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+=======
+<<<<<<< HEAD
+               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+=======
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
@@ -731,8 +1088,18 @@ public class ProductService {
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -752,6 +1119,7 @@ public class ProductService {
     public static List<Product> getCategory3() {
         List<Product> getCategory;
         List<ProductColor> listColor;
+<<<<<<< Updated upstream
 
         List<ProductSize> listSize;
         List<ImageProduct> listImage;
@@ -796,6 +1164,9 @@ public class ProductService {
         List<Product> getCategory;
         List<ProductColor> listColor;
 
+=======
+
+>>>>>>> Stashed changes
         List<ProductSize> listSize;
         List<ImageProduct> listImage;
         try {
@@ -803,22 +1174,45 @@ public class ProductService {
             PreparedStatement pState = null;
             String sql = "select * from products where category=?";
             pState = ConnectDB.connect(sql);
+<<<<<<< Updated upstream
             pState.setString(1, "Gạch giả gỗ");
+=======
+            pState.setString(1, "Gạch trang trí");
+>>>>>>> Stashed changes
             ResultSet rs = pState.executeQuery();
             getCategory = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
+<<<<<<< Updated upstream
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+=======
+<<<<<<< HEAD
+               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+=======
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
+<<<<<<< Updated upstream
                 product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
                 product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+=======
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+>>>>>>> Stashed changes
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -835,6 +1229,246 @@ public class ProductService {
         return getCategory;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static List<Product> getCategory4() {
+        List<Product> getCategory;
+        List<ProductColor> listColor;
+
+        List<ProductSize> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products where category=?";
+            pState = ConnectDB.connect(sql);
+            pState.setString(1, "Gạch giả gỗ");
+            ResultSet rs = pState.executeQuery();
+            getCategory = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+<<<<<<< HEAD
+                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+=======
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+<<<<<<< HEAD
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+=======
+                product.setPrice(ProductImportedService.getMinPriceProduct(rs.getString("id_product")));
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                getCategory.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return getCategory;
+    }
+
+<<<<<<< HEAD
+     public static List<Product> getSeller1() {
+        List<Product> list;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products" +
+                    " where id_category=? and status=? and isNew = 1 limit 8";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 1);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            list = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                list.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public static List<Product> getSeller2() {
+        List<Product> list;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products" +
+                    " where id_category=? and status=? and isNew = 1 limit 8";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 2);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            list = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                list.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    public static List<Product> getSeller3() {
+        List<Product> list;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products" +
+                    " where id_category=? and status=? and isNew = 1 limit 8";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 3);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            list = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                list.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+public static List<Product> getSeller4() {
+        List<Product> list;
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        try {
+
+            PreparedStatement pState = null;
+            String sql = "select * from products" +
+                    " where id_category=? and status=? and isNew = 1 limit 8";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, 4);
+            pState.setInt(2, 1);
+            ResultSet rs = pState.executeQuery();
+            list = new LinkedList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setProductID(rs.getString("id_product"));
+                product.setProductName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setSalePrice(rs.getInt("sale"));
+                product.setIsNew(rs.getInt("isNew"));
+                product.setPrice(price);
+//                product.setCost(rs.getInt("cost"));
+                product.setStatus(rs.getInt("status"));
+                product.setColor(listColor);
+                product.setSize(listSize);
+                product.setCategory(rs.getString("id_category"));
+                product.setImage(listImage);
+                list.add(product);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+
+>>>>>>> Stashed changes
+    public static void main(String[] args) {
+       System.out.println(ProductService.getAllProduct());
+=======
     public static void main(String[] args) {
         ProductService list = new ProductService();
 //        System.out.println(getByType(4));
@@ -852,6 +1486,7 @@ public class ProductService {
 //        deleteProduct("sp031");
 //        updateProduct("sp315945",p);
 //        System.out.println(searchByName("158224").toString());
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
     }
 
 }

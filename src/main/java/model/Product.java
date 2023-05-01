@@ -44,6 +44,11 @@ public class Product {
         this.thumb = thumb;
     }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     public Product(String productID, String productName, String description, List<ProductSize> size, String category, List<ProductColor> color, int salePrice, List<ImageProduct> image, int isNew, int status, int quantityCart, String thumb, List<Integer> priceList, List<Integer> costList, List<Integer> quantityList) {
         this.productID = productID;
         this.productName = productName;
@@ -78,11 +83,8 @@ public class Product {
         this.quantityCart = quantityCart;
     }
 
+>>>>>>> 4bddbfb357a0bba29aca122187d53c2bbaf11471
     public String getProductID() {
-        return productID;
-    }
-
-    public String getKey() {
         return productID;
     }
 

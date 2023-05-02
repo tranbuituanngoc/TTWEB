@@ -985,9 +985,8 @@
                             for="payment_method_id_1002252884"
                           >
                             <div class="blank-slate">
-                              Tên tài khoản: Công Ty Cổ Phần Hợp Tác Kinh Tế Và
-                              Xuất Nhập Khẩu Savimex Số tài khoản: 0071001303667
-                              Ngân hàng: Vietcombank – CN HCM Nội dung: Tên +
+                              Tên tài khoản: Ngân hàng Thương mại cổ phần Đầu tư và Phát triển Việt Nam Số tài khoản: 31410004065840
+                              Ngân hàng: BIDV – CN HCM Nội dung: Tên +
                               SĐT đặt hàng
                             </div>
                           </div>

@@ -127,12 +127,12 @@
                                     <p class="d-flex align-items-center">
                                         <span class="prev-price">
                                             <fmt:formatNumber
-                                            type="currency" currencySymbol="" minFractionDigits="0" value="${product.price}"/>
+                                            type="currency" currencySymbol="" minFractionDigits="0" value="${price}"/>
                                         </span>
                                         <span class="price">
                                             <fmt:formatNumber
                                             type="currency" currencySymbol="" minFractionDigits="0"
-                                            value="${product.price-Math.round(product.price*(product.salePrice/100))}"/> VNĐ
+                                            value="${price-Math.round(price*(product.salePrice/100))}"/> VNĐ
                                         </span>
                                         <span class="saving-price">Tiết kiệm ${product.salePrice}%</span></p>
                                 </div>
@@ -141,9 +141,15 @@
                                     <input name="product_id" type="hidden" value="${product.productID}">
                                     <div class="product-size mb-20 clearfix">
                                         <label>Kích thước</label>
-                                            <select id="size" name="size" class="size">
+                                            <select id="sizeSelect" name="size" class="size">
                                                 <c:forEach var="size" items="${product.size}">
-                                                    <option value="${size.idSize}">${size.width}x${size.length}</option>
+                                                    <c:if test="${size.idSize == size_id}">
+                                                        <c:set var="selected" value="selected"/>
+                                                    </c:if>
+                                                     <c:if test="${size.idSize != size_id}">
+                                                        <c:set var="selected" value=""/>
+                                                    </c:if>
+                                                    <option ${selected} class="sizeOption" value="ProductDetail?productID=${product.productID}&color=${color_id}&size=${size.idSize}">${size.width}x${size.length}</option>
                                                 </c:forEach>
                                             </select>
                                     </div>
@@ -155,12 +161,14 @@
                                                 <c:choose>
                                                     <c:when test="${color_id == color.id_color }">
                                                         <li>
-                                                            <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''} active" href="ProductDetail?productID=${product.productID}&color=${color.id_color}"></a>
+                                                            <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''} active"
+                                                               href="ProductDetail?productID=${product.productID}&color=${color.id_color}&size=${size_id}"></a>
                                                         </li>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li>
-                                                            <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''}" href="ProductDetail?productID=${product.productID}&color=${color.id_color}"></a>
+                                                            <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''}"
+                                                               href="ProductDetail?productID=${product.productID}&color=${color.id_color}&size=${size_id}"></a>
                                                         </li>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -168,11 +176,12 @@
                                         </ul>
                                     </div>
                                     <div class="box-quantity d-flex hot-product2">
-                                        <input name="quantity" class="quantity mr-15" type="number" min="1" value="1">
+                                        <input name="quantity" class="quantity mr-15" type="number" min="1" value="1" onchange="updateQuantityValue(this)">
+                                        <input name="quantity_value" value="1" type="hidden">
                                         <div class="pro-actions">
                                             <div class="actions-primary">
     <%--                                           <c:url value="addCart?productID=${product.productID}&color=${color_id}" var="addCart"/>--%>
-                                                <a href="#" onclick="submitForm()" id="add-cart" title="" data-original-title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                                <a href="addCart?product_id=${product.productID}&color_id=${color_id}&size=${size_id}" title="" data-original-title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                             </div>
                                             <div class="actions-secondary">
     <%--                                            <a href="compare.html" title="" data-original-title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>--%>
@@ -182,7 +191,7 @@
                                     </div>
                                 </form>
                                 <div class="pro-ref mt-20">
-                                    <p><span class="in-stock"><i class="ion-checkmark-round"></i> Còn sẵn XXX sản phẩm</span></p>
+                                    <p><span class="in-stock"><i class="ion-checkmark-round"></i> Còn sẵn ${quantity} sản phẩm</span></p>
                                 </div>
                             </div>
                         </div>
@@ -205,13 +214,13 @@
                         </ul>
                         <!-- Product Thumbnail Tab Content Start -->
                         <div class="tab-content thumb-content border-default">
-                            <div id="dtail" class="tab-pane fade show active">
                                 <!-- Reviews Start -->
-                            <div class="fb-comments"
+                            <div id="dtail" class="fb-comments tab-pane fade show active">
                                  data-href="product-detail.jsp?productID=${product.productID}"
-                                 data-width="1100" data-numposts="5"></div>
-                            <!-- Reviews End -->
+                                 data-width="1100" data-numposts="5">
                             </div>
+                            <!-- Reviews End -->
+
                             <div id="review" class="tab-pane fade">
                                 <!-- Reviews Start -->
                                 <div class="review border-default universal-padding">
@@ -370,7 +379,7 @@
                                     </div>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
-                                            <c:url value="/addCart?productID=${product.productID}&color=${color_id}" var="addCart"/>
+                                            <c:url value="/addCart?productID=${product.productID}&color=${color_id}&size=${size_id}" var="addCart"/>
                                             <a href="${addCart}" id="add-cart" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                         </div>
                                         <div class="actions-secondary">
@@ -380,9 +389,8 @@
                                 </div>
                                 <!-- Product Content End -->
                             </div>
-                        </c:forEach>
+                     </c:forEach>
                         <!-- Single Product End -->
-
                 </div>
                 <!-- Hot Deal Product Active End -->
 
@@ -435,9 +443,19 @@
         }
     </script>
     <script>
-        function submitForm() {
-            document.getElementById('cart-form').submit();
-        }
+        $("select").find("option[value='option3']").prop("selected", true);
+        $("#sizeSelect").change(function() {
+            const selectedValue = $(this).val();
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        });
+    </script>
+    <script>
+          function updateQuantityValue(input) {
+            var quantityValueInput = document.getElementsByName("quantity_value")[0];
+            quantityValueInput.value = input.value;
+          }
     </script>
 </body>
 </html>

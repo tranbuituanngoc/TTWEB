@@ -1,10 +1,8 @@
 package controller;
 
 import model.*;
-import service.CartService;
-import service.ProductColorService;
-import service.ProductService;
-import service.ProductSizeService;
+
+import service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +25,9 @@ public class AddCart extends HttpServlet {
         Product p = ProductService.getById(id);
         String colorId_raw = request.getParameter("color_id");
         User user = (User) request.getSession().getAttribute("user");
-        String quantity_raw = request.getParameter("quantity");
+
+        String quantity_raw = request.getParameter("quantity_value");
+
         int quantity  =1;
         if (quantity_raw != null){
             quantity = Integer.parseInt(quantity_raw);
@@ -41,18 +41,15 @@ public class AddCart extends HttpServlet {
         if (sizeId_raw != null) {
            sizeId = Integer.parseInt(sizeId_raw);
         }
-//        System.out.println(quantity_raw);
-//        System.out.println(sizeId);
-//        System.out.println(colorId);
-//        System.out.println(id);
-//        System.out.println(user.getId_User());
+
+        int price = ProductImportedService.getPrice(id, sizeId, colorId);
         Cart cart = new Cart();
         Color color = ProductColorService.getColorById(colorId);
         Size size = ProductSizeService.getSizeById(sizeId);
+        p.setPrice(price);
         cart.setColor(color);
         cart.setSize(size);
         cart.setProduct(p);
-
         HttpSession session = request.getSession();
         CartUser cartUser = (CartUser) session.getAttribute( "cartUser");
         if (cartUser.getIdUser() == null) {

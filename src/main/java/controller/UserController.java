@@ -3,11 +3,7 @@ package controller;
 import Util.Email;
 import Util.Encode;
 import Util.SaltString;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import model.User;
-import okhttp3.*;
 import service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -26,12 +22,6 @@ import java.util.Random;
 
 @WebServlet(name = "UserController", value = "/nguoi-dung")
 public class UserController extends HttpServlet {
-    private static final int MAX_LOGIN_ATTEMPTS = 3; // Số lần đăng nhập sai tối đa
-    private static final long LOCK_TIME = 5 * 60 * 1000; // Thời gian khóa tài khoản (5 phút)
-
-    private static final String SITE_KEY = "6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"; // site key reCAPTCHA
-    private static final String SECRET_KEY = "6LfaJM4lAAAAACfjZqz0xFBME4uulzf79Wzi8xdJ"; // secret key reCAPTCHA
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -40,12 +30,12 @@ public class UserController extends HttpServlet {
         } else if (action.equals("dang-xuat")) {
             Logout(request, response);
         } else if (action.equals("dang-ki")) {
-            Register(request, response);
+            Register(request,response);
         } else if (action.equals("xac-thuc")) {
             verifyAccount(request, response);
-        } else if (action.equals("doi-mat-khau")) {
+        }else if (action.equals("doi-mat-khau")) {
             ChangePass(request, response);
-        } else if (action.equals("quen-mat-khau")) {
+        }else if (action.equals("quen-mat-khau")) {
             forgetPass(request, response);
         }
     }
@@ -59,78 +49,31 @@ public class UserController extends HttpServlet {
         try {
             String username = request.getParameter("username");
             String pass = request.getParameter("password");
-            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            pass = Encode.encodeToSHA1(pass);
 
-            boolean valid = verifyRecaptcha(gRecaptchaResponse);
+            request.setAttribute("username", username);
+            String messageResponse="";
 
-            String messageResponse = "";
+            User user = new User();
+            user.setUserName(username);
+            user.setPass(pass);
 
-            if (valid) {
-                pass = Encode.encodeToSHA1(pass);
-
-                request.setAttribute("username", username);
-
-                User user = new User();
-                user.setUserName(username);
-                user.setPass(pass);
-
-                UserService us = new UserService();
-                User u = us.selectByUserNameAndpassword(user);
-                HttpSession session = request.getSession(true);
-
-                // Lấy số lần đăng nhập sai đã nhập trong session hoặc tạo session mới nếu chưa có
-                Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
-
-                if (loginAttempts == null) {
-                    loginAttempts = 0;
+            UserService us = new UserService();
+            User u = us.selectByUserNameAndpassword(user);
+            String url = "";
+            if (u != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", u);
+                int r = u.getRole();
+                if (u.getRole() == 1) {
+                    response.sendRedirect("ListProductAd");
+                } else if (u.getRole() == 2) {
+                    response.sendRedirect("Home");
                 }
-
-                // Kiểm tra xem tài khoản đã bị khóa hay chưa
-                Long unlockTime = (Long) session.getAttribute("unlockTime");
-
-                if (unlockTime != null && unlockTime > System.currentTimeMillis()) {
-                    // Nếu tài khoản đã bị khóa, hiển thị thông báo và không xử lý việc đăng nhập
-                    long timeLeft = (unlockTime - System.currentTimeMillis()) / 1000;
-                    request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau " + timeLeft + " giây.");
-                    messageResponse = "error";
-                    request.setAttribute("messageResponse", messageResponse);
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                    return;
-                }
-
-                if (u != null) {
-                    session.setAttribute("user", u);
-                    if (u.getRole() == 1 || u.getRole() == 0) {
-                        response.sendRedirect("ListProductAd");
-                    } else if (u.getRole() == 2) {
-                        response.sendRedirect("Home");
-                    }
-                } else {
-                    loginAttempts++;
-                    session.setAttribute("loginAttempts", loginAttempts);
-                    if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-                        // Nếu đã đạt đến số lần đăng nhập sai tối đa, khóa chức năng đăng nhập trong 5 phút
-                        long unlockTimeSet = System.currentTimeMillis() + LOCK_TIME;
-                        session.setAttribute("unlockTime", unlockTimeSet);
-                        messageResponse = "error";
-                        request.setAttribute("messageResponse", messageResponse);
-                        request.setAttribute("error", "Số lần đăng nhập sai của bạn đã vượt quá giới hạn. Vui lòng thử lại sau " + (LOCK_TIME / 1000) + " giây.");
-                        request.getRequestDispatcher("login.jsp").forward(request, response);
-                        return;
-                    } else {
-                        // Nếu số lần đăng nhập sai chưa đạt tối đa, hiển thị thông báo lỗi và cho phép đăng nhập lại
-                        int remainingAttempts = MAX_LOGIN_ATTEMPTS - loginAttempts;
-                        messageResponse = "error";
-                        request.setAttribute("messageResponse", messageResponse);
-                        request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng. Bạn còn " + remainingAttempts + " lần thử.");
-                        request.getRequestDispatcher("login.jsp").forward(request, response);
-                        return;
-                    }
-                }
-            }else {
-                messageResponse = "error";
-                request.setAttribute("messageResponse", messageResponse);
-                request.setAttribute("error", "Vui lòng xác thực mã Captcha");
+            } else {
+                messageResponse="error";
+                request.setAttribute("messageResponse",messageResponse);
+                request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (ServletException e) {
@@ -161,9 +104,9 @@ public class UserController extends HttpServlet {
             String phone = request.getParameter("phone");
             String password = request.getParameter("password");
             String com_pass = request.getParameter("confirm-password");
-            String address = "";
+            String address= "";
             int role = 2;
-            boolean status = true;
+            boolean status= true;
 
             PrintWriter out = response.getWriter();
 
@@ -175,8 +118,8 @@ public class UserController extends HttpServlet {
 
             String errorUName = "";
             String errorCPass = "";
-            String messageResponse = "";
-            int error = 0;
+            String messageResponse="";
+            int error=0;
             UserService UserService = new UserService();
             if (UserService.checkUserName(username)) {
                 errorUName = "Tên đăng nhập đã tồn tại</br>";
@@ -191,14 +134,14 @@ public class UserController extends HttpServlet {
             if (error != 0) {
                 request.setAttribute("errorUName", errorUName);
                 request.setAttribute("errorCPass", errorCPass);
-                messageResponse = "error";
-                request.setAttribute("messageResponse", messageResponse);
+                messageResponse="error";
+                request.setAttribute("messageResponse",messageResponse);
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 Random rd = new Random();
                 String random = System.currentTimeMillis() + rd.nextInt(100) + "";
                 String id_user = "kh" + random.substring(random.length() - 8);
-                User user = new User(id_user, username, name, email, phone, address, password, role, status);
+                User user= new User(id_user,username,name,email,phone,address,password,role,status);
                 if (UserService.insert(user) > 0) {
                     //Create salt string(random string)
                     String saltString = SaltString.getSaltString();
@@ -224,8 +167,8 @@ public class UserController extends HttpServlet {
                 }
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                messageResponse = "success";
-                request.setAttribute("messageResponse", messageResponse);
+                messageResponse="success";
+                request.setAttribute("messageResponse",messageResponse);
                 String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
@@ -278,7 +221,6 @@ public class UserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     private void ChangePass(HttpServletRequest request, HttpServletResponse response) {
         try {
             String oldPass = request.getParameter("oldPassword");
@@ -323,7 +265,6 @@ public class UserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     private void forgetPass(HttpServletRequest request, HttpServletResponse response) {
         try {
             String uname = request.getParameter("username");
@@ -338,15 +279,15 @@ public class UserController extends HttpServlet {
             String error = "";
             String url = "";
 
-            String oldPass_Encode = "0";
+            String oldPass_Encode="0";
 
-            User user = null;
-            if (oldPass == "") {
+            User user= null;
+            if(oldPass==""){
                 user = userDAO.selectByUnameNEmail(u);
-            } else {
+            }else{
                 oldPass_Encode = Encode.encodeToSHA1(oldPass);
                 u.setOldPass(oldPass_Encode);
-                user = userDAO.selectByUnameNEmailNOldPass(u);
+                user= userDAO.selectByUnameNEmailNOldPass(u);
             }
 
 
@@ -371,10 +312,9 @@ public class UserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     private static String getContentEmailVerify(User user) {
         String link = "http://localhost:8080/nguoi-dung?action=xac-thuc&id_User=" + user.getId_User() + "&verificationCode=" + user.getVerificationCode();
-        String content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+        String content="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" style=\"font-family:arial, 'helvetica neue', helvetica, sans-serif\">\n" +
                 "<head>\n" +
                 "<meta charset=\"UTF-8\">\n" +
@@ -577,7 +517,6 @@ public class UserController extends HttpServlet {
                 "</html>";
         return content;
     }
-
     private static String getContentEmailFogetPass(User user, String saltStirng) {
         String content = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -846,30 +785,4 @@ public class UserController extends HttpServlet {
         return content;
     }
 
-    private boolean verifyRecaptcha(String gRecaptchaResponse) throws IOException {
-
-        // Tạo một OkHttpClient để gửi yêu cầu HTTP đến Google Recaptcha API
-        OkHttpClient client = new OkHttpClient();
-
-        RequestBody formBody = new FormBody.Builder()
-                .add("secret", SECRET_KEY)
-                .add("response", gRecaptchaResponse)
-                .build();
-
-        //Gửi yêu cầu chứa dữ liệu của formBody đến url theo phương thức POST
-        Request request = new Request.Builder()
-                .url("https://www.google.com/recaptcha/api/siteverify")
-                .post(formBody)
-                .build();
-
-        //Trả về 1 response để phản hồi kết quả xem người dùng đã check Captcha hay chưa?
-        Response response = client.newCall(request).execute();
-
-        //Phân tích và chuyển đổi kết quả được trả về thành một biến boolean
-        Gson gson = new Gson();
-        JsonObject jsonObject = JsonParser.parseString(response.body().string()).getAsJsonObject();
-        boolean success = jsonObject.get("success").getAsBoolean();
-
-        return success;
-    }
 }

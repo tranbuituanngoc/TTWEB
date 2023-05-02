@@ -12,48 +12,40 @@
     String idUser = u.getId_User();
     String username = u.getUserName();
     int role = u.getRole();
-    if (username.equalsIgnoreCase("") || role == 2) {
-        response.sendRedirect(request.getContextPath() + "/Home");
+    if (username.equalsIgnoreCase("") || role == 2){
+        response.sendRedirect(request.getContextPath() +"/Home");
         return;
     }
 %>
 <c:set var="username" value="<%=username%>"/>
 <c:set var="userId" value="<%=idUser%>"/>
-<div class="app">
-    <div class="layout">
-        <!-- Header START -->
-        <div class="header">
-            <div class="logo logo-dark">
-                <a href="Home">
-                    <img src="admin/assets/images/logo/logo.png" alt="Logo">
-                    <img class="logo-fold" src="admin/assets/images/logo/logo-fold.png" alt="Logo">
-                </a>
-            </div>
-            <div class="logo logo-white">
-                <a href="Home">
-                    <img src="admin/assets/images/logo/logo-white.png" alt="Logo">
-                    <img class="logo-fold" src="admin/assets/images/logo/logo-fold-white.png" alt="Logo">
-                </a>
-            </div>
 
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Admin Panel</a>
             <c:if test="${user != null}">
-                <div class="nav-wrap">
-                    <ul class="nav-left">
-                    </ul>
-                    <ul class="nav-right">
+                <div class="nav-collapse collapse">
+                    <ul class="nav pull-right">
                         <li class="dropdown">
-                            <button class="btn btn-default dropdown-toggle border-0"  data-toggle="dropdown">
-                                <i class="anticon anticon-user m-r-5"></i><span>${username}</span><i class="caret"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout">Đăng xuất</a>
-                            </div>
+                            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i
+                                    class="icon-user"></i>${username}<i class="caret"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a tabindex="-1" href="logout">Đăng xuất</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </c:if>
+            <!--/.nav-collapse -->
         </div>
-        <!-- Header END -->
     </div>
 </div>
 

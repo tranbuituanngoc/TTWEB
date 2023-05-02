@@ -10,14 +10,14 @@ import java.util.List;
 
 public class ProductImportedService {
     public static int getQuantityDetail(String idProduct, int idSize, int idColor) {
-        int res =0;
+        int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
             String sql = "SELECT inventoryQuantity FROM productimported WHERE id_product=? AND id_size=?  AND id_color=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            statement.setInt(2,idSize);
-            statement.setInt(3,idColor);
+            statement.setInt(2, idSize);
+            statement.setInt(3, idColor);
             System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -32,7 +32,8 @@ public class ProductImportedService {
         return res;
     }
 
-    public static int insert(String idProduct, int idSize, int idCate, int idColor, int quantity, Timestamp importDate) {
+    public static int insert(String idProduct, int idSize, int idCate, int idColor, int quantity,
+            Timestamp importDate) {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
@@ -43,7 +44,7 @@ public class ProductImportedService {
             statement.setInt(3, idColor);
             statement.setInt(4, quantity);
             statement.setInt(5, quantity);
-            statement.setTimestamp(6,importDate);
+            statement.setTimestamp(6, importDate);
             System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
@@ -52,6 +53,7 @@ public class ProductImportedService {
         }
         return res;
     }
+
     public static List<Size> getSizeProduct(String id) {
         List<Size> sizes;
         try {
@@ -76,8 +78,10 @@ public class ProductImportedService {
             throw new RuntimeException(e);
         }
         return sizes;
+
     }
-    public static List<Color> getColorProduct(String id){
+
+    public static List<Color> getColorProduct(String id) {
         List<Color> colorProduct;
         try {
             Connection connection = JDBCUtil.getConnection();
@@ -99,16 +103,17 @@ public class ProductImportedService {
         }
         return colorProduct;
     }
-    public static int getPrice(String idProduct, int idSize, int idColor){
-        int res =0;
+
+    public static int getPrice(String idProduct, int idSize, int idColor) {
+        int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
             String sql = "SELECT price FROM productimported WHERE id_product=? AND id_size=?  AND id_color=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            statement.setInt(2,idSize);
-            statement.setInt(3,idColor);
-//            System.out.println(sql);
+            statement.setInt(2, idSize);
+            statement.setInt(3, idColor);
+            // System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("price");
@@ -120,11 +125,13 @@ public class ProductImportedService {
         }
         return res;
     }
+
     public static void main(String[] args) {
-//        System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1, 2));
-//        System.out.println(ProductImportedService.getColorProduct("sp404590"));
-//        System.out.println(ProductImportedService.getSizeProduct("sp404590"));
-//        System.out.println(ProductImportedService.getPrice("sp404590", 1, 2));
+        // System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1,
+        // 2));
+        // System.out.println(ProductImportedService.getColorProduct("sp404590"));
+        // System.out.println(ProductImportedService.getSizeProduct("sp404590"));
+        // System.out.println(ProductImportedService.getPrice("sp404590", 1, 2));
 
     }
 }

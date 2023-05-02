@@ -787,9 +787,7 @@
                                   id="customer_shipping_district"
                                   name="customer_shipping_district"
                                 >
-<%--                                  <option data-code="null" value="null">--%>
-<%--                                    Chọn quận/ huyện--%>
-<%--                                  </option>--%>
+
                                 </select>
                               </div>
                             </div>
@@ -810,17 +808,7 @@
                                   id="customer_shipping_ward"
                                   name="customer_shipping_ward"
                                 >
-                                  <option
-                                    data-code="null"
-                                    value="null"
-                                    selected=""
-                                  >
-                                    Chọn phường/ xã
-                                  </option>
 
-                                  <option data-code="27643" value="27643">
-                                    Thị trấn Nhà Bè
-                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -993,7 +981,7 @@
                           </div>
 
                           <div
-                            class="radio-wrapper content-box-row content-box-row-secondary hidden"
+                            class="radio-wrapper content-box-row content-box-row-secondary bank-payment hidden"
                             for="payment_method_id_1002252884"
                           >
                             <div class="blank-slate">
@@ -1084,30 +1072,6 @@
         </div>
       </div>
     </div>
-<%--    <script !src="">--%>
-<%--      $(document).ready(function() {--%>
-<%--        $('#customer_shipping_province').change(function() {--%>
-<%--          var provinceId = $(this).val(); // Lấy mã tỉnh/thành được chọn--%>
-<%--          $.ajax({--%>
-<%--            url: 'form_update_shipping_method', // URL của servlet để lấy danh sách các quận/huyện, phường/xã--%>
-<%--            type: 'POST',--%>
-<%--            data: {provinceId: provinceId}, // Truyền mã tỉnh/thành vào để lấy danh sách các quận/huyện, phường/xã tương ứng--%>
-<%--            dataType: 'json',--%>
-<%--            success: function(data) {--%>
-<%--              // Xóa các option cũ của quận/huyện, phường/xã--%>
-<%--              $('#customer_shipping_district').find('option').remove();--%>
-<%--              // Tạo option mới cho quận/huyện, phường/xã và cập nhật giao diện--%>
-<%--              $.each(data, function(index, district) {--%>
-<%--                $('#customer_shipping_district').append($('<option>', {--%>
-<%--                  value: district.districtId,--%>
-<%--                  text: district.districtName--%>
-<%--                }));--%>
-<%--              });--%>
-<%--            }--%>
-<%--          });--%>
-<%--        });--%>
-<%--      });--%>
-<%--    </script>--%>
     <script>
       const url = 'http://140.238.54.136/api/auth/login';
       const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
@@ -1137,6 +1101,7 @@
                 // xử lý dữ liệu trả về từ API ở đây
                 var select =  $("#customer_shipping_district");
                 select.empty();
+                select.append('<option data-code="null" value="null">Chọn quận/ huyện</option>');
                 const data = JSON.parse(xhr.responseText).original.data;
                 $.each(data, function (i, district) {
                   var option = $("<option>");
@@ -1182,6 +1147,7 @@
                 // xử lý dữ liệu trả về từ API ở đây
                 var select =  $("#customer_shipping_ward");
                 select.empty();
+                select.append('<option data-code="null" value="null" selected="">Chọn phường/ xã</option>')
                 const data = JSON.parse(xhr.responseText).original.data;
                 $.each(data, function (i, ward) {
                   var option = $("<option>");
@@ -1201,6 +1167,15 @@
             console.log(xhr.status); // Handle the error
           }
         });
+      });
+    </script>
+    <script !src="">
+      $('input[name="payment_method_id"]').change(function() {
+        if ($(this).val() === '1002252884') {
+          $('.bank-payment').removeClass('hidden');
+        } else {
+          $('.bank-payment').addClass('hidden');
+        }
       });
     </script>
 

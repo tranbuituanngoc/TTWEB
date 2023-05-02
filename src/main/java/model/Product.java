@@ -202,8 +202,8 @@ public class Product {
         List<Double> res= new ArrayList<>();
         double priceAf;
         for (int price : priceList) {
-         priceAf=   price - (price * (salePrice / 100.0));
-         res.add(priceAf);
+            priceAf=   price - (price * (salePrice / 100.0));
+            res.add(priceAf);
         }
         return res;
     }

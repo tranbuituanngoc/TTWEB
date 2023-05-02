@@ -108,7 +108,7 @@ public class ProductImportedService {
             statement.setString(1, idProduct);
             statement.setInt(2,idSize);
             statement.setInt(3,idColor);
-            System.out.println(sql);
+//            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("price");
@@ -121,10 +121,10 @@ public class ProductImportedService {
         return res;
     }
     public static void main(String[] args) {
-        System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1, 2));
-        System.out.println(ProductImportedService.getColorProduct("sp404590"));
-        System.out.println(ProductImportedService.getSizeProduct("sp404590"));
-        System.out.println(ProductImportedService.getPrice("sp404590", 1, 2));
+//        System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1, 2));
+//        System.out.println(ProductImportedService.getColorProduct("sp404590"));
+//        System.out.println(ProductImportedService.getSizeProduct("sp404590"));
+//        System.out.println(ProductImportedService.getPrice("sp404590", 1, 2));
 
     }
 }

@@ -15,8 +15,8 @@ import java.util.List;
 public class ProductService {
     public static List<Product> getAllProduct() {
         List<Product> listProducts;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
             PreparedStatement pState = null;
@@ -27,10 +27,10 @@ public class ProductService {
             listProducts = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
@@ -40,10 +40,10 @@ public class ProductService {
                 product.setPrice(rs.getInt("price"));
 ////                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
-                product.setImage(listImage);
+//                product.setImage(listImage);
                 listProducts.add(product);
             }
 
@@ -57,8 +57,8 @@ public class ProductService {
 
     public static List<Product> getAll() {
         List<Product> listProducts;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
 
         try {
@@ -69,21 +69,21 @@ public class ProductService {
             listProducts = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+//               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(price);
+//                product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
 //                product.setImage(listImage);
                 listProducts.add(product);
@@ -183,8 +183,8 @@ public class ProductService {
 
     public static List<Product> listNewProduct() {
         List<Product> listNewProduct;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -197,8 +197,8 @@ public class ProductService {
             listNewProduct = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
@@ -209,8 +209,8 @@ public class ProductService {
                 product.setPrice(rs.getInt("price"));
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listNewProduct.add(product);
@@ -400,8 +400,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listBestSeller.add(product);
@@ -569,8 +569,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listHintForYou.add(product);
@@ -868,8 +868,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -913,8 +913,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -957,8 +957,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -1002,8 +1002,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -1047,8 +1047,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -1062,7 +1062,7 @@ public class ProductService {
         return list;
     }
     public static List<Product> getSeller2() {
-        List<Product> list;
+         List<Product> list;
         List<Color> listColor;
         List<Size> listSize;
         List<ImageProduct> listImage;
@@ -1091,8 +1091,8 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
@@ -1198,7 +1198,7 @@ public static List<Product> getSeller4() {
 
 
     public static void main(String[] args) {
-       System.out.println(ProductService.getAllProduct());
+//       System.out.println(ProductService.getAllProduct());
     }
 
 }

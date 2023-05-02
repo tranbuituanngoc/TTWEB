@@ -1108,46 +1108,102 @@
 <%--        });--%>
 <%--      });--%>
 <%--    </script>--%>
-<%--    <script>--%>
-<%--      const url = 'http://140.238.54.136/api/auth/login';--%>
-<%--      const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email--%>
-<%--      const password = '12345678'; // Replace with your actual password--%>
-<%--      $('#customer_shipping_province').on('change', function() {--%>
-<%--        // Lấy giá trị được chọn trong select--%>
-<%--        var selectedValue = $(this).val();--%>
-<%--        console.log(selectedValue)--%>
-<%--        $.ajax({--%>
-<%--        url: url,--%>
-<%--        type: 'POST',--%>
-<%--        data: {--%>
-<%--          email: email,--%>
-<%--          password: password--%>
-<%--        },--%>
-<%--        success: function(response) {--%>
-<%--          const token = response.access_token;--%>
-<%--          const districtUrl = 'http://140.238.54.136/api/district?provinceID='+selectedValue;--%>
-<%--          console.log(token)--%>
-<%--          var xhr = new XMLHttpRequest();--%>
-<%--          xhr.open('GET', districtUrl, true);--%>
-<%--          xhr.setRequestHeader('Authorization', 'Bearer '+token);--%>
-<%--          xhr.onload = function() {--%>
-<%--            if (xhr.status === 200) {--%>
-<%--              // xử lý dữ liệu trả về từ API ở đây--%>
-<%--              console.log(xhr.responseText);--%>
-<%--            } else {--%>
-<%--              // xử lý lỗi nếu có--%>
-<%--              console.log('Error:', xhr.status);--%>
-<%--            }--%>
-<%--          };--%>
-<%--          xhr.send();--%>
-<%--        },--%>
-<%--        error: function(xhr, status, error) {--%>
-<%--          console.log(xhr.status); // Handle the error--%>
-<%--        }--%>
-<%--      });--%>
-<%--      });--%>
+    <script>
+      const url = 'http://140.238.54.136/api/auth/login';
+      const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
+      const password = '12345678'; // Replace with your actual password
+// load district
+      $('#customer_shipping_province').on('change', function() {
+        // Lấy giá trị được chọn trong select
+        var selectedValue = $(this).val();
 
-<%--    </script>--%>
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            email: email,
+            password: password
+          },
+          success: function(response) {
+            const token = response.access_token;
+            const districtUrl = 'http://140.238.54.136/api/district?provinceID='+selectedValue;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', districtUrl, true);
+
+            xhr.setRequestHeader('Authorization', 'Bearer '+token);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                // xử lý dữ liệu trả về từ API ở đây
+                var select =  $("#customer_shipping_district");
+                select.empty();
+                const data = JSON.parse(xhr.responseText).original.data;
+                $.each(data, function (i, district) {
+                  var option = $("<option>");
+                  option.attr("data-code", district.DistrictID);
+                  option.attr("value", district.DistrictID);
+                  option.text(district.DistrictName);
+                  select.append(option);
+                });
+              } else {
+                // xử lý lỗi nếu có
+                console.log('Error:', xhr.status);
+              }
+            };
+            xhr.send();
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.status); // Handle the error
+          }
+        });
+      });
+      //load ward
+      $('#customer_shipping_district').on('change', function() {
+        // Lấy giá trị được chọn trong select
+        var selectedValue = $(this).val();
+
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            email: email,
+            password: password
+          },
+          success: function(response) {
+            const token = response.access_token;
+            const wardUrl = 'http://140.238.54.136/api/ward?districtID='+selectedValue;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', wardUrl, true);
+
+            xhr.setRequestHeader('Authorization', 'Bearer '+token);
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                // xử lý dữ liệu trả về từ API ở đây
+                var select =  $("#customer_shipping_ward");
+                select.empty();
+                const data = JSON.parse(xhr.responseText).original.data;
+                $.each(data, function (i, ward) {
+                  var option = $("<option>");
+                  option.attr("data-code", ward.WardCode);
+                  option.attr("value", ward.WardCode);
+                  option.text(ward.WardName);
+                  select.append(option);
+                });
+              } else {
+                // xử lý lỗi nếu có
+                console.log('Error:', xhr.status);
+              }
+            };
+            xhr.send();
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.status); // Handle the error
+          }
+        });
+      });
+    </script>
+
     <script src="js/provinces_load.js"></script>
 <%--    <script src="js/districts_load.js"></script>--%>
     <!-- script apply counpon checkout -->

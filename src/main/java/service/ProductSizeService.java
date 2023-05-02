@@ -38,35 +38,35 @@ public class ProductSizeService {
         }
         return sizes;
     }
-//    public static ProductSize selectByDescrip(String d) {
-//        ProductSize res = null;
-//        try {
-//            Connection connection = JDBCUtil.getConnection();
-//            String sql = "SELECT id_size, descrip FROM sizes WHERE descrip=?";
-//            PreparedStatement statement = connection.prepareStatement(sql);
-//            statement.setString(1, d);
-//            System.out.println(sql);
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                String id_size = resultSet.getString("id_size");
-//                String descrip = resultSet.getString("descrip");
-//                res = new ProductSize();
-//                res.setId_Size(Integer.parseInt(id_size));
-//                res.setDescript(descrip);
-//                break;
-//            }
-//            JDBCUtil.disconection(connection);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return res;
-//    }
+    public static Size selectByDescrip(String d) {
+        Size res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT id_size, descrip FROM sizes WHERE descrip=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, d);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id_size = Integer.parseInt(resultSet.getString("id_size"));
+                String descrip = resultSet.getString("descrip");
+                res = new Size();
+                res.setIdSize(id_size);
+                res.setDescrip(descrip);
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static List<Size> getAll() {
         List<Size> sizes;
         try {
             PreparedStatement pState = null;
-            String sql = "select * from product_size ps join sizes s on ps.id_size = s.id_size";
+            String sql = "select id_size,height,length,width,weight,descrip from sizes ";
             pState = ConnectDB.connect(sql);
             ResultSet rs = pState.executeQuery();
             sizes = new LinkedList<>();
@@ -77,6 +77,7 @@ public class ProductSizeService {
                 size.setWeight(rs.getInt("weight"));
                 size.setLength(rs.getInt("length"));
                 size.setWidth(rs.getInt("width"));
+                size.setDescrip(rs.getString("descrip"));
                 sizes.add(size);
             }
 
@@ -87,6 +88,7 @@ public class ProductSizeService {
         }
         return sizes;
     }
+
     public static Size getSizeById(int idSize) {
         Size size = new Size();
         try {

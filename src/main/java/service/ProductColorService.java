@@ -39,8 +39,8 @@ public class ProductColorService {
         return colorProduct;
     }
 
-    public static ProductColor selectByDescrip(String d) {
-        ProductColor res = null;
+    public static Color selectByDescrip(String d) {
+        Color res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
             String sql = "SELECT id_color, descrip FROM colors WHERE descrip=?";
@@ -53,9 +53,9 @@ public class ProductColorService {
                 String id_color = resultSet.getString("id_color");
                 String descrip = resultSet.getString("descrip");
 
-                res = new ProductColor();
-                res.setId_Color(Integer.parseInt(id_color));
-                res.setDescription(descrip);
+                res = new Color();
+                res.setId_color(Integer.parseInt(id_color));
+                res.setDescrip(descrip);
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -90,7 +90,8 @@ public class ProductColorService {
         }
         return colorProduct;
     }
-  
+
+
     public static void removeProductColorById(String id_product){
         PreparedStatement s = null;
         String sql = "delete from product_color where id_product = ?";

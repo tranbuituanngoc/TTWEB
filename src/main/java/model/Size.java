@@ -6,8 +6,17 @@ public class Size {
     private int length;
     private int width;
     private int weight;
+    private String descrip;
 
     public Size() {
+    }
+
+    public String getDescrip() {
+        return descrip;
+    }
+
+    public void setDescrip(String descrip) {
+        this.descrip = descrip;
     }
 
     public int getIdSize() {

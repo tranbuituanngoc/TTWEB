@@ -1078,7 +1078,7 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());

@@ -4,6 +4,7 @@ import model.ImageProduct;
 import model.Color;
 import model.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
@@ -22,6 +23,9 @@ public class Product {
     private int cost;
     private int quantityCart;
     private String thumb;
+    private List<Integer> priceList;
+    private List<Integer> costList;
+    private List<Integer> quantityList;
 
     public Product() {
     }
@@ -44,6 +48,23 @@ public class Product {
         this.cost = cost;
         this.quantityCart = quantityCart;
         this.thumb = thumb;
+    }
+    public Product(String productID, String productName, String description, List<Size> size, String category, List<Color> color, int salePrice, List<ImageProduct> image, int isNew, int status, int quantityCart, String thumb, List<Integer> priceList, List<Integer> costList, List<Integer> quantityList) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
+        this.size = size;
+        this.category = category;
+        this.color = color;
+        this.salePrice = salePrice;
+        this.image = image;
+        this.isNew = isNew;
+        this.status = status;
+        this.quantityCart = quantityCart;
+        this.thumb = thumb;
+        this.priceList = priceList;
+        this.costList = costList;
+        this.quantityList = quantityList;
     }
 
     public String getProductID() {
@@ -168,6 +189,40 @@ public class Product {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public List<Double> getListPriceAfterSale(List<Integer> priceList) {
+        List<Double> res= new ArrayList<>();
+        double priceAf;
+        for (int price : priceList) {
+            priceAf=   price - (price * (salePrice / 100.0));
+            res.add(priceAf);
+        }
+        return res;
+    }
+
+    public List<Integer> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<Integer> priceList) {
+        this.priceList = priceList;
+    }
+
+    public List<Integer> getCostList() {
+        return costList;
+    }
+
+    public void setCostList(List<Integer> costList) {
+        this.costList = costList;
+    }
+
+    public List<Integer> getQuantityList() {
+        return quantityList;
+    }
+
+    public void setQuantityList(List<Integer> quantityList) {
+        this.quantityList = quantityList;
     }
 
     @Override

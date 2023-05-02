@@ -32,12 +32,11 @@ public class ProductImportedService {
         return res;
     }
 
-    public static int insert(String idProduct, int idSize, int idCate, int idColor, int quantity,
-            Timestamp importDate) {
+    public static int insert(String idProduct, int idSize, int idColor, int quantity, Timestamp importDate, int price, int cost) {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "INSERT INTO productimported (id_product,id_size,id_color,inventoryQuantity,inputQuantity,importDate) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO productimported (id_product,id_size,id_color,inventoryQuantity,inputQuantity,importDate,price,cost) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
             statement.setInt(2, idSize);
@@ -45,6 +44,8 @@ public class ProductImportedService {
             statement.setInt(4, quantity);
             statement.setInt(5, quantity);
             statement.setTimestamp(6, importDate);
+            statement.setInt(7, price);
+            statement.setInt(8, cost);
             System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
@@ -125,7 +126,22 @@ public class ProductImportedService {
         }
         return res;
     }
+    public static int delete(String idProduct) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "DELETE  FROM productimported WHERE id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
 
+            System.out.println(sql);
+            res = statement.executeUpdate();
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public static void main(String[] args) {
         // System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1,
         // 2));

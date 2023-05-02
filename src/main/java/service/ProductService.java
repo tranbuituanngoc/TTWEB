@@ -600,38 +600,33 @@ public class ProductService {
         return listHintForYou;
     }
 
-    // public static void updateProduct(String id, Product product) {
-    // PreparedStatement s = null;
-    // try {
-    // String sql = "UPDATE products set name= ?, descripsion = ?, size = ?,
-    // category = ?, price = ?, sale = ?," +
-    // " image1 = ?, image2 = ?, quantity = ?, isNew = ?, status = ? where id = ?";
-    // s = ConnectDB.connect(sql);
-    // s.setString(1, product.getProductName());
-    // s.setString(2, product.getDescription());
-    // s.setString(3, product.getSize());
-    // s.setString(4, product.getCategory());
-    // s.setInt(5, product.getPrice());
-    // s.setInt(6, product.getSalePrice());
-    // s.setString(7, product.getImage1());
-    // s.setString(8, product.getImage2());
-    // s.setInt(9, product.getQuantity());
-    // s.setInt(10, product.getIsNew());
-    // s.setInt(11, product.getStatus());
-    // s.setString(12, id);
-    // int rs = s.executeUpdate();
-    //
-    // s.close();
-    // } catch (ClassNotFoundException | SQLException e) {
-    // e.printStackTrace();
-    // }
-    // }
+    public static int updateProduct(String id, Product product) {
+        int res=0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE products SET name=? ,description=?,sale=?,isNew=?,status=?,id_category=? WHERE  id_product=?";
+            PreparedStatement s = connection.prepareStatement(sql);
+            s.setString(1, product.getProductName());
+            s.setString(2, product.getDescription());
+            s.setInt(3, product.getSalePrice());
+            s.setInt(4, product.getIsNew());
+            s.setInt(5, product.getStatus());
+            s.setInt(6, Integer.parseInt(product.getCategory()));
+            s.setString(7, id);
+            System.out.println(sql);
+            res = s.executeUpdate();
+            JDBCUtil.disconection(connection);
+        } catch ( SQLException e) {
+            e.printStackTrace();
+        }
+        return  res;
+    }
 
     public static int insert(Product product) {
         int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "INSERT INTO products (id_product,name,description,sale,isNew,status,price,cost,id_category) VALUES (?,?,?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO products (id_product,name,description,sale,isNew,status,id_category) VALUES (?,?,?,?,?,?,?);";
             PreparedStatement s = connection.prepareStatement(sql);
             s.setString(1, product.getProductID());
             s.setString(2, product.getProductName());
@@ -639,9 +634,7 @@ public class ProductService {
             s.setInt(4, product.getSalePrice());
             s.setInt(5, product.getIsNew());
             s.setInt(6, product.getStatus());
-            s.setInt(7, product.getPrice());
-            s.setInt(8, product.getCost());
-            s.setInt(9, Integer.parseInt(product.getCategory()));
+            s.setInt(7, Integer.parseInt(product.getCategory()));
             System.out.println(sql);
             res = s.executeUpdate();
             JDBCUtil.disconection(connection);

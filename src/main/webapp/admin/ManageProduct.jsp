@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Product" %>
 <%@ page import="service.ProductImageService" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -102,8 +103,8 @@
                                                       value="${p.salePrice}"/> VNĐ
                                 </td>
                                 <td>${p.quantity}</td>
-                                <td><img src="${ProductImageService.getThumbProduct(p.productID)}" width="100%"> </td>
-
+                                <td><img src="../${ProductImageService.getThumbProduct(p.productID)}" width="100%"> </td>
+<%--                                <td><img src="../UploadFileStore/2566x14402.png" width="100%"> </td>--%>
                                 <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                 <td id="hide-nothide">
                                     <c:if test="${p.status ==1}">

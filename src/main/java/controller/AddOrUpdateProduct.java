@@ -178,7 +178,8 @@ public class AddOrUpdateProduct extends HttpServlet {
                     int minorVersion = servletContext.getMinorVersion();
                     System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
 
-                    String uploadPath = servletContext.getRealPath("/") + ".." + File.separator + "UploadFileStore" + File.separator;
+                    //sửa lại thành nơi clone reposetory của mình
+                    String uploadPath = "D:\\Git\\TTWEB\\src\\main\\webapp\\UploadFileStore\\";
                     File uploadDir = new File(uploadPath);
                     if (!uploadDir.exists()) {
                         uploadDir.mkdir();
@@ -190,7 +191,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
                         thumbnailPart.write(uploadPath + thumbnailFileName);
                         System.out.println("Thumbnail file uploaded to: " + uploadPath + thumbnailFileName);
-                        p.setThumb("UploadFileStore/" + thumbnailFileName);
+                        p.setThumb("UploadFileStore\\" + thumbnailFileName);
                     }
 
 // Upload image files (multiple file upload)

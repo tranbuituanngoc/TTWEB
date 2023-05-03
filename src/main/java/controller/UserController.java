@@ -127,7 +127,7 @@ public class UserController extends HttpServlet {
                         return;
                     }
                 }
-            }else {
+            } else {
                 messageResponse = "error";
                 request.setAttribute("messageResponse", messageResponse);
                 request.setAttribute("error", "Vui lòng xác thực mã Captcha");

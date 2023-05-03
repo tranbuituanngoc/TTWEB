@@ -1,8 +1,8 @@
 package service;
 
+import database.ConnectDB;
 import database.JDBCUtil;
 import model.*;
-import database.ConnectDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,8 +60,8 @@ public class ProductService {
 
     public static List<Product> getAll() {
         List<Product> listProducts;
-        // List<Color> listColor;
-        // List<Size> listSize;
+        List<Color> listColor;
+        List<Size> listSize;
         List<ImageProduct> listImage;
 
         try {
@@ -72,26 +72,23 @@ public class ProductService {
             listProducts = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                // listColor =
-                // ProductImportedService.getColorProduct(rs.getString("id_product"));
-                // listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-                // listImage =
-                // ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                // int price = ProductImportedService.getPrice(rs.getString("id_product"),
-                // listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-                // product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getMinPriceProduct(rs.getString("id_product"));
+                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                // product.setPrice(price);
-                // product.setCost(rs.getInt("cost"));
+                product.setPrice(price);
+                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
                 product.setStatus(rs.getInt("status"));
-                // product.setColor(listColor);
-                // product.setSize(listSize);
+                product.setColor(listColor);
+                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
-                // product.setImage(listImage);
+                product.setImage(listImage);
                 listProducts.add(product);
             }
 
@@ -101,6 +98,46 @@ public class ProductService {
             throw new RuntimeException(e);
         }
         return listProducts;
+    }
+
+    public static Product getByIdAd(String idProduct) {
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        Product product = new Product();
+        try {
+            PreparedStatement pState = null;
+            String sql = "SELECT * FROM products WHERE id_product=?";
+            pState = ConnectDB.connect(sql);
+
+            pState.setString(1, idProduct);
+
+            ResultSet rs = pState.executeQuery();
+            rs.first();
+
+            listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+            listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+            listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+
+            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+            product.setProductID(rs.getString("id_product"));
+            product.setProductName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setSalePrice(rs.getInt("sale"));
+            product.setIsNew(rs.getInt("isNew"));
+            product.setPriceList(ProductImportedService.getPriceListProduct(rs.getString("id_product")));
+            product.setCostList(ProductImportedService.getCostListProduct(rs.getString("id_product")));
+            product.setQuantityList(ProductImportedService.getQuantityListProduct(rs.getString("id_product")));
+            product.setStatus(rs.getInt("status"));
+            product.setColor(listColor);
+            product.setSize(listSize);
+            product.setCategory(rs.getString("id_category"));
+            product.setImage(listImage);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
     }
 
     public static Product getProductDetail(String idProduct) {
@@ -601,7 +638,7 @@ public class ProductService {
     }
 
     public static int updateProduct(String id, Product product) {
-        int res=0;
+        int res = 0;
         try {
             Connection connection = JDBCUtil.getConnection();
             String sql = "UPDATE products SET name=? ,description=?,sale=?,isNew=?,status=?,id_category=? WHERE  id_product=?";
@@ -616,10 +653,10 @@ public class ProductService {
             System.out.println(sql);
             res = s.executeUpdate();
             JDBCUtil.disconection(connection);
-        } catch ( SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  res;
+        return res;
     }
 
     public static int insert(Product product) {

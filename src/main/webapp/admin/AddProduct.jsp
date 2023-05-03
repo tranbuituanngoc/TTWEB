@@ -223,7 +223,7 @@
                                                                     <c:forEach items="${listColor}" var="item2">
                                                                         <c:set var="isSelected" value="false"/>
                                                                         <c:forEach items="${colorSelected}" var="item1">
-                                                                            <c:if test="${item1 eq item2.description}">
+                                                                            <c:if test="${item1 eq item2.descrip}">
                                                                                 <c:set var="isSelected" value="true"/>
                                                                             </c:if>
                                                                         </c:forEach>

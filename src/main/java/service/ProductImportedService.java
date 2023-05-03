@@ -60,7 +60,7 @@ public class ProductImportedService {
         try {
             Connection connection = JDBCUtil.getConnection();
             PreparedStatement pState = null;
-            String sql = "select DISTINCT s.id_size, height,weight,length,width from productimported ps join sizes s on ps.id_size = s.id_size where id_product=?";
+            String sql = "select DISTINCT s.id_size, height,weight,length,width,descrip from productimported ps join sizes s on ps.id_size = s.id_size where id_product=?";
             pState = connection.prepareStatement(sql);
             pState.setString(1, id);
             ResultSet rs = pState.executeQuery();
@@ -72,6 +72,7 @@ public class ProductImportedService {
                 size.setWeight(rs.getInt("weight"));
                 size.setLength(rs.getInt("length"));
                 size.setWidth(rs.getInt("width"));
+                size.setDescrip(rs.getString("descrip"));
                 sizes.add(size);
             }
 
@@ -105,6 +106,49 @@ public class ProductImportedService {
         return colorProduct;
     }
 
+    public static int getMinPriceProduct(String idProduct) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT price FROM productimported WHERE id_product=? ORDER BY price ASC LIMIT 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res = resultSet.getInt("price");
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public static int getMinCostProduct(String idProduct) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT cost FROM productimported WHERE id_product=? ORDER BY cost ASC LIMIT 1";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res = resultSet.getInt("cost");
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+
     public static int getPrice(String idProduct, int idSize, int idColor) {
         int res = 0;
         try {
@@ -126,6 +170,73 @@ public class ProductImportedService {
         }
         return res;
     }
+
+    public static List<Integer> getPriceListProduct(String idProduct) {
+        List<Integer> res = new LinkedList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT price FROM productimported pi WHERE pi.id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res.add(
+                        resultSet.getInt("price")
+                );
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public static List<Integer> getQuantityListProduct(String idProduct) {
+        List<Integer> res = new LinkedList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT inventoryQuantity FROM productimported pi WHERE pi.id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res.add(
+                        resultSet.getInt("inventoryQuantity")
+                );
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public static List<Integer> getCostListProduct(String idProduct) {
+        List<Integer> res = new LinkedList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT cost FROM productimported pi WHERE pi.id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res.add(
+                        resultSet.getInt("cost")
+                );
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static int delete(String idProduct) {
         int res = 0;
         try {

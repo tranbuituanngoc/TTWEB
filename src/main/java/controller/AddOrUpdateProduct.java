@@ -56,7 +56,7 @@ public class AddOrUpdateProduct extends HttpServlet {
             }
 
             if (action.equals("getupdate")) {
-                Product product = ProductService.getById(id);
+                Product product = ProductService.getByIdAd(id);
 
                 List<String> colors = new ArrayList<>();
                 List<String> sizes = new ArrayList<>();
@@ -67,6 +67,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 }
                 for (Size ps : product.getSize()) {
                     String c = ps.getDescrip();
+                    System.out.println("Size: "+c);
                     sizes.add(c);
                 }
 
@@ -191,7 +192,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
                         thumbnailPart.write(uploadPath + thumbnailFileName);
                         System.out.println("Thumbnail file uploaded to: " + uploadPath + thumbnailFileName);
-                        p.setThumb("UploadFileStore\\" + thumbnailFileName);
+                        p.setThumb("UploadFileStore/" + thumbnailFileName);
                     }
 
 // Upload image files (multiple file upload)
@@ -253,7 +254,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 Timestamp importDate = new Timestamp(calendar.getTimeInMillis());
 
                 Product p = new Product();
-                Product product = ProductService.getById(id);
+                Product product = ProductService.getByIdAd(id);
                 if (!name.equalsIgnoreCase(product.getProductName())) {
                     if (ProductService.existProductName(name)) {
                         request.setAttribute("err", "Tên sản phẩm đã tồn tại");

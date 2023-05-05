@@ -416,8 +416,8 @@ public class ProductService {
     }
     public static List<Product> list10NewProduct() {
         List<Product> listNewProduct;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
             PreparedStatement pState = null;
@@ -429,10 +429,10 @@ public class ProductService {
             listNewProduct = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -441,13 +441,13 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listNewProduct.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -459,8 +459,8 @@ public class ProductService {
 
     public static List<Product> list10BestSeller() {
         List<Product> listBestSeller;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
             PreparedStatement pState = null;
@@ -471,10 +471,10 @@ public class ProductService {
             listBestSeller = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -483,13 +483,13 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listBestSeller.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -513,10 +513,10 @@ public class ProductService {
             listNewProduct = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -525,13 +525,13 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 listNewProduct.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -556,10 +556,10 @@ public class ProductService {
             listHintForYou = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
+               int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
@@ -575,7 +575,7 @@ public class ProductService {
                 product.setImage(listImage);
                 listHintForYou.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -840,8 +840,8 @@ public class ProductService {
 
     public static List<Product> getCategory1() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -855,11 +855,10 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -874,7 +873,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -885,8 +884,8 @@ public class ProductService {
 
     public static List<Product> getCategory2() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -900,11 +899,10 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -919,7 +917,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -930,8 +928,8 @@ public class ProductService {
 
     public static List<Product> getCategory3() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try{
             PreparedStatement pState = null;
@@ -944,11 +942,10 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -963,7 +960,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -974,8 +971,8 @@ public class ProductService {
 
     public static List<Product> getCategory4() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -989,11 +986,10 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -1008,7 +1004,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -1019,8 +1015,8 @@ public class ProductService {
 
      public static List<Product> getSeller1() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -1034,11 +1030,10 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//               listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -1053,7 +1048,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -1063,11 +1058,10 @@ public class ProductService {
     }
     public static List<Product> getSeller2() {
          List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
-
             PreparedStatement pState = null;
             String sql = "select * from products" +
                     " where id_category=? and status=? and isNew = 1 limit 8";
@@ -1078,11 +1072,11 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+                //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -1097,7 +1091,7 @@ public class ProductService {
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -1108,8 +1102,8 @@ public class ProductService {
 
     public static List<Product> getSeller3() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -1123,11 +1117,11 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+                //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -1136,13 +1130,13 @@ public class ProductService {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -1153,8 +1147,8 @@ public class ProductService {
 
 public static List<Product> getSeller4() {
         List<Product> list;
-        List<Color> listColor;
-        List<Size> listSize;
+//        List<Color> listColor;
+//        List<Size> listSize;
         List<ImageProduct> listImage;
         try {
 
@@ -1168,11 +1162,11 @@ public static List<Product> getSeller4() {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getPrice(rs.getString("id_product"), listSize.get(0).getIdSize(), listColor.get(0).getId_color());
-//                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+                //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
@@ -1181,13 +1175,13 @@ public static List<Product> getSeller4() {
                 product.setPrice(price);
 //                product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
-                product.setColor(listColor);
-                product.setSize(listSize);
+//                product.setColor(listColor);
+//                product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 list.add(product);
             }
-
+            pState.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

@@ -99,6 +99,26 @@ public class ProductImportedService {
         }
         return colorProduct;
     }
+    public static int getFirstPrice(String idProduct){
+        int res =0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT price FROM productimported WHERE id_product=? ORDER BY id_productImported ASC\n" +
+                    "LIMIT 1;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idProduct);
+//            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                res = resultSet.getInt("price");
+                break;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static int getPrice(String idProduct, int idSize, int idColor){
         int res =0;
         try {

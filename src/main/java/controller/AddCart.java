@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {
@@ -48,11 +46,14 @@ public class AddCart extends HttpServlet {
         cart.setProduct(p);
         HttpSession session = request.getSession();
         CartUser cartUser = (CartUser) session.getAttribute( "cartUser");
-        if (cartUser.getIdUser() == null) {
+        if (cartUser == null) {
             cartUser = new CartUser();
-            cartUser.setIdUser(user.getId_User());
+            if (user != null) cartUser.setIdUser(user.getId_User());
         }
+        if (user != null) cartUser.setIdUser(user.getId_User());
+
         cartUser.addCart(cart, quantity);
+        if (user != null) CartService.addCart(cartUser);
         session.setAttribute("cartUser", cartUser);
         String url = request.getHeader("referer");
         response.sendRedirect(url);

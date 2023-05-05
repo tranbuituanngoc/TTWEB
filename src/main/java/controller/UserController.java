@@ -64,6 +64,7 @@ public class UserController extends HttpServlet {
             if (u != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", u);
+
                 int r = u.getRole();
                 if (u.getRole() == 1) {
                     response.sendRedirect("ListProductAd");

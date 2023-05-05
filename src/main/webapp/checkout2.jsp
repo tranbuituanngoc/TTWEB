@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/checkout.css" />
     <meta name="description" content="Gạch Men TrueMart - Thanh toán đơn hàng" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link
       href="./css/check_out.css"
       rel="stylesheet"
@@ -33,35 +34,35 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no"
     />
-    <script type="text/javascript">
+    <script>
       var toggleShowOrderSummary = false;
       $(document).ready(function () {
         $("body").on("click", ".order-summary-toggle", function () {
           toggleShowOrderSummary = !toggleShowOrderSummary;
           if (toggleShowOrderSummary) {
             $(".order-summary-toggle")
-              .removeClass("order-summary-toggle-hide")
-              .addClass("order-summary-toggle-show");
+                    .removeClass("order-summary-toggle-hide")
+                    .addClass("order-summary-toggle-show");
 
-            $('.sidebar:not(".sidebar-second") .sidebar-content .order-summary')
-              .removeClass("order-summary-is-collapsed")
-              .addClass("order-summary-is-expanded");
+            $('.sidebar:not(.sidebar-second) .sidebar-content .order-summary')
+                    .removeClass("order-summary-is-collapsed")
+                    .addClass("order-summary-is-expanded");
 
             $(".sidebar.sidebar-second .sidebar-content .order-summary")
-              .removeClass("order-summary-is-expanded")
-              .addClass("order-summary-is-collapsed");
+                    .removeClass("order-summary-is-expanded")
+                    .addClass("order-summary-is-collapsed");
           } else {
             $(".order-summary-toggle")
-              .removeClass("order-summary-toggle-show")
-              .addClass("order-summary-toggle-hide");
+                    .removeClass("order-summary-toggle-show")
+                    .addClass("order-summary-toggle-hide");
 
-            $('.sidebar:not(".sidebar-second").sidebar-content .order-summary')
-              .removeClass("order-summary-is-expanded")
-              .addClass("order-summary-is-collapsed");
+            $('.sidebar:not(.sidebar-second) .sidebar-content .order-summary')
+                    .removeClass("order-summary-is-expanded")
+                    .addClass("order-summary-is-collapsed");
 
             $(".sidebar.sidebar-second .sidebar-content .order-summary")
-              .removeClass("order-summary-is-collapsed")
-              .addClass("order-summary-is-expanded");
+                    .removeClass("order-summary-is-collapsed")
+                    .addClass("order-summary-is-expanded");
           }
         });
       });
@@ -77,7 +78,52 @@
         style="display: none; visibility: hidden"
       ></iframe
     ></noscript>
+    <c:if test="${errorQuantity}">
+      <script type="text/javascript">
+        swal({
+          title: "Error!",
+          text: "Số lượng sản phẩm không đủ",
+          icon: "error",
+          button: "Ok",
+        });
+      </script>
+    </c:if>
+    <c:if test="${messageResponseVoucher == 'fail'}">
+      <script type="text/javascript">
+        swal({
+          title: "Error!",
+          text: "Đơn hàng chưa thỏa điều kiện để nhập voucher",
+          icon: "error",
+          button: "Ok",
+        });
+      </script>
+    </c:if>
+    <c:if test="${userInvalid}">
+      <script type="text/javascript">
+        swal({
+          title: "Error!",
+          text: "Vui lòng đăng nhập để thực hiện chức năng này",
+          icon: "error",
+          button: "Ok",
+        });
+      </script>
+    </c:if>
+    <c:if test="${messageResponseVoucher == 'success'}">
+      <script type="text/javascript">
+        swal({
+          title: "Success!",
+          text: "Sử dụng Voucher thành công",
+          icon: "success",
+          button: "Ok",
+        });
+      </script>
+    </c:if>
 
+    <%
+      request.getSession().removeAttribute("errorQuantity");
+      request.getSession().removeAttribute("messageResponseVoucher");
+      request.getSession().removeAttribute("userInvalid");
+    %>
     <input id="reloadValue" type="hidden" name="reloadValue" />
     <input id="is_vietnam" type="hidden" value="true" />
     <input id="is_vietnam_location" type="hidden" value="true" />
@@ -135,9 +181,12 @@
           </div>
           <div
             class="order-summary-toggle-total-recap"
-            data-checkout-payment-due-target="249000000"
+            data-checkout-payment-due-target="${cartUser.getTotalValue()}"
           >
-            <span class="total-recap-final-price">2,490,000₫</span>
+            <span class="total-recap-final-price"><fmt:formatNumber type="currency"
+                                              currencySymbol=""
+                                              minFractionDigits="0"
+                                              value="${cartUser.getTotalValue()}"/>₫</span>
           </div>
         </div>
       </div>
@@ -152,13 +201,8 @@
                   class="order-summary-section order-summary-section-discount"
                   data-order-summary-section="discount"
                 >
-                  <form
-                    id="form_discount_add"
-                    accept-charset="UTF-8"
-                    method="post"
-                  >
+                  <form id="form_discount_add" accept-charset="UTF-8" method="post" action="form_discount_add">
                     <input name="utf8" type="hidden" value="✓" />
-
                     <div class="fieldset">
                       <div class="field">
                         <div class="field-input-btn-wrapper">
@@ -175,7 +219,6 @@
                               spellcheck="false"
                               size="30"
                               type="text"
-                              id="discount.code"
                               name="discount.code"
                               value=""
                             />
@@ -304,44 +347,34 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        class="product"
-                        data-product-id="1030631225"
-                        data-variant-id="1095913802"
-                      >
-                        <td class="product-image">
-                          <div class="product-thumbnail">
-                            <div class="product-thumbnail-wrapper">
-                              <img
-                                class="product-thumbnail-image"
-                                alt="Tủ Kệ Tivi Gỗ Truemart OSLO 201"
-                                src="img/pro_mau_tu_nhien_noi_that_moho_ke_tu_tivi_go_oslo_1m6_1_95a45809b17548cca19c75fb3b88e31b_small.jpg"
-                              />
+                      <c:forEach items="${cartUser.getCart()}" var="cart" varStatus="status">
+                        <tr class="product" data-product-id="1030631225" data-variant-id="1095913802">
+                          <c:set value="${cart.product}" var="product"></c:set>
+                          <c:set value="${cartUser.getValue()[status.index]}" var="quantity"></c:set>
+                          <td class="product-image">
+                            <div class="product-thumbnail">
+                              <div class="product-thumbnail-wrapper">
+                                <img class="product-thumbnail-image" alt="${product.productName}"
+                                     src="${product.image[1].image}"
+                                />
+                              </div>
+                              <span class="product-thumbnail-quantity" aria-hidden="true">${quantity}</span>
                             </div>
-                            <span
-                              class="product-thumbnail-quantity"
-                              aria-hidden="true"
-                              >1</span
-                            >
-                          </div>
-                        </td>
-                        <td class="product-description">
-                          <span
-                            class="product-description-name order-summary-emphasis"
-                            >Tủ Kệ Tivi Gỗ Truemart OSLO 201</span
-                          >
+                          </td>
+                          <td class="product-description">
+                            <span class="product-description-name order-summary-emphasis">${product.description}</span>
+                            <span class="product-description-variant order-summary-small-text">Màu ${cart.color.descrip} / ${cart.size.width}x${cart.size.length}</span>
+                          </td>
+                          <td class="product-quantity visually-hidden">1</td>
+                          <td class="product-price">
+                            <span class="order-summary-emphasis">
+                              <fmt:formatNumber type="currency" currencySymbol=""
+                              minFractionDigits="0" value="${product.priceAfterSale*quantity}"/>
+                            </span>
+                          </td>
+                        </tr>
+                      </c:forEach>
 
-                          <span
-                            class="product-description-variant order-summary-small-text"
-                          >
-                            Màu Tự Nhiên / 1m4
-                          </span>
-                        </td>
-                        <td class="product-quantity visually-hidden">1</td>
-                        <td class="product-price">
-                          <span class="order-summary-emphasis">2,490,000₫</span>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -350,11 +383,7 @@
                   class="order-summary-section order-summary-section-discount"
                   data-order-summary-section="discount"
                 >
-                  <form
-                    id="form_discount_add"
-                    accept-charset="UTF-8"
-                    method="post"
-                  >
+                  <form id="form_discount_add" accept-charset="UTF-8" method="post" action="form_discount_add">
                     <input name="utf8" type="hidden" value="✓" />
                     <div class="fieldset">
                       <div class="field">
@@ -413,9 +442,7 @@
                         <span>Xem thêm mã giảm giá</span>
                       </div>
                       <div id="list_short_coupon">
-                        <span
-                          ><span data-code="Truemart500K">Giảm 500,000₫</span></span
-                        >
+                        <span><span data-code="Truemart500K">Giảm 500,000₫</span></span>
                         <span
                           ><span data-code="Truemart50K">Giảm 50,000₫</span></span
                         >
@@ -436,26 +463,22 @@
                     mãi</span
                   >
                 </div>
-
-                <div
-                  class="order-summary-section order-summary-section-redeem redeem-login-section"
-                  data-order-summary-section="discount"
-                >
-                  <div class="redeem-login">
-                    <div class="redeem-login-title">
-                      <h2>Khách hàng thân thiết</h2>
-
-                      <i
-                        class="btn-redeem-spinner icon-redeem-button-spinner"
-                      ></i>
-                    </div>
-
-                    <div class="redeem-login-btn">
-                      <a href="#">Đăng nhập</a>
+                <c:if test="${user == null}">
+                  <div
+                    class="order-summary-section order-summary-section-redeem redeem-login-section"
+                    data-order-summary-section="discount"
+                  >
+                    <div class="redeem-login">
+                      <div class="redeem-login-title">
+                        <h2>Khách hàng thân thiết</h2>
+                        <i class="btn-redeem-spinner icon-redeem-button-spinner"></i>
+                      </div>
+                      <div class="redeem-login-btn">
+                        <a href="login.jsp">Đăng nhập</a>
+                      </div>
                     </div>
                   </div>
-                </div>
-
+                </c:if>
                 <div
                   class="order-summary-section order-summary-section-total-lines payment-lines"
                   data-order-summary-section="payment-lines"
@@ -475,15 +498,34 @@
                       <tr class="total-line total-line-subtotal">
                         <td class="total-line-name">Tạm tính</td>
                         <td class="total-line-price">
-                          <span
-                            class="order-summary-emphasis"
-                            data-checkout-subtotal-price-target="249000000"
-                          >
-                            2,490,000₫
+                          <span class="order-summary-emphasis" data-checkout-subtotal-price-target="${cartUser.getTotalValue()}">
+                            <fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0"
+                              value="${cartUser.getTotalValue()}"/>₫
                           </span>
                         </td>
                       </tr>
+                      <c:if test="${voucher!= null}">
 
+                        <tr class="total-line total-line-reduction">
+                          <td class="total-line-name">
+                            <span>Mã giảm giá</span>
+                            <span class="applied-reduction-code">
+                              <svg width="16" height="15" xmlns="http://www.w3.org/2000/svg" class="applied-reduction-code-icon" fill="#CE4549">
+                                <path d="M14.476 0H8.76c-.404 0-.792.15-1.078.42L.446 7.207c-.595.558-.595 1.463 0 2.022l5.703 5.35c.296.28.687.42 1.076.42.39 0 .78-.14 1.077-.418l7.25-6.79c.286-.268.447-.632.447-1.01V1.43C16 .64 15.318 0 14.476 0zm-2.62 5.77c-.944 0-1.713-.777-1.713-1.732 0-.954.77-1.73 1.714-1.73.945 0 1.714.776 1.714 1.73 0 .955-.768 1.73-1.713 1.73z"></path>
+                              </svg>
+                              <span class="applied-reduction-code-information">${voucher.voucherCode}</span>
+                            </span>
+                          </td>
+                          <td class="total-line-price">
+                            <span class="order-summary-emphasis"
+                                  data-checkout-discount-amount-target="${voucher.discount}">- <fmt:formatNumber type="currency"
+                                                                                                                 currencySymbol=""
+                                                                                                                 minFractionDigits="0"
+                                                                                                                 value="${voucher.discount}"/>₫
+                            </span>
+                          </td>
+                        </tr>
+                      </c:if>
                       <tr class="total-line total-line-shipping">
                         <td class="total-line-name">Phí vận chuyển</td>
                         <td class="total-line-price">
@@ -491,11 +533,15 @@
                             class="order-summary-emphasis"
                             data-checkout-total-shipping-target="0"
                           >
-                            Miễn phí
+                            —
                           </span>
                         </td>
                       </tr>
                     </tbody>
+                    <c:set var="totalAmount" value="${cartUser.getTotalValue()}" />
+                    <c:set var="voucherDiscount" value="${voucher != null ? voucher.discount : 0}"/>
+                    <c:set var="totalAmount" value="${cartUser.getTotalValue() - voucherDiscount}" />
+                    <input type="hidden" name="total-amount" id="total-amount">
                     <tfoot class="total-line-table-footer">
                       <tr class="total-line">
                         <td class="total-line-name payment-due-label">
@@ -503,12 +549,13 @@
                         </td>
                         <td class="total-line-name payment-due">
                           <span class="payment-due-currency">VND</span>
-                          <span
-                            class="payment-due-price"
-                            data-checkout-payment-due-target="249000000"
-                          >
-                            2,490,000₫
+                          <span class="payment-due-price" data-checkout-payment-due-target="${totalAmount}">
+                            <fmt:formatNumber type="currency"
+                                              currencySymbol=""
+                                              minFractionDigits="0"
+                                              value="${totalAmount}"/>₫</span></strong>
                           </span>
+
                           <span
                             class="checkout_version"
                             display:none=""
@@ -606,7 +653,8 @@
             <script>
               $("html, body").animate({ scrollTop: 0 }, "slow");
             </script>
-
+            <form action="CreateOrder" method="GET">
+<%--              begin step--%>
             <div class="step">
               <div class="step-sections steps-onepage" step="1">
                 <div class="section">
@@ -616,11 +664,12 @@
                   <div
                     class="section-content section-customer-information no-mb"
                   >
-                    <p class="section-content-text">
-                      Qúy khách đã có tài khoản?
-                      <a href="#">Đăng nhập</a>
-                    </p>
-
+                    <c:if test="${user == null}">
+                      <p class="section-content-text">
+                        Qúy khách đã có tài khoản?`
+                        <a href="#">Đăng nhập</a>
+                      </p>
+                    </c:if>
                     <div class="fieldset">
                       <div class="field field-required">
                         <div class="field-input-wrapper">
@@ -638,7 +687,7 @@
                             type="text"
                             id="billing_address_full_name"
                             name="billing_address[full_name]"
-                            value=""
+                            value="${user.fullname}"
                             autocomplete="false"
                           />
                         </div>
@@ -659,7 +708,7 @@
                             type="email"
                             id="checkout_user_email"
                             name="checkout_user[email]"
-                            value=""
+                            value="${user.email}"
                           />
                         </div>
                       </div>
@@ -680,7 +729,7 @@
                             type="tel"
                             id="billing_address_phone"
                             name="billing_address[phone]"
-                            value=""
+                            value="${user.phone}"
                           />
                         </div>
                       </div>
@@ -693,7 +742,7 @@
                         id="form_update_shipping_method"
                         class="field default"
                         accept-charset="UTF-8"
-                        method="post" action="form_update_shipping_metho"
+                        method="post" action="form_update_shipping_method"
                       >
                         <input name="utf8" type="hidden" value="✓" />
                         <div class="content-box mt0">
@@ -702,13 +751,12 @@
                             class="order-checkout__loading radio-wrapper content-box-row content-box-row-padding content-box-row-secondary"
                             for="customer_pick_at_location_false"
                           >
-                            <input name="utf8" type="hidden" value="✓" />
                             <div class="order-checkout__loading--box">
                               <div
                                 class="order-checkout__loading--circle"
                               ></div>
                             </div>
-
+<%--                            <input type="hidden" name="shippingAddressId" value="${shippingAddress.shippingAddressId}">--%>
                             <div class="field field-required">
                               <div class="field-input-wrapper">
                                 <label
@@ -725,30 +773,28 @@
                                   type="text"
                                   id="billing_address_address1"
                                   name="billing_address[address1]"
-                                  value=""
+                                  value="${shippingAdress.address}"
                                 />
                               </div>
                             </div>
 
                             <input
-                              name="selected_customer_shipping_country"
-                              type="hidden"
-                              value=""
-                            />
-                            <input
                               name="selected_customer_shipping_province"
                               type="hidden"
-                              value=""
+                              id="selected_customer_shipping_province"
+                              value="0"
                             />
                             <input
                               name="selected_customer_shipping_district"
                               type="hidden"
-                              value=""
+                              id="selected_customer_shipping_district"
+                              value="0"
                             />
                             <input
                               name="selected_customer_shipping_ward"
                               type="hidden"
-                              value=""
+                              id="selected_customer_shipping_ward"
+                              value="0"
                             />
 
                             <div
@@ -787,7 +833,7 @@
                                   id="customer_shipping_district"
                                   name="customer_shipping_district"
                                 >
-
+                                  <option data-code="null" value="null">Chọn quận/ huyện</option>
                                 </select>
                               </div>
                             </div>
@@ -808,7 +854,7 @@
                                   id="customer_shipping_ward"
                                   name="customer_shipping_ward"
                                 >
-
+                                  <option data-code="null" value="null" selected="">Chọn phường/ xã</option>
                                 </select>
                               </div>
                             </div>
@@ -864,6 +910,7 @@
                       </form>
                     </div>
                   </div>
+
                   <div id="change_pick_location_or_shipping">
                     <div id="section-shipping-rate">
                       <div class="order-checkout__loading--box">
@@ -872,7 +919,14 @@
                       <div class="section-header">
                         <h2 class="section-title">Phương thức vận chuyển</h2>
                       </div>
-                      <div class="section-content">
+                      <div class="section-content province-null">
+                        <div class="content-box  blank-slate">
+                          <i class="blank-slate-icon icon icon-closed-box "></i>
+                          <p>Vui lòng chọn tỉnh / thành để có danh sách phương thức vận chuyển.</p>
+                        </div>
+                      </div>
+
+                      <div class="section-content hidden province-in">
                         <div class="content-box">
                           <div class="content-box-row">
                             <div class="radio-wrapper">
@@ -895,15 +949,29 @@
                                   quận huyện thuộc TP.HCM đối với các sản phẩm
                                   nội thất. Các sản phẩm thuộc danh mục Đồ Trang
                                   Trí, phí giao hàng sẽ được TrueMart liên hệ báo
-                                  sau.</span
-                                >
-                                <span
-                                  class="radio-accessory content-box-emphasis"
-                                >
-                                  0₫
-                                </span>
+                                  sau.</span>
+                                <span class="radio-accessory content-box-emphasis">0₫</span>
                               </label>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="section-content hidden province-out">
+                      <div class="content-box">
+                        <div class="content-box-row">
+                          <div class="radio-wrapper">
+                            <label class="radio-label" for="shipping_rate_id_1647130">
+                              <div class="radio-input">
+                                <input id="shipping_rate_id_1647130" class="input-radio" type="radio" name="shipping_rate_id" value="1647130" checked="">
+                              </div>
+                              <span class="radio-label-primary">Các tỉnh thành không thuộc khu vực miễn phí giao hàng &amp; lắp đặt, phí giao hàng sẽ được TrueMart tính theo khoảng cách vận chuyển.</span>
+                              <span class="radio-accessory content-box-emphasis">0₫</span>
+                              <input type="hidden" name="service-fee" id="service-fee" value="0">
+                              <input type="hidden" name="lead-time" id="lead-time" value="0">
+                              <input type="hidden" name="voucher" value="${voucher.voucherCode}">
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -916,6 +984,7 @@
                       <div class="section-header">
                         <h2 class="section-title">Phương thức thanh toán</h2>
                       </div>
+                      <input type="hidden" name="payment-method" value="1002252882" id="payment-method">
                       <div class="section-content">
                         <div class="content-box">
                           <div class="radio-wrapper content-box-row">
@@ -1027,21 +1096,16 @@
                 </div>
               </div>
               <div class="step-footer" id="step-footer-checkout">
-                <form id="form_next_step" accept-charset="UTF-8" method="post">
                   <input name="utf8" type="hidden" value="✓" />
                   <button type="submit" class="step-footer-continue-btn btn">
                     <span class="btn-content">Hoàn tất đơn hàng</span>
                     <i class="btn-spinner icon icon-button-spinner"></i>
                   </button>
-                </form>
-                <a
-                  class="step-footer-previous-link"
-                  href="Cart"
-                >
-                  Giỏ hàng
-                </a>
+                <a class="step-footer-previous-link" href="Cart">Giỏ hàng</a>
               </div>
             </div>
+            </form>
+<%--              end step--%>
           </div>
           <div class="hrv-coupons-popup">
             <div class="hrv-title-coupons-popup">
@@ -1075,11 +1139,13 @@
       const url = 'http://140.238.54.136/api/auth/login';
       const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
       const password = '12345678'; // Replace with your actual password
-// load district
+      // load district
       $('#customer_shipping_province').on('change', function() {
         // Lấy giá trị được chọn trong select
+        $('.province-null').removeClass('hidden');
+        $('.province-in').addClass('hidden');
+        $('.province-out').addClass('hidden');
         var selectedValue = $(this).val();
-
         $.ajax({
           url: url,
           type: 'POST',
@@ -1101,6 +1167,9 @@
                 var select =  $("#customer_shipping_district");
                 select.empty();
                 select.append('<option data-code="null" value="null">Chọn quận/ huyện</option>');
+                var select2 =  $("#customer_shipping_ward");
+                select2.empty();
+                select2.append('<option data-code="null" value="null" selected="">Chọn phường/ xã</option>')
                 const data = JSON.parse(xhr.responseText).original.data;
                 $.each(data, function (i, district) {
                   var option = $("<option>");
@@ -1123,9 +1192,11 @@
       });
       //load ward
       $('#customer_shipping_district').on('change', function() {
+        $('.province-null').removeClass('hidden');
+        $('.province-in').addClass('hidden');
+        $('.province-out').addClass('hidden');
         // Lấy giá trị được chọn trong select
         var selectedValue = $(this).val();
-
         $.ajax({
           url: url,
           type: 'POST',
@@ -1167,6 +1238,75 @@
           }
         });
       });
+       //get lead time and calculate fee
+      $("#customer_shipping_ward").on('change', function() {
+        // Lấy giá trị được chọn trong select
+        <%--var height = ${cartUser.getTotalSize().height}--%>
+        <%--var length = ${cartUser.getTotalSize().length}--%>
+        <%--var width = ${cartUser.getTotalSize().width}--%>
+        <%--var weight = ${cartUser.getTotalSize().weight}--%>
+        var wardId = parseInt($(this).val());
+        var districtId = parseInt($('#customer_shipping_district').val());
+        var provinceId = parseInt($('#customer_shipping_province').val());
+        $('#selected_customer_shipping_ward').val($(this).val());
+        $('#selected_customer_shipping_district').val($('#customer_shipping_district').val());
+        $('#selected_customer_shipping_province').val($('#customer_shipping_province').val());
+        if (provinceId === 202){
+          $('.province-in').removeClass('hidden');
+          $('.province-null').addClass('hidden');
+          $('.province-out').addClass('hidden');
+
+          $('#lead-time').val(0);
+          $('#service-fee').val(0);
+        }
+        else if (provinceId !== 202){
+          $('.province-out').removeClass('hidden');
+          $('.province-null').addClass('hidden');
+          $('.province-in').addClass('hidden');
+          $.ajax({
+            url: 'form_update_shipping_method',
+            type: 'POST',
+            data: {
+              wardId: wardId,
+              districtId: districtId
+            },
+            success: function(response) {
+              // Xử lý kết quả trả về từ servlet
+              console.log(response.status); // "success"
+              console.log(response.message); // "Đã nhận được dữ liệu"
+              console.log(response.fee)
+              console.log(response.leadTime)
+              // console.log(response)
+              var dataFee = JSON.parse(response.fee);
+              var dataLeadTime = JSON.parse(response.leadTime)
+              console.log(dataFee)
+              console.log(dataFee[0].service_fee)
+              var serviceFee = Number(dataFee[0].service_fee);
+              var leadTime = dataLeadTime[0].timestamp;
+              console.log(serviceFee)
+              console.log(leadTime)
+              $('.province-out .radio-accessory.content-box-emphasis').text(serviceFee.toLocaleString() + "₫");
+              $('.total-line-shipping .total-line-price').text(serviceFee !== 0 ? serviceFee.toLocaleString() + "₫" : "miễn phí");
+              $('#lead-time').val(leadTime);
+              $('#service-fee').val(serviceFee);
+              var totalAmount = Number($(".payment-due-price").data("checkout-payment-due-target"));
+              // Nếu serviceFee khác 0, cộng thêm vào totalAmount
+              if (serviceFee !== 0) {
+                totalAmount += serviceFee;
+              }
+              // Hiển thị giá tiền cộng thêm serviceFee
+              // $(".payment-due-price").data("checkout-payment-due-target", totalAmount);
+              $(".payment-due-price").text(new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0 }).format(totalAmount));
+
+            },
+            error: function(xhr, status, error) {
+              // Xử lý lỗi khi gửi dữ liệu đến servlet
+              console.log(error);
+            }
+          });
+        }
+
+      });
     </script>
     <script !src="">
       $('input[name="payment_method_id"]').change(function() {
@@ -1175,9 +1315,9 @@
         } else {
           $('.bank-payment').addClass('hidden');
         }
+        $('#payment-method').val($(this).val());
       });
     </script>
-
     <script src="js/provinces_load.js"></script>
 <%--    <script src="js/districts_load.js"></script>--%>
     <!-- script apply counpon checkout -->

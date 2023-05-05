@@ -128,8 +128,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 
 
                 // Nếu lỗi thì set lại các attribute cho nó và gọi lại
-                if (ProductService.existProductName(name)) {
-                    request.setAttribute("err", "Tên sản phẩm đã tồn tại");
+                if (ProductService.existProductName(name) || description.isEmpty()) {
+                    request.setAttribute("err", description.isEmpty()?"Vui lòng không để trống phần mô tả!":"Tên sản phẩm đã tồn tại");
 
                     //get all cate, size, color
                     request.setAttribute("listColor", listColor);

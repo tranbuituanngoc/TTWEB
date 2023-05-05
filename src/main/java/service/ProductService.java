@@ -66,8 +66,9 @@ public class ProductService {
 
         try {
             PreparedStatement pState = null;
+            Connection connection = JDBCUtil.getConnection();
             String sql = "select * from products";
-            pState = ConnectDB.connect(sql);
+            pState = connection.prepareStatement(sql);
             ResultSet rs = pState.executeQuery();
             listProducts = new LinkedList<>();
             while (rs.next()) {
@@ -75,15 +76,12 @@ public class ProductService {
                 listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
                 listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                int price = ProductImportedService.getMinPriceProduct(rs.getString("id_product"));
                 product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(price);
-                product.setCost(ProductImportedService.getMinCostProduct(rs.getString("id_product")));
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
@@ -91,10 +89,8 @@ public class ProductService {
                 product.setImage(listImage);
                 listProducts.add(product);
             }
-
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return listProducts;
@@ -107,8 +103,9 @@ public class ProductService {
         Product product = new Product();
         try {
             PreparedStatement pState = null;
+            Connection connection = JDBCUtil.getConnection();
             String sql = "SELECT * FROM products WHERE id_product=?";
-            pState = ConnectDB.connect(sql);
+            pState = connection.prepareStatement(sql);
 
             pState.setString(1, idProduct);
 
@@ -133,8 +130,8 @@ public class ProductService {
             product.setSize(listSize);
             product.setCategory(rs.getString("id_category"));
             product.setImage(listImage);
-
-        } catch (SQLException | ClassNotFoundException e) {
+        JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return product;
@@ -360,15 +357,15 @@ public class ProductService {
 
     public static void deleteProduct(String idProduct) {
         PreparedStatement pState = null;
-        String sql = "Delete from products where id=?";
+        String sql = "Delete from products where id_product=?";
         try {
-            pState = ConnectDB.connect(sql);
+            Connection connection = JDBCUtil.getConnection();
+            pState = connection.prepareStatement(sql);
             pState.setString(1, idProduct);
-            int rs = pState.executeUpdate();
+            pState.executeUpdate();
             pState.close();
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -377,13 +374,15 @@ public class ProductService {
         PreparedStatement s = null;
         try {
 
-            String sql = "UPDATE products set status = ? where id = ?";
-            s = ConnectDB.connect(sql);
+            String sql = "UPDATE products set status = ? where id_product = ?";
+            Connection connection = JDBCUtil.getConnection();
+            s = connection.prepareStatement(sql);
             s.setInt(1, 0);
             s.setString(2, id);
-            int rs = s.executeUpdate();
+            s.executeUpdate();
             s.close();
-        } catch (ClassNotFoundException | SQLException e) {
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -391,13 +390,15 @@ public class ProductService {
     public static void nothideProduct(String id) {
         PreparedStatement s = null;
         try {
-            String sql = "UPDATE products set status = ? where id = ?";
-            s = ConnectDB.connect(sql);
+            String sql = "UPDATE products set status = ? where id_product = ?";
+            Connection connection = JDBCUtil.getConnection();
+            s = connection.prepareStatement(sql);
             s.setInt(1, 1);
             s.setString(2, id);
-            int rs = s.executeUpdate();
+            s.executeUpdate();
             s.close();
-        } catch (ClassNotFoundException | SQLException e) {
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

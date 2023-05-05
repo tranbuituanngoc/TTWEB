@@ -1,9 +1,5 @@
 package model;
 
-import model.ImageProduct;
-import model.Color;
-import model.Size;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +27,8 @@ public class Product {
     }
 
     public Product(String productID, String productName, String description, List<Size> size, String category,
-            List<Color> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status,
-            int cost, int quantityCart, String thumb) {
+                   List<Color> color, int price, int salePrice, List<ImageProduct> image, int quantity, int isNew, int status,
+                   int cost, int quantityCart, String thumb) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -49,6 +45,7 @@ public class Product {
         this.quantityCart = quantityCart;
         this.thumb = thumb;
     }
+
     public Product(String productID, String productName, String description, List<Size> size, String category, List<Color> color, int salePrice, List<ImageProduct> image, int isNew, int status, int quantityCart, String thumb, List<Integer> priceList, List<Integer> costList, List<Integer> quantityList) {
         this.productID = productID;
         this.productName = productName;
@@ -192,10 +189,10 @@ public class Product {
     }
 
     public List<Double> getListPriceAfterSale(List<Integer> priceList) {
-        List<Double> res= new ArrayList<>();
+        List<Double> res = new ArrayList<>();
         double priceAf;
         for (int price : priceList) {
-            priceAf=   price - (price * (salePrice / 100.0));
+            priceAf = price - (price * (salePrice / 100.0));
             res.add(priceAf);
         }
         return res;

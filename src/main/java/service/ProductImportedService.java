@@ -22,7 +22,6 @@ public class ProductImportedService {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("inventoryQuantity");
-
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -75,7 +74,7 @@ public class ProductImportedService {
                 size.setDescrip(rs.getString("descrip"));
                 sizes.add(size);
             }
-
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -99,7 +98,7 @@ public class ProductImportedService {
                 color.setDescrip(rs.getString("descrip"));
                 colorProduct.add(color);
             }
-
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -237,6 +236,7 @@ public class ProductImportedService {
         return res;
     }
 
+
     public static int delete(String idProduct) {
         int res = 0;
         try {
@@ -253,6 +253,7 @@ public class ProductImportedService {
         }
         return res;
     }
+
     public static void main(String[] args) {
         // System.out.println(ProductImportedService.getQuantityDetail("sp404590", 1,
         // 2));

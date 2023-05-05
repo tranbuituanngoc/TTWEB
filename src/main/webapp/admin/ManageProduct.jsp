@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Product" %>
 <%@ page import="service.ProductImageService" %>
+<%@ page import="service.ProductImportedService" %>
 <%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -71,10 +72,8 @@
                         <span>Công cụ</span>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">In</a>
-                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>
-                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra
-                            Excel</a>
+                        <a class="dropdown-item" href="ExportFile?action=pdf" download="productList.pdf">Xuất ra File PDF</a>
+                        <a class="dropdown-item" href="ExportFile?action=excel"  download="productList.xlsx">Xuất ra File Excel</a>
                     </div>
                 </div>
                 <div class="m-t-25">
@@ -82,12 +81,12 @@
                         <thead>
                         <tr>
                             <th class="align-middle">Tên Gạch</th>
-                            <th>Giá tiền</th>
-                            <th>Giảm giá %</th>
+                            <th width="10%">Giá tiền</th>
+                            <th width="6%" class="align-middle">Sale</th>
                             <th width="10%">Số lượng</th>
                             <th width="12%">Hình ảnh</th>
-                            <th width="10%">Trạng thái</th>
-                            <th width="12%"></th>
+                            <th width="12%">Trạng thái</th>
+                            <th width="10%"></th>
                             <th width="12%"></th>
                             <th width="8%"></th>
                         </tr>
@@ -96,15 +95,88 @@
                         <c:forEach items="${listP}" var="p">
                             <tr id="${p.productID}">
                                 <td class="align-middle">${p.productName}</td>
-                                <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0"
-                                                      value="${p.price}"/> VNĐ
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#priceModal-${p.productID}">
+                                        Chi tiết
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="priceModal-${p.productID}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="priceModalLabel-${p.productID}">Chi Tiết
+                                                        Giá Tiền</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <i class="anticon anticon-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul>
+                                                        <c:forEach items="${p.size}" var="s">
+                                                            <c:forEach items="${p.color}" var="c">
+                                                                <li>
+                                                                        ${c.descrip}-${s.descrip}: ${ProductImportedService.getPrice(p.productID,s.idSize,c.id_color)}
+                                                                    VNĐ
+                                                                </li>
+                                                            </c:forEach>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td><fmt:formatNumber type="currency" currencySymbol="" minFractionDigits="0"
-                                                      value="${p.salePrice}"/> VNĐ
+                                <td>${p.salePrice}%</td>
+                                <td><!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#quantityModal-${p.productID}">
+                                        Chi tiết
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="quantityModal-${p.productID}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="quantityModalLabel-${p.productID}">Chi
+                                                        Tiết Số
+                                                        Lượng</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <i class="anticon anticon-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul>
+                                                        <c:forEach items="${p.size}" var="s">
+                                                            <c:forEach items="${p.color}" var="c">
+                                                                <li>
+                                                                        ${c.descrip}-${s.descrip}: ${ProductImportedService.getQuantityDetail(p.productID,s.idSize,c.id_color)}
+                                                                    sản
+                                                                    phẩm
+                                                                </li>
+                                                            </c:forEach>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>${p.quantity}</td>
-                                <td><img src="../${ProductImageService.getThumbProduct(p.productID)}" width="100%"> </td>
-<%--                                <td><img src="../UploadFileStore/2566x14402.png" width="100%"> </td>--%>
+                                <td><img src="../${ProductImageService.getThumbProduct(p.productID)}" width="100%"></td>
+                                    <%--                                <td><img src="../UploadFileStore/2566x14402.png" width="100%"> </td>--%>
                                 <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                 <td id="hide-nothide">
                                     <c:if test="${p.status ==1}">

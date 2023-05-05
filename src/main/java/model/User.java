@@ -16,6 +16,7 @@ public class User {
     private String fullname;
     private boolean status;
     private String oldPass;
+
     public User() {
     }
 
@@ -46,7 +47,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String id_User, String userName,String fullname, String email, String phone, String address, String pass, int role, boolean status) {
+    public User(String id_User, String userName, String fullname, String email, String phone, String address, String pass, int role, boolean status) {
         this.id_User = id_User;
         this.userName = userName;
         this.email = email;
@@ -54,8 +55,8 @@ public class User {
         this.address = address;
         this.pass = pass;
         this.role = role;
-        this.fullname=fullname;
-        this.status=status;
+        this.fullname = fullname;
+        this.status = status;
     }
 
     public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
@@ -80,6 +81,16 @@ public class User {
         this.role = role;
         this.fullname = fullname;
         this.status = status;
+    }
+
+    public User(String userName, String pass, String email) {
+        this.userName = userName;
+        this.pass = pass;
+        this.email = email;
+    }
+
+    public User(String userName) {
+        this.userName = userName;
     }
 
     public boolean isStatus() {

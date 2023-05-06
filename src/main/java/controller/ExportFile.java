@@ -165,7 +165,7 @@ public class ExportFile extends HttpServlet {
                 }
             });
             document.open();
-            PdfPTable table = new PdfPTable(10);
+            PdfPTable table = new PdfPTable(9);
             PdfPCell cell = new PdfPCell(new Phrase("Product List"));
             cell.setColspan(10);
             table.addCell(cell);
@@ -177,7 +177,7 @@ public class ExportFile extends HttpServlet {
             table.addCell(new Phrase("Sale"));
             table.addCell(new Phrase("Quantity"));
             table.addCell(new Phrase("New"));
-            table.addCell(new Phrase("Thumbnail"));
+//            table.addCell(new Phrase("Thumbnail"));
             table.addCell(new Phrase("Description"));
             for (Product product : productList) {
                 for (Color color : product.getColor()) {

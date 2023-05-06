@@ -76,8 +76,6 @@ public class ProductImageService {
 
             while (resultSet.next()) {
                 res = resultSet.getString("image");
-
-                System.out.println(res.toString());
                 break;
             }
             JDBCUtil.disconection(connection);

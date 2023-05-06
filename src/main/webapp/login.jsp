@@ -104,7 +104,7 @@
                             <br>
                             <form action="/nguoi-dung" method="post" onsubmit="return signIn(); getAlert()">
                                 <input type="hidden" name="action" value="dang-nhap">
-<%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
+                                <%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
                                 <div class="form-group">
                                     <label>Tài khoản</label>
                                     <input type="text" value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>" id="username2" name="username" placeholder="Nhập username..." id="input-email" class="form-control">
@@ -118,6 +118,10 @@
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();" class="return-customer-btn">
                                 <br/>
+                                <a href="<c:url value='${pageContext.request.contextPath}/login/facebook'/>">Login with Facebook</a>
+                                <br>
+                                <a href="<c:url value='${pageContext.request.contextPath}/login/google'/>">Login with Google</a>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -128,42 +132,37 @@
         <!-- Container End -->
     </div>
     <!-- LogIn Page End -->
-    <!-- Support Area Start Here -->
     <jsp:include page="footer.jsp"/>
-    <!-- Quick View Content Start -->
-
-    <!-- Quick View Content End -->
 </div>
 <!-- Main Wrapper End Here -->
-
-<!-- jquery 3.2.1 -->
+<!-- Jquery min js -->
 <script src="js\vendor\jquery-3.2.1.min.js"></script>
-<!-- Countdown js -->
-<script src="js\jquery.countdown.min.js"></script>
-<!-- Mobile menu js -->
-<script src="js\jquery.meanmenu.min.js"></script>
-<!-- ScrollUp js -->
-<script src="js\jquery.scrollUp.js"></script>
-<!-- Nivo slider js -->
-<script src="js\jquery.nivo.slider.js"></script>
-<!-- Fancybox js -->
-<script src="js\jquery.fancybox.min.js"></script>
-<!-- Jquery nice select js -->
-<script src="js\jquery.nice-select.min.js"></script>
-<!-- Jquery ui price slider js -->
-<script src="js\jquery-ui.min.js"></script>
-<!-- Owl carousel -->
-<script src="js\owl.carousel.min.js"></script>
-<!-- Bootstrap popper js -->
-<script src="js\popper.min.js"></script>
+<!-- Proper js -->
+<script src="js\proper.js"></script>
 <!-- Bootstrap js -->
 <script src="js\bootstrap.min.js"></script>
-<!-- Plugin js -->
+<!-- Meanmenu js -->
+<script src="js\jquery.meanmenu.min.js"></script>
+<!-- Wow js -->
+<script src="js\wow.min.js"></script>
+<!-- Slick js -->
+<script src="js\slick.min.js"></script>
+<!-- Owl carousel js -->
+<script src="js\owl.carousel.min.js"></script>
+<!-- Countdown js -->
+<script src="js\jquery.countdown.min.js"></script>
+<!-- Jquery ui price slider js -->
+<script src="js\jquery-ui.min.js"></script>
+<!-- Fancybox js -->
+<script src="js\jquery.fancybox.min.js"></script>
+<!-- Nivo slider js -->
+<script src="js\nivo-slider/jquery.nivo.slider.pack.js"></script>
+<!-- Ajax Mail js -->
+<script src="js\ajax-mail.js"></script>
+<!-- Others js -->
 <script src="js\plugins.js"></script>
-<!-- Main activaion js -->
+<!-- Main js -->
 <script src="js\main.js"></script>
-<%--custom script--%>
-<script src="js\script.js"></script>
 </body>
 
 </html>

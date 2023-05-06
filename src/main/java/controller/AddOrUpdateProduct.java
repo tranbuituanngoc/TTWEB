@@ -56,7 +56,7 @@ public class AddOrUpdateProduct extends HttpServlet {
             }
 
             if (action.equals("getupdate")) {
-                Product product = ProductService.getById(id);
+                Product product = ProductService.getByIdAd(id);
 
                 List<String> colors = new ArrayList<>();
                 List<String> sizes = new ArrayList<>();
@@ -67,6 +67,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 }
                 for (Size ps : product.getSize()) {
                     String c = ps.getDescrip();
+                    System.out.println("Size: "+c);
                     sizes.add(c);
                 }
 
@@ -127,8 +128,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 
 
                 // Nếu lỗi thì set lại các attribute cho nó và gọi lại
-                if (ProductService.existProductName(name)) {
-                    request.setAttribute("err", "Tên sản phẩm đã tồn tại");
+                if (ProductService.existProductName(name) || description.isEmpty()) {
+                    request.setAttribute("err", description.isEmpty()?"Vui lòng không để trống phần mô tả!":"Tên sản phẩm đã tồn tại");
 
                     //get all cate, size, color
                     request.setAttribute("listColor", listColor);
@@ -178,7 +179,8 @@ public class AddOrUpdateProduct extends HttpServlet {
                     int minorVersion = servletContext.getMinorVersion();
                     System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
 
-                    String uploadPath = servletContext.getRealPath("/") + ".." + File.separator + "UploadFileStore" + File.separator;
+                    //sửa lại thành nơi clone reposetory của mình
+                    String uploadPath = "D:\\Git\\TTWEB\\src\\main\\webapp\\UploadFileStore\\";
                     File uploadDir = new File(uploadPath);
                     if (!uploadDir.exists()) {
                         uploadDir.mkdir();
@@ -252,7 +254,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 Timestamp importDate = new Timestamp(calendar.getTimeInMillis());
 
                 Product p = new Product();
-                Product product = ProductService.getById(id);
+                Product product = ProductService.getByIdAd(id);
                 if (!name.equalsIgnoreCase(product.getProductName())) {
                     if (ProductService.existProductName(name)) {
                         request.setAttribute("err", "Tên sản phẩm đã tồn tại");

@@ -1,11 +1,11 @@
 package controller;
 
+import Util.Email;
 import model.Product;
 import model.User;
 import model.Cart;
 import service.OrderDetailService;
 import service.OrderService;
-import tool.SendToMail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,8 +49,8 @@ public class CreateOrder extends HttpServlet {
                 request.setAttribute("msg", "Bạn đã đặt hàng thành công");
                 response.sendRedirect("ProductLists");
 //                OrderDetailService.insertOrderDetail(pro);
-                SendToMail mail = new SendToMail();
-                mail.sendEmail(email, "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
+                Email mail = new Email();
+                Email.sendMail(email,"TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
                 Cart newCart = new Cart();
 //                newCart.commit(session);
             }

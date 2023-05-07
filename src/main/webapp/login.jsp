@@ -118,9 +118,15 @@
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();" class="return-customer-btn">
                                 <br/>
-                                <a href="<c:url value='${pageContext.request.contextPath}/login/facebook'/>">Login with Facebook</a>
-                                <br>
-                                <a href="<c:url value='${pageContext.request.contextPath}/login/google'/>">Login with Google</a>
+                                <form action="<c:url value='/login'/>" method="post">
+                                    <input type="hidden" name="provider" value="Facebook">
+                                    <button type="submit">Login with Facebook</button>
+                                </form>
+
+                                <form action="<c:url value='/login'/>" method="post">
+                                    <input type="hidden" name="provider" value="Google">
+                                    <button type="submit">Login with Google</button>
+                                </form>
                             </form>
                         </div>
                     </div>

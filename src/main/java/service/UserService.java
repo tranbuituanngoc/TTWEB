@@ -113,6 +113,7 @@ public class UserService {
         }
         return res;
     }
+
     public User selectByUnameNEmailNOldPass(User o) {
         User res = null;
         try {
@@ -138,7 +139,7 @@ public class UserService {
                 boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role,oldPssword);
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role, oldPssword);
                 System.out.println(res.toString());
                 break;
             }
@@ -459,7 +460,29 @@ public class UserService {
         }
     }
 
-//
+    public void saveUser(User user) {
+        PreparedStatement pre = null;
+        try {
+            // Chuẩn bị truy vấn SQL để chèn thông tin người dùng vào cơ sở dữ liệu
+            String sql = "INSERT INTO users (username, email, password, role, fullname, status) VALUES (?, ?, ?, ?, ?, ?)";
+            pre = ConnectDB.connect(sql);
+            pre.setString(1, user.getUserName());
+            pre.setString(2, user.getEmail());
+            pre.setString(3, user.getPass());
+            pre.setInt(4, user.getRole());
+            pre.setString(5, user.getFullname());
+            pre.setBoolean(6, user.getStatus());
+
+            // Thực hiện truy vấn SQL để lưu thông tin người dùng vào cơ sở dữ liệu
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //
 //    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;
 //        try {
@@ -553,7 +576,7 @@ public class UserService {
 //
     public static void main(String[] args) {
         UserService service = new UserService();
-        for(User u:service.selectAll()){
+        for (User u : service.selectAll()) {
             System.out.println(u);
         }
     }

@@ -41,11 +41,14 @@
     <script src="js\vendor\modernizr-3.5.0.min.js"></script>
     <%--Sweet alert notify--%>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <%--   Google ReCapcha --%>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></script>
 </head>
 
 <body>
 <!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
 <![endif]-->
 
 <!-- Main Wrapper Start Here -->
@@ -74,16 +77,17 @@
                         <div class="new-customer">
                             <h3 class="custom-title">ĐĂNG KÍ</h3>
                             <br>
-                            <p>Bằng cách tạo tài khoản, bạn sẽ có thể mua sắm nhanh hơn, cập nhật trạng thái đơn hàng và theo dõi các đơn hàng bạn đã thực hiện trước đó</p>
+                            <p>Bằng cách tạo tài khoản, bạn sẽ có thể mua sắm nhanh hơn, cập nhật trạng thái đơn hàng và
+                                theo dõi các đơn hàng bạn đã thực hiện trước đó</p>
                             <a class="customer-btn" href="register.jsp">Tiếp tục</a>
                         </div>
                     </div>
                 </div>
                 <!-- New Customer End -->
                 <%
-                    String messageResponse= request.getAttribute("messageResponse") +"";
-                    messageResponse= ((messageResponse).equals("null"))?"":messageResponse;
-                    if(messageResponse.equals("error")){
+                    String messageResponse = request.getAttribute("messageResponse") + "";
+                    messageResponse = ((messageResponse).equals("null")) ? "" : messageResponse;
+                    if (messageResponse.equals("error")) {
                 %>
                 <script type="text/javascript">
                     swal({
@@ -107,16 +111,24 @@
                                 <%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
                                 <div class="form-group">
                                     <label>Tài khoản</label>
-                                    <input type="text" value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>" id="username2" name="username" placeholder="Nhập username..." id="input-email" class="form-control">
+                                    <input type="text"
+                                           value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>"
+                                           id="username2" name="username" placeholder="Nhập username..."
+                                           id="input-email" class="form-control">
                                     <div id="error_username2"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input type="password" name="password" placeholder="Mật khẩu" id="password2" class="form-control">
+                                    <input type="password" name="password" placeholder="Mật khẩu" id="password2"
+                                           class="form-control">
                                     <div id="error_password2"></div>
                                 </div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
-                                <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();" class="return-customer-btn">
+                                <br>
+                                <div class="justify-content-center"><div class="g-recaptcha" data-sitekey="6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></div></div>
+
+                                <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();"
+                                       class="return-customer-btn">
                                 <br/>
                                 <form action="<c:url value='/login'/>" method="post">
                                     <input type="hidden" name="provider" value="Facebook">
@@ -137,6 +149,7 @@
         </div>
         <!-- Container End -->
     </div>
+
     <!-- LogIn Page End -->
     <jsp:include page="footer.jsp"/>
 </div>

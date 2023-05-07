@@ -76,8 +76,6 @@ public class ProductImageService {
 
             while (resultSet.next()) {
                 res = resultSet.getString("image");
-
-                System.out.println(res.toString());
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -112,23 +110,23 @@ public class ProductImageService {
         return imageProduct;
     }
 
+
     public static int updateImageProduct(Product p) {
         int res = 0;
         Connection connection = JDBCUtil.getConnection();
         String sql = "UPDATE imagesproduct " +
                 " SET " +
                 " image=?" +
-                " WHERE id_product=? AND id_image=?  AND type='image'";
+                " WHERE id_product=?  AND type='image'";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             for (ImageProduct i : p.getImage()) {
                 st.setString(1, i.getImage());
                 st.setString(2, p.getProductID());
-                st.setInt(3, i.getId());
                 System.out.println(sql);
                 res += st.executeUpdate();
-                JDBCUtil.disconection(connection);
             }
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -144,32 +142,10 @@ public class ProductImageService {
                 " WHERE id_product=? AND type='thumb'";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            for (ImageProduct i : p.getImage()) {
-                st.setString(1, i.getImage());
+                st.setString(1, p.getThumb());
                 st.setString(2, p.getProductID());
                 System.out.println(sql);
-                res += st.executeUpdate();
-                JDBCUtil.disconection(connection);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return res;
-    }
-
-    public static int insertImageProduct(Product p) {
-        int res = 0;
-        Connection connection = JDBCUtil.getConnection();
-        String sql = "INSERT INTO imagesproduct (id_product, image, type) VALUES (?,?,?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            for (ImageProduct i : p.getImage()) {
-                statement.setString(1, p.getProductID());
-                statement.setString(2, i.getImage());
-                statement.setString(3, "image");
-                System.out.println(sql);
-                res += statement.executeUpdate();
-            }
+                res = st.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -188,6 +164,25 @@ public class ProductImageService {
             statement.setString(3, "thumb");
             System.out.println(sql);
             res += statement.executeUpdate();
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+    public static int insertImageProduct(Product p) {
+        int res = 0;
+        Connection connection = JDBCUtil.getConnection();
+        String sql = "INSERT INTO imagesproduct (id_product, image, type) VALUES (?,?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            for (ImageProduct i : p.getImage()) {
+                statement.setString(1, p.getProductID());
+                statement.setString(2, i.getImage());
+                statement.setString(3, "image");
+                System.out.println(sql);
+                res += statement.executeUpdate();
+            }
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);

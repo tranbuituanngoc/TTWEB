@@ -112,10 +112,22 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.bumptech.glide/okhttp3-integration -->
+        <dependency>
+            <groupId>com.github.bumptech.glide</groupId>
+            <artifactId>okhttp3-integration</artifactId>
+            <version>4.15.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.social</groupId>
@@ -127,8 +139,17 @@
             <artifactId>spring-social-google</artifactId>
             <version>1.0.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.1.0</version>
+        </dependency>
     </dependencies>
-
     <build>
         <finalName>GachMen_Store</finalName>
         <plugins>
@@ -137,8 +158,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source> <!-- Thay đổi phiên bản tại đây -->
-                    <target>1.8</target>
+                    <source>9</source> <!-- Thay đổi phiên bản tại đây -->
+                    <target>9</target>
                 </configuration>
             </plugin>
         </plugins>

@@ -461,7 +461,6 @@ public class UserService {
         }
     }
 
-<<<<<<< HEAD
     public void saveUser(User user) {
         PreparedStatement pre = null;
         try {
@@ -483,9 +482,6 @@ public class UserService {
             throw new RuntimeException(e);
         }
     }
-
-=======
->>>>>>> 00dc7606a4fe54632f81cb5cf788556006acbc6b
     //
 //    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;

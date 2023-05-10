@@ -464,22 +464,29 @@ public class UserService {
     public void saveUser(User user) {
         PreparedStatement pre = null;
         try {
-            // Chuẩn bị truy vấn SQL để chèn thông tin người dùng vào cơ sở dữ liệu
-            String sql = "INSERT INTO users (username, email, password, role, fullname, status) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (id_user, username, email, phone, password, role, fullname, status) VALUES (?,?,?, ?, ?, ?, ?, ?)";
             pre = ConnectDB.connect(sql);
-            pre.setString(1, user.getUserName());
-            pre.setString(2, user.getEmail());
-            pre.setString(3, user.getPass());
-            pre.setInt(4, user.getRole());
-            pre.setString(5, user.getFullname());
-            pre.setBoolean(6, user.getStatus());
-
-            // Thực hiện truy vấn SQL để lưu thông tin người dùng vào cơ sở dữ liệu
+            pre.setString(1, user.getId_User());
+            pre.setString(2, user.getUserName());
+            pre.setString(3, user.getEmail());
+            pre.setString(4, user.getPhone());
+            pre.setString(5, user.getPass());
+            pre.setInt(6, user.getRole());
+            pre.setString(7, user.getFullname());
+            pre.setBoolean(8, user.getStatus());
             pre.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     //
@@ -576,8 +583,23 @@ public class UserService {
 //
     public static void main(String[] args) {
         UserService service = new UserService();
-        for (User u : service.selectAll()) {
-            System.out.println(u);
-        }
+//        for (User u : service.selectAll()) {
+//            System.out.println(u);
+//        }
+        UserService userService = new UserService();
+
+        // Tạo đối tượng User để kiểm thử phương thức saveUser()
+        User user = new User();
+        user.setId_User("111");
+        user.setUserName("testuser");
+        user.setEmail("testuser@example.com");
+        user.setPhone("0912271440");
+        user.setPass("password");
+        user.setRole(0);
+        user.setFullname("Test User");
+        user.setStatus(true);
+
+        // Gọi phương thức saveUser() để chèn thông tin người dùng vào CSDL
+        userService.saveUser(user);
     }
 }

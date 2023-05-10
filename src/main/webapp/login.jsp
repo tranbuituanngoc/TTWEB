@@ -125,20 +125,22 @@
                                 </div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <br>
-                                <div class="justify-content-center"><div class="g-recaptcha" data-sitekey="6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></div></div>
+                                <div class="justify-content-center">
+                                    <div class="g-recaptcha"
+                                         data-sitekey="6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></div>
+                                </div>
 
                                 <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();"
                                        class="return-customer-btn">
                                 <br/>
-                                <form action="<c:url value='/login'/>" method="post">
-                                    <input type="hidden" name="provider" value="Facebook">
-                                    <button type="submit">Login with Facebook</button>
-                                </form>
-
-                                <form action="<c:url value='/login'/>" method="post">
-                                    <input type="hidden" name="provider" value="Google">
-                                    <button type="submit">Login with Google</button>
-                                </form>
+                            </form>
+                            <form action="<c:url value='/login'/>" method="post">
+                                <input type="hidden" name="provider" value="Facebook">
+                                <button type="submit">Login with Facebook</button>
+                            </form>
+                            <form action="<c:url value='/login'/>" method="post">
+                                <input type="hidden" name="provider" value="Google">
+                                <button type="submit">Login with Google</button>
                             </form>
                         </div>
                     </div>

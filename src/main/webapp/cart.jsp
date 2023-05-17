@@ -213,7 +213,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // Handle success
-                location.reload(); // Refresh the page after successful update
+                location.reload();
             }
         };
         xhr.send();

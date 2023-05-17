@@ -76,14 +76,36 @@ public class CartUser {
         return totalQuantity;
     }
      // Lấy tổng giá trị của giỏ hàng
-    public double getTotalValue() {
-        double totalValue = 0;
+    public int getTotalValue() {
+        int totalValue = 0;
         for (Map.Entry<Cart, Integer> entry : cartMap.entrySet()) {
             Product product = entry.getKey().getProduct();
             int quantity = entry.getValue();
             totalValue += product.getPriceAfterSale() * quantity;
         }
         return totalValue;
+    }
+
+    public Size getTotalSize() {
+        Size totalSize= new Size();
+        int totalHeight =0;
+        int totalLength = 0;
+        int totalWidth = 0;
+        int totalWeight = 0;
+         for (Map.Entry<Cart, Integer> entry : cartMap.entrySet()) {
+            Product product = entry.getKey().getProduct();
+            Size size = entry.getKey().getSize();
+            int quantity = entry.getValue();
+            totalHeight += size.getHeight() * quantity;
+            totalLength += size.getLength() * quantity;
+            totalWeight += size.getWeight() * quantity;
+            totalWidth += size.getWidth() * quantity;
+        }
+         totalSize.setWidth(totalWidth);
+         totalSize.setHeight(totalHeight);
+         totalSize.setLength(totalLength);
+         totalSize.setWeight(totalWeight);
+         return totalSize;
     }
 
     public int size(){
@@ -133,17 +155,7 @@ public class CartUser {
 
 
     public static void main(String[] args) {
-//        HashMap<Cart, Integer> cartMap = new HashMap<Cart, Integer>();
-//        Cart cart = new Cart(); // Tạo đối tượng Cart
-//        Integer quantity = 1; // Số lượng của Cart
-//        Cart cart2 = new Cart();
-//        cartMap.put(cart, quantity); // Thêm Cart và quantity vào cartMap
-//        CartUser cartUser = new CartUser();
-//        cartUser.setCartMap(cartMap);
-//        cartUser.addCart(cart2,2);
-//        System.out.println(cartUser);
-//        System.out.println(cartUser.size());
-//        System.out.println(cartUser.getCart());
-//        System.out.println(cartUser.quantity(cartUser.getCart().get(0)));
+//        CartUser cartUser = CartService.getCartById("kh54788800");
+//        System.out.println(cartUser.getTotalSize());
     }
 }

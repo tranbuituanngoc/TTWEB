@@ -1,5 +1,5 @@
 var discount1 = {
-  name: "MOHO500K",
+  name: "TRUEMART500K",
   description:
     "Giảm 500,000đ cho đơn hàng trên 8,000,000đ. Mỗi khách hàng chỉ được sử dụng mã ưu đãi này một lần, không áp dụng đồng thời với các chương trình khuyến mại khác.",
   discount_type: "5",
@@ -33,7 +33,7 @@ var discount1 = {
   },
 };
 var discount2 = {
-  name: "MOHO50K",
+  name: "TRUEMART50K",
   description:
     "Giảm 50,000đ cho đơn hàng trên 500,000đ. Mỗi khách hàng chỉ được sử dụng mã ưu đãi này một lần, không áp dụng đồng thời với các chương trình khuyến mại khác.",
   discount_type: "5",
@@ -67,7 +67,7 @@ var discount2 = {
   },
 };
 var discount3 = {
-  name: "MOHO300K",
+  name: "TRUEMART300K",
   description:
     "Giảm 300,000đ cho đơn hàng trên 5,000,000đ. Mỗi khách hàng chỉ được sử dụng mã ưu đãi này một lần, không áp dụng đồng thời với các chương trình khuyến mại khác.",
   discount_type: "5",
@@ -101,7 +101,7 @@ var discount3 = {
   },
 };
 var discount4 = {
-  name: "MOHO200K",
+  name: "TRUEMART200K",
   description:
     "Giảm 200,000đ cho đơn hàng trên 3,000,000đ. Mỗi khách hàng chỉ được sử dụng mã ưu đãi này một lần, không áp dụng đồng thời với các chương trình khuyến mại khác.",
   discount_type: "5",
@@ -135,7 +135,7 @@ var discount4 = {
   },
 };
 var discount5 = {
-  name: "MOHO100K",
+  name: "TRUEMART100K",
   description:
     "Giảm 100,000đ cho đơn hàng trên 1,000,000đ. Mỗi khách hàng chỉ được sử dụng mã ưu đãi này một lần, không áp dụng đồng thời với các chương trình khuyến mại khác.",
   discount_type: "5",
@@ -581,9 +581,9 @@ $(document).ready(function () {
       $(
         "form#form_discount_add button.field-input-btn.btn.btn-default"
       ).removeClass("btn-disabled");
-      $(
-        "form#form_discount_add button.field-input-btn.btn.btn-default"
-      ).trigger("click");
+      // $(
+      //   "form#form_discount_add button.field-input-btn.btn.btn-default"
+      // ).trigger("click");
     }
   );
 
@@ -600,10 +600,3 @@ $(document).ready(function () {
     togglePopupCoupons();
   });
 });
-
-var isFirstLoadTime = true;
-var siteKey = "6LdD18MUAAAAAHqKl3Avv8W-tREL6LangePxQLM-";
-var isUseCaptchaCheckout = false;
-
-if (isUseCaptchaCheckout == true) {
-}

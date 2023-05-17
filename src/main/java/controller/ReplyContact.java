@@ -1,8 +1,8 @@
 package controller;
 
+import Util.Email;
 import model.Contact;
 import service.ContactService;
-import tool.SendToMail;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -38,13 +38,12 @@ public class ReplyContact extends HttpServlet {
                     request.getRequestDispatcher("admin/ContactDetail.jsp");
                 }
                 else{
-                    SendToMail mail = new SendToMail();
                     String forward="admin/ContactDetail.jsp?";
                     forward+="fullname="+contact.getUsername();
                     forward+="&email="+ contact.getEmail();
                     forward+="&usersubject="+contact.getUserSubject();
                     forward+="&contactcontent="+contact.getContactContent();
-                    mail.sendEmail(contact.getEmail(),"Reply from TrueMart-Gach men cao cap",replytext);
+                    Email.sendMail(contact.getEmail(),"Reply from TrueMart-Gach men cao cap",replytext);
                     ContactService.updateStatus(id);
                     request.setAttribute("message", "Phản hồi liên hệ thành công");
                     request.getRequestDispatcher(forward).forward(request,response);

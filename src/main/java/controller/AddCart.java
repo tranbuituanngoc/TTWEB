@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+
 import service.*;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,9 @@ public class AddCart extends HttpServlet {
         Product p = ProductService.getById(id);
         String colorId_raw = request.getParameter("color_id");
         User user = (User) request.getSession().getAttribute("user");
+
         String quantity_raw = request.getParameter("quantity_value");
+
         int quantity  =1;
         if (quantity_raw != null){
             quantity = Integer.parseInt(quantity_raw);
@@ -36,6 +39,7 @@ public class AddCart extends HttpServlet {
         if (sizeId_raw != null) {
            sizeId = Integer.parseInt(sizeId_raw);
         }
+
         int price = ProductImportedService.getPrice(id, sizeId, colorId);
         Cart cart = new Cart();
         Color color = ProductColorService.getColorById(colorId);

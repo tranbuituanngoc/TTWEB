@@ -58,16 +58,15 @@ public class UserService {
             while (resultSet.next()) {
                 String id_user = resultSet.getString("id_user");
                 String userName = resultSet.getString("userName");
+                String fullName = resultSet.getString("fullName");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
-                String verificationCode = resultSet.getString("verification_code");
-                Timestamp timeValid = resultSet.getTimestamp("time_valid");
-                boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
+                boolean status = resultSet.getBoolean("status");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
+                res = new User(id_user, userName,fullName, email, phone, address, password, role,status);
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -85,7 +84,7 @@ public class UserService {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
-//            System.out.println(sql);
+            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -119,7 +118,7 @@ public class UserService {
             statement.setString(1, o.getUserName());
             statement.setString(2, o.getEmail());
             statement.setString(3, o.getOldPass());
-//            System.out.println(sql);
+            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -228,17 +227,19 @@ public class UserService {
             Connection connection = JDBCUtil.getConnection();
             String sql = "UPDATE Users " +
                     " SET " +
-                    " password=?" +
-                    ", email=?" +
+                    " email=?" +
                     ", phone=?" +
-                    ", address=?" +
+                    ", fullname =?" +
+                    ", role=?" +
+                    ", status=?" +
                     " WHERE id_user=?";
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, o.getPass());
-            st.setString(2, o.getEmail());
-            st.setString(3, o.getPhone());
-            st.setString(4, o.getAddress());
-            st.setString(5, o.getId_User());
+            st.setString(1, o.getEmail());
+            st.setString(2, o.getPhone());
+            st.setString(3, o.getFullname());
+            st.setInt(4, o.getRole());
+            st.setBoolean(5, o.getStatus());
+            st.setString(6, o.getId_User());
             System.out.println(sql);
             res = st.executeUpdate();
         } catch (SQLException e) {
@@ -330,7 +331,7 @@ public class UserService {
     public static void deleteUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "DELETE  FROM users where id = ?";
+            String sql = "DELETE  FROM users where id_user = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -343,7 +344,7 @@ public class UserService {
     public static void lockUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "UPDATE Users set status = 0 where id = ?";
+            String sql = "UPDATE Users set status = 0 where id_user = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -376,7 +377,7 @@ public class UserService {
     public static void unlockUser(String idUser) {
         PreparedStatement s = null;
         try {
-            String sql = "UPDATE Users set status = 1 where id = ?";
+            String sql = "UPDATE Users set status = 1 where id_user = ?";
             s = ConnectDB.connect(sql);
             s.setString(1, idUser);
             int rs = s.executeUpdate();
@@ -457,7 +458,7 @@ public class UserService {
         }
     }
 
-//
+    //
 //    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;
 //        try {

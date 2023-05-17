@@ -3,9 +3,13 @@ package controller;
 import model.CartUser;
 import model.Order;
 import model.ShippingAdress;
+import Util.Email;
+import model.Product;
+
 import model.User;
 import service.CartService;
 import service.OrderService;
+
 import service.ShippingAddressService;
 import service.VoucherService;
 
@@ -84,6 +88,7 @@ public class CreateOrder extends HttpServlet {
             CartService.setCartOrder(user.getId_User(), order.getOrderID());
         }
 
+
         if (OrderService.updateQuantity(order) == -1 ){
             request.getSession().setAttribute("errorQuantity", true);
             response.sendRedirect("CheckOut");
@@ -98,6 +103,16 @@ public class CreateOrder extends HttpServlet {
             request.getSession().setAttribute("order", order);
             System.out.println("success");
             response.sendRedirect("SuccessOrder");
+
+//                 request.setAttribute("msg", "Bạn đã đặt hàng thành công");
+//                 response.sendRedirect("ProductLists");
+//                OrderDetailService.insertOrderDetail(pro);
+                Email mail = new Email();
+                Email.sendMail(email,"TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
+                Cart newCart = new Cart();
+//                newCart.commit(session);
+            }
+
         }
     }
 

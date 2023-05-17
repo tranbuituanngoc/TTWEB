@@ -136,13 +136,14 @@
                             </form>
                             <form action="<c:url value='/login'/>" method="post">
                                 <input type="hidden" name="provider" value="Facebook">
-                                <input type="hidden" name="provider" value="<c:url value='/oauth2callback'/>">
+                                <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
                                 <button type="submit">Login with Facebook</button>
                             </form>
                             <form action="<c:url value='/login'/>" method="post">
                                 <input type="hidden" name="provider" value="Google">
-                                <input type="hidden" name="provider" value="<c:url value='/oauth2callback'/>">
+                                <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
                                 <button type="submit">Login with Google</button>
+                            </form>
                             </form>
                         </div>
                     </div>

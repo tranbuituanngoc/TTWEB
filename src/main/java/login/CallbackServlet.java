@@ -27,7 +27,7 @@ public class CallbackServlet extends HttpServlet {
         String provider = request.getParameter("provider");
         String code = request.getParameter("code");
         if (provider.equals("Facebook")) {
-            String accessTokenUrl = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=<client_id>&redirect_uri=http://localhost:8080/TTWEB_war/callback&client_secret=<client_secret>&code=" + code;
+            String accessTokenUrl = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=526446266364446&redirect_uri=http://localhost:8080/TTWEB_war/callback&client_secret=<client_secret>&code=" + code;
             String accessTokenResponse = sendGetRequest(accessTokenUrl);
             String accessToken = extractAccessTokenFromResponse(accessTokenResponse);
 
@@ -43,7 +43,7 @@ public class CallbackServlet extends HttpServlet {
             saveUserToDatabase(id, name, email);
         } else if (provider.equals("Google")) {
             String tokenUrl = "https://accounts.google.com/o/oauth2/token";
-            String tokenParams = "code=" + code + "&client_id=<client_id>&client_secret=<client_secret>&redirect_uri=http://localhost:8080/TTWEB_war/callback&grant_type=authorization_code";
+            String tokenParams = "code=" + code + "&client_id=524926861428-2uub0irutasgfqkmutpn37p8sltupgre.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost:8080/TTWEB_war/callback&grant_type=authorization_code";
             String tokenResponse = sendPostRequest(tokenUrl, tokenParams);
             JSONObject tokenInfo = new JSONObject(tokenResponse);
             String accessToken = tokenInfo.getString("access_token");

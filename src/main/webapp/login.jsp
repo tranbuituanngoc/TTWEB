@@ -134,17 +134,19 @@
                                        class="return-customer-btn">
                                 <br/>
                             </form>
-                            <form action="<c:url value='/login'/>" method="post">
+                            <form class="form-fbgg" action="<c:url value='/login'/>" method="post">
                                 <input type="hidden" name="provider" value="Facebook">
                                 <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
-                                <button type="submit">Login with Facebook</button>
-                            </form>
-                            <form action="<c:url value='/login'/>" method="post">
-                                <input type="hidden" name="provider" value="Google">
-                                <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
-                                <button type="submit">Login with Google</button>
-                            </form>
-                            </form>
+                                <button class="btn-fbgg" type="submit">
+                                    <i class="fa fa-facebook"></i> Login with Facebook
+                                </button>
+                            </form><form class="form-fbgg" action="<c:url value='/login'/>" method="post">
+                            <input type="hidden" name="provider" value="Google">
+                            <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
+                            <button class="btn-fbgg" type="submit">
+                                <i class="fa fa-google"></i> Login with Google
+                            </button>
+                        </form>
                         </div>
                     </div>
                 </div>

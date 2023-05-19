@@ -41,7 +41,7 @@ public class CartService {
         CartUser cartUser = new CartUser();
         try {
             PreparedStatement pState = null;
-            String sql = "select * from cart where id_user =?";
+            String sql = "select * from cart where id_user =? and id_order is null";
             pState = ConnectDB.connect(sql);
             pState.setString(1, idUser);
             ResultSet rs = pState.executeQuery();
@@ -106,7 +106,37 @@ public class CartService {
                 throw new RuntimeException(e);
             }
     }
+
+    public static void setCartOrder(String id_user, String id_order){
+        try {
+                PreparedStatement pState = null;
+                String sql = "Update cart set id_order =?  WHERE id_user = ?";
+                pState = ConnectDB.connect(sql);
+                pState.setString(1, id_order);
+                pState.setString(2, id_user);
+                pState.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+    }
+
+    public static void removeCartOrder(String id_user){
+        try {
+                PreparedStatement pState = null;
+                String sql = "Update cart set id_order =null  WHERE id_user = ?";
+                pState = ConnectDB.connect(sql);
+                pState.setString(1, id_user);
+                pState.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+    }
+
     public static void main(String[] args) {
-        System.out.println(CartService.getCartById("kh01125729").getIdUser() == null);
+//        System.out.println(CartService.getCartById("kh01125729").getIdUser() == null);
     }
 }

@@ -1,13 +1,17 @@
 package controller;
 
 import model.*;
+import service.CartService;
 import service.ProductColorService;
 import service.ProductService;
 import service.ProductSizeService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "UpdateCart", value = "/UpdateCart")
@@ -45,7 +49,8 @@ public class UpdateCart extends HttpServlet {
         cartUser.updateQuantity(cart, quantity);
         session.removeAttribute("cartUser");
         session.setAttribute("cartUser", cartUser);
-        response.sendRedirect("SaveCart");
+        CartService.addCart(cartUser);
+        response.sendRedirect("Cart");
     }
 
     @Override

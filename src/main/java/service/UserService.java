@@ -1,14 +1,11 @@
 package service;
 
+import database.ConnectDB;
 import database.JDBCUtil;
 import model.User;
-import database.ConnectDB;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 public class UserService {
     private final ArrayList<User> data = new ArrayList<User>();
@@ -174,6 +171,7 @@ public class UserService {
                 int role = resultSet.getInt("role");
 
                 res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
+                res.setFullname(resultSet.getString("fullname"));
                 System.out.println(res.toString());
                 break;
             }

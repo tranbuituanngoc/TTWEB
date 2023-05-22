@@ -91,7 +91,7 @@ public class OrderService {
         List<Order> listOrder = new LinkedList<>();
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "select id_order, u.id_user, payment_id, totalPrice, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user";
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -101,6 +101,7 @@ public class OrderService {
                 order.setPaymentMethodId(rs.getInt("payment_id"));
                 order.setTotalPrice(rs.getInt("totalPrice"));
                 order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
                 order.setShipping_cost(rs.getInt("shipping_cost"));
                 order.setShipping_time(rs.getTimestamp("shipping_time"));
                 order.setOrder_date(rs.getTimestamp("orderDate"));
@@ -117,13 +118,41 @@ public class OrderService {
         return listOrder;
     }
 
-    public static void updateStatus(String id, int status){
+    public static Order getOrder(String idOrder) {
+        Order order = new Order();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user where id_order = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idOrder);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
+    }
+    public static void deleteOrder(String orderID){
         PreparedStatement s = null;
         try {
-            String sql = "update `order` set status = ? where id = ?";
+            String sql = "DELETE from `orders` WHERE id_order = ?";
             s = ConnectDB.connect(sql);
-            s.setInt(1,status);
-            s.setString(1,id);
+            s.setString(1,orderID);
             int rs = s.executeUpdate();
             s.close();
 
@@ -131,22 +160,32 @@ public class OrderService {
             e.printStackTrace();
         }
     }
-    public static void deleteOrder(String id){
+
+    public static String updateStatus(int idStatus, int idStatusTransport, String idOrder) {
         PreparedStatement s = null;
         try {
-            String sql = "DELETE from `order` WHERE id = ?";
+            String sql = "UPDATE `orders` SET status_id = ?, transport_status_id = ? WHERE id_order = ?";
             s = ConnectDB.connect(sql);
-            s.setString(1,id);
+            s.setInt(1, idStatus);
+            s.setInt(2, idStatusTransport);
+            s.setString(3, idOrder);
             int rs = s.executeUpdate();
             s.close();
 
+            if (rs > 0) {
+                return "Cập nhật thành công.";
+            } else {
+                return "Không thể thay đổi trạng thái.";
+            }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            return "Lỗi xảy ra khi cập nhật.";
         }
     }
 
     public static void main(String[] args) {
 //        System.out.println(OrderService.getAllOrder());
+//        System.out.println(OrderService.getOrder("DH00683"));
     }
 
 }

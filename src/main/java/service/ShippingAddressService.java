@@ -2,6 +2,7 @@ package service;
 
 import database.ConnectDB;
 import database.JDBCUtil;
+import model.Order;
 import model.ShippingAdress;
 import model.User;
 
@@ -37,6 +38,33 @@ public class ShippingAddressService {
             e.printStackTrace();
         }
           return result;
+    }
+
+    public static ShippingAdress getShippingAddressOrder(Order order){
+        String idUser = order.getUserID();
+        PreparedStatement s = null;
+        ShippingAdress result = new ShippingAdress();
+        try {
+            String sql = "SELECT * from shipping_address where user_id = ?";
+            s = ConnectDB.connect(sql);
+            s.setString(1, idUser);
+            ResultSet rs = s.executeQuery();
+            while(rs.next()){
+                result.setAddress(rs.getString("address"));
+                result.setEmal(rs.getString("email"));
+                result.setDistrictId(rs.getInt("district_id"));
+                result.setPhone(rs.getString("phone"));
+                result.setFullName(rs.getString("fullname"));
+                result.setProvinceId(rs.getInt("province_id"));
+                result.setShippingAddressId(rs.getInt("shipping_address_id"));
+                result.setWardId(rs.getInt("ward_id"));
+            }
+            rs.close();
+            s.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static int addShippingAddress(ShippingAdress shippingAdress){

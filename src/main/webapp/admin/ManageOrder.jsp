@@ -30,7 +30,8 @@
 
     <!-- page css -->
     <link href="admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <!-- Core css -->
     <link href="admin/assets/css/app.min.css" rel="stylesheet">
 </head>
@@ -39,6 +40,46 @@
 <jsp:include page="headerAd.jsp"/>
 <jsp:include page="menu.jsp"/>
 
+<%
+    String result = (String) request.getSession().getAttribute("resultOrder");
+    String msg = (String) request.getSession().getAttribute("msgOrder");
+%>
+
+
+<% if (result != null && msg != null) {
+    if (result.equals("false")) {
+%>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<% } %>
+<% if (result.equals("true")) { %>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<%
+        }
+    }
+%>
+<% request.getSession().removeAttribute("resultOrder");
+    request.getSession().removeAttribute("msgOrder");
+%>
 <!-- Page Container START -->
 <div class="page-container">
     <!-- Content Wrapper START -->
@@ -76,7 +117,7 @@
                             <th>Ngày Đặt</th>
                             <th>Ngày Giao</th>
                             <th>Tình Trạng Đơn Hàng</th>
-<%--                            <th>Tình Trạng Vận Chuyển</th>--%>
+                            <th>Tình Trạng Vận Chuyển</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -91,26 +132,28 @@
                                 </td>
                                 <td>
 
-                                    <fmt:parseDate value="${o.order_date}" var="parsedDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-                                    <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" var="formattedDate" />
-                                    ${formattedDate}
+                                    <fmt:parseDate value="${o.order_date}" var="parsedDate"
+                                                   pattern="yyyy-MM-dd HH:mm:ss.S"/>
+                                    <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" var="formattedDate"/>
+                                        ${formattedDate}
                                 </td>
                                 <td>
-                                    <fmt:parseDate value="${o.shipping_time}" var="parsedDate" pattern="yyyy-MM-dd HH:mm:ss.S" />
-                                    <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" var="formattedDate" />
+                                    <fmt:parseDate value="${o.shipping_time}" var="parsedDate"
+                                                   pattern="yyyy-MM-dd HH:mm:ss.S"/>
+                                    <fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" var="formattedDate"/>
                                         ${formattedDate}
                                 </td>
                                 <td id="orderstatus">
                                     <c:if test="${o.status ==1}">
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-success badge-dot m-r-10"></div>
-                                            <div>Đã xử lý</div>
+                                            <div>Đã xác nhận</div>
                                         </div>
                                     </c:if>
                                     <c:if test="${o.status ==0}">
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-primary badge-dot m-r-10"></div>
-                                            <div>Chưa xử lý</div>
+                                            <div>Chưa xác nhận</div>
                                         </div>
                                     </c:if>
                                     <c:if test="${o.status ==2}">
@@ -120,41 +163,27 @@
                                         </div>
                                     </c:if>
                                 </td>
-<%--                                <td id="transportstatus">--%>
-<%--                                    <c:if test="${o.transport_status ==1}">Vận chuyển thành công</c:if>--%>
-<%--                                    <c:if test="${o.transport_status ==0}">Đang vận chuyển</c:if>--%>
-<%--                                    <c:if test="${o.transport_status ==2}">Đã hủy</c:if>--%>
-<%--                                </td>--%>
+                                <td id="transportstatus">
+                                    <c:if test="${o.transport_status ==0}">Chưa Vận chuyển</c:if>
+                                    <c:if test="${o.transport_status ==1}">Đang vận chuyển</c:if>
+                                    <c:if test="${o.transport_status ==2}">Vận chuyển thành công</c:if>
+                                </td>
                                 <td class="text-right">
-                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                                        <i class="anticon anticon-edit"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded">
-                                        <i class="anticon anticon-delete"></i>
-                                    </button>
+                                    <a href="EditOrder?orderID=${o.orderID}">
+                                        <button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                                            <i class="anticon anticon-edit"></i>
+                                        </button>
+                                    </a>
+                                    <a href="DeleteOrder?orderID=${o.orderID}" >
+                                        <button class="btn btn-icon btn-hover btn-sm btn-rounded" ">
+                                            <i class="anticon anticon-delete"></i>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div id="id01" class="modal">
-                        <!-- Modal Content -->
-                        <form class="modal-content animate">
-                                <span onclick="document.getElementById('id01').style.display='none'"
-                                      class="close" title="Close Modal">&times;</span>
-                            <div class="header-modal"><h3>Bạn có chắc là muốn xóa đơn hàng này</h3></div>
-                            <%--                                    <input id="delete" name="action" style="display: none" value="delete">--%>
-                            <input id="deleteval" name="id" style="display: none">
-                            <div class="button-group">
-                                <button id="btnDelete" class="btn-yes" type="button"
-                                        onclick="document.getElementById('id01').style.display='none'">Có
-                                </button>
-                                <button class="btn-no" type="button"
-                                        onclick="document.getElementById('id01').style.display='none'">Không
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -167,7 +196,6 @@
 <!-- Page Container END -->
 <!-- Core Vendors JS -->
 <script src="admin/assets/js/vendors.min.js"></script>
-
 <!-- page js -->
 <script src="admin/assets/vendors/datatables/jquery.dataTables.min.js"></script>
 <script src="admin/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>

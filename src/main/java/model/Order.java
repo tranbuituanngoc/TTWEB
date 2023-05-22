@@ -6,14 +6,17 @@ import java.sql.Timestamp;
 public class Order implements Serializable {
     private String orderID;
     private String userID;
+    private String fullName;
     private int totalPrice;
     private int status;
     private int transport_status;
     private int shipping_cost;
     private Timestamp shipping_time;
+    private Timestamp order_date;
     private int paymentMethodId;
     private String voucher_code;
     private String idTransport;
+
     public Order() {
     }
 
@@ -97,15 +100,37 @@ public class Order implements Serializable {
         this.transport_status = transport_status;
     }
 
+    public Timestamp getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(Timestamp order_date) {
+        this.order_date = order_date;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName= fullName;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderID='" + orderID + '\'' +
                 ", userID='" + userID + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", status=" + status +
+                ", transport_status=" + transport_status +
                 ", shipping_cost=" + shipping_cost +
                 ", shipping_time=" + shipping_time +
-                '}';
+                ", order_date=" + order_date +
+                ", paymentMethodId=" + paymentMethodId +
+                ", voucher_code='" + voucher_code + '\'' +
+                ", idTransport='" + idTransport + '\'' +
+                '}' + "\n";
     }
 }

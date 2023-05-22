@@ -12,25 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class OrderService {
-     public static boolean validOrder(Order order){
-        String id = order.getOrderID();
-        PreparedStatement s = null;
-        try {
-            String sql = "SELECT * from orders where id_order = ?";
-            s = ConnectDB.connect(sql);
-            s.setString(1, id);
-            ResultSet rs = s.executeQuery();
-            if(rs.next()){
-                rs.close();
-                s.close();
-                return true;
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static int addOrder(Order order){
         if (order.getOrderID() != null){
             int res = 0;
@@ -57,8 +38,6 @@ public class OrderService {
         }
         return 0;
     }
-
-
 
     public static int updateQuantity(Order order){
             int res = 0;
@@ -110,7 +89,31 @@ public class OrderService {
 
     public static List<Order> getAllOrder() {
         List<Order> listOrder = new LinkedList<>();
-
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
+                listOrder.add(order);
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return listOrder;
     }
 
@@ -143,14 +146,7 @@ public class OrderService {
     }
 
     public static void main(String[] args) {
-//        deleteOrder("1324653113234");
-        Order order = new Order();
-        order.setShipping_cost(3242);
-//        order.setShipping_time(234);
-        order.setTotalPrice(234324);
-        order.setUserID("123213");
-        order.setOrderID("21313");
-        order.setPaymentMethodId(12313);
-        OrderService.addOrder(order);
+//        System.out.println(OrderService.getAllOrder());
     }
+
 }

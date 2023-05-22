@@ -27,7 +27,7 @@ public class CallbackServlet extends HttpServlet {
         String provider = request.getParameter("provider");
         String code = request.getParameter("code");
         if (provider.equals("Facebook")) {
-            String accessTokenUrl = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=526446266364446&redirect_uri=http://localhost:8080/TTWEB_war/callback&client_secret=<client_secret>&code=" + code;
+            String accessTokenUrl = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=526446266364446&redirect_uri=http://localhost:8080/TTWEB_war/callback&client_secret=0c016f33615a32a9549aa7c113b18261&code=" + code;
             String accessTokenResponse = sendGetRequest(accessTokenUrl);
             String accessToken = extractAccessTokenFromResponse(accessTokenResponse);
 

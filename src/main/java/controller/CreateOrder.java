@@ -92,9 +92,10 @@ public class CreateOrder extends HttpServlet {
             CartService.removeCartOrder(user.getId_User());
         }
         if (OrderService.updateQuantity(order) == 1) {
-            String idTransport = new RegisterTransport().registerTransport(shippingAdress.getDistrictId(), shippingAdress.getWardId());
-            System.out.println(idTransport);
-            order.setIdTransport(idTransport);
+//            sử dụng api logistic
+//            String idTransport = new RegisterTransport().registerTransport(shippingAdress.getDistrictId(), shippingAdress.getWardId());
+//            System.out.println(idTransport);
+//            order.setIdTransport(idTransport);
             OrderService.addOrder(order);
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getSession().setAttribute("order", order);

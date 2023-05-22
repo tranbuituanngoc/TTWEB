@@ -216,6 +216,11 @@
                     .return-customer-btn:hover {
                         background-color: #0069d2;
                     }
+                    .g-recaptcha{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                     .social-login {
                         display: flex;
                         justify-content: center;

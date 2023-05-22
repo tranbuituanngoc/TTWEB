@@ -17,14 +17,9 @@ public class JDBCUtil {
             DriverManager.registerDriver(driver);
 
             //link
-            String urlString = "jdbc:mysql://localhost:3306/gachmen_shop";
-            //tên database
-            String usernameString = "root";
-            //mật khẩu database
-            String passwordString = "";
-
+            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName();
             // Tạo kết nối
-            connection = DriverManager.getConnection(urlString, usernameString, passwordString);
+            connection = DriverManager.getConnection(url, DBProperties.getUsername(), DBProperties.getPassword());
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

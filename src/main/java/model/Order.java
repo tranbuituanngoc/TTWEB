@@ -8,6 +8,7 @@ public class Order implements Serializable {
     private String userID;
     private int totalPrice;
     private int status;
+    private int transport_status;
     private int shipping_cost;
     private Timestamp shipping_time;
     private int paymentMethodId;
@@ -86,6 +87,14 @@ public class Order implements Serializable {
 
     public void setIdTransport(String idTransport) {
         this.idTransport = idTransport;
+    }
+
+    public int getTransport_status() {
+        return transport_status;
+    }
+
+    public void setTransport_status(int transport_status) {
+        this.transport_status = transport_status;
     }
 
     @Override

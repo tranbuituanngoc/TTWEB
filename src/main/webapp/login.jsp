@@ -108,7 +108,7 @@
                             <br>
                             <form action="/nguoi-dung" method="post" onsubmit="return signIn(); getAlert()">
                                 <input type="hidden" name="action" value="dang-nhap">
-                                <%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
+                                <%--<p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
                                 <div class="form-group">
                                     <label>Tài khoản</label>
                                     <input type="text"
@@ -134,22 +134,145 @@
                                        class="return-customer-btn">
                                 <br/>
                             </form>
-                            <form class="form-fbgg" action="<c:url value='/login'/>" method="post">
-                                <input type="hidden" name="provider" value="Facebook">
-                                <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
-                                <button class="btn-fbgg" type="submit">
-                                    <i class="fa fa-facebook"></i> Login with Facebook
-                                </button>
-                            </form><form class="form-fbgg" action="<c:url value='/login'/>" method="post">
-                            <input type="hidden" name="provider" value="Google">
-                            <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
-                            <button class="btn-fbgg" type="submit">
-                                <i class="fa fa-google"></i> Login with Google
-                            </button>
-                        </form>
+                            <div class="or-divider">
+                                <span class="or-text">Hoặc</span>
+                            </div>
+                            <div class="social-login">
+                                <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
+                                    <input type="hidden" name="provider" value="Facebook">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
+                                    <button class="btn-fbgg" type="submit">
+                                        <i class="fa fa-facebook"></i> Đăng nhập bằng Facebook
+                                    </button>
+                                </form>
+                                <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
+                                    <input type="hidden" name="provider" value="Google">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
+                                    <button class="btn-fbgg-google" type="submit">
+                                        <i class="fa fa-google"></i> Đăng nhập bằng Google
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <style>
+                    .or-divider {
+                        display: flex;
+                        align-items: center;
+                        text-align: center;
+                        margin: 10px 0;
+                    }
+
+                    .or-divider:before,
+                    .or-divider:after {
+                        content: "";
+                        flex: 1;
+                        border-bottom: 1px solid #d9d9d9;
+                    }
+
+                    .or-divider .or-text {
+                        padding: 0 10px;
+                        color: #8c8c8c;
+                        font-weight: bold;
+                    }
+
+                    /* Đăng nhập */
+                    .custom-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+
+                    .form-group {
+                        margin-bottom: 10px;
+                    }
+
+                    .form-control {
+                        border: 1px solid #d9d9d9;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px;
+                    }
+
+                    .lost-password {
+                        text-align: right;
+                        margin-top: 10px;
+                    }
+
+                    .return-customer-btn {
+                        background-color: #007bff;
+                        border: none;
+                        color: #fff;
+                        border-radius: 4px;
+                        height: 40px;
+                        width: 100%;
+                        font-size: 16px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                    }
+
+                    .return-customer-btn:hover {
+                        background-color: #0069d2;
+                    }
+                    .social-login {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .social-login form {
+                        margin: 0 10px;
+                    }
+                    /* Button Facebook */
+
+                    .btn-fbgg {
+                        background-color: #3b5998;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px 16px;
+                        margin: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .btn-fbgg:hover {
+                        background-color: #2d4373;
+                    }
+
+                    .btn-fbgg i {
+                        margin-right: 10px;
+                    }
+
+                    /* Button Google */
+
+                    .btn-fbgg-google {
+                        background-color: #dd4b39;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px 16px;
+                        margin: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .btn-fbgg-google:hover {
+                        background-color: #c23321;
+                    }
+
+                    .btn-fbgg-google i {
+                        margin-right: 10px;
+                    }
+                </style>
                 <!-- Returning Customer End -->
             </div>
             <!-- Row End -->

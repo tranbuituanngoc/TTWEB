@@ -81,4 +81,8 @@ public class Log extends HttpServlet {
             response.sendRedirect("login.jsp");
         }
     }
+//    public static void main(String[] args) {
+//        logger.info("Đây là một thông báo INFO");
+//        logger.error("Đây là một thông báo lỗi ERROR");
+//    }
 }

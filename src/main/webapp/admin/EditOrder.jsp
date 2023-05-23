@@ -27,12 +27,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" href="admin/assets/images/logo/favicon.png">
-
+    <link href="admin/assets/vendors/select2/select2.css" rel="stylesheet"/>
     <!-- page css -->
     <!-- Core css -->
     <link href="admin/assets/css/app.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -65,18 +64,18 @@
                             <input type="hidden" name="idOrder" value="${order.orderID}">
                             <strong><h5>Trạng thái đơn hàng</h5></strong>
                             <select id="mySelect1" name="id_status">
-                                <option value="0">Chờ xác nhận</option>
-                                <option value="1">Đã xác nhận</option>
-                                <option value="2">Đã hủy</option>
+                                <option value="0" <c:if test="${order.status eq 0}">selected</c:if>>Chờ xác nhận</option>
+                                <option value="1" <c:if test="${order.status eq 1}">selected</c:if>>Đã xác nhận</option>
+                                <option value="2" <c:if test="${order.status eq 2}">selected</c:if>>Đã hủy</option>
                             </select>
                             <br/>
                             <br/>
 
                             <strong><h5>Trạng thái vận chuyển</h5></strong>
                             <select id="mySelect2" name="id_status_transport">
-                                <option value="0">Chưa vận chuyển</option>
-                                <option value="1">Đang vận chuyển</option>
-                                <option value="2">Vận chuyển thành công</option>
+                                <option value="0" <c:if test="${order.transport_status eq 0}">selected</c:if>>Chưa vận chuyển</option>
+                                <option value="1" <c:if test="${order.transport_status eq 1}">selected</c:if>>Đang vận chuyển</option>
+                                <option value="2" <c:if test="${order.transport_status eq 2}">selected</c:if>>Vận chuyển thành công</option>
                             </select>
                         </form>
 
@@ -227,13 +226,12 @@
         form.submit();
     }
 </script>
+<script src="admin/assets/vendors/jquery/dist/jquery.js"></script>
+<script src="admin/assets/vendors/select2/select2.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#mySelect1').select2();
-    });
-    $(document).ready(function () {
-        $('#mySelect2').select2();
-    });
+    $("#mySelect1").select2();
+    $("#mySelect2").select2();
+
 </script>
 <!-- Core Vendors JS -->
 <script src="admin/assets/js/vendors.min.js"></script>

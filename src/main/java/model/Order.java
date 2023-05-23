@@ -1,50 +1,20 @@
 package model;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.sql.Timestamp;
 
 public class Order implements Serializable {
     private String orderID;
     private String userID;
-    private String fullName;
     private int totalPrice;
-    private String address;
-    private String phone;
-    private String email;
     private int status;
-    private String createDate;
-    private String updateDate;
-    private LinkedList<OrderDetail> orderDetails;
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderID='" + orderID + '\'' +
-                ", userID='" + userID + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", totalPrice=" + totalPrice +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", status=" + status +
-                ", createDate='" + createDate + '\'' +
-                ", updateDate='" + updateDate + '\'' +
-                ", orderDetails=" + orderDetails +
-                '}';
-    }
-
-    public Order(String orderID, String userID, String fullName, int totalPrice, String address, String phone, String email, int status, String createDate, String updateDate) {
-        this.orderID = orderID;
-        this.userID = userID;
-        this.fullName = fullName;
-        this.totalPrice = totalPrice;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.status = status;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.orderDetails= new LinkedList<>();
+    private int transport_status;
+    private int shipping_cost;
+    private Timestamp shipping_time;
+    private int paymentMethodId;
+    private String voucher_code;
+    private String idTransport;
+    public Order() {
     }
 
     public String getOrderID() {
@@ -63,44 +33,12 @@ public class Order implements Serializable {
         this.userID = userID;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public int getTotalPrice() {
         return totalPrice;
     }
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getStatus() {
@@ -111,27 +49,63 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public int getShipping_cost() {
+        return shipping_cost;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setShipping_cost(int shipping_cost) {
+        this.shipping_cost = shipping_cost;
     }
 
-    public String getUpdateDate() {
-        return updateDate;
+    public Timestamp getShipping_time() {
+        return shipping_time;
     }
 
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
+    public void setShipping_time(Timestamp shipping_time) {
+        this.shipping_time = shipping_time;
     }
 
-    public LinkedList<OrderDetail> getOrderDetails() {
-        return orderDetails;
+    public int getPaymentMethodId() {
+        return paymentMethodId;
     }
 
-    public void setOrderDetails(LinkedList<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setPaymentMethodId(int paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
+    }
+
+    public String getVoucher_code() {
+        return voucher_code;
+    }
+
+    public void setVoucher_code(String voucher_code) {
+        this.voucher_code = voucher_code;
+    }
+
+    public String getIdTransport() {
+        return idTransport;
+    }
+
+    public void setIdTransport(String idTransport) {
+        this.idTransport = idTransport;
+    }
+
+    public int getTransport_status() {
+        return transport_status;
+    }
+
+    public void setTransport_status(int transport_status) {
+        this.transport_status = transport_status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderID='" + orderID + '\'' +
+                ", userID='" + userID + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", status=" + status +
+                ", shipping_cost=" + shipping_cost +
+                ", shipping_time=" + shipping_time +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package service;
 import database.ConnectDB;
 import database.JDBCUtil;
 import model.Role;
+import model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -186,7 +187,7 @@ public class RoleService {
             String sql = "UPDATE `users` SET role = ? WHERE id_user = ?";
             s = ConnectDB.connect(sql);
             s.setInt(1, role);
-            s.setString(2,idUser);
+            s.setString(2, idUser);
             int rs = s.executeUpdate();
             s.close();
             return 1;
@@ -196,7 +197,133 @@ public class RoleService {
         return 0;
     }
 
+    public static boolean checkRolePermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select role_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    public static boolean checkUserPermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select user_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    public static boolean checkOrderPermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select order_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean checkCartPermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select cart_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean checkShippingAddressPermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select shipping_address_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean checkProductPermission(User user) {
+        boolean result = false;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select product_permission from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getId_User());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next() && rs.getInt(1) == 1) {
+                result = true;
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
-        System.out.println(RoleService.getRole(4));
+//        User u = new User();
+//        u.setId_User("kh44181207");
+//        System.out.println(checkCartPermission(u));
     }
 }

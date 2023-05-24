@@ -111,9 +111,9 @@
                     <table id="data-table" class="table">
                         <thead>
                         <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Tên khách hàng</th>
-                            <th>Tổng đơn hàng</th>
+                            <th>Mã Đơn Hàng</th>
+                            <th>Tên Khách Hàng</th>
+                            <th>Tổng Đơn Hàng</th>
                             <th>Ngày Đặt</th>
                             <th>Ngày Giao</th>
                             <th>Tình Trạng Đơn Hàng</th>

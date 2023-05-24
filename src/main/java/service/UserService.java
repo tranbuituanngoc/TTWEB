@@ -8,8 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class UserService {
-    private final ArrayList<User> data = new ArrayList<User>();
-
     public static UserService getInstance() {
         return new UserService();
     }
@@ -75,6 +73,28 @@ public class UserService {
         }
         return res;
     }
+
+    public static String getNameUser(String id) {
+        String res = "";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT userName FROM users WHERE id_user=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString(1);
+                res = name;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
 
     public User selectByUnameNEmail(User o) {
         User res = null;

@@ -1,8 +1,10 @@
 package service;
 
+import database.JDBCUtil;
 import model.*;
 import database.ConnectDB;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +33,27 @@ public class CategoryService {
         return result;
     }
 
+    public static String getCateByID(String id){
+        String res="";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT descrip FROM categories\n" +
+                    "JOIN products ON products.id_category= categories.id_category \n" +
+                    "WHERE id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res=resultSet.getString(1);
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
-        System.out.println(CategoryService.getAllCategory().toString());
+        System.out.println(getCateByID("sp002"));
     }
 }

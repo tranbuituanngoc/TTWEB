@@ -113,8 +113,7 @@
                                     <label>Tài khoản</label>
                                     <input type="text"
                                            value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>"
-                                           id="username2" name="username" placeholder="Nhập username..."
-                                           id="input-email" class="form-control">
+                                           id="username2" name="username" placeholder="Nhập username..." class="form-control">
                                     <div id="error_username2"></div>
                                 </div>
                                 <div class="form-group">

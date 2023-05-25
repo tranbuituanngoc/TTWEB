@@ -63,8 +63,10 @@ public class UserService {
                 String password = resultSet.getString("password");
                 int role = resultSet.getInt("role");
                 boolean status = resultSet.getBoolean("status");
+                boolean verified = resultSet.getBoolean("verified");
 
                 res = new User(id_user, userName,fullName, email, phone, address, password, role,status);
+                res.setVerified(verified);
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -78,7 +80,7 @@ public class UserService {
         String res = "";
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT userName FROM users WHERE id_user=?";
+            String sql = "SELECT fullName FROM users WHERE id_user=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             System.out.println(sql);
@@ -572,8 +574,7 @@ public class UserService {
 //
     public static void main(String[] args) {
         UserService service = new UserService();
-        for(User u:service.selectAll()){
-            System.out.println(u);
-        }
+        System.out.println(getNameUser("kh02094306"));
+
     }
 }

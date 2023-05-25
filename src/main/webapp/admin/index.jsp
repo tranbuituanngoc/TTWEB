@@ -281,7 +281,7 @@
                                                     <td>
                                                         <div class="d-flex align-items-center">
                                                             <div class="d-flex align-items-center">
-                                                                <h6 class="m-l-10 m-b-0">${UserService.getNameUser(o.userID)}</h6>
+                                                                <h6 class="m-b-0">${o.fullName}</h6>
                                                             </div>
                                                         </div>
                                                     </td>

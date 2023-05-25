@@ -10,6 +10,7 @@ import model.User;
 import okhttp3.*;
 import service.UserService;
 
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,6 +48,8 @@ public class UserController extends HttpServlet {
             ChangePass(request, response);
         } else if (action.equals("quen-mat-khau")) {
             forgetPass(request, response);
+        } else if (action.equals("xac-thuc-lai")) {
+            reVerifyAccount(request, response);
         }
     }
 
@@ -99,11 +102,19 @@ public class UserController extends HttpServlet {
                 }
 
                 if (u != null) {
-                    session.setAttribute("user", u);
-                    if (u.getRole() == 1 || u.getRole() == 0) {
-                        response.sendRedirect("ListProductAd");
-                    } else if (u.getRole() == 2) {
-                        response.sendRedirect("Home");
+                    if (u.isVerified()) {
+                        session.setAttribute("user", u);
+                        if (u.getRole() == 1 || u.getRole() == 0) {
+                            response.sendRedirect("thong-ke");
+                        } else if (u.getRole() == 2) {
+                            response.sendRedirect("Home");
+                        }
+                    } else {
+                        messageResponse = "error";
+                        request.setAttribute("messageResponse", messageResponse);
+                        request.setAttribute("error", "Vui lòng xác thực tài khoảng trước khi đăng nhập.");
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                        return;
                     }
                 } else {
                     loginAttempts++;
@@ -165,8 +176,6 @@ public class UserController extends HttpServlet {
             int role = 2;
             boolean status = true;
 
-            PrintWriter out = response.getWriter();
-
             request.setAttribute("name", name);
             request.setAttribute("username", username);
             request.setAttribute("email", email);
@@ -222,8 +231,8 @@ public class UserController extends HttpServlet {
                         Email.sendMail(user.getEmail(), getContentEmailVerify(user), "Xác Thực Tài Khoản Tại TileMarket");
                     }
                 }
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("id_user", id_user);
                 messageResponse = "success";
                 request.setAttribute("messageResponse", messageResponse);
                 String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -237,11 +246,43 @@ public class UserController extends HttpServlet {
     }
 
 
-    private void verifyAccount(HttpServletRequest request, HttpServletResponse response) {
+    private void reVerifyAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idUser= request.getParameter("id_user");
+
+        UserService userService = new UserService();
+        User user = new User();
+        user.setId_User(idUser);
+        User us = userService.selectById(user);
+
+        //Create salt string(random string)
+        String saltString = SaltString.getSaltString();
+
+        //Set timevalid
+        Date todaysDate = new Date(new java.util.Date().getTime());
+        Calendar c = Calendar.getInstance();
+        c.setTime(todaysDate);
+        //set time valid is 5 minute
+        c.add(Calendar.MINUTE, 5);
+        Timestamp timeValid = new Timestamp(c.getTimeInMillis());
+
+        if(!us.isVerified()){
+            us.setVerificationCode(saltString);
+            us.setTimeValid(timeValid);
+        }
+
+        if (userService.updateVerifyInfo(us) > 0) {
+            Email.sendMail(us.getEmail(), getContentEmailVerify(us), "Xác Thực Tài Khoản Tại TileMarket");
+        }
+    }
+
+    private void verifyAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idUser = request.getParameter("id_User");
         String verificationCode = request.getParameter("verificationCode");
 
         UserService userService = new UserService();
+
+        String messageResponse = "";
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
         User user = new User();
         user.setId_User(idUser);
@@ -259,21 +300,33 @@ public class UserController extends HttpServlet {
                     //success
                     us.setVerified(true);
                     userService.updateVerifyInfo(us);
-                    msg = "Xác thực tài khoản thành công";
+                    messageResponse = "success";
+                    request.setAttribute("messageResponse", messageResponse);
+                    request.setAttribute("error", "Xác thực tài khoản thành công.");
+                    request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
                 } else {
                     //error time not valid
-                    msg = "Xác thực tài khoản không thành công";
+                    messageResponse = "info";
+                    request.setAttribute("messageResponse", messageResponse);
+                    request.setAttribute("error", "Xác thực tài khoản không thành công vì đã quá thời gian cho phép.");
+                    request.setAttribute("user",us);
+                    request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
                 }
             } else {
                 //error verification code
-                msg = "Xác thực tài khoản thành công";
+                messageResponse = "error";
+                request.setAttribute("messageResponse", messageResponse);
+                request.setAttribute("error", "Mẫ xác thực không hợp lệ!");
+                request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
             }
         } else {
-            msg = "Tài khoản không tồn tại!";
+            messageResponse = "error";
+            request.setAttribute("messageResponse", messageResponse);
+            request.setAttribute("error", "Tài khoản không tồn tại!");
+            request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
         }
         try {
-            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            response.sendRedirect(url + "/Home");
+            response.sendRedirect(url + "/login.jsp");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

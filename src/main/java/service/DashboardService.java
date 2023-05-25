@@ -254,22 +254,23 @@ public class DashboardService {
         List<Order> res= new ArrayList<>();
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT id_order, id_user, orderDate,totalPrice, status_id\n" +
-                    "FROM orders\n" +
+            String sql = "SELECT id_order, u.fullname , orderDate,totalPrice, status_id\n" +
+                    "FROM orders o\n" +
+                    "JOIN users u ON u.id_user=o.id_user\n" +
                     "ORDER BY orderDate DESC LIMIT 6 ";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Order order= new Order();
                 String id_order= resultSet.getString("id_order");
-                String id_user= resultSet.getString("id_user");
+                String fullname= resultSet.getString("fullname");
                 Timestamp orderDate= resultSet.getTimestamp("orderDate");
                 int totalPrice= resultSet.getInt("totalPrice");
                 int status= resultSet.getInt("status_id");
 
                 order.setOrderID(id_order);
-                order.setUserID(id_user);
+                order.setFullName(fullname);
                 order.setOrder_date(orderDate);
                 order.setTotalPrice(totalPrice);
                 order.setStatus(status);

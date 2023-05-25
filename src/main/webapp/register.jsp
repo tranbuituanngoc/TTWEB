@@ -86,7 +86,7 @@
             icon: "success",
             button: "Tiếp tục!",
         }).then(function() {
-            window.location = "Home";
+            window.location = "login.jsp";
         });
     </script>
     <%

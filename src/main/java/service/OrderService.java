@@ -183,6 +183,57 @@ public class OrderService {
         }
     }
 
+    public static String cancelOrder(String idOrder) {
+        PreparedStatement s = null;
+        try {
+            String sql = "UPDATE `orders` SET status_id = 2 WHERE id_order = ?";
+            s = ConnectDB.connect(sql);
+            s.setString(1, idOrder);
+            int rs = s.executeUpdate();
+            s.close();
+
+            if (rs > 0) {
+                return "Cập nhật thành công.";
+            } else {
+                return "Không thể thay đổi trạng thái.";
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return "Lỗi xảy ra khi cập nhật.";
+        }
+    }
+
+    public static List<Order> getOrderById(String idUser) {
+        List<Order> listOrder = new LinkedList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user where o.id_user = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idUser);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
+                listOrder.add(order);
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listOrder;
+    }
     public static void main(String[] args) {
 //        System.out.println(OrderService.getAllOrder());
 //        System.out.println(OrderService.getOrder("DH00683"));

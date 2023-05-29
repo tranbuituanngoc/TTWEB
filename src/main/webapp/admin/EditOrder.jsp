@@ -63,19 +63,18 @@
                         <form action="/EditOrder" method="post" id="form_edit">
                             <input type="hidden" name="idOrder" value="${order.orderID}">
                             <strong><h5>Trạng thái đơn hàng</h5></strong>
-                            <select id="mySelect1" name="id_status">
+                            <select id="mySelect1" name="id_status" <c:if test="${order.status eq 2}">disabled</c:if> >
                                 <option value="0" <c:if test="${order.status eq 0}">selected</c:if>>Chờ xác nhận</option>
-                                <option value="1" <c:if test="${order.status eq 1}">selected</c:if>>Đã xác nhận</option>
-                                <option value="2" <c:if test="${order.status eq 2}">selected</c:if>>Đã hủy</option>
+                                <option value="1" <c:if test="${order.status eq 1}">selected </c:if>>Đã xác nhận</option>
+                                <option value="2" <c:if test="${order.status eq 2}">selected </c:if>>Đã hủy</option>
                             </select>
                             <br/>
                             <br/>
-
                             <strong><h5>Trạng thái vận chuyển</h5></strong>
-                            <select id="mySelect2" name="id_status_transport">
-                                <option value="0" <c:if test="${order.transport_status eq 0}">selected</c:if>>Chưa vận chuyển</option>
-                                <option value="1" <c:if test="${order.transport_status eq 1}">selected</c:if>>Đang vận chuyển</option>
-                                <option value="2" <c:if test="${order.transport_status eq 2}">selected</c:if>>Vận chuyển thành công</option>
+                            <select id="mySelect2" name="id_status_transport" <c:if test="${order.status eq 2}">disabled</c:if>>
+                                <option value="0" <c:if test="${order.transport_status eq 0}">selected </c:if>>Chưa vận chuyển</option>
+                                <option value="1" <c:if test="${order.transport_status eq 1}">selected </c:if>>Đang vận chuyển</option>
+                                <option value="2" <c:if test="${order.transport_status eq 2}">selected </c:if>>Vận chuyển thành công</option>
                             </select>
                         </form>
 

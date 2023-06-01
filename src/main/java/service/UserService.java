@@ -63,12 +63,16 @@ public class UserService {
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
+                String verifyCode = resultSet.getString("verification_code");
                 int role = resultSet.getInt("role");
                 boolean status = resultSet.getBoolean("status");
                 boolean verified = resultSet.getBoolean("verified");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
 
                 res = new User(id_user, userName, fullName, email, phone, address, password, role, status);
                 res.setVerified(verified);
+                res.setVerificationCode(verifyCode);
+                res.setTimeValid(timeValid);
                 break;
             }
             JDBCUtil.disconection(connection);

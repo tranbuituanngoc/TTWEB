@@ -113,7 +113,7 @@ public class UserController extends HttpServlet {
                     } else {
                         messageResponse = "error";
                         request.setAttribute("messageResponse", messageResponse);
-                        request.setAttribute("error", "Vui lòng xác thực tài khoảng trước khi đăng nhập.");
+                        request.setAttribute("error", "Vui lòng xác thực tài khoản trước khi đăng nhập.");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                         return;
                     }
@@ -158,8 +158,7 @@ public class UserController extends HttpServlet {
             // remove session
             session.invalidate();
 
-            String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            response.sendRedirect(url + "/Home");
+            response.sendRedirect("/Home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -236,7 +235,6 @@ public class UserController extends HttpServlet {
                 session.setAttribute("id_user", id_user);
                 messageResponse = "success";
                 request.setAttribute("messageResponse", messageResponse);
-                String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
         } catch (ServletException e) {
@@ -283,7 +281,6 @@ public class UserController extends HttpServlet {
         UserService userService = new UserService();
 
         String messageResponse = "";
-        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 
         User user = new User();
         user.setId_User(idUser);
@@ -304,32 +301,27 @@ public class UserController extends HttpServlet {
                     messageResponse = "success";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Xác thực tài khoản thành công.");
-                    request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
                 } else {
                     //error time not valid
                     messageResponse = "info";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Xác thực tài khoản không thành công vì đã quá thời gian cho phép.");
                     request.setAttribute("user", us);
-                    request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
                 }
             } else {
                 //error verification code
                 messageResponse = "error";
                 request.setAttribute("messageResponse", messageResponse);
                 request.setAttribute("error", "Mã xác thực không hợp lệ!");
-                request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
         } else {
             messageResponse = "error";
             request.setAttribute("messageResponse", messageResponse);
             request.setAttribute("error", "Tài khoản không tồn tại!");
-            request.getRequestDispatcher(url + "/login.jsp").forward(request, response);
-        }
-        try {
-            response.sendRedirect(url + "/login.jsp");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 
@@ -788,7 +780,7 @@ public class UserController extends HttpServlet {
                 "<w:anchorlock></w:anchorlock>\n" +
                 "<center style='color:#ffffff; font-family:arial, \"helvetica neue\", helvetica, sans-serif; font-size:27px; font-weight:400; line-height:27px; mso-text-raise:1px'>Xác Thực Tài Khoản</center>\n" +
                 "</v:roundrect></a>\n" +
-                "<![endif]--><!--[if !mso]><!-- --><span class=\"msohide es-button-border\" style=\"border-style:solid;border-color:#2CB543;background:#ef5350;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-border-alt:10px;mso-hide:all\"><a href=" + link + "\"class=\"es-button\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:36px;display:inline-block;background:#ef5350;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:43px;width:auto;text-align:center;padding:10px 30px 10px 30px;padding-left:30px;padding-right:30px;border-color:#ef5350\">Xác Thực Tài Khoản</a></span><!--<![endif]--></td>\n" +
+                "<![endif]--><!--[if !mso]><!-- --><span class=\"msohide es-button-border\" style=\"border-style:solid;border-color:#2CB543;background:#ef5350;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-border-alt:10px;mso-hide:all\"><a href=\"" + link + "\"class=\"es-button\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:36px;display:inline-block;background:#ef5350;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:43px;width:auto;text-align:center;padding:10px 30px 10px 30px;padding-left:30px;padding-right:30px;border-color:#ef5350\">Thay Đổi Mật Khẩu Tài Khoản</a></span><!--<![endif]--></td>\n" +
                 "</tr>\n" +
                 "</table></td>\n" +
                 "</tr>\n" +

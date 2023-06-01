@@ -15,23 +15,10 @@ public class User {
     private int role;
     private String fullname;
     private boolean status;
-    private String oldPass;
+
     public User() {
     }
 
-    public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified, int role, String oldPass) {
-        this.id_User = id_User;
-        this.userName = userName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.pass = pass;
-        this.verificationCode = verificationCode;
-        this.timeValid = timeValid;
-        this.verified = verified;
-        this.role = role;
-        this.oldPass = oldPass;
-    }
 
     public User(String id_User, String userName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified, int role) {
         this.id_User = id_User;
@@ -46,7 +33,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String id_User, String userName,String fullname, String email, String phone, String address, String pass, int role, boolean status) {
+    public User(String id_User, String userName, String fullname, String email, String phone, String address, String pass, int role, boolean status) {
         this.id_User = id_User;
         this.userName = userName;
         this.email = email;
@@ -54,11 +41,11 @@ public class User {
         this.address = address;
         this.pass = pass;
         this.role = role;
-        this.fullname=fullname;
-        this.status=status;
+        this.fullname = fullname;
+        this.status = status;
     }
 
-    public User(String id_User, String userName,String fullName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
+    public User(String id_User, String userName, String fullName, String email, String phone, String address, String pass, String verificationCode, Timestamp timeValid, boolean verified) {
         this.id_User = id_User;
         this.fullname = fullName;
         this.userName = userName;
@@ -85,14 +72,6 @@ public class User {
 
     public boolean isStatus() {
         return status;
-    }
-
-    public String getOldPass() {
-        return oldPass;
-    }
-
-    public void setOldPass(String oldPass) {
-        this.oldPass = oldPass;
     }
 
     public String getId_User() {

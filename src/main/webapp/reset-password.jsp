@@ -1,10 +1,13 @@
+<%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!doctype html>
+<html class="no-js" lang="zxx">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Đăng nhập || Truemart Gạch men cao cấp</title>
+    <title>Quên mật khẩu || Truemart Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
     <link rel="shortcut icon" href="img\favicon.ico">
@@ -40,80 +43,94 @@
 </head>
 
 <body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
 
-<%@include file="header.jsp" %>
-
-<!--BANNER START-->
-<div class="log-in ptb-100 ptb-sm-60">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-12 d-flex justify-content-center align-items-center text-center">
-                <div class="login-content">
-                    <div class="login-table">
-                        <section class="vh-100">
-                            <div class="container py-5 h-100">
-                                <div class="row d-flex align-items-center justify-content-center h-100">
-                                    <div class="col-md-8 col-lg-7 col-xl-6">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                                             class="img-fluid" alt="Phone image">
-                                    </div>
-                                    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                                        <form class="register-form form-outline mb-4" id="" method="get"
-                                              action="updateReset">
-                                            <!-- Email input -->
-                                            <span class="fw-bold mb-2 text-uppercase custom-title">ĐỔI MẬT KHẨU</span>
-                                            <p style="color:#62ab00; display:block; margin: auto"><%=request.getAttribute("changePassSuccess") == null ? " " : request.getAttribute("changePassSuccess")%>
-                                            </p>
-                                            <p style="color:red; display:block; margin: auto"><%=request.getAttribute("inputEmpty") == null ? " " : request.getAttribute("inputEmpty")%>
-                                            </p>
-                                            <p style="color:red; display:block; margin: auto"><%=request.getAttribute("errUsername") == null ? " " : request.getAttribute("errUsername")%>
-                                            </p>
-                                            <div class="form-outline mb-4">
-                                                <input type="email" class="form-control" id="email"
-                                                       name="email"
-                                                       value="<%=request.getParameter("email")==null ? "":request.getParameter("email")%>"
-                                                       placeholder="Nhập địa chỉ email">
-                                            </div>
-                                            <!-- Password input -->
-                                            <div class="form-outline mb-4">
-                                                <input type="password" class="form-control"
-                                                       id="password"
-                                                       name="password"
-                                                       placeholder="Nhập mật khẩu mới">
-                                            </div>
-                                            <!-- Submit button -->
-                                            <div class="btn">
-                                                <button type="submit" class="btn-primary btn-lg btn-block">LƯU THAY
-                                                    ĐỔI
-                                                </button>
-                                            </div>
-                                            <div class="message2">
-                                                <a href="login.jsp"> Trở Về</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+    <jsp:include page="header.jsp"/>
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb-area mt-30">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="d-flex align-items-center">
+                    <li><a href="index.jsp">Trang chủ</a></li>
+                    <li class="active"><a href="forgot-password.jsp">Quên mật khẩu</a></li>
+                </ul>
             </div>
         </div>
-        <!--BANNER END-->
+        <!-- Container End -->
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- LogIn Page Start -->
+    <div class="log-in ptb-100 ptb-sm-60">
+        <div class="container">
+            <div class="row">
+                <!-- Returning Customer Start -->
+                <div class="col-md-6 center">
+                    <div class="well">
+                        <div class="return-customer">
+                            <h3 class="mb-10 custom-title">Quên mật khẩu</h3>
+                            <br>
+                            <form action="/nguoi-dung" method="post">
+                                <input type="hidden" name="action" value="tao-lai-mat-khau">
+                                <input type="hidden" name="token" value="${token}">
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" name="newPassword" id="input-password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nhập lại mật khẩu mới</label>
+                                    <input type="password" name="comNewPass" id="pwd-confirm" class="form-control">
+                                </div>
+                                <input type="submit" value="Đổi mật khẩu" class="return-customer-btn">
+                                <br/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Returning Customer End -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- LogIn Page End -->
+    <!-- Support Area Start Here -->
+    <jsp:include page="footer.jsp"/>
+    <!-- Quick View Content Start -->
 
-        <%@include file="footer.jsp" %>
+    <!-- Quick View Content End -->
+</div>
+<!-- Main Wrapper End Here -->
 
-        <script src="vendor\js\bundle.min.js"></script>
-        <!-- Plugin Js -->
-        <script src="vendor/js/jquery-3.5.1.min.js"></script>
-        <script src="vendor\js\jquery.fancybox.min.js"></script>
-        <script src="vendor\js\owl.carousel.min.js"></script>
-        <script src="vendor\js\swiper.min.js"></script>
-        <script src="vendor\js\jquery.cubeportfolio.min.js"></script>
-        <script src="vendor\js\wow.min.js"></script>
-        <script src="vendor\js\bootstrap-input-spinner.js"></script>
-        <script src="vendor\js\parallaxie.min.js"></script>
-        <!-- Custom Script -->
-        <script src="js/script.js"></script>
+<!-- jquery 3.2.1 -->
+<script src="js\vendor\jquery-3.2.1.min.js"></script>
+<!-- Countdown js -->
+<script src="js\jquery.countdown.min.js"></script>
+<!-- Mobile menu js -->
+<script src="js\jquery.meanmenu.min.js"></script>
+<!-- ScrollUp js -->
+<script src="js\jquery.scrollUp.js"></script>
+<!-- Nivo slider js -->
+<script src="js\jquery.nivo.slider.js"></script>
+<!-- Fancybox js -->
+<script src="js\jquery.fancybox.min.js"></script>
+<!-- Jquery nice select js -->
+<script src="js\jquery.nice-select.min.js"></script>
+<!-- Jquery ui price slider js -->
+<script src="js\jquery-ui.min.js"></script>
+<!-- Owl carousel -->
+<script src="js\owl.carousel.min.js"></script>
+<!-- Bootstrap popper js -->
+<script src="js\popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js\bootstrap.min.js"></script>
+<!-- Plugin js -->
+<script src="js\plugins.js"></script>
+<!-- Main activaion js -->
+<script src="js\main.js"></script>
 </body>
+
 </html>

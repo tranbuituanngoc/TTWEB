@@ -40,10 +40,17 @@
 <jsp:include page="headerAd.jsp"/>
 <jsp:include page="menu.jsp"/>
 
+<style>
+    tbody thead th{
+        white-space: nowrap;
+    }
+</style>
+
 <%
     String result = (String) request.getSession().getAttribute("resultOrder");
     String msg = (String) request.getSession().getAttribute("msgOrder");
 %>
+
 
 
 <% if (result != null && msg != null) {
@@ -96,28 +103,18 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="dropdown float-md-right">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span>Công cụ</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">In</a>
-                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>
-                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra
-                            Excel</a>
-                    </div>
-                </div>
                 <div class="m-t-25">
                     <table id="data-table" class="table">
                         <thead>
                         <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Tên khách hàng</th>
-                            <th>Tổng đơn hàng</th>
+                            <th>Mã Đơn Hàng</th>
+                            <th>Tên Khách Hàng</th>
+                            <th>Tổng Đơn Hàng</th>
                             <th>Ngày Đặt</th>
                             <th>Ngày Giao</th>
                             <th>Tình Trạng Đơn Hàng</th>
                             <th>Tình Trạng Vận Chuyển</th>
+                            <th></th>
                             <th></th>
                         </tr>
                         </thead>
@@ -174,9 +171,11 @@
                                             <i class="anticon anticon-edit"></i>
                                         </button>
                                     </a>
-                                    <a href="DeleteOrder?orderID=${o.orderID}" >
-                                        <button class="btn btn-icon btn-hover btn-sm btn-rounded" ">
-                                            <i class="anticon anticon-delete"></i>
+                                </td>
+                                <td>
+                                    <a href="DeleteOrder?orderID=${o.orderID}">
+                                        <button class="btn btn-icon btn-hover btn-sm btn-rounded">
+                                        <i class="anticon anticon-delete"></i>
                                         </button>
                                     </a>
                                 </td>

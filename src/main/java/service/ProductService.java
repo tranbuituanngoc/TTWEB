@@ -96,6 +96,47 @@ public class ProductService {
         return product;
     }
 
+    public static Product getByName(String name) {
+        List<Color> listColor;
+        List<Size> listSize;
+        List<ImageProduct> listImage;
+        Product product = new Product();
+        try {
+            PreparedStatement pState = null;
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM products WHERE name=?";
+            pState = connection.prepareStatement(sql);
+
+            pState.setString(1, name);
+
+            ResultSet rs = pState.executeQuery();
+            rs.first();
+
+            listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+            listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+            listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+
+            product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+            product.setProductID(rs.getString("id_product"));
+            product.setProductName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setSalePrice(rs.getInt("sale"));
+            product.setIsNew(rs.getInt("isNew"));
+            product.setPriceList(ProductImportedService.getPriceListProduct(rs.getString("id_product")));
+            product.setCostList(ProductImportedService.getCostListProduct(rs.getString("id_product")));
+            product.setQuantityList(ProductImportedService.getQuantityListProduct(rs.getString("id_product")));
+            product.setStatus(rs.getInt("status"));
+            product.setColor(listColor);
+            product.setSize(listSize);
+            product.setCategory(rs.getString("id_category"));
+            product.setImage(listImage);
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
+    }
+
     public static Product getProductDetail(String idProduct) {
         List<Color> listColor;
         List<Size> listSize;
@@ -1225,6 +1266,7 @@ public class ProductService {
 
     public static void main(String[] args) {
         // System.out.println(ProductService.getAllProduct());
+        System.out.println(getByIdAd("sp002"));
     }
 
 }

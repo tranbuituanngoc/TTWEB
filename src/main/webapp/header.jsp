@@ -61,7 +61,7 @@
                                         <li><a href="nguoi-dung?action=dang-xuat">Đăng xuất</a></li>
                                     </ul>
                             <%
-                                } else if (user.getRole() == 1) {
+                                } else if (user.getRole() == 1|| user.getRole()==0) {
 
                             %>
                             <li><a href="ListProductAd"><i class="lnr lnr-pointer-right"></i><span

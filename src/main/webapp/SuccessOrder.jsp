@@ -23,9 +23,7 @@
             href="https://theme.hstatic.net/200000065946/1000806110/14/favicon.png?v=2476"
             type="image/png"
     />
-    <title>Nội Thất MOHO - Đơn hàngDH114590</title>
-
-    <meta name="description" content="Nội Thất MOHO - Đơn hàngDH114590"/>
+    <title>Gạch men TrueMart - Đặt hàng thành công</title>
 
     <style>
         .btn {

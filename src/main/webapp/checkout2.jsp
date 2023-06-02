@@ -1137,28 +1137,56 @@
     </div>
     <script !src="">
       $(document).ready(function() {
-        // Lấy giá trị đã lưu từ local storage
+
+        $('#customer_shipping_ward').change(function() {
+          const wardOption = $('#customer_shipping_ward').children('option:selected')[0].outerHTML;
+          const wardId = $('#customer_shipping_ward').val()
+          localStorage.setItem('wardOption', wardOption);
+          localStorage.setItem('wardId', wardId);
+
+          // console.log(wardOption)
+
+          const provinceOption = $('#customer_shipping_province').children('option:selected')[0].outerHTML;
+          const provinceId = $('#customer_shipping_province').val()
+          localStorage.setItem('provinceOption', provinceOption);
+          localStorage.setItem('provinceId', provinceId)
+          // console.log(provinceOption)
+
+          const districtOption = $('#customer_shipping_district').children('option:selected')[0].outerHTML;
+          const districtId = $('#customer_shipping_district').val()
+          localStorage.setItem('districtOption', districtOption);
+          localStorage.setItem('districtId', districtId);
+
+          // console.log(districtOption)
+        });
+
+      });
+    </script>
+    <script !src="">
+      $(document).ready(function() {
         const province = localStorage.getItem('provinceOption');
         const district = localStorage.getItem('districtOption');
         const ward = localStorage.getItem('wardOption');
-        console.log(province)
-        console.log(district)
-        console.log(ward)
 
-        $('#customer_shipping_province').change(function() {
-          const provinceOption = $('#customer_shipping_province').val();
-          localStorage.setItem('provinceOption', provinceOption);
-        });
+        const provinceId = localStorage.getItem('provinceId');
+        const districtId = localStorage.getItem('districtId');
+        const wardId = localStorage.getItem('wardId');
 
-        $('#customer_shipping_district').change(function() {
-          const districtOption = $('#customer_shipping_district').val();
-          localStorage.setItem('districtOption', districtOption);
-        });
-        $('#selected_customer_shipping_ward').change(function() {
-          const wardOption = $('#selected_customer_shipping_ward').val();
-          localStorage.setItem('wardOption', wardOption);
-        });
+        console.log(provinceId)
+        console.log(districtId)
+        console.log(wardId)
+
+        $('#customer_shipping_ward').append(ward)
+        $('#customer_shipping_district').append(district)
+        // $('#customer_shipping_province').append(province)
+
+        // Đặt thuộc tính "selected" cho tùy chọn đã lưu
+        $('#customer_shipping_ward option[value="' + wardId + '"]').prop('selected', true);
+        $('#customer_shipping_district option[value="' + districtId + '"]').prop('selected', true);
+        $('#customer_shipping_province option[value="' + provinceId + '"]').prop('selected', true);
+
       });
+
     </script>
     <script>
       const url = 'http://140.238.54.136/api/auth/login';
@@ -1232,10 +1260,8 @@
           success: function(response) {
             const token = response.access_token;
             const wardUrl = 'http://140.238.54.136/api/ward?districtID='+selectedValue;
-
             var xhr = new XMLHttpRequest();
             xhr.open('GET', wardUrl, true);
-
             xhr.setRequestHeader('Authorization', 'Bearer '+token);
             xhr.onload = function() {
               if (xhr.status === 200) {
@@ -1336,5 +1362,6 @@
       });
     </script>
     <script src="js/provinces_load.js"></script>
+    <script src="js/counpon.js"></script>
   </body>
 </html>

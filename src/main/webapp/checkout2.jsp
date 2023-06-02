@@ -1185,6 +1185,24 @@
         $('#customer_shipping_district option[value="' + districtId + '"]').prop('selected', true);
         $('#customer_shipping_province option[value="' + provinceId + '"]').prop('selected', true);
 
+        const lead = localStorage.getItem('lead');
+        const fee = Number(localStorage.getItem('fee'));
+        console.log(lead);
+        console.log(fee);
+        if (lead != null && fee != null){
+          $('#lead-time').val(lead);
+          $('#service-fee').val(fee);
+          $('.province-out .radio-accessory.content-box-emphasis').text(fee.toLocaleString() + "₫");
+          $('.total-line-shipping .total-line-price').text(fee !== 0 ? fee.toLocaleString() + "₫" : "miễn phí");
+
+          var totalAmount = Number($(".payment-due-price").data("checkout-payment-due-target"));
+          // Nếu serviceFee khác 0, cộng thêm vào totalAmount
+          if (fee !== 0) {
+            totalAmount += fee;
+          }
+          // Hiển thị giá tiền cộng thêm serviceFee
+          $(".payment-due-price").text(new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0 }).format(totalAmount));
+        }
       });
 
     </script>
@@ -1302,7 +1320,6 @@
           $('.province-in').removeClass('hidden');
           $('.province-null').addClass('hidden');
           $('.province-out').addClass('hidden');
-
           $('#lead-time').val(0);
           $('#service-fee').val(0);
         }
@@ -1328,17 +1345,23 @@
               var dataLeadTime = JSON.parse(response.leadTime)
               var serviceFee = Number(dataFee[0].service_fee);
               var leadTime = dataLeadTime[0].timestamp;
+
+              if (serviceFee != null && leadTime != null) {
+                $('#lead-time').val(leadTime);
+                $('#service-fee').val(serviceFee);
+                localStorage.setItem('lead', leadTime);
+                localStorage.setItem('fee', serviceFee);
+              }
+
               $('.province-out .radio-accessory.content-box-emphasis').text(serviceFee.toLocaleString() + "₫");
               $('.total-line-shipping .total-line-price').text(serviceFee !== 0 ? serviceFee.toLocaleString() + "₫" : "miễn phí");
-              $('#lead-time').val(leadTime);
-              $('#service-fee').val(serviceFee);
+
               var totalAmount = Number($(".payment-due-price").data("checkout-payment-due-target"));
               // Nếu serviceFee khác 0, cộng thêm vào totalAmount
               if (serviceFee !== 0) {
                 totalAmount += serviceFee;
               }
               // Hiển thị giá tiền cộng thêm serviceFee
-              // $(".payment-due-price").data("checkout-payment-due-target", totalAmount);
               $(".payment-due-price").text(new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0 }).format(totalAmount));
 
             },

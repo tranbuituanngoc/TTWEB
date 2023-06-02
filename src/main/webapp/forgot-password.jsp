@@ -87,10 +87,6 @@
                                     <label>Email*</label>
                                     <input type="email" name="email" id="input-password" class="form-control" required>
                                 </div>
-                                <div class="form-group">
-                                    <label>Mật khẩu cũ</label>
-                                    <input type="password" name="oldPass" id="pwd-confirm" class="form-control" placeholder="Nếu bạn chưa từng thay đổi mật khẩu hãy bỏ qua dòng này!">
-                                </div>
                                 <div class="aa-single-submit" style="text-align: center">
                                     <input type="submit" value="Xác Nhận" class="return-customer-btn" name="submit">
                                     <p style="margin-top:10px">  Bạn đã nhớ mật khẩu? <a href="login.jsp" style="color: #e62e13;">Đăng nhập tại đây!</a></p>

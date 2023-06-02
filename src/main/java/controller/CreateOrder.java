@@ -1,6 +1,5 @@
 package controller;
 
-import Util.Email;
 import model.CartUser;
 import model.Order;
 import model.ShippingAdress;
@@ -35,7 +34,7 @@ public class CreateOrder extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             request.getSession().setAttribute("userInvalid", true);
-            response.sendRedirect("CheckOut");
+            response.sendRedirect("/CheckOut");
         }
         String paymentMethod_raw = request.getParameter("payment-method");
         Timestamp leadTime = null;
@@ -88,7 +87,7 @@ public class CreateOrder extends HttpServlet {
 
         if (OrderService.updateQuantity(order) == -1) {
             request.getSession().setAttribute("errorQuantity", true);
-            response.sendRedirect("CheckOut");
+            response.sendRedirect("/CheckOut");
             CartService.removeCartOrder(user.getId_User());
         }
         if (OrderService.updateQuantity(order) == 1) {
@@ -100,9 +99,9 @@ public class CreateOrder extends HttpServlet {
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getSession().setAttribute("order", order);
             System.out.println("success");
-            response.sendRedirect("SuccessOrder");
-            Email mail = new Email();
-            mail.sendMail(user.getEmail(), "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
+            response.sendRedirect("/SuccessOrder");
+//            Email mail = new Email();
+//            mail.sendMail(user.getEmail(), "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
         }
 
 

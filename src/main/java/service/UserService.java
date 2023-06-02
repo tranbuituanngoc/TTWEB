@@ -1,15 +1,15 @@
 package service;
 
+import Util.SaltString;
 import database.ConnectDB;
 import database.JDBCUtil;
 import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class UserService {
-    private final ArrayList<User> data = new ArrayList<User>();
-
     public static UserService getInstance() {
         return new UserService();
     }
@@ -63,10 +63,16 @@ public class UserService {
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String password = resultSet.getString("password");
+                String verifyCode = resultSet.getString("verification_code");
                 int role = resultSet.getInt("role");
                 boolean status = resultSet.getBoolean("status");
+                boolean verified = resultSet.getBoolean("verified");
+                Timestamp timeValid = resultSet.getTimestamp("time_valid");
 
-                res = new User(id_user, userName,fullName, email, phone, address, password, role,status);
+                res = new User(id_user, userName, fullName, email, phone, address, password, role, status);
+                res.setVerified(verified);
+                res.setVerificationCode(verifyCode);
+                res.setTimeValid(timeValid);
                 break;
             }
             JDBCUtil.disconection(connection);
@@ -76,7 +82,33 @@ public class UserService {
         return res;
     }
 
+    public static String getNameUser(String id) {
+        String res = "";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT fullName FROM users WHERE id_user=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString(1);
+                res = name;
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+
+    public User selectByUnameNEmailNOldPass(User o) {
+
+
     public User selectByUnameNEmail(User o) {
+
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
@@ -99,43 +131,10 @@ public class UserService {
                 boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
-                System.out.println(res.toString());
-                break;
-            }
-            JDBCUtil.disconection(connection);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return res;
-    }
-
-    public User selectByUnameNEmailNOldPass(User o) {
-        User res = null;
-        try {
-            Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM users WHERE username=? AND email=? AND changedPassword=?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, o.getUserName());
-            statement.setString(2, o.getEmail());
-            statement.setString(3, o.getOldPass());
-            System.out.println(sql);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String id_user = resultSet.getString("id_user");
-                String userName = resultSet.getString("userName");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                String password = resultSet.getString("password");
-                String oldPssword = resultSet.getString("changedPassword");
-                String verificationCode = resultSet.getString("verification_code");
-                Timestamp timeValid = resultSet.getTimestamp("time_valid");
-                boolean verified = resultSet.getBoolean("verified");
-                int role = resultSet.getInt("role");
-
                 res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role, oldPssword);
+
+                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
+
                 System.out.println(res.toString());
                 break;
             }
@@ -145,7 +144,6 @@ public class UserService {
         }
         return res;
     }
-
 
     public User selectByUserNameAndpassword(User o) {
         User res = null;
@@ -361,12 +359,11 @@ public class UserService {
             Connection connection = JDBCUtil.getConnection();
             String sql = "UPDATE Users " +
                     " SET " +
-                    " password=?, changedPassword=?" +
+                    " password=?" +
                     " WHERE id_user=?";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, o.getPass());
-            st.setString(2, o.getOldPass());
-            st.setString(3, o.getId_User());
+            st.setString(2, o.getId_User());
             System.out.println(sql);
             res = st.executeUpdate();
         } catch (SQLException e) {
@@ -443,7 +440,6 @@ public class UserService {
         return count;
     }
 
-    // tìm kiếm theo tên sản phẩm
 
     public static void updatepassword(String email, String password) {
         PreparedStatement preSta = null;
@@ -579,8 +575,21 @@ public class UserService {
 //        return res;
 //    }
 //
+
+    private static ArrayList<String> getValueFromToken(String token) {
+        // Phương thức này để trích xuất email từ token, tùy thuộc vào cách bạn tạo và lưu trữ token
+        // Trong ví dụ này, tôi giả định token chứa email được phân tách bằng dấu gạch dưới (_)
+        ArrayList<String> res = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(token, "+");
+        while (tokenizer.hasMoreTokens()) {
+            res.add(tokenizer.nextToken());
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         UserService service = new UserService();
+
 //        for (User u : service.selectAll()) {
 //            System.out.println(u);
 //        }
@@ -599,5 +608,12 @@ public class UserService {
 
         // Gọi phương thức saveUser() để chèn thông tin người dùng vào CSDL
         userService.saveUser(user);
+        String saltString = SaltString.getSaltString();
+        System.out.println(getNameUser("kh02094306"));
+        String s = ("kh02094306".substring(2) + "+" + saltString);
+        System.out.println(getValueFromToken(s).get(0));
+        for(String c: getValueFromToken(s)){
+            System.out.println(c);
+        }
     }
 }

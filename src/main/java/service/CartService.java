@@ -69,6 +69,40 @@ public class CartService {
         }
         return cartUser;
     }
+
+    public static CartUser getCartByIdOrder(String idOrder) {
+        CartUser cartUser = new CartUser();
+        try {
+            PreparedStatement pState = null;
+            String sql = "select * from cart where id_order = ?";
+            pState = ConnectDB.connect(sql);
+            pState.setString(1, idOrder);
+            ResultSet rs = pState.executeQuery();
+            while (rs.next()) {
+                int id_size = rs.getInt("id_size");
+                int id_color = rs.getInt("id_color");
+                String id_user = rs.getString("id_user");
+                String id_product = rs.getString("id_product");
+                Product product = ProductService.getById(id_product);
+                Color color = ProductColorService.getColorById(id_color);
+                Size size = ProductSizeService.getSizeById(id_size);
+                Cart cart = new Cart();
+                cart.setSize(size);
+                cart.setProduct(product);
+                cart.setColor(color);
+                cartUser.setId_cart(rs.getInt("id"));
+                cartUser.setIdUser(id_user);
+                cartUser.addCart(cart, rs.getInt("quantity"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return cartUser;
+    }
+
     public static void addCart(CartUser cartUser) {
         CartService.deleteCart(cartUser.getIdUser());
         for (Map.Entry<Cart, Integer> entry : cartUser.getCartMap().entrySet()) {

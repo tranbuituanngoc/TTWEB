@@ -10,6 +10,7 @@ import model.User;
 import okhttp3.*;
 import org.apache.commons.math3.util.Pair;
 import service.ResetPasswordService;
+import service.RoleService;
 import service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,7 +23,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 @WebServlet(name = "UserController", value = "/nguoi-dung")
 public class UserController extends HttpServlet {
@@ -104,10 +108,11 @@ public class UserController extends HttpServlet {
 
                 if (u != null) {
                     if (u.isVerified()) {
+
                         session.setAttribute("user", u);
-                        if (u.getRole() == 1 || u.getRole() == 0) {
+                        if (isAdmin(u)) {
                             response.sendRedirect("thong-ke");
-                        } else if (u.getRole() == 2) {
+                        } else if (!isAdmin(u)) {
                             response.sendRedirect("Home");
                         }
                     } else {
@@ -415,7 +420,7 @@ public class UserController extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         if (newPassword != null) {
             ArrayList<String> value = getValueFromToken(token);
-            String id= "kh"+value.get(0);
+            String id = "kh" + value.get(0);
             Pair<String, Timestamp> map = ResetPasswordService.selectByUserID(id);
 
             Calendar c = Calendar.getInstance();
@@ -451,8 +456,8 @@ public class UserController extends HttpServlet {
                 request.setAttribute("error", "Mã token không hợp lệ!");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
-        }else {
-            request.setAttribute("token",token);
+        } else {
+            request.setAttribute("token", token);
             request.getRequestDispatcher("/reset-password.jsp").forward(request, response);
         }
 
@@ -906,5 +911,12 @@ public class UserController extends HttpServlet {
             res.add(tokenizer.nextToken());
         }
         return res;
+    }
+
+    private static boolean isAdmin(User user) {
+        if (RoleService.checkRolePermission(user) || RoleService.checkUserPermission(user) || RoleService.checkCartPermission(user) || RoleService.checkOrderPermission(user) || RoleService.checkProductPermission(user) || RoleService.checkShippingAddressPermission(user)) {
+            return true;
+        }
+        return false;
     }
 }

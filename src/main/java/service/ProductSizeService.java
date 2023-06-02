@@ -2,12 +2,12 @@ package service;
 
 import database.ConnectDB;
 import database.JDBCUtil;
-import model.ProductSize;
-import model.ProductSize;
 import model.Size;
-import model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,6 +38,7 @@ public class ProductSizeService {
         }
         return sizes;
     }
+
     public static Size selectByDescrip(String d) {
         Size res = null;
         try {
@@ -62,6 +63,32 @@ public class ProductSizeService {
         }
         return res;
     }
+
+    public static String selectByID(String id) {
+        String res = "";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT descrip FROM sizes s JOIN productimported p ON p.id_size=s.id_size  WHERE id_product=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String descrip = resultSet.getString("descrip");
+                res += descrip;
+                if (!resultSet.isLast()) {
+                    res += "mm, ";
+                } else {
+                    res += "mm.";
+                }
+            }
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static List<Size> getAll() {
         List<Size> sizes;
         try {
@@ -139,6 +166,7 @@ public class ProductSizeService {
 //        list =ProductSizeService.getSizeProduct("sp094");
 //        System.out.println(list.toString());
         System.out.println(ProductSizeService.getSizeById(1));
+        System.out.println(ProductSizeService.selectByID("sp002"));
 
     }
 }

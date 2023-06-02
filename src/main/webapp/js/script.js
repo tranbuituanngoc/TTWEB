@@ -60,13 +60,13 @@ function signIn() {
 
     if (email.length == 0) {
         error += 1;
-        error_email.innerHTML = '<span class="required">Vui lòng không để trống phần tên đăng nhập</span>';
+        error_email.innerHTML = '<span style="color: red">Vui lòng không để trống phần tên đăng nhập</span>';
     } else {
         error_email.innerHTML = ''
     }
     if (pass.length == 0) {
         error += 1;
-        error_password.innerHTML = '<span class="required">Vui lòng không để trống phần mật khẩu</span>';
+        error_password.innerHTML = '<span style="color: red">Vui lòng không để trống phần mật khẩu</span>';
     } else {
         error_password.innerHTML = ''
     }
@@ -80,7 +80,7 @@ function checkComPass() {
     compass = document.getElementById('comPass').value;
     error_compass = document.getElementById('error_compass');
     if (pass != compass) {
-        error_compass.innerHTML = '<span class="required">Mật khẩu nhập lại chưa đúng</span>';
+        error_compass.innerHTML = '<span style="color: red">Mật khẩu nhập lại chưa đúng</span>';
         return false;
     } else {
         error_compass.innerHTML = ''
@@ -95,7 +95,7 @@ function regexForTel() {
     error_tel = document.getElementById('error_tel');
     var regex = new RegExp("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$");
     if (!(regex.test(tel))) {
-        error_tel.innerHTML = '<span class="required">Số điện thoại không hợp lệ.</span>';
+        error_tel.innerHTML = '<span style="color: red">Số điện thoại không hợp lệ.</span>';
         errorP++;
         return false;
     } else {
@@ -110,7 +110,7 @@ function regexForPass() {
     var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z\d]).{8,}$/gm;
     error_password = document.getElementById('error_pass');
     if (!(pass.match(regex))) {
-        error_password.innerHTML = '<span class="required">Mật khẩu phải chứa ít nhất 8 ký tự và phải bao gồm 1 kí tự in hoa, 1 kí tự in thường và 1 chữ số.</span>';
+        error_password.innerHTML = '<span style="color: red">Mật khẩu phải chứa ít nhất 8 ký tự và phải bao gồm 1 kí tự in hoa, 1 kí tự in thường và 1 chữ số.</span>';
         return false;
     } else {
         error_password.innerHTML = ''
@@ -126,8 +126,10 @@ function signUp() {
     compass = document.getElementById('comPass').value;
     username = document.getElementById('username').value;
     tel = document.getElementById('tel').value;
+    name = document.getElementById('name').value;
 
     error_username = document.getElementById('error_username');
+    error_fullname = document.getElementById('error_username');
     error_email1 = document.getElementById('error_email1');
     error_pass = document.getElementById('error_pass');
     error_compass = document.getElementById('error_compass');
@@ -135,35 +137,41 @@ function signUp() {
 
     if (email.length == 0) {
         error += 1;
-        error_email1.innerHTML = '<span class="required">Vui lòng không để trống phần email</span>';
+        error_email1.innerHTML = '<span style="color: red">Vui lòng không để trống phần email</span>';
     } else {
         error_email1.innerHTML = ''
     }
 
     if (username.length == 0) {
         error += 1;
-        error_username.innerHTML = '<span class="required">Vui lòng không để trống phần tên đăng nhập</span>';
+        error_username.innerHTML = '<span style="color: red">Vui lòng không để trống phần tên đăng nhập</span>';
     } else {
         error_username.innerHTML = ''
+    }
+    if (name.length == 0) {
+        error += 1;
+        error_fullname.innerHTML = '<span style="color: red">Vui lòng không để trống phần họ và tên</span>';
+    } else {
+        error_fullname.innerHTML = ''
     }
 
     if (tel.length == 0) {
         error += 1;
-        error_tel.innerHTML = '<span class="required">Vui lòng không để trống phần số điện thoại</span>';
+        error_tel.innerHTML = '<span style="color: red">Vui lòng không để trống phần số điện thoại</span>';
     } else {
         error_tel.innerHTML = ''
     }
 
     if (pass.length == 0) {
         error += 1;
-        error_pass.innerHTML = '<span class="required">Vui lòng không để trống phần mật khẩu</span>';
+        error_pass.innerHTML = '<span style="color: red">Vui lòng không để trống phần mật khẩu</span>';
     } else {
         error_pass.innerHTML = ''
     }
 
     if (compass.length == 0) {
         error += 1;
-        error_compass.innerHTML = '<span class="required">Vui lòng không để trống phần nhập lại mật khẩu</span>';
+        error_compass.innerHTML = '<span style="color: red">Vui lòng không để trống phần nhập lại mật khẩu</span>';
     } else {
         error_compass.innerHTML = ''
     }
@@ -186,15 +194,20 @@ function checkLicense() {
 
 function checkSignUp() {
     if (signUp() == false || regexForPass() == false || regexForTel() == false || checkComPass() == false || checkLicense() == false) {
+        swal({
+            title: "Error!",
+            text: "Có gì đó sai sai!!!",
+            icon: "error",
+            button: "Thử lại!",
+        });
         return false;
     } else {
         return true;
     }
 }
 
-
-function getAlert() {
-    if(signIn()==false){
+function getAlertSignUp() {
+    if(checkSignUp()==false){
         swal({
             title: "Error!",
             text: "Có gì đó sai sai!!!",
@@ -202,7 +215,10 @@ function getAlert() {
             button: "Thử lại!",
         });
     }
-    if (checkSignUp() == false ) {
+}
+
+function getAlert() {
+    if(signIn()==false){
         swal({
             title: "Error!",
             text: "Có gì đó sai sai!!!",

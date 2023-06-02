@@ -131,7 +131,7 @@
                                         <c:if test="${o.transport_status ==2}">Vận chuyển thành công</c:if>
                                     </td>
                                     <td class="product-remove">
-                                        <c:if test="${o.status !=2}">
+                                        <c:if test="${o.status !=2 || o.transport_status ==0}">
                                             <a href="/CancelOrder?order_id=${o.orderID}"><i class="fa fa-times"
                                                                                             aria-hidden="true"></i></a>
                                         </c:if>
@@ -178,22 +178,6 @@
 <!-- Main Wrapper End Here -->
 <script>
 
-</script>
-<script>
-    function updateQuantity(itemId, quantity, colorId, sizeId) {
-        console.log(quantity)
-        // Make an AJAX call to the servlet to update the quantity of the item
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/UpdateCart?" + "product_id=" + itemId + "&quantity_value=" + quantity + "&id_color=" + colorId, "&id_size=" + sizeId, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Handle success
-                location.reload();
-            }
-        };
-        xhr.send();
-    }
 </script>
 <!-- jquery 3.2.1 -->
 <script src="js\vendor\jquery-3.2.1.min.js"></script>

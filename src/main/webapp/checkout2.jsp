@@ -201,7 +201,7 @@
                   class="order-summary-section order-summary-section-discount"
                   data-order-summary-section="discount"
                 >
-                  <form id="form_discount_add" accept-charset="UTF-8" method="post" action="form_discount_add">
+                  <form accept-charset="UTF-8" method="post" action="form_discount_add">
                     <input name="utf8" type="hidden" value="✓" />
                     <div class="fieldset">
                       <div class="field">
@@ -259,7 +259,7 @@
                         </svg>
                         <span>Xem thêm mã giảm giá</span>
                       </div>
-                      <div id="list_short_coupon">
+                      <div>
                         <span
                           ><span data-code="Truemart500K">Giảm 500,000₫</span></span
                         >
@@ -1135,6 +1135,59 @@
         </div>
       </div>
     </div>
+    <script !src="">
+      $(document).ready(function() {
+
+        $('#customer_shipping_ward').change(function() {
+          const wardOption = $('#customer_shipping_ward').children('option:selected')[0].outerHTML;
+          const wardId = $('#customer_shipping_ward').val()
+          localStorage.setItem('wardOption', wardOption);
+          localStorage.setItem('wardId', wardId);
+
+          // console.log(wardOption)
+
+          const provinceOption = $('#customer_shipping_province').children('option:selected')[0].outerHTML;
+          const provinceId = $('#customer_shipping_province').val()
+          localStorage.setItem('provinceOption', provinceOption);
+          localStorage.setItem('provinceId', provinceId)
+          // console.log(provinceOption)
+
+          const districtOption = $('#customer_shipping_district').children('option:selected')[0].outerHTML;
+          const districtId = $('#customer_shipping_district').val()
+          localStorage.setItem('districtOption', districtOption);
+          localStorage.setItem('districtId', districtId);
+
+          // console.log(districtOption)
+        });
+
+      });
+    </script>
+    <script !src="">
+      $(document).ready(function() {
+        const province = localStorage.getItem('provinceOption');
+        const district = localStorage.getItem('districtOption');
+        const ward = localStorage.getItem('wardOption');
+
+        const provinceId = localStorage.getItem('provinceId');
+        const districtId = localStorage.getItem('districtId');
+        const wardId = localStorage.getItem('wardId');
+
+        console.log(provinceId)
+        console.log(districtId)
+        console.log(wardId)
+
+        $('#customer_shipping_ward').append(ward)
+        $('#customer_shipping_district').append(district)
+        // $('#customer_shipping_province').append(province)
+
+        // Đặt thuộc tính "selected" cho tùy chọn đã lưu
+        $('#customer_shipping_ward option[value="' + wardId + '"]').prop('selected', true);
+        $('#customer_shipping_district option[value="' + districtId + '"]').prop('selected', true);
+        $('#customer_shipping_province option[value="' + provinceId + '"]').prop('selected', true);
+
+      });
+
+    </script>
     <script>
       const url = 'http://140.238.54.136/api/auth/login';
       const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
@@ -1207,10 +1260,8 @@
           success: function(response) {
             const token = response.access_token;
             const wardUrl = 'http://140.238.54.136/api/ward?districtID='+selectedValue;
-
             var xhr = new XMLHttpRequest();
             xhr.open('GET', wardUrl, true);
-
             xhr.setRequestHeader('Authorization', 'Bearer '+token);
             xhr.onload = function() {
               if (xhr.status === 200) {
@@ -1241,10 +1292,6 @@
        //get lead time and calculate fee
       $("#customer_shipping_ward").on('change', function() {
         // Lấy giá trị được chọn trong select
-        <%--var height = ${cartUser.getTotalSize().height}--%>
-        <%--var length = ${cartUser.getTotalSize().length}--%>
-        <%--var width = ${cartUser.getTotalSize().width}--%>
-        <%--var weight = ${cartUser.getTotalSize().weight}--%>
         var wardId = parseInt($(this).val());
         var districtId = parseInt($('#customer_shipping_district').val());
         var provinceId = parseInt($('#customer_shipping_province').val());
@@ -1272,19 +1319,15 @@
             },
             success: function(response) {
               // Xử lý kết quả trả về từ servlet
-              console.log(response.status); // "success"
-              console.log(response.message); // "Đã nhận được dữ liệu"
-              console.log(response.fee)
-              console.log(response.leadTime)
+              // console.log(response.status);
+              // console.log(response.message);
+              // console.log(response.fee)
+              // console.log(response.leadTime)
               // console.log(response)
               var dataFee = JSON.parse(response.fee);
               var dataLeadTime = JSON.parse(response.leadTime)
-              console.log(dataFee)
-              console.log(dataFee[0].service_fee)
               var serviceFee = Number(dataFee[0].service_fee);
               var leadTime = dataLeadTime[0].timestamp;
-              console.log(serviceFee)
-              console.log(leadTime)
               $('.province-out .radio-accessory.content-box-emphasis').text(serviceFee.toLocaleString() + "₫");
               $('.total-line-shipping .total-line-price').text(serviceFee !== 0 ? serviceFee.toLocaleString() + "₫" : "miễn phí");
               $('#lead-time').val(leadTime);
@@ -1319,8 +1362,6 @@
       });
     </script>
     <script src="js/provinces_load.js"></script>
-<%--    <script src="js/districts_load.js"></script>--%>
-    <!-- script apply counpon checkout -->
     <script src="js/counpon.js"></script>
   </body>
 </html>

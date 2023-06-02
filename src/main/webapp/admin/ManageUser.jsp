@@ -1,5 +1,6 @@
 <%@ page import="model.User" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="service.RoleService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -59,15 +60,15 @@
                         <span>Thêm tài khoản</span></button>
                 </a>
                 <div class="dropdown float-md-right">
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span>Công cụ</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">In</a>
-                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>
-                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra
-                            Excel</a>
-                    </div>
+<%--                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
+<%--                        <span>Công cụ</span>--%>
+<%--                    </button>--%>
+<%--                    <div class="dropdown-menu">--%>
+<%--                        <a class="dropdown-item" href="#">In</a>--%>
+<%--                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>--%>
+<%--                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra--%>
+<%--                            Excel</a>--%>
+<%--                    </div>--%>
                 </div>
                 <div class="m-t-25">
                     <table id="data-table" class="table">
@@ -86,9 +87,8 @@
                         <c:forEach items="${listUser}" var="user">
                             <tr id="${user.id_User}">
                                 <td>${user.userName}</td>
-                                <td><c:if test="${user.role==1}">Admin</c:if>
-                                    <c:if test="${user.role==0}">Boss</c:if>
-                                    <c:if test="${user.role==2}">User</c:if>
+                                <td class="text-capitalize">
+                                    ${RoleService.getRoleName(user.id_User)}
                                 </td>
                                 <td id="status">${user.status==true?"đang hoạt động":"đã ngừng hoạt động"}</td>
                                 <td id="lock-unlock">

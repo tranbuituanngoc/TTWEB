@@ -2592,6 +2592,11 @@ li.megamenu-img a {
     box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.color-list li a.gray {
+    background: var(--gray);
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
 .in-stock {
     color: #666666;
     font-size: 14px;

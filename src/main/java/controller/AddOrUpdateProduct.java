@@ -247,6 +247,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 sale = sale.equals("") ? "0" : sale;
                 String newProduct = request.getParameter("newProduct");
                 String description = request.getParameter("description");
+                int status= Integer.parseInt(request.getParameter("newProduct"));
 
                 java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
                 Calendar calendar = Calendar.getInstance();
@@ -268,16 +269,15 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setProductID(id);
                     p.setCategory(category.getId() + "");
                     p.setProductName(name);
-                    p.setDescription(description);
-                    p.setStatus(1);
+                    if(!description.isEmpty()){
+                        p.setDescription(description);
+                    }
+                    p.setStatus(status);
                     p.setSalePrice(Integer.parseInt(sale));
                     p.setIsNew(Integer.parseInt(newProduct));
 
                     //upload image
                     ServletContext servletContext = getServletContext();
-                    int majorVersion = servletContext.getMajorVersion();
-                    int minorVersion = servletContext.getMinorVersion();
-                    System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
                     String uploadPath = getServletContext().getRealPath("/") + "UploadFileStore";
                     File uploadDir = new File(uploadPath);
                     if (!uploadDir.exists()) {
@@ -306,7 +306,6 @@ public class AddOrUpdateProduct extends HttpServlet {
                             String imageFileName = getFileName(imagePart);
                             if (imageFileName != null && !imageFileName.isEmpty()) {
                                 imagePart.write(uploadPath + File.separator + imageFileName);
-                                System.out.println("Image file uploaded to: " + uploadPath + File.separator + imageFileName);
                                 ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
                                 images.add(i);
                             }

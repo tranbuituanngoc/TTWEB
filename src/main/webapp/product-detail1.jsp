@@ -171,13 +171,13 @@
                                             <c:choose>
                                                 <c:when test="${color_id == color.id_color }">
                                                     <li>
-                                                        <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''} active"
+                                                        <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' :color.id_color == 7 ? 'gray' : ''} active"
                                                            href="ProductDetail?productID=${product.productID}&color=${color.id_color}&size=${size_id}"></a>
                                                     </li>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li>
-                                                        <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' : ''}"
+                                                        <a class="${color.id_color} ${color.id_color == 1 ? 'white' : color.id_color == 2 ? 'red' : color.id_color == 3 ? 'blue' : color.id_color == 4 ? 'purple' : color.id_color == 5 ? 'yellow' : color.id_color == 6 ? 'green' :color.id_color == 7 ? 'gray' : ''}"
                                                            href="ProductDetail?productID=${product.productID}&color=${color.id_color}&size=${size_id}"></a>
                                                     </li>
                                                 </c:otherwise>
@@ -227,7 +227,7 @@
                         <li><a data-toggle="tab" href="#dtail">Hỏi Đáp</a></li>
                     </ul>
                     <!-- Product Thumbnail Tab Content Start -->
-                    <div class="tab-content thumb-content border-default p-0" style="border-top: 1px solid #ededed !important;border: none;">
+                    <div class="tab-content thumb-content border-default p-0  m-b-20" style="border-top: 1px solid #ededed !important;border: none;">
                         <!-- Reviews Start -->
                         <div id="dtail" class="fb-comments tab-pane m-10 ">
                             data-href="product-detail.jsp?productID=${product.productID}"

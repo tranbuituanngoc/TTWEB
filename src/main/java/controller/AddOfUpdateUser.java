@@ -84,6 +84,7 @@ public class AddOfUpdateUser extends HttpServlet {
                     password = Encode.encodeToSHA1(password);
 
                     User user = new User();
+                    user.setUserName(username);
                     user.setVerificationCode(saltString);
                     user.setTimeValid(timeValid);
                     user.setVerified(verified);

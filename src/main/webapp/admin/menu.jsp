@@ -5,13 +5,11 @@
     <div class="side-nav-inner">
         <ul class="side-nav-menu scrollable">
             <li class="nav-item ">
-                <%--                hiện đang lỗi do không dẫn vào trang servlet mà gọi thẳng vào địa chỉ gốc nên sai link css image js--%>
-                <%--                của mấy cái khác !!!--%>
-                <a class="dropdown-toggle" href="admin/index.jsp">
+                <a class="dropdown-toggle" href="thong-ke">
                         <span class="icon-holder">
                             <i class="anticon anticon-dashboard"></i>
                         </span>
-                    <span class="title">Dashboard</span>
+                    <span class="title">Thống Kê</span>
                 </a>
             </li>
             <li class="nav-item">

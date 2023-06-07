@@ -180,7 +180,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
 
                     //sửa lại thành nơi clone reposetory của mình
-                    String uploadPath = "D:\\Git\\TTWEB\\src\\main\\webapp\\UploadFileStore\\";
+                    String uploadPath = "D:\\VuxBaox\\Github_Clone\\TTWEB\\src\\main\\webapp\\UploadFileStore";
                     File uploadDir = new File(uploadPath);
                     if (!uploadDir.exists()) {
                         uploadDir.mkdir();

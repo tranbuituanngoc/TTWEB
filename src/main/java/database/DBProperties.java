@@ -9,6 +9,7 @@ public class DBProperties {
     static {
         try {
             prop.load(DBProperties.class.getClassLoader().getResourceAsStream("db.properties"));
+            prop.setProperty("useSSL", "false");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

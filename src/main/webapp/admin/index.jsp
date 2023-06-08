@@ -219,7 +219,7 @@
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex">
                                                         <div class="avatar avatar-image m-r-15">
-                                                            <img src="../${ProductImageService.getThumbProduct(entry.key.productID)}"
+                                                            <img src="${ProductImageService.getThumbProduct(entry.key.productID)}"
                                                                  alt="">
                                                         </div>
                                                         <div>

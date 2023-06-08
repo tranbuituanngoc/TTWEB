@@ -108,9 +108,9 @@ public class UserController extends HttpServlet {
 
                 if (u != null) {
                     if (u.isVerified()) {
-
                         session.setAttribute("user", u);
                         if (isAdmin(u)) {
+                            session.setAttribute("isAdmin", isAdmin(u));
                             response.sendRedirect("thong-ke");
                         } else if (!isAdmin(u)) {
                             response.sendRedirect("Home");

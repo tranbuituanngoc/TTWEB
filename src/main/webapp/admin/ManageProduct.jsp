@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><img src="../${ProductImageService.getThumbProduct(p.productID)}" width="100%"></td>
+                                <td><img src="${ProductImageService.getThumbProduct(p.productID)}" width="100%"></td>
                                     <%--                                <td><img src="../UploadFileStore/2566x14402.png" width="100%"> </td>--%>
                                 <td id="status">${p.status==1?"Đang bán":"Ngừng bán"}</td>
                                 <td id="hide-nothide">

@@ -140,14 +140,14 @@
                             <div class="social-login">
                                 <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
                                     <input type="hidden" name="provider" value="Facebook">
-                                    <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/loginCallback'/>">
                                     <button class="btn-fbgg" type="submit">
                                         <i class="fa fa-facebook"></i> Đăng nhập bằng Facebook
                                     </button>
                                 </form>
                                 <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
                                     <input type="hidden" name="provider" value="Google">
-                                    <input type="hidden" name="redirect_uri" value="<c:url value='/callback'/>">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/loginCallback'/>">
                                     <button class="btn-fbgg-google" type="submit">
                                         <i class="fa fa-google"></i> Đăng nhập bằng Google
                                     </button>

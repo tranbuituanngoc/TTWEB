@@ -126,7 +126,7 @@
             <div class="container">
 
                 <div class="copyright-text text-center">
-                    <p>Copyright © 2022 <a target="_blank" href="#">Truemart</a> đã đăng ký bản quyền.</p>
+                    <p>Copyright © 2022 <a target="_blank" href="#">Tile Market</a> đã đăng ký bản quyền.</p>
                 </div>
             </div>
             <!-- Container End -->

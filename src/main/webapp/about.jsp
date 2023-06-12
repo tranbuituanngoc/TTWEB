@@ -7,10 +7,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Giới thiệu || Truemart Gạch men cao cấp</title>
+    <title>Giới thiệu || Tile Market Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="img\favicon.ico">
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="css\font-awesome.min.css">
     <!-- Ionicons css -->
@@ -80,7 +80,7 @@
                     <div class="about-desc">
                         <h3 class="mb-10 about-title">GIỚI THIỆU VỀ CỬA HÀNG HÀNG</h3>
                         <p class="mb-20">
-                            Được thành lập vào năm 2020, TrueMart là Nhà Nhập khẩu & Phân phối Gạch Sứ Mỹ chính tại Việt
+                            Được thành lập vào năm 2020, Tile Market là Nhà Nhập khẩu & Phân phối Gạch Sứ Mỹ chính tại Việt
                             Nam, có thể cung cấp tất cả các yêu cầu về gạch ốp lát cho các công trình gia dụng, kiến
                             trúc, thiết kế nội thất và xây dựng.</p>
                         <h5 class="mb-10 about-title">NHIỆM VỤ</h5>

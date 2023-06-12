@@ -17,8 +17,8 @@
         <div class="container">
             <div class="row align-items-center no-gutters">
                 <div class="col-lg-3 col-md-12">
-                    <div class="logo mb-all-30">
-                        <a href="Home"><img src="img\logo\logo.png" alt="logo-image"></a>
+                    <div class="logo mb-all-30 mr-50">
+                        <a href="Home"><img src="img\logo\logo-transparent-png.png"  style="width: 100%;"  alt="logo-image"></a>
                     </div>
                 </div>
                 <!-- Categorie Search Box Start Here -->
@@ -75,7 +75,7 @@
                                 if (user != null) {
                             %>
                             <li id="wishlist">
-                                <a href="#">
+                                <a href="danh-sach-quan-tam?action=get">
                                     <div class="total-product-wish">
                                         <div class="total-pro-wish" id="wishlistCount">
                                             <!-- Placeholder for wishlist count -->

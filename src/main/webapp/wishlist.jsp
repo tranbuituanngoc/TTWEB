@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Sản phẩm || Truemart gạch men cao cấp</title>
+    <title>Danh sách quan tâm || Truemart gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
     <link rel="shortcut icon" href="404.html">
@@ -108,7 +108,7 @@
             <div class="breadcrumb">
                 <ul class="d-flex align-items-center">
                     <li><a href="Home">Trang chủ</a></li>
-                    <li class="active"><a href="ProductLists?page=1">Sản phẩm</a></li>
+                    <li class="active"><a href="danh-sach-quan-tam?action=get&page=1">Danh sách quan tâm</a></li>
                 </ul>
             </div>
         </div>
@@ -247,7 +247,6 @@
                                                                         </a>
                                                                     </div>
                                                                 </c:if>
-
                                                             </div>
                                                         </div>
                                                         <!-- Product Content End -->
@@ -269,24 +268,27 @@
 
                                 <div class="pro-pagination">
                                     <ul class="blog-pagination">
-                                        <c:if test="${requestScope.page >4}">
-                                            <li><a href="page=${requestScope.page - 1}">«</a></li>
+                                        <c:if test="${page >4}">
+                                            <li><a href="danh-sach-quan-tam?action=get&page=${page - 1}">«</a></li>
                                         </c:if>
-                                        <c:forEach begin="1" end="${requestScope.numberPage}" var="i">
+
+                                        <c:forEach begin="1" end="${numberPage}" var="i">
                                             <c:choose>
-                                                <c:when test="${requestScope.page eq i}">
-                                                    <li class="active"><a href="search?page=${i}">${i}</a></li>
+                                                <c:when test="${page eq i}">
+                                                    <li class="active"><a
+                                                            href="danh-sach-quan-tam?action=get&page=${i}">${i}</a></li>
                                                 </c:when>
-                                                <c:when test="${requestScope.page eq i}">
-                                                    <li class="active"><a href="search?page=${i}">${i}</a></li>
+                                                <c:when test="${page eq i}">
+                                                    <li class="active"><a
+                                                            href="danh-sach-quan-tam?action=get&page=${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li><a href="search?page=${i}">${i}</a></li>
+                                                    <li><a href="danh-sach-quan-tam?action=get&page=${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
-                                        <c:if test="${requestScope.page < requestScope.numberPage}">
-                                            <li><a href="search?page=${requestScope.page + 1}">»</a></li>
+                                        <c:if test="${page < numberPage}">
+                                            <li><a href="danh-sach-quan-tam?action=get&page=${page + 1}">»</a></li>
                                         </c:if>
 
                                     </ul>
@@ -347,6 +349,7 @@
     <!-- Main activaion js -->
     <script src="js\main.js"></script>
     <script>
+
         function addToWishlist(event) {
             var wishlistButton = event.target; // Thẻ <a> được click
             var productDiv = wishlistButton.closest('.product'); // Thẻ cha chứa sản phẩm

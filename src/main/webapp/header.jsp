@@ -1,5 +1,10 @@
 <%@ page import="javax.mail.Session" %>
 <%@ page import="model.User" %>
+<%@ page import="controller.UserController" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="service.WishlistService" %>
+<%@ page import="model.Product" %>
+<%@ page import="java.text.NumberFormat" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -25,44 +30,201 @@
                         </form>
                     </div>
                 </div>
-                <!-- Categorie Search Box End Here -->
                 <!-- Cart Box Start Here -->
                 <div class="col-lg-4 col-md-12">
                     <div class="cart-box mt-all-30">
                         <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
                             <li>
-                                <a href="Cart"><i class="lnr lnr-cart"></i>
-                                    <span class="my-cart">
-                                            <span class="total-pro">${cartUser.getTotalQuantity()}</span>
-                                            <span>Giỏ hàng</span>
-                                        </span>
+                                <a href="Cart">
+                                    <div class="total-product">
+                                        <i class="lnr lnr-cart"></i>
+                                        <div class="total-pro">
+                                            <c:if test="${cartUser.getTotalQuantity() == null}">
+                                                0
+                                            </c:if>
+                                            ${cartUser.getTotalQuantity()}
+                                        </div>
+                                    </div>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="/UserOrder"><i class="lnr lnr-shirt"></i>
-                                    <span>Đơn hàng</span>
-                                </a>
+                                <%--                                <ul class="ht-dropdown cart-box-width">--%>
+                                <%--                                    <li>--%>
+                                <%--                                        <!-- Cart Box Start -->--%>
+                                <%--                                        <div class="single-cart-box">--%>
+                                <%--                                            <div class="cart-img">--%>
+                                <%--                                                <a href="#"><img src="img\products\1.jpg" alt="cart-image"></a>--%>
+                                <%--                                                <span class="pro-quantity">1X</span>--%>
+                                <%--                                            </div>--%>
+                                <%--                                            <div class="cart-content">--%>
+                                <%--                                                <h6><a href="product.html">Printed Summer Red </a></h6>--%>
+                                <%--                                                <span class="cart-price">27.45</span>--%>
+                                <%--                                            </div>--%>
+                                <%--                                        </div>--%>
+                                <%--                                        <!-- Cart Box End -->--%>
+                                <%--                                        <!-- Cart Footer Inner Start -->--%>
+                                <%--                                        <div class="cart-footer">--%>
+                                <%--                                            <div class="cart-actions text-center">--%>
+                                <%--                                                <a class="cart-checkout" href="Cart">Xem giỏ hàng</a>--%>
+                                <%--                                            </div>--%>
+                                <%--                                        </div>--%>
+                                <%--                                        <!-- Cart Footer Inner End -->--%>
+                                <%--                                    </li>--%>
+                                <%--                                </ul>--%>
                             </li>
                             <%
                                 User user = (User) session.getAttribute("user");
+                                if (user != null) {
+                            %>
+                            <li id="wishlist">
+                                <a href="#">
+                                    <div class="total-product-wish">
+                                        <div class="total-pro-wish" id="wishlistCount">
+                                            <!-- Placeholder for wishlist count -->
+                                        </div>
+                                        <i class="lnr lnr-heart"></i>
+                                    </div>
+                                </a>
+                                <ul class="ht-dropdown cart-box-width" id="wishlistItems">
+                                    <!-- Placeholder for wishlist items -->
+                                </ul>
+                            </li>
+                            <script>
+                                // Gọi hàm kiểm tra sau khi trang đã tải xong
+                                window.addEventListener('DOMContentLoaded', function () {
+                                    headerWishlist();
+                                });
+
+                                function headerWishlist() {
+                                    // Tạo một đối tượng XMLHttpRequest
+                                    var xhr = new XMLHttpRequest();
+
+                                    // Xác định phương thức HTTP và URL của servlet
+                                    var method = "POST";
+                                    var url = "/danh-sach-quan-tam?action=header";
+
+                                    // Thiết lập hàm xử lý khi có phản hồi từ servlet
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                                            if (xhr.status === 200) {
+                                                // Xử lý phản hồi từ servlet ở đây
+                                                var wishlistData = JSON.parse(xhr.responseText);
+
+                                                // Cập nhật hiển thị số lượng sản phẩm trong wishlist
+                                                var wishlistCount = document.querySelector('#wishlistCount');
+                                                wishlistCount.textContent = wishlistData.count;
+
+                                                // Cập nhật danh sách sản phẩm trong dropdown
+                                                var wishlistItems = document.querySelector('#wishlistItems');
+                                                wishlistItems.innerHTML = '';
+
+                                                for (var productId in wishlistData) {
+                                                    if (productId !== 'count') {
+                                                        var product = wishlistData[productId];
+
+                                                        // Tạo phần tử HTML cho từng sản phẩm
+                                                        var productElement = document.createElement('li');
+                                                        productElement.className = 'single-cart-box';
+
+                                                        // Tạo phần tử HTML cho hình ảnh sản phẩm
+                                                        var imgElement = document.createElement('div');
+                                                        imgElement.className = 'cart-img';
+                                                        var imgLink = document.createElement('a');
+                                                        imgLink.href = 'ProductDetail?productID=' + product.id;
+                                                        var img = document.createElement('img');
+                                                        img.src = product.thumb;
+                                                        imgLink.appendChild(img);
+                                                        imgElement.appendChild(imgLink);
+                                                        productElement.appendChild(imgElement);
+
+                                                        // Tạo phần tử HTML cho nội dung sản phẩm
+                                                        var contentElement = document.createElement('div');
+                                                        contentElement.className = 'cart-content';
+                                                        var productName = document.createElement('h6');
+                                                        var productNameLink = document.createElement('a');
+                                                        productNameLink.href = 'ProductDetail?productID=' + product.id;
+                                                        productNameLink.textContent = product.name;
+                                                        productName.appendChild(productNameLink);
+                                                        contentElement.appendChild(productName);
+                                                        var productPrice = document.createElement('span');
+                                                        productPrice.className = 'cart-price';
+                                                        productPrice.textContent = product.price + ' VNĐ';
+                                                        contentElement.appendChild(productPrice);
+                                                        productElement.appendChild(contentElement);
+
+                                                        wishlistItems.appendChild(productElement);
+                                                    }
+                                                }
+
+                                                // Tạo phần tử HTML cho cart footer
+                                                var cartFooter = document.createElement('li');
+                                                cartFooter.className = 'cart-footer';
+                                                cartFooter.style= 'padding-top: 0;'
+                                                var cartActions = document.createElement('div');
+                                                cartActions.className = 'cart-actions text-center';
+                                                var cartCheckoutLink = document.createElement('a');
+                                                cartCheckoutLink.className = 'cart-checkout';
+                                                cartCheckoutLink.href = 'danh-sach-quan-tam?action=get';
+                                                cartCheckoutLink.textContent = 'Xem Danh Sách Quan Tâm';
+                                                cartActions.appendChild(cartCheckoutLink);
+                                                cartFooter.appendChild(cartActions);
+                                                wishlistItems.appendChild(cartFooter);
+                                            } else {
+                                                // Xử lý lỗi nếu có
+                                                console.log('Có lỗi xảy ra.');
+                                            }
+                                        }
+                                    };
+
+                                    // Mở kết nối với servlet
+                                    xhr.open(method, url, true);
+
+                                    // Gửi yêu cầu đến servlet
+                                    xhr.send();
+                                }
+                            </script>
+
+
+                            <%
+                                }
                                 if (user == null) {
                             %>
-                            <li><a href="login.jsp"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Đăng nhập</strong></span><span> đăng kí</span></span></a>
+                            <li>
+                                <a href="login.jsp">
+                                    <i class="lnr lnr-user"></i>
+                                    <span class="my-cart">
+                                        <span> <strong>Đăng nhập</strong></span>
+                                        <span> đăng kí</span>
+                                    </span>
+                                </a>
                             </li>
                             <%
                             } else if (user.getRole() == 2) {
                             %>
-                            <i class="lnr lnr-user" style="font-size: 25pt; margin-left: 10px;"></i><span
-                                class="dropdown"><a class="dropdown-toggle" style="cursor: pointer;"
-                                                    data-toggle="dropdown"><%=user.getUserName()%> <span
-                                class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="changePass.jsp">Đổi mật khẩu</a></li>
-                                        <li><a href="nguoi-dung?action=dang-xuat">Đăng xuất</a></li>
-                                    </ul>
+                            <li class="login-box">
+                                <a href="#">
+                                    <i class="lnr lnr-user"></i>
+                                    <span class="my-cart">
+                                            <span class="text-center pt-2 font-weight-bold"><%=user.getUserName()%></span>
+                                    </span>
+                                </a>
+                                <ul class="ht-dropdown log-box mt-2">
+                                    <li>
+                                        <!-- Cart Box Start -->
+                                        <div class="log-text">
+                                            <a href="/UserOrder">Đơn hàng</a>
+                                        </div>
+                                        <!-- Cart Box End -->
+                                        <!-- Cart Box Start -->
+                                        <div class="log-text">
+                                            <a href="changePass.jsp">Đổi mật khẩu</a>
+                                        </div>
+                                        <div class="log-text">
+                                            <a href="nguoi-dung?action=dang-xuat">Đăng xuất</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
                             <%
-                                } else if (user.getRole() == 1|| user.getRole()==0) {
-
+                            } else if (user.getRole() != 2) {
                             %>
                             <li><a href="ListProductAd"><i class="lnr lnr-pointer-right"></i><span
                                     class="my-cart"><span><strong><%=user.getUserName()%></strong></span><span>vào admin</span></span></a>

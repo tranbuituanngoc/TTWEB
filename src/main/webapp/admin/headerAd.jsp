@@ -46,7 +46,7 @@
                                 <i class="anticon anticon-user m-r-5"></i><span>${username}</span><i class="caret"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout">Đăng xuất</a>
+                                <a class="dropdown-item" href="nguoi-dung?action=dang-xuat">Đăng xuất</a>
                             </div>
                         </li>
                     </ul>

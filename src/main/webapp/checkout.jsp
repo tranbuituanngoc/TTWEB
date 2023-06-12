@@ -8,10 +8,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Thanh toán || Truemart Gạch men cao cấp</title>
+    <title>Thanh toán || Tile Market Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="img\favicon.ico">
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="css\font-awesome.min.css">
     <!-- Ionicons css -->

@@ -14,10 +14,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Chi tiết sản phẩm || Truemart gạch men cao cấp</title>
+    <title>Chi tiết sản phẩm || Tile Market gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="img\favicon.ico">
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="css\font-awesome.min.css">
     <!-- Ionicons css -->
@@ -47,9 +47,57 @@
 
     <!-- Modernizer js -->
     <script src="js\vendor\modernizr-3.5.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/9212eb0180.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <!-- Main Wrapper Start Here -->
+<c:if test="${sessionScope.user !=null}">
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            // Gọi hàm kiểm tra sau khi trang đã tải xong
+            checkWishlist();
+        });
+
+        function checkWishlist() {
+            // Lấy danh sách các sản phẩm trong trang
+            var productDivs = document.querySelectorAll('.product');
+
+            // Tạo một đối tượng XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Xác định phương thức HTTP và URL của servlet
+            var method = "POST";
+            var url = "/danh-sach-quan-tam?action=check";
+
+            // Thiết lập hàm xử lý khi có phản hồi từ servlet
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Xử lý phản hồi từ servlet ở đây
+                        var wishlistData = JSON.parse(xhr.responseText);
+                        // Kiểm tra từng sản phẩm và cập nhật hiển thị
+                        productDivs.forEach(function (productDiv) {
+                            var id_product = productDiv.getAttribute('data-product-id');
+                            var wishlistIcon = productDiv.querySelector('i.fa-regular');
+                            if (wishlistData.includes(id_product)) {
+                                wishlistIcon.classList.add('fa-solid');
+                            }
+                        });
+                    } else {
+                        // Xử lý lỗi nếu có
+                        console.log('Có lỗi xảy ra.');
+                    }
+                }
+            };
+
+            // Mở kết nối với servlet
+            xhr.open(method, url, true);
+
+            // Gửi yêu cầu đến servlet
+            xhr.send();
+        }
+    </script>
+</c:if>
 <div class="wrapper">
     <jsp:include page="header.jsp"/>
     <!-- Breadcrumb Start -->
@@ -79,14 +127,15 @@
                             <c:forEach var="image" items="${productImage}" varStatus="loop">
                                 <c:if test="${loop.index == 0}">
                                     <div id="thumb${loop.index+1}" class="tab-pane fade show active">
-                                        <a data-fancybox="images" href="${image.image}"><img src="${image.image}"
+                                        <a data-fancybox="images" href="${image.image}"><img src="${image.image}" style="height: 265px"
                                                                                              alt="product-view"></a>
                                     </div>
                                 </c:if>
                                 <c:if test="${loop.index != 0}">
                                     <div id="thumb${loop.index+1}" class="tab-pane fade show">
-                                        <a data-fancybox="images" href="${image.image}"><img src="${image.image}"
-                                                                                             alt="product-view"></a>
+                                        <a data-fancybox="images" href="${image.image}"><img style="height: 265px"
+                                                src="${image.image}"
+                                                alt="product-view"></a>
                                     </div>
                                 </c:if>
                             </c:forEach>
@@ -97,12 +146,13 @@
                             <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
                                 <c:forEach var="image" items="${productImage}" varStatus="loop">
                                     <c:if test="${loop.index == 0}">
-                                        <a class="active" data-toggle="tab" href="#thumb1"><img src="${image.image}"
+                                        <a class="active" data-toggle="tab" href="#thumb1"><img src="${image.image}" style="height: 105px"
                                                                                                 alt="product-thumbnail"></a>
                                     </c:if>
                                     <c:if test="${loop.index != 0}">
-                                        <a data-toggle="tab" href="#thumb${loop.index+1}"><img src="${image.image}"
-                                                                                               alt="product-thumbnail"></a>
+                                        <a data-toggle="tab" href="#thumb${loop.index+1}"><img  style="height: 105px"
+                                                src="${image.image}"
+                                                alt="product-thumbnail"></a>
                                     </c:if>
 
                                 </c:forEach>
@@ -195,11 +245,16 @@
                                             <a href="addCart?product_id=${product.productID}&color_id=${color_id}&size=${size_id}"
                                                title="" data-original-title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                         </div>
-                                        <div class="actions-secondary">
-                                            <%--                                            <a href="compare.html" title="" data-original-title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>--%>
-                                            <a href="wishlist.html" title="" data-original-title="WishList"><i
-                                                    class="lnr lnr-heart"></i> <span>Thêm vào danh sách yêu thích</span></a>
-                                        </div>
+                                        <c:if test="${sessionScope.user !=null}">
+                                            <div class="actions-secondary">
+                                                <a href="javascript:void(0)"
+                                                   class="product ${product.productID}"
+                                                   data-product-id="${product.productID}"
+                                                   onclick="addToWishlist(event)">
+                                                    <i class="fa-regular fa-heart"></i> <span style="padding-top: 7px">Quan tâm</span>
+                                                </a>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </div>
                             </form>
@@ -227,7 +282,8 @@
                         <li><a data-toggle="tab" href="#dtail">Hỏi Đáp</a></li>
                     </ul>
                     <!-- Product Thumbnail Tab Content Start -->
-                    <div class="tab-content thumb-content border-default p-0  m-b-20" style="border-top: 1px solid #ededed !important;border: none;">
+                    <div class="tab-content thumb-content border-default p-0  m-b-20"
+                         style="border-top: 1px solid #ededed !important;border: none;">
                         <!-- Reviews Start -->
                         <div id="dtail" class="fb-comments tab-pane m-10 ">
                             data-href="product-detail.jsp?productID=${product.productID}"
@@ -261,7 +317,7 @@
                                 <div class="pro-img">
                                     <a href="ProductDetail?productID=${p.productID}">
                                         <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                        <img class="secondary-img" src="${p.image[1].image}"
+                                        <img class="secondary-img" src="${p.image[1].image}" style="height: 165px;"
                                              alt="single-product">
                                     </a>
                                     <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
@@ -300,10 +356,16 @@
                                             <a href="${addCart}" id="add-cart" title="Thêm vào giỏ"> + Thêm vào
                                                 giỏ</a>
                                         </div>
-                                        <div class="actions-secondary">
-                                            <a href="wishlist.html" title="WishList"><i
-                                                    class="lnr lnr-heart"></i> <span>Thêm vào danh sách yêu thích</span></a>
-                                        </div>
+                                        <c:if test="${sessionScope.user !=null}">
+                                            <div class="actions-secondary">
+                                                <a href="javascript:void(0)"
+                                                   class="product ${p.productID}"
+                                                   data-product-id="${p.productID}"
+                                                   onclick="addToWishlist(event)">
+                                                    <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                </a>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <!-- Product Content End -->
@@ -376,6 +438,48 @@
             quantityValueInput.value = input.value;
         }
     </script>
+    <script>
+        function addToWishlist(event) {
+            var wishlistButton = event.target; // Thẻ <a> được click
+            var productDiv = wishlistButton.closest('.product'); // Thẻ cha chứa sản phẩm
+            var id_product = productDiv.getAttribute('data-product-id'); // Lấy giá trị id của sản phẩm
 
+            // Tạo một đối tượng XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Xác định phương thức HTTP và URL của servlet
+            var method = "POST";
+            var url = "/danh-sach-quan-tam?action=update&id_product=" + encodeURIComponent(id_product) + "&url=" + encodeURIComponent(window.location.href);
+
+            // Thiết lập hàm xử lý khi có phản hồi từ servlet
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Xử lý phản hồi từ servlet ở đây
+                        var isExist = JSON.parse(xhr.responseText);
+                        var wishlistIcon = document.querySelector(".product." + id_product + " i.fa-regular.fa-heart");
+                        if (wishlistIcon) {
+                            if (!isExist) {
+                                wishlistIcon.classList.add("fa-solid");
+                            } else {
+                                wishlistIcon.classList.remove("fa-solid");
+                            }
+                        }
+                        headerWishlist();
+                    } else {
+                        // Xử lý lỗi nếu có
+                        console.log('Có lỗi xảy ra.');
+                    }
+                }
+            };
+
+            // Mở kết nối với servlet
+            xhr.open(method, url, true);
+
+            // Gửi yêu cầu đến servlet
+            xhr.send();
+        }
+
+    </script>
 </body>
 </html>

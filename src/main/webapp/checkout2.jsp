@@ -5,10 +5,10 @@
 <html lang="en" class="flexbox">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="shortcut icon" href="#" type="image/png" />
-    <title>Thanh toán || Truemart Gạch men cao cấp</title>
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
+    <title>Thanh toán || Tile Market Gạch men cao cấp</title>
     <link rel="stylesheet" href="./css/checkout.css" />
-    <meta name="description" content="Gạch Men TrueMart - Thanh toán đơn hàng" />
+    <meta name="description" content="Gạch Men Tile Market - Thanh toán đơn hàng" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link
@@ -131,7 +131,7 @@
     <div class="banner">
       <div class="wrap">
         <a href="Home" class="logo">
-          <h1 class="logo-text">Gạch men TrueMart</h1>
+          <h1 class="logo-text">Gạch men Tile Market</h1>
         </a>
       </div>
     </div>
@@ -261,23 +261,23 @@
                       </div>
                       <div>
                         <span
-                          ><span data-code="Truemart500K">Giảm 500,000₫</span></span
+                          ><span data-code="Tile Market500K">Giảm 500,000₫</span></span
                         >
 
                         <span
-                          ><span data-code="Truemart50K">Giảm 50,000₫</span></span
+                          ><span data-code="Tile Market50K">Giảm 50,000₫</span></span
                         >
 
                         <span
-                          ><span data-code="Truemart300K">Giảm 300,000₫</span></span
+                          ><span data-code="Tile Market300K">Giảm 300,000₫</span></span
                         >
 
                         <span
-                          ><span data-code="Truemart200K">Giảm 200,000₫</span></span
+                          ><span data-code="Tile Market200K">Giảm 200,000₫</span></span
                         >
 
                         <span
-                          ><span data-code="Truemart100K">Giảm 100,000₫</span></span
+                          ><span data-code="Tile Market100K">Giảm 100,000₫</span></span
                         >
                       </div>
                     </div>
@@ -442,18 +442,18 @@
                         <span>Xem thêm mã giảm giá</span>
                       </div>
                       <div id="list_short_coupon">
-                        <span><span data-code="Truemart500K">Giảm 500,000₫</span></span>
+                        <span><span data-code="Tile Market500K">Giảm 500,000₫</span></span>
                         <span
-                          ><span data-code="Truemart50K">Giảm 50,000₫</span></span
+                          ><span data-code="Tile Market50K">Giảm 50,000₫</span></span
                         >
                         <span
-                          ><span data-code="Truemart300K">Giảm 300,000₫</span></span
+                          ><span data-code="Tile Market300K">Giảm 300,000₫</span></span
                         >
                         <span
-                          ><span data-code="Truemart200K">Giảm 200,000₫</span></span
+                          ><span data-code="Tile Market200K">Giảm 200,000₫</span></span
                         >
                         <span
-                          ><span data-code="Truemart100K">Giảm 100,000₫</span></span
+                          ><span data-code="Tile Market100K">Giảm 100,000₫</span></span
                         >
                       </div>
                     </div>
@@ -574,7 +574,7 @@
         <div class="main">
           <div class="main-header">
             <a href="Home" class="logo">
-                <h1 class="logo-text">Gạch Men TrueMart</h1>
+                <h1 class="logo-text">Gạch Men Tile Market</h1>
             </a>
 
             <style>
@@ -948,7 +948,7 @@
                                   >Miễn phí giao hàng &amp; lắp đặt tại tất cả
                                   quận huyện thuộc TP.HCM đối với các sản phẩm
                                   nội thất. Các sản phẩm thuộc danh mục Đồ Trang
-                                  Trí, phí giao hàng sẽ được TrueMart liên hệ báo
+                                  Trí, phí giao hàng sẽ được Tile Market liên hệ báo
                                   sau.</span>
                                 <span class="radio-accessory content-box-emphasis">0₫</span>
                               </label>
@@ -966,7 +966,7 @@
                               <div class="radio-input">
                                 <input id="shipping_rate_id_1647130" class="input-radio" type="radio" name="shipping_rate_id" value="1647130" checked="">
                               </div>
-                              <span class="radio-label-primary">Các tỉnh thành không thuộc khu vực miễn phí giao hàng &amp; lắp đặt, phí giao hàng sẽ được TrueMart tính theo khoảng cách vận chuyển.</span>
+                              <span class="radio-label-primary">Các tỉnh thành không thuộc khu vực miễn phí giao hàng &amp; lắp đặt, phí giao hàng sẽ được Tile Market tính theo khoảng cách vận chuyển.</span>
                               <span class="radio-accessory content-box-emphasis">0₫</span>
                               <input type="hidden" name="service-fee" id="service-fee" value="0">
                               <input type="hidden" name="lead-time" id="lead-time" value="0">

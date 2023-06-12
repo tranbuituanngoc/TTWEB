@@ -1,18 +1,10 @@
 package controller;
 
-import model.Category;
-import model.Color;
-import model.Product;
-import model.Size;
-import model.ImageProduct;
-import service.ProductCategoryService;
-import service.ProductColorService;
-import service.ProductService;
-import service.ProductSizeService;
-import service.ProductImageService;
-import service.ProductImportedService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import model.*;
+import service.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -32,7 +23,10 @@ import java.util.*;
 
 public class AddOrUpdateProduct extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final String UPLOAD_DIR = "UploadFileStore";
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dcuoluhoa",
+            "api_key", "345639439183833",
+            "api_secret", "xoJDHnss7DBL1R_6cpQrph9p908"));
 
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -67,7 +61,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 }
                 for (Size ps : product.getSize()) {
                     String c = ps.getDescrip();
-                    System.out.println("Size: "+c);
+                    System.out.println("Size: " + c);
                     sizes.add(c);
                 }
 
@@ -129,7 +123,7 @@ public class AddOrUpdateProduct extends HttpServlet {
 
                 // Nếu lỗi thì set lại các attribute cho nó và gọi lại
                 if (ProductService.existProductName(name) || description.isEmpty()) {
-                    request.setAttribute("err", description.isEmpty()?"Vui lòng không để trống phần mô tả!":"Tên sản phẩm đã tồn tại");
+                    request.setAttribute("err", description.isEmpty() ? "Vui lòng không để trống phần mô tả!" : "Tên sản phẩm đã tồn tại");
 
                     //get all cate, size, color
                     request.setAttribute("listColor", listColor);
@@ -174,39 +168,66 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setIsNew(Integer.parseInt(newProduct));
 
                     //upload image
-                    ServletContext servletContext = getServletContext();
-                    int majorVersion = servletContext.getMajorVersion();
-                    int minorVersion = servletContext.getMinorVersion();
-                    System.out.println("Servlet API version: " + majorVersion + "." + minorVersion);
-
-                    //sửa lại thành nơi clone reposetory của mình
-                    String uploadPath = "D:\\Git\\TTWEB\\src\\main\\webapp\\UploadFileStore\\";
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdir();
-                    }
-
-// Upload thumbnail file (single file upload)
                     Part thumbnailPart = request.getPart("thumbnail");
                     String thumbnailFileName = getFileName(thumbnailPart);
                     if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
-                        thumbnailPart.write(uploadPath + thumbnailFileName);
-                        System.out.println("Thumbnail file uploaded to: " + uploadPath + thumbnailFileName);
-                        p.setThumb("UploadFileStore/" + thumbnailFileName);
+                        try {
+                            // Lưu tệp tin vào ổ đĩa cục bộ
+                            File thumbnailFile = new File(thumbnailFileName);
+                            try (InputStream thumbnailInputStream = thumbnailPart.getInputStream();
+                                 OutputStream thumbnailOutputStream = new FileOutputStream(thumbnailFile)) {
+                                byte[] buffer = new byte[1024];
+                                int length;
+                                while ((length = thumbnailInputStream.read(buffer)) != -1) {
+                                    thumbnailOutputStream.write(buffer, 0, length);
+                                }
+                            }
+
+                            // Upload tệp tin lên Cloudinary
+                            Map<String, String> thumbnailUploadResult = cloudinary.uploader().upload(thumbnailFile,
+                                    ObjectUtils.asMap("public_id", thumbnailFileName));
+                            String thumbnailUrl = thumbnailUploadResult.get("url");
+                            p.setThumb(thumbnailUrl);
+
+                            // Xóa tệp tin cục bộ
+                            thumbnailFile.delete();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
-// Upload image files (multiple file upload)
+
+                    // Upload image files (multiple file upload)
                     List<ImageProduct> images = new ArrayList<>();
                     List<Part> imageParts = (List<Part>) request.getParts();
                     for (Part imagePart : imageParts) {
-                        System.out.println(imagePart.getName());
                         if (imagePart.getName().equals("images")) {
                             String imageFileName = getFileName(imagePart);
                             if (imageFileName != null && !imageFileName.isEmpty()) {
-                                imagePart.write(uploadPath + imageFileName);
-                                System.out.println("Image file uploaded to: " + uploadPath + imageFileName);
-                                ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
-                                images.add(i);
+                                try {
+                                    // Lưu tệp tin vào ổ đĩa cục bộ
+                                    File imageFile = new File(imageFileName);
+                                    try (InputStream imageInputStream = imagePart.getInputStream();
+                                         OutputStream imageOutputStream = new FileOutputStream(imageFile)) {
+                                        byte[] buffer = new byte[1024];
+                                        int length;
+                                        while ((length = imageInputStream.read(buffer)) != -1) {
+                                            imageOutputStream.write(buffer, 0, length);
+                                        }
+                                    }
+
+                                    // Upload tệp tin lên Cloudinary với public ID là imageFileName
+                                    Map<String, String> imageUploadResult = cloudinary.uploader().upload(imageFile,
+                                            ObjectUtils.asMap("public_id", imageFileName));
+                                    String imageUrl = imageUploadResult.get("url");
+                                    ImageProduct i = new ImageProduct(imageUrl);
+                                    images.add(i);
+
+                                    // Xóa tệp tin cục bộ
+                                    imageFile.delete();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -247,7 +268,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 sale = sale.equals("") ? "0" : sale;
                 String newProduct = request.getParameter("newProduct");
                 String description = request.getParameter("description");
-                int status= Integer.parseInt(request.getParameter("newProduct"));
+                int status = Integer.parseInt(request.getParameter("newProduct"));
 
                 java.sql.Date todaysDate = new java.sql.Date(new java.util.Date().getTime());
                 Calendar calendar = Calendar.getInstance();
@@ -269,7 +290,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setProductID(id);
                     p.setCategory(category.getId() + "");
                     p.setProductName(name);
-                    if(!description.isEmpty()){
+                    if (!description.isEmpty()) {
                         p.setDescription(description);
                     }
                     p.setStatus(status);
@@ -277,45 +298,74 @@ public class AddOrUpdateProduct extends HttpServlet {
                     p.setIsNew(Integer.parseInt(newProduct));
 
                     //upload image
-                    ServletContext servletContext = getServletContext();
-                    String uploadPath = getServletContext().getRealPath("/") + "UploadFileStore";
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdir();
-                    }
-//                  Upload thumbnail file (single file upload)
+                    // Upload thumbnail file (single file upload)
                     Part thumbnailPart = request.getPart("thumbnail");
                     String thumbnailFileName = getFileName(thumbnailPart);
                     if (thumbnailFileName != null && !thumbnailFileName.isEmpty()) {
-                        thumbnailPart.write(uploadPath + File.separator + thumbnailFileName);
-                        System.out.println("Thumbnail file uploaded to: " + uploadPath + File.separator + thumbnailFileName);
-                        p.setThumb("UploadFileStore/" + thumbnailFileName);
-                    } else {
-                        //Xử lý khi người dùng không upload ảnh mới
-                        p.setThumb(product.getThumb());
+                        try {
+                            // Lưu tệp tin vào ổ đĩa cục bộ
+                            File thumbnailFile = new File(thumbnailFileName);
+                            try (InputStream thumbnailInputStream = thumbnailPart.getInputStream();
+                                 OutputStream thumbnailOutputStream = new FileOutputStream(thumbnailFile)) {
+                                byte[] buffer = new byte[1024];
+                                int length;
+                                while ((length = thumbnailInputStream.read(buffer)) != -1) {
+                                    thumbnailOutputStream.write(buffer, 0, length);
+                                }
+                            }
+
+                            // Upload tệp tin lên Cloudinary
+                            Map<String, String> thumbnailUploadResult = cloudinary.uploader().upload(thumbnailFile,
+                                    ObjectUtils.asMap("public_id", thumbnailFileName));
+                            String thumbnailUrl = thumbnailUploadResult.get("url");
+                            p.setThumb(thumbnailUrl);
+                            ProductImageService.updateThumbProduct(p);
+                            // Xóa tệp tin cục bộ
+                            thumbnailFile.delete();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     // Upload image files (multiple file upload)
                     List<ImageProduct> images = new ArrayList<>();
-
                     List<Part> imageParts = (List<Part>) request.getParts();
-
                     for (Part imagePart : imageParts) {
-                        System.out.println(imagePart.getName());
                         if (imagePart.getName().equals("images")) {
                             String imageFileName = getFileName(imagePart);
                             if (imageFileName != null && !imageFileName.isEmpty()) {
-                                imagePart.write(uploadPath + File.separator + imageFileName);
-                                ImageProduct i = new ImageProduct("UploadFileStore/" + imageFileName);
-                                images.add(i);
+                                try {
+                                    // Lưu tệp tin vào ổ đĩa cục bộ
+                                    File imageFile = new File(imageFileName);
+                                    try (InputStream imageInputStream = imagePart.getInputStream();
+                                         OutputStream imageOutputStream = new FileOutputStream(imageFile)) {
+                                        byte[] buffer = new byte[1024];
+                                        int length;
+                                        while ((length = imageInputStream.read(buffer)) != -1) {
+                                            imageOutputStream.write(buffer, 0, length);
+                                        }
+                                    }
+
+                                    // Upload tệp tin lên Cloudinary với public ID là imageFileName
+                                    Map<String, String> imageUploadResult = cloudinary.uploader().upload(imageFile,
+                                            ObjectUtils.asMap("public_id", imageFileName));
+                                    String imageUrl = imageUploadResult.get("url");
+                                    ImageProduct i = new ImageProduct(imageUrl);
+                                    images.add(i);
+
+                                    // Xóa tệp tin cục bộ
+                                    imageFile.delete();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
 
+
                     if (images.size() > 0) {
                         p.setImage(images);
-                    } else {
-                        p.setImage(product.getImage());
+                        ProductImageService.updateImageProduct(p);
                     }
 
                     //Delete Old Product Quantity, Price And Cost
@@ -333,10 +383,6 @@ public class AddOrUpdateProduct extends HttpServlet {
                         }
                     }
 
-                    //update image and thumb
-                    ProductImageService.updateThumbProduct(p);
-                    ProductImageService.updateImageProduct(p);
-
                     //update product
                     ProductService.updateProduct(id, p);
                     request.setAttribute("err", "Chỉnh sửa thành công");
@@ -345,6 +391,8 @@ public class AddOrUpdateProduct extends HttpServlet {
             }
             if (action.equals("delete")) {
                 ProductService.deleteProduct(id);
+                ProductImportedService.delete(id);
+                ProductImageService.deleteImageProduct(id);
                 response.sendRedirect("ListProductAd");
             }
             if (action.equals("hide")) {
@@ -369,9 +417,10 @@ public class AddOrUpdateProduct extends HttpServlet {
         String[] tokens = contentDisp.split(";");
         for (String token : tokens) {
             if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+                return token.substring(token.indexOf("=") + 2, token.length() - 5);
             }
         }
         return null;
     }
+
 }

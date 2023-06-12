@@ -15,9 +15,7 @@ public class ListByType extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String type_raw = request.getParameter("type");
         int type = Integer.parseInt(type_raw);
-//        System.out.println(type);
         List<Product>list = ProductService.getByType(type);
-//        System.out.println(list);
         int page,show=12;
         int size = list.size();
         int numberPage = size%show==0?size/show :(size/show+1);

@@ -25,14 +25,14 @@
         <div class="header">
             <div class="logo logo-dark">
                 <a href="Home">
-                    <img src="admin/assets/images/logo/logo.png" alt="Logo">
-                    <img class="logo-fold" src="admin/assets/images/logo/logo-fold.png" alt="Logo">
+                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 100%;" alt="Logo">
+                    <img class="logo-fold" src="admin/assets/images/logo/logo-transparent-png-icon.png" alt="Logo">
                 </a>
             </div>
             <div class="logo logo-white">
                 <a href="Home">
-                    <img src="admin/assets/images/logo/logo-white.png" alt="Logo">
-                    <img class="logo-fold" src="admin/assets/images/logo/logo-fold-white.png" alt="Logo">
+                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 100%;" alt="Logo">
+                    <img class="logo-fold" src="admin/assets/images/logo/logo-transparent-png-icon.png" alt="Logo">
                 </a>
             </div>
 
@@ -46,7 +46,7 @@
                                 <i class="anticon anticon-user m-r-5"></i><span>${username}</span><i class="caret"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout">Đăng xuất</a>
+                                <a class="dropdown-item" href="nguoi-dung?action=dang-xuat">Đăng xuất</a>
                             </div>
                         </li>
                     </ul>

@@ -108,11 +108,12 @@ public class UserController extends HttpServlet {
 
                 if (u != null) {
                     if (u.isVerified()) {
-
                         session.setAttribute("user", u);
-                        if (isAdmin(u)) {
+                        boolean isAdmin= isAdmin(u);
+                        session.setAttribute("isAdmin",isAdmin);
+                        if (isAdmin) {
                             response.sendRedirect("thong-ke");
-                        } else if (!isAdmin(u)) {
+                        } else if (!isAdmin) {
                             response.sendRedirect("Home");
                         }
                     } else {
@@ -291,7 +292,6 @@ public class UserController extends HttpServlet {
         user.setId_User(idUser);
         User us = userService.selectById(user);
 
-        String msg = "";
         if (us != null) {
             Calendar c = Calendar.getInstance();
             Date todaysDate = new Date(new java.util.Date().getTime());

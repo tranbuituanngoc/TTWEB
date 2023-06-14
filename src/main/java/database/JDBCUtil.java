@@ -17,7 +17,7 @@ public class JDBCUtil {
             DriverManager.registerDriver(driver);
 
             //link
-            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName();
+            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName() +"?useSSL=false";
             // Tạo kết nối
             connection = DriverManager.getConnection(url, DBProperties.getUsername(), DBProperties.getPassword());
         } catch (SQLException e) {

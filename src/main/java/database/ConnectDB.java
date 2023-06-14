@@ -7,7 +7,7 @@ public class ConnectDB {
     public static PreparedStatement connect(String sql) throws SQLException, ClassNotFoundException {
         if (con == null || con.isClosed()) {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName();
+            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName() +"?useSSL=false";
             con = DriverManager.getConnection(url, DBProperties.getUsername(), DBProperties.getPassword());
             return con.prepareStatement(sql);
         } else {

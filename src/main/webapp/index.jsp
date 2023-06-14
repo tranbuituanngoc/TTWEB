@@ -145,7 +145,8 @@
                                 <div class="pro-img">
                                     <a href="ProductDetail?productID=${p.productID}">
                                         <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                        <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                        <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                             alt="single-product">
                                     </a>
                                     <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                        title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -181,12 +182,12 @@
                                             <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
                                         </div>
                                         <c:if test="${sessionScope.user !=null}">
-                                        <div class="actions-secondary">
-                                            <a href="javascript:void(0)" class="product ${p.productID}"
-                                               data-product-id="${p.productID}" onclick="addToWishlist(event)">
-                                                <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
-                                            </a>
-                                        </div>
+                                            <div class="actions-secondary">
+                                                <a href="javascript:void(0)" class="product ${p.productID}"
+                                                   data-product-id="${p.productID}" onclick="addToWishlist(event)">
+                                                    <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                </a>
+                                            </div>
                                         </c:if>
                                     </div>
                                 </div>
@@ -220,7 +221,8 @@
                                 <div class="pro-img">
                                     <a href="ProductDetail?productID=${p.productID}">
                                         <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                        <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                        <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                             alt="single-product">
                                     </a>
                                     <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                        title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -277,164 +279,6 @@
         <!-- Container End -->
     </div>
     <!-- Trending Products End Here -->
-    <!-- Hot Deal Products Start Here -->
-    <div class="hot-deal-products pt-100 pt-sm-60">
-        <div class="container">
-            <div class="all-border">
-                <!-- Product Title Start -->
-                <div class="section-ttitle mb-30">
-                    <h2>hot deals </h2>
-                </div>
-                <!-- Product Title End -->
-                <!-- Hot Deal Product Activation Start -->
-                <div class="hot-deal-active3 owl-carousel">
-                    <div class="row">
-                        <!-- Main Thumbnail Image Start -->
-                        <div class="col-lg-6 mb-all-40 hot-product2 ">
-                            <!-- Thumbnail Large Image start -->
-                            <div class="tab-content">
-                                <div id="thumb1" class="tab-pane fade show active">
-                                    <a data-fancybox="images" href="img\products\35.jpg"><img src="img\products\35.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb2" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\13.jpg"><img src="img\products\13.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb3" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\15.jpg"><img src="img\products\15.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb4" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\4.jpg"><img src="img\products\4.jpg"
-                                                                                             alt="product-view"></a>
-                                </div>
-                            </div>
-                            <!-- Thumbnail Large Image End -->
-                            <!-- Thumbnail Image End -->
-                            <div class="product-thumbnail">
-                                <div class="pro-tab-menu nav tabs-area" role="tablist">
-                                    <a class="active" data-toggle="tab" href="#thumb1"><img src="img\products\35.jpg"
-                                                                                            alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb2"><img src="img\products\13.jpg"
-                                                                             alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb3"><img src="img\products\15.jpg"
-                                                                             alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb4"><img src="img\products\4.jpg"
-                                                                             alt="product-thumbnail"></a>
-                                </div>
-                            </div>
-                            <!-- Thumbnail image end -->
-                        </div>
-                        <!-- Main Thumbnail Image End -->
-                        <!-- Thumbnail Description Start -->
-                        <div class="col-lg-6 hot-product2">
-                            <div class="thubnail-desc fix">
-                                <div class="countdown" data-countdown="2025/03/01"></div>
-                                <h3><a href="product.html">Light Inverted Pendant Qu...</a></h3>
-                                <div class="pro-price mtb-30">
-                                    <p><span class="price">$90.45</span>
-                                        <del class="prev-price">$105.50</del>
-                                    </p>
-                                    <div class="label-product l_sale">6<span class="symbol-percent">%</span></div>
-                                </div>
-                                <p class="mb-30 pro-desc-details"> Canon's press material for the EOS 5D states that it
-                                    'defines (a) new D-SLR category', while we're not typically too concerned with
-                                    marketing talk this particular statement is clearly pretty accurate. The EOS 5D is
-                                    unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high
-                                    resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger
-                                    than the EOS.</p>
-                                <div class="pro-actions">
-                                    <div class="actions-primary">
-                                        <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                                    </div>
-                                    <div class="actions-secondary">
-                                        <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                        <a href="wishlist.html" title="WishList"><i class="fa-regular fa-heart"></i>
-                                            <span>Add to WishList</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Thumbnail Description End -->
-                    </div>
-                    <div class="row">
-                        <!-- Main Thumbnail Image Start -->
-                        <div class="col-lg-6 mb-all-40 hot-product2 ">
-                            <!-- Thumbnail Large Image start -->
-                            <div class="tab-content">
-                                <div id="thumb11" class="tab-pane fade show active">
-                                    <a data-fancybox="images" href="img\products\21.jpg"><img src="img\products\21.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb21" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\22.jpg"><img src="img\products\22.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb31" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\23.jpg"><img src="img\products\23.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                                <div id="thumb41" class="tab-pane fade">
-                                    <a data-fancybox="images" href="img\products\24.jpg"><img src="img\products\24.jpg"
-                                                                                              alt="product-view"></a>
-                                </div>
-                            </div>
-                            <!-- Thumbnail Large Image End -->
-                            <!-- Thumbnail Image End -->
-                            <div class="product-thumbnail">
-                                <div class="pro-tab-menu nav tabs-area" role="tablist">
-                                    <a class="active" data-toggle="tab" href="#thumb11"><img src="img\products\21.jpg"
-                                                                                             alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb21"><img src="img\products\22.jpg"
-                                                                              alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb31"><img src="img\products\23.jpg"
-                                                                              alt="product-thumbnail"></a>
-                                    <a data-toggle="tab" href="#thumb41"><img src="img\products\24.jpg"
-                                                                              alt="product-thumbnail"></a>
-                                </div>
-                            </div>
-                            <!-- Thumbnail image end -->
-                        </div>
-                        <!-- Main Thumbnail Image End -->
-                        <!-- Thumbnail Description Start -->
-                        <div class="col-lg-6 hot-product2">
-                            <div class="thubnail-desc fix">
-                                <div class="countdown" data-countdown="2025/03/01"></div>
-                                <h3><a href="product.html">Flos Chasen S2 Suspension </a></h3>
-                                <div class="pro-price mtb-30">
-                                    <p><span class="price">$84.45</span>
-                                        <del class="prev-price">$105.50</del>
-                                    </p>
-                                    <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                                </div>
-                                <p class="mb-30 pro-desc-details"> Canon's press material for the EOS 5D states that it
-                                    'defines (a) new D-SLR category', while we're not typically too concerned with
-                                    marketing talk this particular statement is clearly pretty accurate. The EOS 5D is
-                                    unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high
-                                    resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger
-                                    than the EOS.</p>
-                                <div class="pro-actions">
-                                    <div class="actions-primary">
-                                        <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                                    </div>
-                                    <div class="actions-secondary">
-                                        <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                        <a href="wishlist.html" title="WishList"><i class="fa-regular fa-heart"></i>
-                                            <span>Add to WishList</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Thumbnail Description End -->
-                    </div>
-                </div>
-                <!-- Hot Deal Product Active End -->
-            </div>
-        </div>
-        <!-- Container End -->
-    </div>
-    <!-- Hot Deal Products End Here -->
     <!-- Big Banner Start Here -->
     <div class="big-banner mt-100 pb-85 mt-sm-60 pb-sm-45">
         <div class="container banner-2">
@@ -477,290 +321,42 @@
     </div>
     <!-- Big Banner End Here -->
     <!-- Arrivals Products Area Start Here -->
-    <div class="arrivals-product pb-85 pb-sm-45">
-        <div class="container">
-            <div class="main-product-tab-area">
-                <div class="tab-menu mb-25">
-                    <div class="section-ttitle">
-                        <h2>New Arrivals</h2>
-                    </div>
-                    <!-- Nav tabs -->
-                    <ul class="nav tabs-area" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#fshion">Gạch giả gỗ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#kids">Gạch lát nền</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#electronics">Gạch ốp tường</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#beauty">Gạch trang trí</a>
-                        </li>
-                    </ul>
+    <div class="big-banner mt-100 pb-85 mt-sm-60 pb-sm-45">
+        <div class="container banner-2">
+            <div class="banner-box">
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner1.png" alt="banner 3"></a>
                 </div>
-
-                <!-- Tab Contetn Start -->
-                <div class="tab-content">
-                    <%--                    <c:set var="pCate1" value="${listCategoryProduct1}" />--%>
-                    <div id="fshion" class="tab-pane fade">
-                        <!-- Arrivals Product Activation Start Here -->
-                        <div class="electronics-pro-active owl-carousel">
-                            <c:forEach items="${listCategoryProduct1}" var="p">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="ProductDetail?productID=${p.productID}">
-                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
-                                        </a>
-                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
-                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <div class="pro-info">
-                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
-                                            </h4>
-                                            <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                     currencySymbol=""
-                                                                                     minFractionDigits="0"
-                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
-                                                <c:if test="${p.salePrice>0}">
-                                                    <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                              currencySymbol=""
-                                                                                              minFractionDigits="0"
-                                                                                              value="${p.price}"/>
-                                                        VNĐ
-                                                    </del>
-                                                </c:if>
-                                            </p>
-                                            <c:if test="${p.salePrice>0}">
-                                                <div class="label-product l_sale">${p.salePrice}<span
-                                                        class="symbol-percent">%</span></div>
-                                            </c:if>
-
-                                        </div>
-                                        <div class="pro-actions">
-                                            <div class="actions-primary">
-                                                <c:url value="/addCart?productID=${p.productID}"
-                                                       var="addCart"/>
-                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                            </div>
-                                            <c:if test="${sessionScope.user !=null}">
-                                                <div class="actions-secondary">
-                                                    <a href="javascript:void(0)" class="product ${p.productID}"
-                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
-                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
-                                                    </a>
-                                                </div>
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <!-- Arrivals Product Activation End Here -->
-                    </div>
-                    <!-- #fshion End Here -->
-                    <div id="kids" class="tab-pane fade show active">
-                        <!-- Arrivals Product Activation Start Here -->
-                        <div class="electronics-pro-active owl-carousel">
-                            <c:forEach items="${listCategoryProduct2}" var="p">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="ProductDetail?productID=${p.productID}">
-                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
-                                        </a>
-                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
-                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <div class="pro-info">
-                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
-                                            </h4>
-                                            <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                     currencySymbol=""
-                                                                                     minFractionDigits="0"
-                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
-                                                <c:if test="${p.salePrice>0}">
-                                                    <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                              currencySymbol=""
-                                                                                              minFractionDigits="0"
-                                                                                              value="${p.price}"/>
-                                                        VNĐ
-                                                    </del>
-                                                </c:if>
-                                            </p>
-                                            <c:if test="${p.salePrice>0}">
-                                                <div class="label-product l_sale">${p.salePrice}<span
-                                                        class="symbol-percent">%</span></div>
-                                            </c:if>
-
-                                        </div>
-                                        <div class="pro-actions">
-                                            <div class="actions-primary">
-                                                <c:url value="/addCart?productID=${p.productID}"
-                                                       var="addCart"/>
-                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                            </div>
-                                            <c:if test="${sessionScope.user !=null}">
-                                                <div class="actions-secondary">
-                                                    <a href="javascript:void(0)" class="product ${p.productID}"
-                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
-                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
-                                                    </a>
-                                                </div>
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <!-- Arrivals Product Activation End Here -->
-                    </div>
-                    <!-- #fshion End Here -->
-                    <div id="beauty" class="tab-pane fade">
-                        <!-- Arrivals Product Activation Start Here -->
-                        <div class="electronics-pro-active owl-carousel">
-                            <c:forEach items="${listCategoryProduct4}" var="p">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="ProductDetail?productID=${p.productID}">
-                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
-                                        </a>
-                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
-                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <div class="pro-info">
-                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
-                                            </h4>
-                                            <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                     currencySymbol=""
-                                                                                     minFractionDigits="0"
-                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
-                                                <c:if test="${p.salePrice>0}">
-                                                    <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                              currencySymbol=""
-                                                                                              minFractionDigits="0"
-                                                                                              value="${p.price}"/>
-                                                        VNĐ
-                                                    </del>
-                                                </c:if>
-                                            </p>
-                                            <c:if test="${p.salePrice>0}">
-                                                <div class="label-product l_sale">${p.salePrice}<span
-                                                        class="symbol-percent">%</span></div>
-                                            </c:if>
-
-                                        </div>
-                                        <div class="pro-actions">
-                                            <div class="actions-primary">
-                                                <c:url value="/addCart?productID=${p.productID}"
-                                                       var="addCart"/>
-                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                            </div>
-                                            <c:if test="${sessionScope.user !=null}">
-                                                <div class="actions-secondary">
-                                                    <a href="javascript:void(0)" class="product ${p.productID}"
-                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
-                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
-                                                    </a>
-                                                </div>
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                            </c:forEach>
-
-                        </div>
-                        <!-- Arrivals Product Activation End Here -->
-                    </div>
-                    <!-- #beauty End Here -->
-                    <div id="electronics" class="tab-pane fade">
-                        <!-- Arrivals Product Activation Start Here -->
-                        <div class="electronics-pro-active owl-carousel">
-                            <c:forEach items="${listCategoryProduct3}" var="p">
-                                <!-- Single Product Start -->
-                                <div class="single-product">
-                                    <!-- Product Image Start -->
-                                    <div class="pro-img">
-                                        <a href="ProductDetail?productID=${p.productID}">
-                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
-                                        </a>
-                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
-                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                                    </div>
-                                    <!-- Product Image End -->
-                                    <!-- Product Content Start -->
-                                    <div class="pro-content">
-                                        <div class="pro-info">
-                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
-                                            </h4>
-                                            <p><span class="price"><fmt:formatNumber type="currency"
-                                                                                     currencySymbol=""
-                                                                                     minFractionDigits="0"
-                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
-                                                <c:if test="${p.salePrice>0}">
-                                                    <del class="prev-price"><fmt:formatNumber type="currency"
-                                                                                              currencySymbol=""
-                                                                                              minFractionDigits="0"
-                                                                                              value="${p.price}"/>
-                                                        VNĐ
-                                                    </del>
-                                                </c:if>
-                                            </p>
-                                            <c:if test="${p.salePrice>0}">
-                                                <div class="label-product l_sale">${p.salePrice}<span
-                                                        class="symbol-percent">%</span></div>
-                                            </c:if>
-
-                                        </div>
-                                        <div class="pro-actions">
-                                            <div class="actions-primary">
-                                                <c:url value="/addCart?productID=${p.productID}"
-                                                       var="addCart"/>
-                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
-                                            </div>
-                                            <c:if test="${sessionScope.user !=null}">
-                                                <div class="actions-secondary">
-                                                    <a href="javascript:void(0)" class="product ${p.productID}"
-                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
-                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
-                                                    </a>
-                                                </div>
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                    <!-- Product Content End -->
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <!-- Arrivals Product Activation End Here -->
-                    </div>
-                    <!-- #electronics End Here -->
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner2.png" alt="banner 3"></a>
                 </div>
-                <!-- Tab Content End -->
             </div>
-            <!-- main-product-tab-area-->
+            <div class="banner-box">
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner3.png" alt="banner 3"></a>
+                </div>
+            </div>
+            <div class="banner-box">
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner4.png" alt="banner 3"></a>
+                </div>
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner6.png" alt="banner 3"></a>
+                </div>
+            </div>
+            <div class="banner-box">
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner5.png" alt="banner 3"></a>
+                </div>
+            </div>
+            <div class="banner-box">
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner7.png" alt="banner 3"></a>
+                </div>
+                <div class="col-img">
+                    <a href="#"><img src="img/banner/banner8.png" alt="banner 3"></a>
+                </div>
+            </div>
         </div>
         <!-- Container End -->
     </div>
@@ -794,7 +390,7 @@
 
                 <!-- Tab Contetn Start -->
                 <div class="tab-content">
-                    <div id="fshion2" class="tab-pane fade">
+                    <div id="fshion2" class="tab-pane fade show active">
                         <!-- Arrivals Product Activation Start Here -->
                         <div class="best-seller-pro-active owl-carousel">
                             <c:forEach items="${listSellerProduct1}" var="p">
@@ -804,7 +400,8 @@
                                     <div class="pro-img">
                                         <a href="ProductDetail?productID=${p.productID}">
                                             <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                                 alt="single-product">
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                            title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -868,7 +465,8 @@
                                     <div class="pro-img">
                                         <a href="ProductDetail?productID=${p.productID}">
                                             <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                                 alt="single-product">
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                            title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -932,7 +530,8 @@
                                     <div class="pro-img">
                                         <a href="ProductDetail?productID=${p.productID}">
                                             <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                                 alt="single-product">
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                            title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -986,7 +585,7 @@
                         <!-- Arrivals Product Activation End Here -->
                     </div>
                     <!-- #beauty End Here -->
-                    <div id="electronics2" class="tab-pane fade show active">
+                    <div id="electronics2" class="tab-pane fade">
                         <!-- Arrivals Product Activation Start Here -->
                         <div class="best-seller-pro-active owl-carousel">
                             <c:forEach items="${listSellerProduct3}" var="p">
@@ -996,7 +595,8 @@
                                     <div class="pro-img">
                                         <a href="ProductDetail?productID=${p.productID}">
                                             <img class="primary-img" src="${p.image[0].image}" alt="single-product">
-                                           <img class="secondary-img" src="${p.image[1].image}" style="height: 170px" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 170px"
+                                                 alt="single-product">
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                            title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -1067,7 +667,7 @@
             <div class="row no-gutters">
                 <div class="col-lg-3">
                     <div class="col-img">
-                        <img src="img\banner\h1-band1.jpg" alt="">
+                        <img src="img/banner/brand1.png" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -1115,7 +715,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="col-img">
-                        <img src="img\banner\h1-band2.jpg" alt="">
+                        <img src="img/banner/brand2.png" alt="">
                     </div>
                 </div>
             </div>
@@ -1127,12 +727,12 @@
         <div class="container big-banner-box">
             <div class="col-img">
                 <a href="#">
-                    <img src="img\banner\5.jpg" alt="">
+                    <img src="img/banner/banner-ads1.png" alt="">
                 </a>
             </div>
             <div class="col-img">
                 <a href="#">
-                    <img src="img\banner\h1-banner3.jpg" alt="">
+                    <img src="img/banner/banner-ads2.png" alt="">
                 </a>
             </div>
         </div>

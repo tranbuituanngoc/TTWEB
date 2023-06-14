@@ -116,6 +116,6 @@ public class ProductCategoryService {
 //        List<Category> list =CategoryService.getCategoryProduct("sp094");
 //        System.out.println(list.toString());
 //        List<Category> list2 = CategoryService.getAll();
-//        System.out.println(list2);
+        System.out.println(selectByDescrip("gạch giả gỗ"));
     }
 }

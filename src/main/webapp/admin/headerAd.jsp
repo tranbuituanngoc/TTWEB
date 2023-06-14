@@ -25,13 +25,13 @@
         <div class="header">
             <div class="logo logo-dark">
                 <a href="Home">
-                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 100%;" alt="Logo">
+                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 80%; padding-top: 15px;" alt="Logo">
                     <img class="logo-fold" src="admin/assets/images/logo/logo-transparent-png-icon.png" alt="Logo">
                 </a>
             </div>
             <div class="logo logo-white">
                 <a href="Home">
-                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 100%;" alt="Logo">
+                    <img src="admin/assets/images/logo/logo-transparent-png.png" style="width: 80%; padding-top: 15px;" alt="Logo">
                     <img class="logo-fold" src="admin/assets/images/logo/logo-transparent-png-icon.png" alt="Logo">
                 </a>
             </div>

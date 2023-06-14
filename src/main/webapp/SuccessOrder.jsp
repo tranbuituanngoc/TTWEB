@@ -18,12 +18,8 @@
 >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link
-            rel="shortcut icon"
-            href="https://theme.hstatic.net/200000065946/1000806110/14/favicon.png?v=2476"
-            type="image/png"
-    />
-    <title>Gạch men TrueMart - Đặt hàng thành công</title>
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
+    <title>Gạch men Tile Market - Đặt hàng thành công</title>
 
     <style>
         .btn {
@@ -2548,7 +2544,7 @@
 <div class="banner">
     <div class="wrap">
         <a href="/Home" class="logo">
-            <h1 class="logo-text">Gạch Men TRUEMART</h1>
+            <h1 class="logo-text">Gạch Men Tile Market</h1>
         </a>
     </div>
 </div>
@@ -2777,7 +2773,7 @@
         <div class="main">
             <div class="main-header">
                 <a href="Home" class="logo">
-                    <h1 class="logo-text">Gạch Men TrueMart</h1>
+                    <h1 class="logo-text">Gạch Men Tile Market</h1>
                 </a>
 
                 <style>
@@ -2834,7 +2830,7 @@
                                 <span class="os-order-number"> Mã đơn hàng ${order.orderID} </span>
 
                                 <span class="os-description">
-                      Cảm ơn quý khách đã mua hàng tại TRUEMART
+                      Cảm ơn quý khách đã mua hàng tại Tile Market
                     </span>
                             </div>
                         </div>

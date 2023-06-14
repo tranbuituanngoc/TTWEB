@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Chính sách giao hàng || Truemart Responsive Html5 Ecommerce Template</title>
+    <title>Chính sách giao hàng || Tile Market Responsive Html5 Ecommerce Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="img\favicon.ico">
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="css\font-awesome.min.css">
     <!-- Ionicons css -->
@@ -77,7 +77,7 @@
                                     <Strong> 1. Giao hàng trong TP.HCM:</Strong> Hàng hoá chỉ giao tại chân công trình, không quá 5m từ chỗ xe tải đỗ. Không bốc xếp lên lầu, xuống hầm. Quý khách vui lòng sắp xếp chỗ để gạch, lối đi, thủ tục ra vào chung cư, công trình… trước thời điểm giao hàng.
                                     Không giao hàng vào các tuyến đường cấm tải. Các trường hợp cần hỗ trợ đặc biệt quý khách vui lòng thông báo trước cho nhân viên bán hàng.</p>
 
-                                <p><strong> 2. Giao hàng ngoại tỉnh:</strong> Hàng hoá được giao miễn phí từ kho TrueMart đến đơn vị vận chuyển / chành xe do quý khách chỉ định, chi phí vận chuyển từ đơn vị vận chuyển / chành xe về đến địa điểm nhận hàng
+                                <p><strong> 2. Giao hàng ngoại tỉnh:</strong> Hàng hoá được giao miễn phí từ kho Tile Market đến đơn vị vận chuyển / chành xe do quý khách chỉ định, chi phí vận chuyển từ đơn vị vận chuyển / chành xe về đến địa điểm nhận hàng
                                     sẽ do quý khách thanh toán.
                                 </p>
                                 <p><strong> 3. Đối với hàng mẫu:</strong> Miễn phí giao mẫu trên toàn quốc cho cty thiết kế, cty xây dựng, dự án, kiến trúc sư…

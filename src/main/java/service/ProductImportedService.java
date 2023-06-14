@@ -18,7 +18,6 @@ public class ProductImportedService {
             statement.setString(1, idProduct);
             statement.setInt(2, idSize);
             statement.setInt(3, idColor);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("inventoryQuantity");
@@ -45,7 +44,6 @@ public class ProductImportedService {
             statement.setTimestamp(6, importDate);
             statement.setInt(7, price);
             statement.setInt(8, cost);
-            System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
@@ -112,7 +110,6 @@ public class ProductImportedService {
             String sql = "SELECT price FROM productimported WHERE id_product=? ORDER BY price ASC LIMIT 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -133,7 +130,6 @@ public class ProductImportedService {
             String sql = "SELECT cost FROM productimported WHERE id_product=? ORDER BY cost ASC LIMIT 1";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -157,7 +153,6 @@ public class ProductImportedService {
             statement.setString(1, idProduct);
             statement.setInt(2, idSize);
             statement.setInt(3, idColor);
-            // System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("price");
@@ -177,7 +172,6 @@ public class ProductImportedService {
             String sql = "SELECT price FROM productimported pi WHERE pi.id_product=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -199,7 +193,6 @@ public class ProductImportedService {
             String sql = "SELECT inventoryQuantity FROM productimported pi WHERE pi.id_product=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -221,7 +214,6 @@ public class ProductImportedService {
             String sql = "SELECT cost FROM productimported pi WHERE pi.id_product=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -245,7 +237,6 @@ public class ProductImportedService {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
 
-            System.out.println(sql);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
@@ -262,7 +253,6 @@ public class ProductImportedService {
                     "LIMIT 1;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, idProduct);
-//            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 res = resultSet.getInt("price");

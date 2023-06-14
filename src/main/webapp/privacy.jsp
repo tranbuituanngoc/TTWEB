@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Chính sách bảo mật || Truemart Gạch men cao cấp</title>
+    <title>Chính sách bảo mật || Tile Market Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="img\favicon.ico">
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="css\font-awesome.min.css">
     <!-- Ionicons css -->
@@ -71,8 +71,8 @@
                         <div class="titleh4">
                             <h4>
                                 <Strong>1. Mục đích và phạm vi thu thập thông tin</Strong> </h4>
-                            <p>TrueMart cam kết không mua bán, chia sẻ hay trao đổi thông tin cá nhân của khách hàng thu thập trên trang web cho bên thứ ba nào khác. Thông tin cá nhân thu thập được sẽ chỉ sử dụng trong nội bộ công ty. Khi bạn truy cập
-                                trang web, liên hệ đăng ký sử dụng sản phẩm và dịch vụ của công ty, thông tin cá nhân mà TrueMart thu thập sẽ bao gồm:</p>
+                            <p>Tile Market cam kết không mua bán, chia sẻ hay trao đổi thông tin cá nhân của khách hàng thu thập trên trang web cho bên thứ ba nào khác. Thông tin cá nhân thu thập được sẽ chỉ sử dụng trong nội bộ công ty. Khi bạn truy cập
+                                trang web, liên hệ đăng ký sử dụng sản phẩm và dịch vụ của công ty, thông tin cá nhân mà Tile Market thu thập sẽ bao gồm:</p>
                             <ul>
                                 <li>Họ và tên
                                 </li>
@@ -96,13 +96,13 @@
                                 <h5>
                                     <Strong>1.1. Phạm vi sử dụng thông tin</Strong>
                                 </h5>
-                                <p>Thông tin cá nhân thu thập được TrueMart sử dụng trong nội bộ công ty cho một hoặc tất cả các mục đích sau:</p>
+                                <p>Thông tin cá nhân thu thập được Tile Market sử dụng trong nội bộ công ty cho một hoặc tất cả các mục đích sau:</p>
                                 <ul>
                                     <li>Hỗ trợ chăm sóc khách hàng
                                     </li>
                                     <li>Cung cấp thông tin liên quan đến sản phẩm, dịch vụ
                                     </li>
-                                    <li>Xử lý đơn đặt hàng, cung cấp dịch vụ và thông tin qua website TrueMart.com.vn theo yêu cầu của bạn
+                                    <li>Xử lý đơn đặt hàng, cung cấp dịch vụ và thông tin qua website Tile Market.com.vn theo yêu cầu của bạn
                                     </li>
                                 </ul>
                                 <p>Thông tin thu thập được giúp chúng tôi có thể gửi thông tin sản phẩm, dịch vụ mới, thông tin về các sự kiện sắp tới nếu quý khách đăng kí nhận email thông báo.</p>
@@ -110,10 +110,10 @@
                                 <h5>
                                     <Strong>1.2. Thời gian lưu trữ thông tin</Strong>
                                 </h5>
-                                <p>Đối với thông tin cá nhân, TrueMart chỉ xóa dữ liệu này nếu nhận được yêu cầu từ phía khách hàng. Mọi yêu cầu vui lòng gửi về địa chỉ vphanhchinh@hcmuaf.edu.com.vn để được hổ trợ tốt nhất.</p>
+                                <p>Đối với thông tin cá nhân, Tile Market chỉ xóa dữ liệu này nếu nhận được yêu cầu từ phía khách hàng. Mọi yêu cầu vui lòng gửi về địa chỉ vphanhchinh@hcmuaf.edu.com.vn để được hổ trợ tốt nhất.</p>
                                 <h4><strong>2.  Cơ chế tiếp nhận và xử lý khiếu nại của khách hàng liên quan đến thông tin cá nhân</strong></h4>
-                                <p>Tại TrueMart, việc bảo vệ thông tin cá nhân của khách hàng là rất quan trọng, bạn được đảm bảo rằng thông tin đã cung cấp cho chúng tôi sẽ được bảo mật theo đúng cam kết, TrueMart không chia sẻ, bán hoặc cho thuê thông
-                                    tin cá nhân của bạn cho bất kỳ người nào khác. TrueMart cam kết chỉ sử dụng các thông tin cá nhân của bạn vào trường hợp sau:</p>
+                                <p>Tại Tile Market, việc bảo vệ thông tin cá nhân của khách hàng là rất quan trọng, bạn được đảm bảo rằng thông tin đã cung cấp cho chúng tôi sẽ được bảo mật theo đúng cam kết, Tile Market không chia sẻ, bán hoặc cho thuê thông
+                                    tin cá nhân của bạn cho bất kỳ người nào khác. Tile Market cam kết chỉ sử dụng các thông tin cá nhân của bạn vào trường hợp sau:</p>
                                 <ul>
                                     <li>Nâng cao chất lượng dịch vụ hậu mãi cho khách hàng
                                     </li>
@@ -122,7 +122,7 @@
                                     <li>Giải quyết các tranh chấp, khiếu nại khi cơ quan pháp luật có yêu cầu
                                     </li>
                                 </ul>
-                                <p>TrueMart cho rằng quyền lợi của bạn trong việc bảo vệ thông tin cá nhân cũng chính là trách nhiệm của chúng tôi nên trong bất kỳ trường hợp có thắc mắc, góp ý nào liên quan đến chính sách bảo mật thông tin của công
+                                <p>Tile Market cho rằng quyền lợi của bạn trong việc bảo vệ thông tin cá nhân cũng chính là trách nhiệm của chúng tôi nên trong bất kỳ trường hợp có thắc mắc, góp ý nào liên quan đến chính sách bảo mật thông tin của công
                                     ty và việc thông tin cá nhân bị sử dụng sai mục đích hay vượt quá phạm vi đã thông báo vui lòng liên hệ qua số Hotline (84-28) 3896 6780 hoặc địa chỉ email: vphanhchinh@hcmuaf.edu.vn.</p>
                             </div>
 

@@ -26,7 +26,7 @@
     <title>Quản lý đơn hàng</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="admin/assets/images/logo/logo-transparent-png-icon.png">
 
     <!-- page css -->
     <link href="admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">

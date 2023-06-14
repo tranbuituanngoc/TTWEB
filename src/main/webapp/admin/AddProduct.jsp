@@ -18,7 +18,7 @@
     </c:choose>
         sản phẩm</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="admin/assets/images/logo/logo-transparent-png-icon.png">
 
     <!-- page css -->
     <link href="admin/assets/vendors/select2/select2.css" rel="stylesheet">

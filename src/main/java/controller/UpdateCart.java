@@ -23,7 +23,12 @@ public class UpdateCart extends HttpServlet {
         String colorId_raw = request.getParameter("id_color");
         String quantity_raw = request.getParameter("quantity_value");
         String sizeId_raw = request.getParameter("id_size");
-        System.out.println("quantity ="+quantity_raw);
+        String idCart_raw = request.getParameter("id_cart");
+        int idCart = 0;
+        if (idCart_raw != null) {
+            idCart = Integer.parseInt(idCart_raw);
+        }
+//        System.out.println("quantity ="+quantity_raw);
         int quantity  =1;
         if (quantity_raw != null){
             quantity = Integer.parseInt(quantity_raw);
@@ -49,7 +54,8 @@ public class UpdateCart extends HttpServlet {
         cartUser.updateQuantity(cart, quantity);
         session.removeAttribute("cartUser");
         session.setAttribute("cartUser", cartUser);
-        CartService.addCart(cartUser);
+//        CartService.addCart(cartUser);
+        CartService.updateQuantityCart(quantity, idCart);
         response.sendRedirect("Cart");
     }
 

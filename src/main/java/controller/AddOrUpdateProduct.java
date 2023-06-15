@@ -61,7 +61,7 @@ public class AddOrUpdateProduct extends HttpServlet {
                 }
                 for (Size ps : product.getSize()) {
                     String c = ps.getDescrip();
-                    System.out.println("Size: " + c);
+//                    System.out.println("Size: " + c);
                     sizes.add(c);
                 }
 

@@ -50,6 +50,7 @@ public class CartService {
                 int id_color = rs.getInt("id_color");
                 String id_user = rs.getString("id_user");
                 String id_product = rs.getString("id_product");
+                int id_cart = rs.getInt("id");
                 Product product = ProductService.getById(id_product);
                 Color color = ProductColorService.getColorById(id_color);
                 Size size = ProductSizeService.getSizeById(id_size);
@@ -57,8 +58,9 @@ public class CartService {
                 cart.setSize(size);
                 cart.setProduct(product);
                 cart.setColor(color);
+                cart.setIdCart(id_cart);
                 cartUser.setId_cart(rs.getInt("id"));
-                cartUser.setIdUser(idUser);
+//                cartUser.setIdUser(idUser);
                 cartUser.addCart(cart, rs.getInt("quantity"));
             }
 
@@ -103,14 +105,13 @@ public class CartService {
         return cartUser;
     }
 
-    public static void addCart(CartUser cartUser) {
-        CartService.deleteCart(cartUser.getIdUser());
-        for (Map.Entry<Cart, Integer> entry : cartUser.getCartMap().entrySet()) {
+    public static void addCart(CartUser cartUser, Cart cart, int quantity) {
+//        CartService.deleteCart(cartUser.getIdUser());
+
             try {
-                Product product = entry.getKey().getProduct();
-                int quantity = entry.getValue();
-                Color color = entry.getKey().getColor();
-                Size size = entry.getKey().getSize();
+                Product product = cart.getProduct();
+                Color color = cart.getColor();
+                Size size = cart.getSize();
                 PreparedStatement pState = null;
                 String sql = "insert into cart(id_user, id_product, id_size, id_color, quantity) values(?, ?, ?, ?, ?)";
                 pState = ConnectDB.connect(sql);
@@ -125,14 +126,30 @@ public class CartService {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
+    }
+
+    public static void updateQuantityCart(int quantity, int idCart) {
+        try {
+            PreparedStatement pState = null;
+            String sql = "Update cart set quantity =?  WHERE id = ?";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, quantity);
+            pState.setInt(2, idCart);
+            pState.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
-    public static void deleteCart(String id_user){
+
+    public static void deleteCart(int idCart){
         try {
                 PreparedStatement pState = null;
-                String sql = "DELETE FROM cart WHERE id_user = ?";
+                String sql = "DELETE FROM cart WHERE id = ?";
                 pState = ConnectDB.connect(sql);
-                pState.setString(1, id_user);
+                pState.setInt(1, idCart);
                 pState.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -159,7 +176,7 @@ public class CartService {
     public static void removeCartOrder(String id_user){
         try {
                 PreparedStatement pState = null;
-                String sql = "Update cart set id_order =null  WHERE id_user = ?";
+                String sql = "Update cart set id_order =null WHERE id_user = ?";
                 pState = ConnectDB.connect(sql);
                 pState.setString(1, id_user);
                 pState.executeUpdate();

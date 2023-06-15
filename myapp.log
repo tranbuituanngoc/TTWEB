@@ -1,7 +1,0 @@
-2023-04-14 22:45:53 DEBUG Log:16 - Debug message
-2023-04-14 22:45:53 INFO  Log:17 - Info message
-2023-04-14 22:45:53 WARN  Log:18 - Warning message
-2023-04-14 22:45:53 ERROR Log:19 - Error message
-2023-04-14 22:45:53 FATAL Log:20 - Fatal message
-2023-05-22 22:38:52  INFO Log:85 - Đây là một thông báo INFO
-2023-05-22 22:38:52 ERROR Log:87 - Đây là một thông báo lỗi ERROR

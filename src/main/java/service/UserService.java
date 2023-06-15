@@ -104,11 +104,7 @@ public class UserService {
     }
 
 
-    public User selectByUnameNEmailNOldPass(User o) {
-
-
     public User selectByUnameNEmail(User o) {
-
         User res = null;
         try {
             Connection connection = JDBCUtil.getConnection();
@@ -131,10 +127,7 @@ public class UserService {
                 boolean verified = resultSet.getBoolean("verified");
                 int role = resultSet.getInt("role");
 
-                res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role, oldPssword);
-
                 res = new User(id_user, userName, email, phone, address, password, verificationCode, timeValid, verified, role);
-
                 System.out.println(res.toString());
                 break;
             }
@@ -455,34 +448,6 @@ public class UserService {
         }
     }
 
-    public void saveUser(User user) {
-        PreparedStatement pre = null;
-        try {
-            String sql = "INSERT INTO users (id_user, username, email, phone, password, role, fullname, status) VALUES (?,?,?, ?, ?, ?, ?, ?)";
-            pre = ConnectDB.connect(sql);
-            pre.setString(1, user.getId_User());
-            pre.setString(2, user.getUserName());
-            pre.setString(3, user.getEmail());
-            pre.setString(4, user.getPhone());
-            pre.setString(5, user.getPass());
-            pre.setInt(6, user.getRole());
-            pre.setString(7, user.getFullname());
-            pre.setBoolean(8, user.getStatus());
-            pre.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (pre != null) {
-                try {
-                    pre.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
     //
 //    public static User checkUser(String username, String password) {
 //        PreparedStatement preSta = null;
@@ -589,25 +554,6 @@ public class UserService {
 
     public static void main(String[] args) {
         UserService service = new UserService();
-
-//        for (User u : service.selectAll()) {
-//            System.out.println(u);
-//        }
-        UserService userService = new UserService();
-
-        // Tạo đối tượng User để kiểm thử phương thức saveUser()
-        User user = new User();
-        user.setId_User("111");
-        user.setUserName("testuser");
-        user.setEmail("testuser@example.com");
-        user.setPhone("0912271440");
-        user.setPass("password");
-        user.setRole(0);
-        user.setFullname("Test User");
-        user.setStatus(true);
-
-        // Gọi phương thức saveUser() để chèn thông tin người dùng vào CSDL
-        userService.saveUser(user);
         String saltString = SaltString.getSaltString();
         System.out.println(getNameUser("kh02094306"));
         String s = ("kh02094306".substring(2) + "+" + saltString);

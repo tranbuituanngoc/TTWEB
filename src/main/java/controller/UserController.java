@@ -3,13 +3,16 @@ package controller;
 import Util.Email;
 import Util.Encode;
 import Util.SaltString;
+import bean.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import model.User;
 import okhttp3.*;
 import org.apache.commons.math3.util.Pair;
+import org.jdbi.v3.core.Jdbi;
 import service.ResetPasswordService;
+import service.RoleService;
 import service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -20,9 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 @WebServlet(name = "UserController", value = "/nguoi-dung")
 public class UserController extends HttpServlet {
@@ -31,6 +38,7 @@ public class UserController extends HttpServlet {
 
     private static final String SITE_KEY = "6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"; // site key reCAPTCHA
     private static final String SECRET_KEY = "6LfaJM4lAAAAACfjZqz0xFBME4uulzf79Wzi8xdJ"; // secret key reCAPTCHA
+    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -99,15 +107,20 @@ public class UserController extends HttpServlet {
                     messageResponse = "error";
                     request.setAttribute("messageResponse", messageResponse);
                     request.getRequestDispatcher("login.jsp").forward(request, response);
+                    // Ghi log khi đăng nhập thất bại
+                    Log loginFailedLog = new Log(Log.WARNING, username, "UserController", "Đăng nhập thất bại", "failed");
+                    loginFailedLog.insert(jdbi);
                     return;
                 }
 
                 if (u != null) {
                     if (u.isVerified()) {
                         session.setAttribute("user", u);
-                        if (u.getRole() == 1 || u.getRole() == 0) {
+                        boolean isAdmin = isAdmin(u);
+                        session.setAttribute("isAdmin", isAdmin);
+                        if (isAdmin) {
                             response.sendRedirect("thong-ke");
-                        } else if (u.getRole() == 2) {
+                        } else if (!isAdmin) {
                             response.sendRedirect("Home");
                         }
                     } else {
@@ -128,6 +141,9 @@ public class UserController extends HttpServlet {
                         request.setAttribute("messageResponse", messageResponse);
                         request.setAttribute("error", "Số lần đăng nhập sai của bạn đã vượt quá giới hạn. Vui lòng thử lại sau " + (LOCK_TIME / 1000) + " giây.");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
+                        // Ghi log khi đăng nhập thất bại
+                        Log loginFailedLog = new Log(Log.WARNING, username, "UserController", "Đăng nhập thất bại", "failed");
+                        loginFailedLog.insert(jdbi);
                         return;
                     } else {
                         // Nếu số lần đăng nhập sai chưa đạt tối đa, hiển thị thông báo lỗi và cho phép đăng nhập lại
@@ -136,6 +152,9 @@ public class UserController extends HttpServlet {
                         request.setAttribute("messageResponse", messageResponse);
                         request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng. Bạn còn " + remainingAttempts + " lần thử.");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
+                        // Ghi log khi đăng nhập thất bại
+                        Log loginFailedLog = new Log(Log.WARNING, username, "UserController", "Đăng nhập thất bại", "failed");
+                        loginFailedLog.insert(jdbi);
                         return;
                     }
                 }
@@ -144,7 +163,12 @@ public class UserController extends HttpServlet {
                 request.setAttribute("messageResponse", messageResponse);
                 request.setAttribute("error", "Vui lòng xác thực mã Captcha");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+                // Ghi log khi đăng nhập thất bại
+                Log loginFailedLog = new Log(Log.WARNING, username, "UserController", "Đăng nhập thất bại", "failed");
+                loginFailedLog.insert(jdbi);
             }
+            Log loginLog = new Log(Log.INFO, username, "UserController", "Đăng nhập thành công", "success");
+            loginLog.insert(jdbi);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -155,19 +179,30 @@ public class UserController extends HttpServlet {
     private void Logout(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+
             // remove session
             session.invalidate();
 
             response.sendRedirect("/Home");
+
+            // Ghi log
+            String username = (user != null) ? user.getUserName() : "N/A";  // Kiểm tra user có null hay không
+            Log logoutLog = new Log(Log.INFO, username, "UserController", "Đăng xuất thành công", "success");
+            logoutLog.insert(jdbi);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void Register(HttpServletRequest request, HttpServletResponse response) {
+
+    private void Register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = "";
+        boolean registrationSuccess = false;
+
         try {
             String name = request.getParameter("name");
-            String username = request.getParameter("username");
+            username = request.getParameter("username");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String password = request.getParameter("password");
@@ -175,6 +210,8 @@ public class UserController extends HttpServlet {
             String address = "";
             int role = 2;
             boolean status = true;
+
+            PrintWriter out = response.getWriter();
 
             request.setAttribute("name", name);
             request.setAttribute("username", username);
@@ -186,8 +223,8 @@ public class UserController extends HttpServlet {
             String errorCPass = "";
             String messageResponse = "";
             int error = 0;
-            UserService UserService = new UserService();
-            if (UserService.checkUserName(username)) {
+            UserService userService = new UserService();
+            if (userService.checkUserName(username)) {
                 errorUName = "Tên đăng nhập đã tồn tại</br>";
                 error++;
             }
@@ -208,7 +245,7 @@ public class UserController extends HttpServlet {
                 String random = System.currentTimeMillis() + rd.nextInt(100) + "";
                 String id_user = "kh" + random.substring(random.length() - 8);
                 User user = new User(id_user, username, name, email, phone, address, password, role, status);
-                if (UserService.insert(user) > 0) {
+                if (userService.insert(user) > 0) {
                     //Create salt string(random string)
                     String saltString = SaltString.getSaltString();
 
@@ -227,20 +264,30 @@ public class UserController extends HttpServlet {
                     user.setTimeValid(timeValid);
                     user.setVerified(verified);
 
-                    if (UserService.updateVerifyInfo(user) > 0) {
+                    if (userService.updateVerifyInfo(user) > 0) {
                         Email.sendMail(user.getEmail(), getContentEmailVerify(user), "Xác Thực Tài Khoản Tại TileMarket");
                     }
+                    registrationSuccess = true;
                 }
-                HttpSession session = request.getSession(true);
-                session.setAttribute("id_user", id_user);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
                 messageResponse = "success";
                 request.setAttribute("messageResponse", messageResponse);
+                String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        if (!registrationSuccess) {
+            Log registerFailedLog = new Log(Log.WARNING, username, "UserController", "Đăng ký thất bại", "failed");
+            registerFailedLog.insert(jdbi);
+        } else {
+            Log registerLog = new Log(Log.INFO, username, "UserController", "Đăng ký thành công", "success");
+            registerLog.insert(jdbi);
         }
     }
 
@@ -286,7 +333,6 @@ public class UserController extends HttpServlet {
         user.setId_User(idUser);
         User us = userService.selectById(user);
 
-        String msg = "";
         if (us != null) {
             Calendar c = Calendar.getInstance();
             Date todaysDate = new Date(new java.util.Date().getTime());
@@ -415,7 +461,7 @@ public class UserController extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         if (newPassword != null) {
             ArrayList<String> value = getValueFromToken(token);
-            String id= "kh"+value.get(0);
+            String id = "kh" + value.get(0);
             Pair<String, Timestamp> map = ResetPasswordService.selectByUserID(id);
 
             Calendar c = Calendar.getInstance();
@@ -451,8 +497,8 @@ public class UserController extends HttpServlet {
                 request.setAttribute("error", "Mã token không hợp lệ!");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
-        }else {
-            request.setAttribute("token",token);
+        } else {
+            request.setAttribute("token", token);
             request.getRequestDispatcher("/reset-password.jsp").forward(request, response);
         }
 
@@ -906,5 +952,12 @@ public class UserController extends HttpServlet {
             res.add(tokenizer.nextToken());
         }
         return res;
+    }
+
+    private static boolean isAdmin(User user) {
+        if (RoleService.checkRolePermission(user) || RoleService.checkUserPermission(user) || RoleService.checkCartPermission(user) || RoleService.checkOrderPermission(user) || RoleService.checkProductPermission(user) || RoleService.checkShippingAddressPermission(user)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import service.CartService;
 import service.ProductColorService;
 import service.ProductService;
 import service.ProductSizeService;
@@ -17,9 +18,14 @@ public class DeleteCart extends HttpServlet {
         String id = request.getParameter("product_id");
         Product p = ProductService.getById(id);
         String colorId_raw = request.getParameter("id_color");
+        String idCart_raw = request.getParameter("cartId");
         int colorId = p.getColor().get(0).getId_color();
+        int idCart = 0;
         if (colorId_raw != null) {
            colorId = Integer.parseInt(colorId_raw);
+        }
+        if (idCart_raw != null) {
+            idCart = Integer.parseInt(idCart_raw);
         }
         String sizeId_raw = request.getParameter("id_size");
         int sizeId = p.getSize().get(0).getIdSize();
@@ -41,7 +47,9 @@ public class DeleteCart extends HttpServlet {
         cartUser.removeItem(cart);
         session.removeAttribute("cartUser");
         session.setAttribute("cartUser", cartUser);
-        response.sendRedirect("SaveCart");
+        CartService.deleteCart(idCart);
+        String url = request.getHeader("referer");
+        response.sendRedirect(url);
     }
 
     @Override

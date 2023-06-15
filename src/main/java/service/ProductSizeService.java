@@ -166,7 +166,7 @@ public class ProductSizeService {
 //        list =ProductSizeService.getSizeProduct("sp094");
 //        System.out.println(list.toString());
 //        System.out.println(ProductSizeService.getSizeById(1));
-        System.out.println(ProductSizeService.selectByID("sp15653637"));
+//        System.out.println(ProductSizeService.selectByID("sp15653637"));
 
     }
 }

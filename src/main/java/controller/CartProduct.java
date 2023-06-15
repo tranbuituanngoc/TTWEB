@@ -26,7 +26,7 @@ public class CartProduct extends HttpServlet {
             response.sendRedirect("ProductLists");
         }else{
             request.setAttribute("listCart",c);
-            System.out.println(c);
+//            System.out.println(c);
             request.getSession().setAttribute("cartUser",c);
             request.getRequestDispatcher("cart.jsp").forward(request,response);
         }

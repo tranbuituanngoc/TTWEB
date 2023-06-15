@@ -362,7 +362,7 @@
                             </div>
                           </td>
                           <td class="product-description">
-                            <span class="product-description-name order-summary-emphasis">${product.description}</span>
+                            <span class="product-name order-summary-emphasis">${product.productName}</span>
                             <span class="product-description-variant order-summary-small-text">Màu ${cart.color.descrip} / ${cart.size.width}x${cart.size.length}</span>
                           </td>
                           <td class="product-quantity visually-hidden">1</td>

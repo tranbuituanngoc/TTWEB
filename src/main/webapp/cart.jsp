@@ -123,11 +123,11 @@
                                             </td>
                                             <td class="product-quantity">
                                                 <c:set value="${cart}" var="cartUpdate"></c:set>
-                                                <input min="1" id="quantity" onchange="updateQuantity('${product.productID}', this.value, '${cart.color.id_color}', '${cart.size.idSize}')"
-                                                                                type="number"
-                                                                                value="${quantity}">
+                                                <input min="1" id="quantity" onchange="updateQuantity('${product.productID}', this.value, '${cart.color.id_color}', '${cart.size.idSize}', '${cart.idCart}')"
+                                                       type="number"
+                                                       value="${quantity}">
 
-<%--                                                <input type="hidden" id="quantity_value" name="quantity_value">--%>
+                                            <%--                                                <input type="hidden" id="quantity_value" name="quantity_value">--%>
                                             </td>
                                             <td class="product-subtotal"><fmt:formatNumber type="currency" currencySymbol=""
                                                                                            minFractionDigits="0"
@@ -135,7 +135,7 @@
                                                 VNĐ
                                             </td>
                                             <td class="product-remove">
-                                                <a href="/DeleteCart?product_id=${product.productID}&id_color=${cart.color.id_color}&id_size=${cart.size.idSize}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                <a href="/DeleteCart?product_id=${product.productID}&id_color=${cart.color.id_color}&id_size=${cart.size.idSize}&cartId=${cart.idCart}"><i class="fa fa-times" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -204,11 +204,11 @@
 
 </script>
 <script>
-    function updateQuantity(itemId, quantity, colorId, sizeId) {
+    function updateQuantity(itemId, quantity, colorId, sizeId, idcart) {
         console.log(quantity)
         // Make an AJAX call to the servlet to update the quantity of the item
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/UpdateCart?"+"product_id=" + itemId + "&quantity_value=" + quantity+ "&id_color="+colorId, "&id_size="+sizeId, true);
+        xhr.open("GET", "/UpdateCart?product_id=" + itemId + "&quantity_value=" + quantity + "&id_color=" + colorId + "&id_size=" + sizeId + "&id_cart=" + idcart, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {

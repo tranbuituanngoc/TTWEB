@@ -588,7 +588,7 @@
 
       .section .section-content.no-mb,
       .section .section-content:last-child {
-        margin-bottom: inherit;
+        margin-bottom: 2em;
       }
 
       .section .section-content:after,

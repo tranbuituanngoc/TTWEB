@@ -7,6 +7,112 @@
     <listener>
         <listener-class>Util.MyServletContextListener</listener-class>
     </listener>
+    <filter>
+        <filter-name>HomeFilter</filter-name>
+        <filter-class>filter.HomeFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HomeFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>RolePermission</filter-name>
+        <filter-class>filter.RolePermission</filter-class>
+    </filter>
 
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>AddRole</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>EditRole</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>EditRoleUser</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>ManageRole</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>ManageRoleUser</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>RolePermission</filter-name>
+        <servlet-name>RemoveRole</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>UserPermission</filter-name>
+        <filter-class>filter.UserPermission</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UserPermission</filter-name>
+        <servlet-name>AddOfUpdateUser</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>OrderPermission</filter-name>
+        <filter-class>filter.OrderPermission</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>OrderPermission</filter-name>
+        <servlet-name>CreateOrder</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>OrderPermission</filter-name>
+        <servlet-name>EditOrder</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>OrderPermission</filter-name>
+        <servlet-name>UpdateOrder</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CartShippingPermission</filter-name>
+        <filter-class>filter.CartShippingPermission</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CartShippingPermission</filter-name>
+        <servlet-name>AddCart</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CartShippingPermission</filter-name>
+        <servlet-name>DeleteCart</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CartShippingPermission</filter-name>
+        <servlet-name>SaveCart</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CartShippingPermission</filter-name>
+        <servlet-name>UpdateCart</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ProductPermission</filter-name>
+        <filter-class>filter.ProductPermission</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ProductPermission</filter-name>
+        <servlet-name>AddOrUpdateProduct</servlet-name>
+    </filter-mapping>
 </web-app>
 

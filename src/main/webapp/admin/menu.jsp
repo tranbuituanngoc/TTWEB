@@ -5,13 +5,13 @@
     <div class="side-nav-inner">
         <ul class="side-nav-menu scrollable">
             <li class="nav-item ">
-<%--                hiện đang lỗi do không dẫn vào trang servlet mà gọi thẳng vào địa chỉ gốc nên sai link css image js--%>
-<%--                của mấy cái khác !!!--%>
-                <a class="dropdown-toggle" href="admin/index.jsp">
+                <%--                hiện đang lỗi do không dẫn vào trang servlet mà gọi thẳng vào địa chỉ gốc nên sai link css image js--%>
+                <%--                của mấy cái khác !!!--%>
+                <a class="dropdown-toggle" href="thong-ke">
                         <span class="icon-holder">
                             <i class="anticon anticon-dashboard"></i>
                         </span>
-                    <span class="title">Dashboard</span>
+                    <span class="title">Thống Kê</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -46,22 +46,33 @@
                     <span class="title"> Quản lý đơn hàng</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="dropdown-toggle" href="ListAbout">
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="javascript:void(0);">
                         <span class="icon-holder">
                             <i class="anticon anticon-team"></i>
                         </span>
-                    <span class="title"> Quản lý thành viên</span>
+                    <span class="title">Phân quyền</span>
+                    <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/ManageRole">Role</a>
+                    </li>
+                    <li>
+                        <a href="/ManageRoleUser">Phân quyền người dùng</a>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="dropdown-toggle" href="ListContact">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-contacts"></i>
-                        </span>
-                    <span class="title"> Quản lý liên hệ</span>
-                </a>
-            </li>
+            <%--            <li class="nav-item">--%>
+            <%--                <a class="dropdown-toggle" href="ListContact">--%>
+            <%--                        <span class="icon-holder">--%>
+            <%--                            <i class="anticon anticon-contacts"></i>--%>
+            <%--                        </span>--%>
+            <%--                    <span class="title"> Quản lý liên hệ</span>--%>
+            <%--                </a>--%>
+            <%--            </li>--%>
         </ul>
     </div>
 </div>

@@ -86,7 +86,7 @@
             icon: "success",
             button: "Tiếp tục!",
         }).then(function() {
-            window.location = "Home";
+            window.location = "login.jsp";
         });
     </script>
     <%
@@ -106,7 +106,7 @@
             <!-- Row End -->
             <div class="row">
                 <div class="col-sm-12">
-                    <form class="form-register" method="post" action="/nguoi-dung" onsubmit="return checkSignUp();getAlert();">
+                    <form class="form-register" method="post" action="/nguoi-dung" onsubmit="return checkSignUp();getAlertSignUp();">
                             <input type="hidden" name="action" value="dang-ki">
                         <fieldset>
                             <legend>Thông tin cá nhân</legend>
@@ -114,6 +114,7 @@
                                 <label class="control-label col-md-2" for="f-name"><span class="require">*</span>Họ và Tên</label>
                                 <div class="col-md-10">
                                     <input type="text"  required="required" class="form-control" value="<%=request.getParameter("name")==null ? "":request.getParameter("name")%>" name="name" id="f-name" placeholder="Vui lòng nhập họ và tên..">
+                                    <div style="color: #e31414;font-size: 12pt;" id="error_fullname"></div>
                                 </div>
                             </div>
                             <div class="form-group d-md-flex align-items-md-center">
@@ -165,7 +166,7 @@
                             <div class="float-md-right">
                                 <span>Tôi đã đọc và đồng ý <a href="#" class="agree"><b>chính sách bảo mật của cửa hàng</b></a></span>
                                 <input type="checkbox" name="agree" value="1" id="checkLicense"> &nbsp;
-                                <input type="submit" value="Tiếp tục" onclick="signUp();getAlert();" class="return-customer-btn">
+                                <input type="submit" value="Tiếp tục" onclick="signUp();getAlertSignUp();" class="return-customer-btn">
                             </div>
                         </div>
                     </form>

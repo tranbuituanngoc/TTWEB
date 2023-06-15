@@ -1,125 +1,158 @@
 package service;
 
-import model.Order;
-import model.OrderDetail;
 import database.ConnectDB;
+import database.JDBCUtil;
+import model.Order;
 
-import java.sql.Date;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class OrderService {
+    public static int addOrder(Order order){
+        if (order.getOrderID() != null){
+            int res = 0;
+            try {
+                Connection connection = JDBCUtil.getConnection();
+                String sql = "INSERT INTO orders (id_order, id_user, payment_id, totalPrice, status_id, shipping_cost, shipping_time, voucher_code, idTransport) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, order.getOrderID());
+                if(order.getOrderID()!= null) statement.setString(2, order.getUserID());
+                statement.setInt(3, order.getPaymentMethodId());
+                statement.setInt(4, order.getTotalPrice());
+                statement.setInt(5, order.getStatus());
+                statement.setInt(6, order.getShipping_cost());
+                statement.setTimestamp(7, order.getShipping_time());
+                statement.setString(8, order.getVoucher_code());
+                statement.setString(9, order.getIdTransport());
+                res = statement.executeUpdate();
+                JDBCUtil.disconection(connection);
+                statement.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return res;
+        }
+        return 0;
+    }
+
+    public static int updateQuantity(Order order){
+            int res = 0;
+            try {
+                Connection connection = JDBCUtil.getConnection();
+                String sql = "UPDATE productimported\n" +
+                        "SET inventoryQuantity = inventoryQuantity - (\n" +
+                        "  SELECT SUM(quantity)\n" +
+                        "  FROM cart\n" +
+                        "  WHERE cart.id_size = productimported.id_size\n" +
+                        "    AND cart.id_color = productimported.id_color\n" +
+                        "    AND cart.id_product = productimported.id_product\n" +
+                        "    AND cart.id_order = ?\n" +
+                        ")\n" +
+                        "WHERE EXISTS (\n" +
+                        "  SELECT 1\n" +
+                        "  FROM cart\n" +
+                        "  WHERE cart.id_size = productimported.id_size\n" +
+                        "    AND cart.id_color = productimported.id_color\n" +
+                        "    AND cart.id_product = productimported.id_product\n" +
+                        "    AND cart.id_order = ?\n" +
+                        ")\n" +
+                        "AND (inventoryQuantity - (\n" +
+                        "  SELECT SUM(quantity)\n" +
+                        "  FROM cart\n" +
+                        "  WHERE cart.id_size = productimported.id_size\n" +
+                        "    AND cart.id_color = productimported.id_color\n" +
+                        "    AND cart.id_product = productimported.id_product\n" +
+                        "    AND cart.id_order = ?\n" +
+                        ")) >= 0;";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, order.getOrderID());
+                statement.setString(2, order.getOrderID());
+                statement.setString(3, order.getOrderID()); // add another parameter for the third occurrence of orderID
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    res = 1;
+                } else {
+                    res = -1; // set result to -1 if no rows were updated
+                }
+                JDBCUtil.disconection(connection);
+                statement.close();
+            } catch (SQLException e) {
+                res =-1;
+                throw new RuntimeException(e);
+            }
+            return res;
+    }
+
     public static List<Order> getAllOrder() {
         List<Order> listOrder = new LinkedList<>();
-            PreparedStatement pState = null;
-            String sql = "SELECT * FROM `order` ";
         try {
-            pState = ConnectDB.connect(sql);
-            ResultSet rs = pState.executeQuery();
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Order order = new Order(rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getString(9),
-                        rs.getString(10));
+                Order order = new Order();
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
                 listOrder.add(order);
             }
-            rs.close();
-            pState.close();
-
-        } catch (SQLException|ClassNotFoundException e) {
-            e.printStackTrace();
-
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return listOrder;
     }
-    public static List<OrderDetail> getOrderNotDeliver(String id) {
-            PreparedStatement s = null;
-            try {
-                String sql = "SELECT o.id_product,o.id_order,p.`name`,p.price-p.price*(p.sale/100),o.quantity,o.totalPrice FROM products p join order_detail o on p.id_product=o.id_product JOIN order d on o.id_order=d.id_order WHERE d.id_user=? AND d.`status`=?;";
-                s = ConnectDB.connect(sql);
-                s.setString(1, id);
-                s.setInt(2, 0);
-                ResultSet rs = s.executeQuery();
-                List<OrderDetail> listOrder = new LinkedList<>();
-                while (rs.next()) {
-                    OrderDetail orderDetail = new OrderDetail(
-                            rs.getString(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            rs.getInt(5),
-                            rs.getInt(6));
-                    listOrder.add(orderDetail);
-                }
-                rs.close();
-                s.close();
-                return listOrder;
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-                return new LinkedList<>();
+
+    public static Order getOrder(String idOrder) {
+        Order order = new Order();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user where id_order = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idOrder);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
             }
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    public static void insertOrder(String userID, String username, int priceTotal,
-                            String address, String phone,String email){
-        PreparedStatement ps = null;
-        try{
-            String sql = "insert into `order`values (?,?,?,?,?,?,?,?,?,?)";
-            ps = ConnectDB.connect(sql);
-            Random rd = new Random();
-            String idOrder="order"+rd.nextInt(1000000000)+rd.nextInt(1000000);
-            ps.setString(1, idOrder);
-            ps.setString(2, userID);
-            ps.setString(3, username);
-            ps.setInt(4, priceTotal);
-            ps.setString(5, address);
-            ps.setString(6, phone);
-            ps.setString(7, email);
-            ps.setInt(8, 0);
-            ps.setDate(9, Date.valueOf(java.time.LocalDate.now()));
-            ps.setDate(10, Date.valueOf(java.time.LocalDate.now()));
-            ps.executeUpdate();
-            ps.close();
-
-        }
-
-        catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException classNotFoundException) {
-            classNotFoundException.printStackTrace();
-        }
-
+        return order;
     }
-
-
-    public static void updateStatus(String id){
+    public static void deleteOrder(String orderID){
         PreparedStatement s = null;
         try {
-            String sql = "update `order` set status = 1 where id = ?";
+            String sql = "DELETE from `orders` WHERE id_order = ?";
             s = ConnectDB.connect(sql);
-            s.setString(1,id);
-            int rs = s.executeUpdate();
-            s.close();
-
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void deleteOrder(String id){
-        PreparedStatement s = null;
-        try {
-            String sql = "DELETE from `order` WHERE id = ?";
-            s = ConnectDB.connect(sql);
-            s.setString(1,id);
+            s.setString(1,orderID);
             int rs = s.executeUpdate();
             s.close();
 
@@ -128,24 +161,82 @@ public class OrderService {
         }
     }
 
-    public static int countOrder() {
-        PreparedStatement pre = null;
-        int count=0;
+    public static String updateStatus(int idStatus, int idStatusTransport, String idOrder) {
+        PreparedStatement s = null;
         try {
-            String sql = "SELECT * FROM `order`";
-            pre = ConnectDB.connect(sql);
-            ResultSet rs = pre.executeQuery();
-            rs.last();
-            count = rs.getRow();
-            return count;
+            String sql = "UPDATE `orders` SET status_id = ?, transport_status_id = ? WHERE id_order = ?";
+            s = ConnectDB.connect(sql);
+            s.setInt(1, idStatus);
+            s.setInt(2, idStatusTransport);
+            s.setString(3, idOrder);
+            int rs = s.executeUpdate();
+            s.close();
+
+            if (rs > 0) {
+                return "Cập nhật thành công.";
+            } else {
+                return "Không thể thay đổi trạng thái.";
+            }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            return "Lỗi xảy ra khi cập nhật.";
         }
-        return count;
     }
 
+    public static String cancelOrder(String idOrder) {
+        PreparedStatement s = null;
+        try {
+            String sql = "UPDATE `orders` SET status_id = 2 WHERE id_order = ?";
+            s = ConnectDB.connect(sql);
+            s.setString(1, idOrder);
+            int rs = s.executeUpdate();
+            s.close();
+
+            if (rs > 0) {
+                return "Cập nhật thành công.";
+            } else {
+                return "Không thể thay đổi trạng thái.";
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return "Lỗi xảy ra khi cập nhật.";
+        }
+    }
+
+    public static List<Order> getOrderById(String idUser) {
+        List<Order> listOrder = new LinkedList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user where o.id_user = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idUser);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getString("id_order"));
+                order.setUserID(rs.getString("id_user"));
+                order.setPaymentMethodId(rs.getInt("payment_id"));
+                order.setTotalPrice(rs.getInt("totalPrice"));
+                order.setStatus(rs.getInt("status_id"));
+                order.setTransport_status(rs.getInt("transport_status_id"));
+                order.setShipping_cost(rs.getInt("shipping_cost"));
+                order.setShipping_time(rs.getTimestamp("shipping_time"));
+                order.setOrder_date(rs.getTimestamp("orderDate"));
+                order.setVoucher_code(rs.getString("voucher_code"));
+                order.setIdTransport(rs.getString("idTransport"));
+                order.setFullName(rs.getString("fullname"));
+                listOrder.add(order);
+            }
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listOrder;
+    }
     public static void main(String[] args) {
-//        deleteOrder("1324653113234");
-        insertOrder("admin","unaghuy",45554545,"binhduong","134910843","@gmail");
+//        System.out.println(OrderService.getAllOrder());
+//        System.out.println(OrderService.getOrder("DH00683"));
     }
+
 }

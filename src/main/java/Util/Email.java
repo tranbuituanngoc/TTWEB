@@ -1,14 +1,9 @@
 package Util;
 
-import model.User;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Properties;
 
 public class Email {
@@ -58,5 +53,9 @@ public class Email {
     public static void main(String[] args) {
         boolean status = "1".equals("1");
         System.out.println(status);
-       }
+
+    }
 }
+
+
+

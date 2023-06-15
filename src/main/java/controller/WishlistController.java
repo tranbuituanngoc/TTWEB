@@ -187,7 +187,7 @@ public class WishlistController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(json);
-        System.out.println(json);
+//        System.out.println(json);
         out.flush();
     }
 }

@@ -12,12 +12,12 @@ import java.io.IOException;
 public class SaveCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        CartUser cartUser = (CartUser) session.getAttribute( "cartUser");
-        if (cartUser.getIdUser() != null) {
-             CartService.addCart(cartUser);
-        }
-        response.sendRedirect("Cart");
+//        HttpSession session = request.getSession();
+//        CartUser cartUser = (CartUser) session.getAttribute( "cartUser");
+//        if (cartUser.getIdUser() != null) {
+//             CartService.addCart(cartUser);
+//        }
+//        response.sendRedirect("Cart");
     }
 
     @Override

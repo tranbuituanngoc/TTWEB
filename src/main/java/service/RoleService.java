@@ -344,7 +344,7 @@ public class RoleService {
     public static void main(String[] args) {
 //        User u = new User();
 //        u.setId_User("kh44181207");
-        System.out.println(getRoleName("kh28325740"));
+//        System.out.println(getRoleName("kh28325740"));
 
     }
 }

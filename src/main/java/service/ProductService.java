@@ -658,7 +658,7 @@ public class ProductService {
             s.setInt(5, product.getStatus());
             s.setInt(6, Integer.parseInt(product.getCategory()));
             s.setString(7, id);
-            System.out.println(sql);
+//            System.out.println(sql);
             res = s.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {

@@ -53,7 +53,7 @@ public class ReviewService {
     }
 
     public static void main(String[] args) {
-        insertReview(new Reviews("151515", "trung"));
-        System.out.println(getAllReviewProduct().toString());
+//        insertReview(new Reviews("151515", "trung"));
+//        System.out.println(getAllReviewProduct().toString());
     }
 }

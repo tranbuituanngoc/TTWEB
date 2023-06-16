@@ -71,7 +71,6 @@ public class ProductImageService {
             String sql = "SELECT * FROM imagesproduct WHERE id_product=? AND type='thumb'";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
-            System.out.println(sql);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -123,7 +122,6 @@ public class ProductImageService {
             for (ImageProduct i : p.getImage()) {
                 st.setString(1, i.getImage());
                 st.setString(2, p.getProductID());
-                System.out.println(sql);
                 res += st.executeUpdate();
             }
             JDBCUtil.disconection(connection);
@@ -144,7 +142,6 @@ public class ProductImageService {
             PreparedStatement st = connection.prepareStatement(sql);
                 st.setString(1, p.getThumb());
                 st.setString(2, p.getProductID());
-                System.out.println(sql);
                 res = st.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
@@ -162,7 +159,6 @@ public class ProductImageService {
             statement.setString(1, p.getProductID());
             statement.setString(2, p.getThumb());
             statement.setString(3, "thumb");
-            System.out.println(sql);
             res += statement.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
@@ -180,7 +176,6 @@ public class ProductImageService {
                 statement.setString(1, p.getProductID());
                 statement.setString(2, i.getImage());
                 statement.setString(3, "image");
-                System.out.println(sql);
                 res += statement.executeUpdate();
             }
             JDBCUtil.disconection(connection);
@@ -190,12 +185,13 @@ public class ProductImageService {
         return res;
     }
 
-    public static int deleteImageProduct(Product p) {
+    public static int deleteImageProduct(String id) {
         int res = 0;
         Connection connection = JDBCUtil.getConnection();
         String sql = "DELETE  FROM imagesproduct where id_product = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
             res = statement.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
@@ -209,14 +205,14 @@ public class ProductImageService {
         System.out.println(list.toString());
 //        List<ImageProduct> list2 = ProductImageService.getAll();
 //        System.out.println(list2);
-        Product p = new Product();
-        p.setProductID("sp094");
-        List<ImageProduct> image = new ArrayList<>();
-        image.add(new ImageProduct(191, "https://khatra.com.vn/wp-content/uploads/2020/06/walnut-105-.jpg"));
-        image.add(new ImageProduct(92, "https://khatra.com.vn/wp-content/uploads/2022/11/69000.jpg"));
-        p.setImage(image);
-        updateImageProduct(p);
-        List<ImageProduct> list2 = ProductImageService.getAllImageProduct("sp094");
-        System.out.println(list2.toString());
+//        Product p = new Product();
+//        p.setProductID("sp094");
+//        List<ImageProduct> image = new ArrayList<>();
+//        image.add(new ImageProduct(191, "https://khatra.com.vn/wp-content/uploads/2020/06/walnut-105-.jpg"));
+//        image.add(new ImageProduct(92, "https://khatra.com.vn/wp-content/uploads/2022/11/69000.jpg"));
+//        p.setImage(image);
+//        updateImageProduct(p);
+//        List<ImageProduct> list2 = ProductImageService.getAllImageProduct("sp094");
+//        System.out.println(list2.toString());
     }
 }

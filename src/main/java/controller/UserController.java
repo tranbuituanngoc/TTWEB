@@ -116,8 +116,10 @@ public class UserController extends HttpServlet {
                 if (u != null) {
                     if (u.isVerified()) {
                         session.setAttribute("user", u);
+
                         boolean isAdmin = isAdmin(u);
                         session.setAttribute("isAdmin", isAdmin);
+
                         if (isAdmin) {
                             response.sendRedirect("thong-ke");
                         } else if (!isAdmin) {
@@ -961,3 +963,4 @@ public class UserController extends HttpServlet {
         return false;
     }
 }
+

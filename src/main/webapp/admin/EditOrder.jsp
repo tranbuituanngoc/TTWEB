@@ -26,7 +26,7 @@
     <title>Quản lý đơn hàng</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="admin/assets/images/logo/logo-transparent-png-icon.png">
     <link href="admin/assets/vendors/select2/select2.css" rel="stylesheet"/>
     <!-- page css -->
     <!-- Core css -->
@@ -118,7 +118,9 @@
                                         max-width: 30px;
                                       "
                                                         >
-
+                                                            <img class="product-thumbnail-image" alt="${product.productName}"
+                                                                 src="${product.image[1].image}"
+                                                            />
                                                         </div>
                                                         <h6 class="m-l-10 m-b-0">${product.productName}</h6>
                                                     </div>

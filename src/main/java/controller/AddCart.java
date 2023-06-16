@@ -60,7 +60,7 @@ public class AddCart extends HttpServlet {
         if (user != null) cartUser.setIdUser(user.getId_User());
 
         cartUser.addCart(cart, quantity);
-        if (user != null) CartService.addCart(cartUser);
+        if (user != null) CartService.addCart(cartUser, cart, quantity);
         session.setAttribute("cartUser", cartUser);
         String url = request.getHeader("referer");
 

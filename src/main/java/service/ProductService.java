@@ -89,6 +89,7 @@ public class ProductService {
             product.setCategory(rs.getString("id_category"));
             product.setImage(listImage);
             product.setPrice(price);
+
         JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -285,23 +286,22 @@ public class ProductService {
             list = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
-                // product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(price);
-                // product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
+                product.setPrice(price);
                 list.add(product);
             }
 
@@ -658,7 +658,7 @@ public class ProductService {
             s.setInt(5, product.getStatus());
             s.setInt(6, Integer.parseInt(product.getCategory()));
             s.setString(7, id);
-            System.out.println(sql);
+//            System.out.println(sql);
             res = s.executeUpdate();
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {

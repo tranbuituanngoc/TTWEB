@@ -321,9 +321,30 @@ public class RoleService {
         return result;
     }
 
+    public static String getRoleName(String id) {
+        String result = "";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "select role_name from roles r join users u on r.role_id = u.role where id_user = ? ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                result= rs.getString(1);
+            }
+            JDBCUtil.disconection(connection);
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
     public static void main(String[] args) {
 //        User u = new User();
 //        u.setId_User("kh44181207");
-//        System.out.println(checkCartPermission(u));
+//        System.out.println(getRoleName("kh28325740"));
+
     }
 }

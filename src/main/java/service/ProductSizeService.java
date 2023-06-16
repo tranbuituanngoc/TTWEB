@@ -68,7 +68,7 @@ public class ProductSizeService {
         String res = "";
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "SELECT descrip FROM sizes s JOIN productimported p ON p.id_size=s.id_size  WHERE id_product=?";
+            String sql = "SELECT DISTINCT descrip FROM sizes s JOIN productimported p ON p.id_size=s.id_size  WHERE id_product=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -165,8 +165,8 @@ public class ProductSizeService {
 //        ProductSizeService.addProductSize(6,"sp094");
 //        list =ProductSizeService.getSizeProduct("sp094");
 //        System.out.println(list.toString());
-        System.out.println(ProductSizeService.getSizeById(1));
-        System.out.println(ProductSizeService.selectByID("sp002"));
+//        System.out.println(ProductSizeService.getSizeById(1));
+//        System.out.println(ProductSizeService.selectByID("sp15653637"));
 
     }
 }

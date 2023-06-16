@@ -18,14 +18,8 @@
 >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link
-            rel="shortcut icon"
-            href="https://theme.hstatic.net/200000065946/1000806110/14/favicon.png?v=2476"
-            type="image/png"
-    />
-    <title>Nội Thất MOHO - Đơn hàngDH114590</title>
-
-    <meta name="description" content="Nội Thất MOHO - Đơn hàngDH114590"/>
+    <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
+    <title>Gạch men Tile Market - Đặt hàng thành công</title>
 
     <style>
         .btn {
@@ -2550,7 +2544,7 @@
 <div class="banner">
     <div class="wrap">
         <a href="/Home" class="logo">
-            <h1 class="logo-text">Gạch Men TRUEMART</h1>
+            <h1 class="logo-text">Gạch Men Tile Market</h1>
         </a>
     </div>
 </div>
@@ -2663,7 +2657,7 @@
                                             </div>
                                         </td>
                                         <td class="product-description">
-                                            <span class="product-description-name order-summary-emphasis">${product.description}</span>
+                                            <span class="product-name order-summary-emphasis">${product.productName}</span>
                                             <span class="product-description-variant order-summary-small-text">Màu ${cart.color.descrip} / ${cart.size.width}x${cart.size.length}</span>
                                         </td>
                                         <td class="product-quantity visually-hidden">1</td>
@@ -2779,7 +2773,7 @@
         <div class="main">
             <div class="main-header">
                 <a href="Home" class="logo">
-                    <h1 class="logo-text">Gạch Men TrueMart</h1>
+                    <h1 class="logo-text">Gạch Men Tile Market</h1>
                 </a>
 
                 <style>
@@ -2836,7 +2830,7 @@
                                 <span class="os-order-number"> Mã đơn hàng ${order.orderID} </span>
 
                                 <span class="os-description">
-                      Cảm ơn quý khách đã mua hàng tại TRUEMART
+                      Cảm ơn quý khách đã mua hàng tại Tile Market
                     </span>
                             </div>
                         </div>

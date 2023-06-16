@@ -25,7 +25,7 @@
     <title>Enlink - Admin Dashboard Template</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="admin/assets/images/logo/logo-transparent-png-icon.png">
 
     <!-- page css -->
     <link href="admin/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
@@ -219,7 +219,7 @@
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex">
                                                         <div class="avatar avatar-image m-r-15">
-                                                            <img src="../${ProductImageService.getThumbProduct(entry.key.productID)}"
+                                                            <img src="${ProductImageService.getThumbProduct(entry.key.productID)}"
                                                                  alt="">
                                                         </div>
                                                         <div>

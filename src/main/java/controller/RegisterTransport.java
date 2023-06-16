@@ -42,7 +42,7 @@ public class RegisterTransport {
 
             try (Response response2 = client.newCall(request2).execute()) {
                 String responseBody2 = response2.body().string();
-                System.out.println(responseBody2);
+//                System.out.println(responseBody2);
                 JSONObject jsonObject1 = new JSONObject(responseBody2);
                 result = jsonObject1.getJSONObject("Transport").getString("id");
                 System.out.println(result);

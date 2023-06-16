@@ -285,14 +285,14 @@ public class DashboardService {
     }
 
     public static void main(String[] args) {
-        System.out.println(selectRegisterInMonth());
-        System.out.println(selectOrderInMonth());
-        System.out.println(selectRevenueInMonth());
-        System.out.println(selectSalesInMonth());
-        System.out.println(selectSalesInSixMonth());
-        System.out.println(selectSalesInTenDay());
-        System.out.println(selectBestSellerProduct());
-        System.out.println(selectBestSellerCategory());
-        System.out.println(getRecentOrder());
+//        System.out.println(selectRegisterInMonth());
+//        System.out.println(selectOrderInMonth());
+//        System.out.println(selectRevenueInMonth());
+//        System.out.println(selectSalesInMonth());
+//        System.out.println(selectSalesInSixMonth());
+//        System.out.println(selectSalesInTenDay());
+//        System.out.println(selectBestSellerProduct());
+//        System.out.println(selectBestSellerCategory());
+//        System.out.println(getRecentOrder());
     }
 }

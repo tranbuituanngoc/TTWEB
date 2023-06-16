@@ -14,6 +14,8 @@ public class Cart implements Serializable {
     private Color color;
     private Size size;
 
+    private int idCart;
+
     public Cart() {
     }
 
@@ -39,6 +41,14 @@ public class Cart implements Serializable {
 
     public void setSize(Size size) {
         this.size = size;
+    }
+
+    public int getIdCart() {
+        return idCart;
+    }
+
+    public void setIdCart(int idCart) {
+        this.idCart = idCart;
     }
 
     @Override

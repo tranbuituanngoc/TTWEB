@@ -53,7 +53,7 @@ public class CreateOrder extends HttpServlet {
         order.setPaymentMethodId(paymentMethod);
         order.setVoucher_code(voucherCode);
         ShippingAdress shippingAdress = (ShippingAdress) request.getSession().getAttribute("shippingAddress");
-        System.out.println(shippingAdress);
+//        System.out.println(shippingAdress);
         if (shippingAdress == null) {
             String fullname = request.getParameter("billing_address[full_name]");
             String address = request.getParameter("billing_address[address1]");
@@ -77,31 +77,21 @@ public class CreateOrder extends HttpServlet {
             shippingAdress.setProvinceId(province_id);
             shippingAdress.setWardId(ward_id);
             if (user != null) shippingAdress.setUserId(user.getId_User());
-            System.out.println(shippingAdress);
+//            System.out.println(shippingAdress);
             if (user != null) ShippingAddressService.addShippingAddress(shippingAdress);
         }
-        if (user != null) {
-            CartService.setCartOrder(user.getId_User(), order.getOrderID());
-        }
-
-
+        CartService.setCartOrder(user.getId_User(), order.getOrderID());
         if (OrderService.updateQuantity(order) == -1) {
             request.getSession().setAttribute("errorQuantity", true);
-            response.sendRedirect("/CheckOut");
             CartService.removeCartOrder(user.getId_User());
+            response.sendRedirect("/CheckOut");
         }
         if (OrderService.updateQuantity(order) == 1) {
-//            sử dụng api logistic
-//            String idTransport = new RegisterTransport().registerTransport(shippingAdress.getDistrictId(), shippingAdress.getWardId());
-//            System.out.println(idTransport);
-//            order.setIdTransport(idTransport);
             OrderService.addOrder(order);
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getSession().setAttribute("order", order);
             System.out.println("success");
             response.sendRedirect("/SuccessOrder");
-//            Email mail = new Email();
-//            mail.sendMail(user.getEmail(), "TrueMart-Order", "TrueMart gach men cao cấp đã nhận được đơn đặt hàng của bạn");
         }
 
 

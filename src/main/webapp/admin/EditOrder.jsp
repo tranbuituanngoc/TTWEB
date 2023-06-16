@@ -118,7 +118,9 @@
                                         max-width: 30px;
                                       "
                                                         >
-
+                                                            <img class="product-thumbnail-image" alt="${product.productName}"
+                                                                 src="${product.image[1].image}"
+                                                            />
                                                         </div>
                                                         <h6 class="m-l-10 m-b-0">${product.productName}</h6>
                                                     </div>

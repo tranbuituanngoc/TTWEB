@@ -54,6 +54,6 @@ public class CategoryService {
     }
 
     public static void main(String[] args) {
-        System.out.println(getCateByID("sp002"));
+//        System.out.println(getCateByID("sp002"));
     }
 }

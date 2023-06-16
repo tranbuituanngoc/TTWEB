@@ -21,7 +21,7 @@ public class SearchControl extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
     String txtSearch = request.getParameter("txt");
-    List<Product> list = ProductService.searchByName(txtSearch);
+    List<Product> list = ProductService.searchProduct(txtSearch);
         int page,show=12;
         int size = list.size();;
         int numberPage = size%show==0?size/show :(size/show+1);

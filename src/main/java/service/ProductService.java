@@ -2,7 +2,10 @@ package service;
 
 import database.ConnectDB;
 import database.JDBCUtil;
-import model.*;
+import model.Color;
+import model.ImageProduct;
+import model.Product;
+import model.Size;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,7 +93,7 @@ public class ProductService {
             product.setImage(listImage);
             product.setPrice(price);
 
-        JDBCUtil.disconection(connection);
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -574,7 +577,6 @@ public class ProductService {
 
                 int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
 
-               
 
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
@@ -619,7 +621,7 @@ public class ProductService {
 //                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
 
-               int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
 //                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
 
                 product.setProductID(rs.getString("id_product"));
@@ -689,41 +691,81 @@ public class ProductService {
         return res;
     }
 
-    public static List<Product> searchByName(String txtSearch) {
+    //    public static List<Product> searchByName(String txtSearch) {
+//        List<Color> listColor;
+//        List<Size> listSize;
+//        List<ImageProduct> listImage;
+//        PreparedStatement pre = null;
+//        List<Product> list = new ArrayList<>();
+//        String sql = "SELECT * FROM products WHERE name LIKE ?;";
+//        try {
+//            pre = ConnectDB.connect(sql);
+//            pre.setString(1, "%" + txtSearch + "%");
+//            ResultSet rs = pre.executeQuery();
+//            while (rs.next()) {
+//                Product product = new Product();
+//                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
+//                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+//                // product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+//                product.setProductID(rs.getString("id_product"));
+//                product.setProductName(rs.getString("name"));
+//                product.setDescription(rs.getString("description"));
+//                product.setSalePrice(rs.getInt("sale"));
+//                product.setIsNew(rs.getInt("isNew"));
+//                product.setPrice(rs.getInt("price"));
+//                // product.setCost(rs.getInt("cost"));
+//                product.setStatus(rs.getInt("status"));
+//                product.setColor(listColor);
+//                product.setSize(listSize);
+//                product.setCategory(rs.getString("id_category"));
+//                product.setImage(listImage);
+//                list.add(product);
+//            }
+//        } catch (Exception e) {
+//            e.getStackTrace();
+//        }
+//        return list;
+//    }
+    public static ArrayList<Product> searchProduct(String txt) {
+        ArrayList<Product> res = new ArrayList<>();
         List<Color> listColor;
         List<Size> listSize;
         List<ImageProduct> listImage;
-        PreparedStatement pre = null;
-        List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM products WHERE name LIKE ?;";
         try {
-            pre = ConnectDB.connect(sql);
-            pre.setString(1, "%" + txtSearch + "%");
-            ResultSet rs = pre.executeQuery();
+            PreparedStatement pState = null;
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM products WHERE name LIKE ?";
+            pState = connection.prepareStatement(sql);
+
+            pState.setString(1, "%" + txt + "%");
+
+            ResultSet rs = pState.executeQuery();
             while (rs.next()) {
                 Product product = new Product();
-                listColor = ProductColorService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductSizeService.getSizeProduct(rs.getString("id_product"));
+                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                // product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
-                product.setPrice(rs.getInt("price"));
-                // product.setCost(rs.getInt("cost"));
                 product.setStatus(rs.getInt("status"));
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
-                list.add(product);
+                product.setPrice(price);
+                res.add(product);
             }
-        } catch (Exception e) {
-            e.getStackTrace();
+            JDBCUtil.disconection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return list;
+        return res;
     }
 
     public static List<Product> listProductA_Z() {
@@ -1051,7 +1093,7 @@ public class ProductService {
 //                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
                 listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
                 int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));//               
-              product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
 
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
@@ -1124,7 +1166,7 @@ public class ProductService {
 
     public static List<Product> getSeller2() {
 
-         List<Product> list;
+        List<Product> list;
 //        List<Color> listColor;
 //        List<Size> listSize;
 
@@ -1266,7 +1308,8 @@ public class ProductService {
 
     public static void main(String[] args) {
         // System.out.println(ProductService.getAllProduct());
-        System.out.println(getByIdAd("sp002"));
+//        System.out.println(getByIdAd("sp002"));
+        System.out.println(searchProduct("gạch"));
     }
 
 }

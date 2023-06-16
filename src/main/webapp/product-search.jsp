@@ -199,11 +199,9 @@
                                                                 <img class="primary-img"
                                                                      src="${p.image[0].image}"
                                                                      alt="single-product">
-                                                                <img class="secondary-img"
-                                                                     src="${p.image[1].image}" style="height: 195px"
-                                                                     alt="single-product">
+                                                                <img class="secondary-img" src="${p.image[1].image}"
+                                                                     style="height: 195px" alt="single-product">
                                                             </a>
-
                                                         </div>
                                                         <!-- Product Image End -->
                                                         <!-- Product Content Start -->
@@ -247,7 +245,6 @@
                                                                         </a>
                                                                     </div>
                                                                 </c:if>
-
                                                             </div>
                                                         </div>
                                                         <!-- Product Content End -->
@@ -269,24 +266,25 @@
 
                                 <div class="pro-pagination">
                                     <ul class="blog-pagination">
-                                        <c:if test="${requestScope.page >4}">
-                                            <li><a href="page=${requestScope.page - 1}">«</a></li>
+                                        <c:if test="${page >4}">
+                                            <li><a href="ProductLists?page=${page - 1}">«</a></li>
                                         </c:if>
-                                        <c:forEach begin="1" end="${requestScope.numberPage}" var="i">
+
+                                        <c:forEach begin="1" end="${numberPage}" var="i">
                                             <c:choose>
-                                                <c:when test="${requestScope.page eq i}">
-                                                    <li class="active"><a href="search?page=${i}">${i}</a></li>
+                                                <c:when test="${page eq i}">
+                                                    <li class="active"><a href="ProductLists?page=${i}">${i}</a></li>
                                                 </c:when>
-                                                <c:when test="${requestScope.page eq i}">
-                                                    <li class="active"><a href="search?page=${i}">${i}</a></li>
+                                                <c:when test="${page eq i}">
+                                                    <li class="active"><a href="ProductLists?page=${i}">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li><a href="search?page=${i}">${i}</a></li>
+                                                    <li><a href="ProductLists?page=${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
-                                        <c:if test="${requestScope.page < requestScope.numberPage}">
-                                            <li><a href="search?page=${requestScope.page + 1}">»</a></li>
+                                        <c:if test="${page < numberPage}">
+                                            <li><a href="ProductLists?page=${page + 1}">»</a></li>
                                         </c:if>
 
                                     </ul>

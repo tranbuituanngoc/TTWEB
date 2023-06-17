@@ -390,15 +390,21 @@ public class UserController extends HttpServlet {
             } else {
                 if (!oldPass_Encode.equals(user.getPass())) {
                     error = "Mật khẩu hiện tại không chính xác!";
+                    Log changePassFail = new Log(Log.DANGER, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thất bại", "failed");
+                    changePassFail.insert(jdbi);
                 } else {
                     if (!newPassword.equals(comNewPass)) {
                         error = "Mật khẩu nhập lại không khớp!";
+                        Log changePassFail = new Log(Log.DANGER, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thất bại", "failed");
+                        changePassFail.insert(jdbi);
                     } else {
                         String newPass_Encode = Encode.encodeToSHA1(newPassword);
                         user.setPass(newPass_Encode);
                         UserService userDAO = new UserService();
                         if (userDAO.changePass(user)) {
                             error = "Thay đổi mật khẩu thành công!";
+                            Log changePass = new Log(Log.INFO, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thành công", "success");
+                            changePass.insert(jdbi);
                         } else error = "Thay đổi mật khẩu thất bại!";
                     }
                 }

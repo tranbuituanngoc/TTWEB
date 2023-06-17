@@ -17,7 +17,7 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
-public class Log extends AbBean implements Serializable {
+public class Log extends AbLog implements Serializable {
     private long id_log;
 
     private int id_level;

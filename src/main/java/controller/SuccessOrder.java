@@ -21,7 +21,7 @@ public class SuccessOrder extends HttpServlet {
         Order order = (Order) request.getSession().getAttribute("order");
 //        request.setAttribute("order", order);
 //        int paymentMethodId = order.getPaymentMethodId();
-        Log log = new Log(Log.INFO, order.getUserID(), "SuccessOrder", "Đặt hàng thành công", "SUCCESS");
+        Log log = new Log(Log.INFO, order.getUserID(), "SuccessOrder", "Đặt hàng thành công", "success");
         log.insert(jdbi);
         String voucher_code = order.getVoucher_code();
         Voucher voucher = VoucherService.getVoucher(voucher_code);

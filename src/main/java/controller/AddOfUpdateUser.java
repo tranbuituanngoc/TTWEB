@@ -2,9 +2,7 @@ package controller;
 
 import Util.Encode;
 import Util.SaltString;
-import bean.Log;
 import model.User;
-import org.jdbi.v3.core.Jdbi;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import java.util.Random;
 
 @WebServlet(name = "AddOfUpdateUser", value = "/AddOfUpdateUser")
 public class AddOfUpdateUser extends HttpServlet {
-    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -60,15 +57,11 @@ public class AddOfUpdateUser extends HttpServlet {
                     request.setAttribute("err", "Tên tài khoản đã tồn tại");
                     request.getRequestDispatcher("admin/AddUser.jsp").forward(request, response);
                     isErr = true;
-                    Log log = new Log(Log.WARNING, id, "AddOfUpdateUser", "Tài khoản đã tồn tại thêm tài khoản thất bại", "failed");
-                    log.insert(jdbi);
 
                 } else if (password.length() < 8) {
                     request.setAttribute("err", "Vui lòng nhập mật khẩu từ 8 kí tự trở lên");
                     request.getRequestDispatcher("admin/AddUser.jsp").forward(request, response);
                     isErr = true;
-                    Log log = new Log(Log.WARNING, id, "AddOfUpdateUser", "Thêm tài khoản thất bại", "failed");
-                    log.insert(jdbi);
                 }
                 if (!isErr) {
                     Random rd = new Random();
@@ -108,8 +101,6 @@ public class AddOfUpdateUser extends HttpServlet {
                     us.updateVerifyInfo(user);
                     request.setAttribute("err", "Thêm tài khoản thành công");
                     response.sendRedirect("ListUserAd");
-                    Log log = new Log(Log.INFO, id_user, "AddOfUpdateUser", "Thêm tài khoản thành công", "success");
-                    log.insert(jdbi);
                 }
             }
 
@@ -141,15 +132,11 @@ public class AddOfUpdateUser extends HttpServlet {
                     us.update( user);
                     request.setAttribute("err", "Chỉnh sửa tài khoản thành công");
                     response.sendRedirect("ListUserAd");
-                    Log log = new Log(Log.INFO, id, "AddOfUpdateUser", "Chỉnh sửa tài khoản thành công", "success");
-                    log.insert(jdbi);
                 }
             }
             if (action.equals("delete")) {
                 UserService.deleteUser(id);
                 response.sendRedirect("ListUserAd");
-                Log log = new Log(Log.INFO, id, "AddOfUpdateUser", "Xóa tài khoản thành công", "success");
-                log.insert(jdbi);
             }
             if (action.equals("lock")) {
                 UserService.lockUser(id);

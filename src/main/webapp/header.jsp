@@ -18,7 +18,8 @@
             <div class="row align-items-center no-gutters">
                 <div class="col-lg-3 col-md-12">
                     <div class="logo mb-all-30 mr-50">
-                        <a href="Home"><img src="img\logo\logo-transparent-png.png"  style="width: 100%;"  alt="logo-image"></a>
+                        <a href="Home"><img src="img\logo\logo-transparent-png.png" style="width: 100%;"
+                                            alt="logo-image"></a>
                     </div>
                 </div>
                 <!-- Categorie Search Box Start Here -->
@@ -115,58 +116,60 @@
                                                 // Cập nhật danh sách sản phẩm trong dropdown
                                                 var wishlistItems = document.querySelector('#wishlistItems');
                                                 wishlistItems.innerHTML = '';
+                                                if (wishlistData.count > 0) {
+                                                    for (var productId in wishlistData) {
+                                                        if (productId !== 'count') {
+                                                            var product = wishlistData[productId];
 
-                                                for (var productId in wishlistData) {
-                                                    if (productId !== 'count') {
-                                                        var product = wishlistData[productId];
+                                                            // Tạo phần tử HTML cho từng sản phẩm
+                                                            var productElement = document.createElement('li');
+                                                            productElement.className = 'single-cart-box';
 
-                                                        // Tạo phần tử HTML cho từng sản phẩm
-                                                        var productElement = document.createElement('li');
-                                                        productElement.className = 'single-cart-box';
+                                                            // Tạo phần tử HTML cho hình ảnh sản phẩm
+                                                            var imgElement = document.createElement('div');
+                                                            imgElement.className = 'cart-img';
+                                                            var imgLink = document.createElement('a');
+                                                            imgLink.href = 'ProductDetail?productID=' + product.id;
+                                                            var img = document.createElement('img');
+                                                            img.src = product.thumb;
+                                                            imgLink.appendChild(img);
+                                                            imgElement.appendChild(imgLink);
+                                                            productElement.appendChild(imgElement);
 
-                                                        // Tạo phần tử HTML cho hình ảnh sản phẩm
-                                                        var imgElement = document.createElement('div');
-                                                        imgElement.className = 'cart-img';
-                                                        var imgLink = document.createElement('a');
-                                                        imgLink.href = 'ProductDetail?productID=' + product.id;
-                                                        var img = document.createElement('img');
-                                                        img.src = product.thumb;
-                                                        imgLink.appendChild(img);
-                                                        imgElement.appendChild(imgLink);
-                                                        productElement.appendChild(imgElement);
+                                                            // Tạo phần tử HTML cho nội dung sản phẩm
+                                                            var contentElement = document.createElement('div');
+                                                            contentElement.className = 'cart-content';
+                                                            var productName = document.createElement('h6');
+                                                            var productNameLink = document.createElement('a');
+                                                            productNameLink.href = 'ProductDetail?productID=' + product.id;
+                                                            productNameLink.textContent = product.name;
+                                                            productName.appendChild(productNameLink);
+                                                            contentElement.appendChild(productName);
+                                                            var productPrice = document.createElement('span');
+                                                            productPrice.className = 'cart-price';
+                                                            productPrice.textContent = product.price + ' VNĐ';
+                                                            contentElement.appendChild(productPrice);
+                                                            productElement.appendChild(contentElement);
 
-                                                        // Tạo phần tử HTML cho nội dung sản phẩm
-                                                        var contentElement = document.createElement('div');
-                                                        contentElement.className = 'cart-content';
-                                                        var productName = document.createElement('h6');
-                                                        var productNameLink = document.createElement('a');
-                                                        productNameLink.href = 'ProductDetail?productID=' + product.id;
-                                                        productNameLink.textContent = product.name;
-                                                        productName.appendChild(productNameLink);
-                                                        contentElement.appendChild(productName);
-                                                        var productPrice = document.createElement('span');
-                                                        productPrice.className = 'cart-price';
-                                                        productPrice.textContent = product.price + ' VNĐ';
-                                                        contentElement.appendChild(productPrice);
-                                                        productElement.appendChild(contentElement);
-
-                                                        wishlistItems.appendChild(productElement);
+                                                            wishlistItems.appendChild(productElement);
+                                                        }
                                                     }
-                                                }
 
-                                                // Tạo phần tử HTML cho cart footer
-                                                var cartFooter = document.createElement('li');
-                                                cartFooter.className = 'cart-footer';
-                                                cartFooter.style= 'padding-top: 0;'
-                                                var cartActions = document.createElement('div');
-                                                cartActions.className = 'cart-actions text-center';
-                                                var cartCheckoutLink = document.createElement('a');
-                                                cartCheckoutLink.className = 'cart-checkout';
-                                                cartCheckoutLink.href = 'danh-sach-quan-tam?action=get';
-                                                cartCheckoutLink.textContent = 'Xem Danh Sách Quan Tâm';
-                                                cartActions.appendChild(cartCheckoutLink);
-                                                cartFooter.appendChild(cartActions);
-                                                wishlistItems.appendChild(cartFooter);
+
+                                                    // Tạo phần tử HTML cho cart footer
+                                                    var cartFooter = document.createElement('li');
+                                                    cartFooter.className = 'cart-footer';
+                                                    cartFooter.style = 'padding-top: 0;'
+                                                    var cartActions = document.createElement('div');
+                                                    cartActions.className = 'cart-actions text-center';
+                                                    var cartCheckoutLink = document.createElement('a');
+                                                    cartCheckoutLink.className = 'cart-checkout';
+                                                    cartCheckoutLink.href = 'danh-sach-quan-tam?action=get';
+                                                    cartCheckoutLink.textContent = 'Xem Danh Sách Quan Tâm';
+                                                    cartActions.appendChild(cartCheckoutLink);
+                                                    cartFooter.appendChild(cartActions);
+                                                    wishlistItems.appendChild(cartFooter);
+                                                }
                                             } else {
                                                 // Xử lý lỗi nếu có
                                                 console.log('Có lỗi xảy ra.');

@@ -5,10 +5,8 @@ import eu.bitwalker.useragentutils.UserAgent;
 import org.jdbi.v3.core.Jdbi;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.sql.*;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +26,7 @@ public class Log extends AbLog implements Serializable {
     private String web_browser;
     private Timestamp create_at;
     private String status;
+
 
     @Override
     public String toString() {
@@ -148,6 +147,41 @@ public class Log extends AbLog implements Serializable {
         this.status = status;
     }
 
+    public static List<Log> getAllLogs() {
+        List<Log> logs = new ArrayList<>();
+
+        try {
+            // Kết nối cơ sở dữ liệu và truy vấn danh sách Logs
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM logs");
+
+            while (rs.next()) {
+                Log log = new Log();
+                log.setId_log(rs.getLong("id_log"));
+                log.setId_level(rs.getInt("id_level"));
+                log.setUser_id(rs.getString("user_id"));
+                log.setSrc(rs.getString("src"));
+                log.setContent(rs.getString("content"));
+                log.setIp_address(rs.getString("ip_address"));
+                log.setWeb_browser(rs.getString("web_browser"));
+                log.setCreate_at(rs.getTimestamp("create_at"));
+                log.setStatus(rs.getString("status"));
+
+                logs.add(log);
+            }
+
+            // Đóng kết nối cơ sở dữ liệu
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return logs;
+    }
+
     public Log() {
     }
 
@@ -159,6 +193,7 @@ public class Log extends AbLog implements Serializable {
     public boolean insert(Jdbi db) {
         // Tạo một đối tượng Random
         Random random = new Random();
+        long idLog = 10000000L + random.nextInt(90000000);
         String ipAddress = "";
         String webBrowser = "";
         try {
@@ -187,8 +222,6 @@ public class Log extends AbLog implements Serializable {
 
         String userAgentHeader = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36";
         webBrowser = getBrowserFromUserAgent(userAgentHeader);
-
-        long idLog = random.nextLong();
 
         String finalIpAddress = ipAddress;
         String finalWebBrowser = webBrowser;
@@ -224,5 +257,7 @@ public class Log extends AbLog implements Serializable {
         return false;
     }
 
-
+//    public static void main(String[] args) {
+//        System.out.println(getAllLogs());
+//    }
 }

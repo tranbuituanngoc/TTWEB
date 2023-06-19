@@ -238,19 +238,20 @@
                     }
 
                     .return-customer-btn {
-                        background-color: #007bff;
-                        border: none;
+                        background: #e62e04 none repeat scroll 0 0;
+                        border: medium none;
                         color: #fff;
                         border-radius: 4px;
                         height: 40px;
                         width: 100%;
-                        font-size: 16px;
+                        font-size: 15px;
                         margin-top: 10px;
                         cursor: pointer;
+                        transition: all 300ms ease-in 0s;
                     }
 
                     .return-customer-btn:hover {
-                        background-color: #0069d2;
+                        background-color: #000;
                     }
                     .g-recaptcha{
                         display: flex;

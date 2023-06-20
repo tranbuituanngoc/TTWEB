@@ -119,7 +119,6 @@ public class UserController extends HttpServlet {
 
                         boolean isAdmin = isAdmin(u);
                         session.setAttribute("isAdmin", isAdmin);
-
                         if (isAdmin) {
                             response.sendRedirect("thong-ke");
                         } else if (!isAdmin) {
@@ -129,6 +128,8 @@ public class UserController extends HttpServlet {
                         messageResponse = "error";
                         request.setAttribute("messageResponse", messageResponse);
                         request.setAttribute("error", "Vui lòng xác thực tài khoản trước khi đăng nhập.");
+                        Log log = new Log(Log.WARNING, username, "UserController", "Tài khoản chưa được xác thực.", "failed");
+                        log.insert(jdbi);
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                         return;
                     }
@@ -189,8 +190,8 @@ public class UserController extends HttpServlet {
             response.sendRedirect("/Home");
 
             // Ghi log
-            String username = (user != null) ? user.getUserName() : "N/A";  // Kiểm tra user có null hay không
-            Log logoutLog = new Log(Log.INFO, username, "UserController", "Đăng xuất thành công", "success");
+            String id = (user != null) ? user.getId_User() : "N/A";  // Kiểm tra user có null hay không
+            Log logoutLog = new Log(Log.INFO, id, "UserController", "Đăng xuất thành công", "success");
             logoutLog.insert(jdbi);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -268,6 +269,8 @@ public class UserController extends HttpServlet {
 
                     if (userService.updateVerifyInfo(user) > 0) {
                         Email.sendMail(user.getEmail(), getContentEmailVerify(user), "Xác Thực Tài Khoản Tại TileMarket");
+                        Log logoutLog = new Log(Log.INFO, id_user, "UserController", "Đã gửi Email xác thực tài khoản", "success");
+                        logoutLog.insert(jdbi);
                     }
                     registrationSuccess = true;
                 }
@@ -349,12 +352,16 @@ public class UserController extends HttpServlet {
                     messageResponse = "success";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Xác thực tài khoản thành công.");
+                    Log log = new Log(Log.INFO, user.getId_User(), "verifyAccount", "Xác thực tài khoản thành công", "success");
+                    log.insert(jdbi);
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 } else {
                     //error time not valid
                     messageResponse = "info";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Xác thực tài khoản không thành công vì đã quá thời gian cho phép.");
+                    Log log = new Log(Log.WARNING, user.getId_User(), "verifyAccount", "Xác thực tài khoản thất bại", "failed");
+                    log.insert(jdbi);
                     request.setAttribute("user", us);
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 }
@@ -456,6 +463,8 @@ public class UserController extends HttpServlet {
             messageResponse = "success";
             request.setAttribute("messageResponse", messageResponse);
             request.setAttribute("error", "Gửi email thành công!");
+            Log changePass = new Log(Log.INFO, user.getId_User(), "forgetPass", "Gửi email thay đổi mật khẩu thành công", "success");
+            changePass.insert(jdbi);
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -492,11 +501,15 @@ public class UserController extends HttpServlet {
                     messageResponse = "success";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Mật khẩu đã được thay đổi thành công!");
+                    Log log = new Log(Log.INFO, u.getId_User(), "forgetPass", "Mật khẩu đã được thay đổi thành công!", "success");
+                    log.insert(jdbi);
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 } else {
                     messageResponse = "error";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Thay đổi không thành công do đã quá thời gian quy định!");
+                    Log log = new Log(Log.WARNING, id, "forgetPass", "Thay đổi không thành công do đã quá thời gian quy định!", "failed");
+                    log.insert(jdbi);
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 }
             } else {

@@ -1,18 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
 <%@ page import="bean.Log" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Quản lý logs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" href="admin/assets/images/logo/logo-transparent-png-icon.png">
+
+    <!-- page css -->
+    <link href="admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
 
     <!-- Core css -->
     <link href="admin/assets/css/app.min.css" rel="stylesheet">
@@ -46,37 +52,48 @@
                 <% Collections.sort(logs, Comparator.comparing(Log::getCreate_at).reversed()); %>
 
                 <%-- Hiển thị danh sách Logs --%>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cấp độ</th>
-                        <th>ID Khách hàng hoặc Username</th>
-                        <th>Src</th>
-                        <th>Nội dung</th>
-                        <th>Địa chỉ IP</th>
-                        <th>Trình duyệt Web</th>
-                        <th>Thời gian tạo</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%-- Duyệt qua danh sách Logs và hiển thị từng dòng --%>
-                    <% for (Log log : logs) { %>
-                    <tr>
-                        <td><%= log.getId_log() %></td>
-                        <td><%= log.getLevelWithName() %></td>
-                        <td><%= log.getUser_id() %></td>
-                        <td><%= log.getSrc() %></td>
-                        <td><%= log.getContent() %></td>
-                        <td><%= log.getIp_address() %></td>
-                        <td><%= log.getWeb_browser() %></td>
-                        <td><%= log.getCreate_at() %></td>
-                        <td><%= log.getStatus() %></td>
-                    </tr>
-                    <% } %>
-                    </tbody>
-                </table>
+                <div class="m-t-25">
+                    <table id="data-table" class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cấp độ</th>
+                            <th>ID Khách hàng hoặc Username</th>
+                            <th>Src</th>
+                            <th>Nội dung</th>
+                            <th>Địa chỉ IP</th>
+                            <th>Trình duyệt Web</th>
+                            <th>Thời gian tạo</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%-- Duyệt qua danh sách Logs và hiển thị từng dòng --%>
+                        <% for (Log log : logs) { %>
+                        <tr>
+                            <td><%= log.getId_log() %>
+                            </td>
+                            <td><%= log.getLevelWithName() %>
+                            </td>
+                            <td><%= log.getUser_id() %>
+                            </td>
+                            <td><%= log.getSrc() %>
+                            </td>
+                            <td><%= log.getContent() %>
+                            </td>
+                            <td><%= log.getIp_address() %>
+                            </td>
+                            <td><%= log.getWeb_browser() %>
+                            </td>
+                            <td><%= log.getCreate_at() %>
+                            </td>
+                            <td><%= log.getStatus() %>
+                            </td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

@@ -67,7 +67,7 @@
     <!-- Register Account Start -->
     <div class="log-in ptb-100 ptb-sm-60">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <!-- Returning Customer Start -->
                 <div class="col-md-6 center">
                     <div class="well">
@@ -138,6 +138,8 @@
 <script src="js\plugins.js"></script>
 <!-- Main activaion js -->
 <script src="js\main.js"></script>
+<%--Custom script--%>
+<script src="js\script.js"></script>
 </body>
 
 </html>

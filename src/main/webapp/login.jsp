@@ -368,6 +368,8 @@
 <script src="js\plugins.js"></script>
 <!-- Main js -->
 <script src="js\main.js"></script>
+<%--Custom script--%>
+<script src="js\script.js"></script>
 </body>
 
 </html>

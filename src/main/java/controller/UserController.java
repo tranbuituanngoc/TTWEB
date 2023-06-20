@@ -406,6 +406,7 @@ public class UserController extends HttpServlet {
 
             String oldPass_Encode = Encode.encodeToSHA1(oldPass);
             String error = "";
+            String messageResponse = "";
             String url = "/changePass.jsp";
 
             HttpSession session = request.getSession();
@@ -414,29 +415,41 @@ public class UserController extends HttpServlet {
                 response.sendRedirect("/404.jsp");
             } else {
                 if (!oldPass_Encode.equals(user.getPass())) {
-                    error = "Mật khẩu hiện tại không chính xác!";
                     Log changePassFail = new Log(Log.DANGER, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thất bại", "failed");
                     changePassFail.insert(jdbi);
+                    messageResponse = "error";
+                    request.setAttribute("messageResponse", messageResponse);
+                    request.setAttribute("error", "Mật khẩu hiện tại không chính xác!");
+                    request.getRequestDispatcher(url).forward(request, response);
                 } else {
                     if (!newPassword.equals(comNewPass)) {
-                        error = "Mật khẩu nhập lại không khớp!";
                         Log changePassFail = new Log(Log.DANGER, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thất bại", "failed");
                         changePassFail.insert(jdbi);
+                        messageResponse = "error";
+                        request.setAttribute("messageResponse", messageResponse);
+                        request.setAttribute("error", "Mật khẩu nhập lại không khớp!");
+                        request.getRequestDispatcher(url).forward(request, response);
                     } else {
                         String newPass_Encode = Encode.encodeToSHA1(newPassword);
                         user.setPass(newPass_Encode);
                         UserService userDAO = new UserService();
                         if (userDAO.changePass(user)) {
-                            error = "Thay đổi mật khẩu thành công!";
                             Log changePass = new Log(Log.INFO, user.getId_User(), "ChangePass", "Thay đổi mật khẩu thành công", "success");
                             changePass.insert(jdbi);
-                        } else error = "Thay đổi mật khẩu thất bại!";
+                            messageResponse = "success";
+                            request.setAttribute("messageResponse", messageResponse);
+                            request.setAttribute("error", "Thay đổi mật khẩu thành công!");
+                            request.getRequestDispatcher(url).forward(request, response);
+                        } else{
+                            messageResponse = "success";
+                            request.setAttribute("messageResponse", messageResponse);
+                            request.setAttribute("error", "Thay đổi mật khẩu thất bại!");
+                            request.getRequestDispatcher(url).forward(request, response);
+                        }
                     }
                 }
             }
             request.setAttribute("error", error);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
-            requestDispatcher.forward(request, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ServletException e) {

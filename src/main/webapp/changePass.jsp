@@ -37,7 +37,8 @@
     <link rel="stylesheet" href="css\style.css">
     <!-- Responsive css -->
     <link rel="stylesheet" href="css\responsive.css">
-
+    <%--Sweet alert notify--%>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Modernizer js -->
     <script src="js\vendor\modernizr-3.5.0.min.js"></script>
 </head>
@@ -70,17 +71,44 @@
         <!-- Container End -->
     </div>
     <!-- Breadcrumb End -->
+    <%
+        String messageResponse = request.getAttribute("messageResponse") + "";
+        messageResponse = ((messageResponse).equals("null")) ? "" : messageResponse;
+        if (messageResponse.equals("error")) {
+    %>
+    <script type="text/javascript">
+        swal({
+            title: "Error!",
+            text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",
+            icon: "error",
+            button: "Thử lại!",
+        });
+    </script>
+    <%
+    } else if (messageResponse.equals("success")) {
+    %>
+    <script type="text/javascript">
+        swal({
+            title: "Congratulation!",
+            text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",
+            icon: "success",
+            button: "Tiếp tục.",
+        });
+    </script>
+        <%
+                }
+        %>
     <!-- LogIn Page Start -->
     <div class="log-in ptb-100 ptb-sm-60">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <!-- Returning Customer Start -->
                 <div class="col-md-6 center">
                     <div class="well">
                         <div class="return-customer">
                             <h3 class="mb-10 custom-title">Đổi mật khẩu</h3>
                             <br>
-                            <form action="/nguoi-dung" method="post">
+                            <form action="/nguoi-dung" method="post" onsubmit="return (regexForPass()&&checkComPass())">
                                 <input type="hidden" name="action" value="doi-mat-khau">
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes0")==null ?" ":request.getAttribute("errMes0")%></p>
                                 <p style="color:red; display:block"><%=request.getAttribute("errMes1")==null ?" ":request.getAttribute("errMes1")%></p>
@@ -91,12 +119,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khẩu mới</label>
-                                    <input type="password" name="newPassword" id="input-password" class="form-control">
+                                    <input type="password" name="newPassword" id="pass" class="form-control" onkeyup="regexForPass()">
                                 </div>
+                                <div id="error_pass"></div>
                                 <div class="form-group">
                                     <label>Nhập lại mật khẩu mới</label>
-                                    <input type="password" name="comNewPass" id="pwd-confirm" class="form-control">
+                                    <input type="password" name="comNewPass" id="comPass" class="form-control" onkeyup="checkComPass()">
                                 </div>
+                                <div id="error_compass" style="color: #e31414;font-size: 12pt;"></div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <input type="submit" value="Đổi mật khẩu" class="return-customer-btn">
                                 <br/>
@@ -150,6 +180,8 @@
 <script src="js\plugins.js"></script>
 <!-- Main activaion js -->
 <script src="js\main.js"></script>
+<%--Custom script--%>
+<script src="js\script.js"></script>
 </body>
 
 </html>

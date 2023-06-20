@@ -98,7 +98,7 @@
                     });
                 </script>
                 <%
-                    }else if(messageResponse.equals("success")){
+                } else if (messageResponse.equals("success")) {
                 %>
                 <script type="text/javascript">
                     swal({
@@ -109,30 +109,43 @@
                     });
                 </script>
                 <%
-                    }else if(messageResponse.equals("info")){
+                } else if (messageResponse.equals("info")) {
                 %>
                 <script type="text/javascript">
-                    Swal.fire({
-                        title: 'Xác Thực Không Thành Công!',
+                    swal({
+                        title: "Xác Thực Không Thành Công!",
                         text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        <%
-                        String id_user= (String) session.getAttribute("id_user");
-                        String link = "http://localhost:8080/nguoi-dung?action=xac-thuc-lai&id_User=" + id_user ;
-                        %>
-                        confirmButtonText: '<a href="<%=link%>" style="text-decoration: none; color: inherit;">Xác thực lại!</a>'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire(
-                                'Thành Công!',
-                                'Email xác thực đã được gửi lại đến email của bạn. Vui lòng xác thực lại!',
-                                'success'
-                            )
+                        <% String id_user= (String) request.getAttribute("id_user");
+                           String link = "http://localhost:8080/nguoi-dung?action=xac-thuc-lai&id_user=" + id_user ; %>
+                        icon: "warning",
+                        buttons: {
+                            cancel: 'Hủy',
+                            confirm: {
+                                text: 'Xác thực lại!',
+                                value: 'confirm',
+                                className: 'swal-confirm-button',
+                            },
+                        },
+                        dangerMode: true,
+                    }).then((value) => {
+                        if (value === "confirm") {
+                            window.location.href = '<%=link%>';
                         }
-                    })
+                    });
+
+                    <%--Swal.fire({--%>
+                    <%--    title: 'Xác Thực Không Thành Công!',--%>
+                    <%--    text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",--%>
+                    <%--    icon: 'warning',--%>
+                    <%--    showCancelButton: "Hủy",--%>
+                    <%--    confirmButtonColor: '#3085d6',--%>
+                    <%--    cancelButtonColor: '#d33',--%>
+                    <%--    <%--%>
+                    <%--    String id_user= (String) request.getAttribute("id_user");--%>
+                    <%--    String link = "http://localhost:8080/nguoi-dung?action=xac-thuc-lai&id_user=" + id_user ;--%>
+                    <%--    %>--%>
+                    <%--    confirmButtonText: '<a href="<%=link%>" style="text-decoration: none; color: inherit;">Xác thực lại!</a>'--%>
+                    <%--})--%>
                 </script>
                 <%
                     }
@@ -150,7 +163,8 @@
                                     <label>Tài khoản</label>
                                     <input type="text"
                                            value="<%=request.getParameter("username")==null ? "":request.getParameter("username")%>"
-                                           id="username2" name="username" placeholder="Nhập username..." class="form-control">
+                                           id="username2" name="username" placeholder="Nhập username..."
+                                           class="form-control">
                                     <div id="error_username2"></div>
                                 </div>
                                 <div class="form-group">

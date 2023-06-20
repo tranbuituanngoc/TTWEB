@@ -274,8 +274,7 @@ public class UserController extends HttpServlet {
                     }
                     registrationSuccess = true;
                 }
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+
                 messageResponse = "success";
                 request.setAttribute("messageResponse", messageResponse);
                 String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -319,10 +318,18 @@ public class UserController extends HttpServlet {
         if (!us.isVerified()) {
             us.setVerificationCode(saltString);
             us.setTimeValid(timeValid);
-        }
-
-        if (userService.updateVerifyInfo(us) > 0) {
-            Email.sendMail(us.getEmail(), getContentEmailVerify(us), "Xác Thực Tài Khoản Tại TileMarket");
+            if (userService.updateVerifyInfo(us) > 0) {
+                Email.sendMail(us.getEmail(), getContentEmailVerify(us), "Xác Thực Tài Khoản Tại TileMarket");
+                String messageResponse = "success";
+                request.setAttribute("messageResponse", messageResponse);
+                request.setAttribute("error", "Email xác thực đã được gửi lại đến email của bạn. Vui lòng xác thực lại!");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+        } else {
+            String messageResponse = "error";
+            request.setAttribute("messageResponse", messageResponse);
+            request.setAttribute("error", "Xác thực không thành công do tài khoản của bạn đã được xác thực trước đó!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 
@@ -345,7 +352,7 @@ public class UserController extends HttpServlet {
             Timestamp timestamp = new Timestamp(c.getTimeInMillis());
 
             if (us.getVerificationCode().equals(verificationCode)) {
-                if (timestamp.before(us.getTimeValid())) {
+                if (timestamp.before(us.getTimeValid()) && !us.isVerified()) {
                     //success
                     us.setVerified(true);
                     userService.updateVerifyInfo(us);
@@ -355,14 +362,25 @@ public class UserController extends HttpServlet {
                     Log log = new Log(Log.INFO, user.getId_User(), "verifyAccount", "Xác thực tài khoản thành công", "success");
                     log.insert(jdbi);
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
-                } else {
+                } else if (!timestamp.before(us.getTimeValid()) && !us.isVerified()) {
                     //error time not valid
                     messageResponse = "info";
                     request.setAttribute("messageResponse", messageResponse);
                     request.setAttribute("error", "Xác thực tài khoản không thành công vì đã quá thời gian cho phép.");
+
                     Log log = new Log(Log.WARNING, user.getId_User(), "verifyAccount", "Xác thực tài khoản thất bại", "failed");
                     log.insert(jdbi);
-                    request.setAttribute("user", us);
+
+                    request.setAttribute("id_user", idUser);
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
+                } else if (us.isVerified()) {
+                    messageResponse = "error";
+                    request.setAttribute("messageResponse", messageResponse);
+                    request.setAttribute("error", "Xác thực không thành công do tài khoản của bạn đã được xác thực trước đó!");
+
+                    Log log = new Log(Log.WARNING, user.getId_User(), "verifyAccount", "Xác thực tài khoản thất bại", "failed");
+                    log.insert(jdbi);
+
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 }
             } else {
@@ -847,7 +865,7 @@ public class UserController extends HttpServlet {
                 "<w:anchorlock></w:anchorlock>\n" +
                 "<center style='color:#ffffff; font-family:arial, \"helvetica neue\", helvetica, sans-serif; font-size:27px; font-weight:400; line-height:27px; mso-text-raise:1px'>Xác Thực Tài Khoản</center>\n" +
                 "</v:roundrect></a>\n" +
-                "<![endif]--><!--[if !mso]><!-- --><span class=\"msohide es-button-border\" style=\"border-style:solid;border-color:#2CB543;background:#ef5350;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-border-alt:10px;mso-hide:all\"><a href=\"" + link + "\"class=\"es-button\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:36px;display:inline-block;background:#ef5350;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:43px;width:auto;text-align:center;padding:10px 30px 10px 30px;padding-left:30px;padding-right:30px;border-color:#ef5350\">Thay Đổi Mật Khẩu Tài Khoản</a></span><!--<![endif]--></td>\n" +
+                "<![endif]--><!--[if !mso]><!-- --><span class=\"msohide es-button-border\" style=\"border-style:solid;border-color:#2CB543;background:#ef5350;border-width:0px;display:inline-block;border-radius:6px;width:auto;mso-border-alt:10px;mso-hide:all\"><a href=\"" + link + "\"class=\"es-button\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:36px;display:inline-block;background:#ef5350;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:43px;width:auto;text-align:center;padding:10px 30px 10px 30px;padding-left:30px;padding-right:30px;border-color:#ef5350\">Xác Thực Tài Khoản</a></span><!--<![endif]--></td>\n" +
                 "</tr>\n" +
                 "</table></td>\n" +
                 "</tr>\n" +

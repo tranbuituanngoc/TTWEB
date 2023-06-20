@@ -145,7 +145,7 @@
                             <br>
                             <form action="/nguoi-dung" method="post" onsubmit="return signIn(); getAlert()">
                                 <input type="hidden" name="action" value="dang-nhap">
-                                <%--                                <p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
+                                <%--<p style="color:red; display:block"><%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%></p>--%>
                                 <div class="form-group">
                                     <label>Tài khoản</label>
                                     <input type="text"
@@ -161,14 +161,160 @@
                                 </div>
                                 <p class="lost-password"><a href="forgot-password.jsp">Quên mật khẩu?</a></p>
                                 <br>
-                                <div class="justify-content-center"><div class="g-recaptcha" data-sitekey="6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></div></div>
+                                <div class="justify-content-center">
+                                    <div class="g-recaptcha"
+                                         data-sitekey="6LfaJM4lAAAAAIZJo4uMpLgyFwkQDp2x4hUguTwY"></div>
+                                </div>
 
                                 <input type="submit" value="Đăng nhập" onclick="signIn();getAlert();"
                                        class="return-customer-btn">
                                 <br/>
+                            </form>
+                            <div class="or-divider">
+                                <span class="or-text">Hoặc</span>
+                            </div>
+                            <div class="social-login">
+                                <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
+                                    <input type="hidden" name="provider" value="Facebook">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/loginCallback'/>">
+                                    <button class="btn-fbgg" type="submit">
+                                        <i class="fa fa-facebook"></i> Đăng nhập bằng Facebook
+                                    </button>
+                                </form>
+                                <form class="form-fbgg" action="<c:url value='/loginSocial'/>" method="post">
+                                    <input type="hidden" name="provider" value="Google">
+                                    <input type="hidden" name="redirect_uri" value="<c:url value='/loginCallback'/>">
+                                    <button class="btn-fbgg-google" type="submit">
+                                        <i class="fa fa-google"></i> Đăng nhập bằng Google
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <style>
+                    .or-divider {
+                        display: flex;
+                        align-items: center;
+                        text-align: center;
+                        margin: 10px 0;
+                    }
+
+                    .or-divider:before,
+                    .or-divider:after {
+                        content: "";
+                        flex: 1;
+                        border-bottom: 1px solid #d9d9d9;
+                    }
+
+                    .or-divider .or-text {
+                        padding: 0 10px;
+                        color: #8c8c8c;
+                        font-weight: bold;
+                    }
+
+                    /* Đăng nhập */
+                    .custom-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                    }
+
+                    .form-group {
+                        margin-bottom: 10px;
+                    }
+
+                    .form-control {
+                        border: 1px solid #d9d9d9;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px;
+                    }
+
+                    .lost-password {
+                        text-align: right;
+                        margin-top: 10px;
+                    }
+
+                    .return-customer-btn {
+                        background: #e62e04 none repeat scroll 0 0;
+                        border: medium none;
+                        color: #fff;
+                        border-radius: 4px;
+                        height: 40px;
+                        width: 100%;
+                        font-size: 15px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                        transition: all 300ms ease-in 0s;
+                    }
+
+                    .return-customer-btn:hover {
+                        background-color: #000;
+                    }
+                    .g-recaptcha{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .social-login {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .social-login form {
+                        margin: 0 10px;
+                    }
+                    /* Button Facebook */
+
+                    .btn-fbgg {
+                        background-color: #3b5998;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px 16px;
+                        margin: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .btn-fbgg:hover {
+                        background-color: #2d4373;
+                    }
+
+                    .btn-fbgg i {
+                        margin-right: 10px;
+                    }
+
+                    /* Button Google */
+
+                    .btn-fbgg-google {
+                        background-color: #dd4b39;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        height: 40px;
+                        padding: 8px 16px;
+                        margin: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .btn-fbgg-google:hover {
+                        background-color: #c23321;
+                    }
+
+                    .btn-fbgg-google i {
+                        margin-right: 10px;
+                    }
+                </style>
                 <!-- Returning Customer End -->
             </div>
             <!-- Row End -->
@@ -177,42 +323,37 @@
     </div>
 
     <!-- LogIn Page End -->
-    <!-- Support Area Start Here -->
     <jsp:include page="footer.jsp"/>
-    <!-- Quick View Content Start -->
-
-    <!-- Quick View Content End -->
 </div>
 <!-- Main Wrapper End Here -->
-
-<!-- jquery 3.2.1 -->
+<!-- Jquery min js -->
 <script src="js\vendor\jquery-3.2.1.min.js"></script>
-<!-- Countdown js -->
-<script src="js\jquery.countdown.min.js"></script>
-<!-- Mobile menu js -->
-<script src="js\jquery.meanmenu.min.js"></script>
-<!-- ScrollUp js -->
-<script src="js\jquery.scrollUp.js"></script>
-<!-- Nivo slider js -->
-<script src="js\jquery.nivo.slider.js"></script>
-<!-- Fancybox js -->
-<script src="js\jquery.fancybox.min.js"></script>
-<!-- Jquery nice select js -->
-<script src="js\jquery.nice-select.min.js"></script>
-<!-- Jquery ui price slider js -->
-<script src="js\jquery-ui.min.js"></script>
-<!-- Owl carousel -->
-<script src="js\owl.carousel.min.js"></script>
-<!-- Bootstrap popper js -->
-<script src="js\popper.min.js"></script>
+<!-- Proper js -->
+<script src="js\proper.js"></script>
 <!-- Bootstrap js -->
 <script src="js\bootstrap.min.js"></script>
-<!-- Plugin js -->
+<!-- Meanmenu js -->
+<script src="js\jquery.meanmenu.min.js"></script>
+<!-- Wow js -->
+<script src="js\wow.min.js"></script>
+<!-- Slick js -->
+<script src="js\slick.min.js"></script>
+<!-- Owl carousel js -->
+<script src="js\owl.carousel.min.js"></script>
+<!-- Countdown js -->
+<script src="js\jquery.countdown.min.js"></script>
+<!-- Jquery ui price slider js -->
+<script src="js\jquery-ui.min.js"></script>
+<!-- Fancybox js -->
+<script src="js\jquery.fancybox.min.js"></script>
+<!-- Nivo slider js -->
+<script src="js\nivo-slider/jquery.nivo.slider.pack.js"></script>
+<!-- Ajax Mail js -->
+<script src="js\ajax-mail.js"></script>
+<!-- Others js -->
 <script src="js\plugins.js"></script>
-<!-- Main activaion js -->
+<!-- Main js -->
 <script src="js\main.js"></script>
-<%--custom script--%>
-<script src="js\script.js"></script>
 </body>
 
 </html>

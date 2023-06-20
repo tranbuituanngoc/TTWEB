@@ -16,6 +16,9 @@ public class User {
     private String fullname;
     private boolean status;
 
+    private String oldPass;
+
+
     public User() {
     }
 
@@ -68,6 +71,16 @@ public class User {
         this.role = role;
         this.fullname = fullname;
         this.status = status;
+    }
+
+    public User(String userName, String pass, String email) {
+        this.userName = userName;
+        this.pass = pass;
+        this.email = email;
+    }
+
+    public User(String userName) {
+        this.userName = userName;
     }
 
     public boolean isStatus() {

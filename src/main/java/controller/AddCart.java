@@ -1,7 +1,9 @@
 package controller;
 
+import bean.Log;
 import model.*;
 
+import org.jdbi.v3.core.Jdbi;
 import service.*;
 
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import java.io.IOException;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {
+    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("product_id");
@@ -32,12 +35,12 @@ public class AddCart extends HttpServlet {
         }
         int colorId = p.getColor().get(0).getId_color();
         if (colorId_raw != null) {
-           colorId = Integer.parseInt(colorId_raw);
+            colorId = Integer.parseInt(colorId_raw);
         }
         String sizeId_raw = request.getParameter("size");
         int sizeId = p.getSize().get(0).getIdSize();
         if (sizeId_raw != null) {
-           sizeId = Integer.parseInt(sizeId_raw);
+            sizeId = Integer.parseInt(sizeId_raw);
         }
 
         int price = ProductImportedService.getPrice(id, sizeId, colorId);
@@ -60,8 +63,14 @@ public class AddCart extends HttpServlet {
         if (user != null) CartService.addCart(cartUser, cart, quantity);
         session.setAttribute("cartUser", cartUser);
         String url = request.getHeader("referer");
+
+        // Ghi log
+        Log log = new Log(Log.INFO, user != null ? user.getId_User() : "-1", "AddCart", "Thêm sản phẩm vào giỏ thành công", "success");
+        log.insert(jdbi);
+
         response.sendRedirect(url);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1208,7 +1208,7 @@
     </script>
     <script>
       const url = 'http://140.238.54.136/api/auth/login';
-      const email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
+      let email = '20130471@st.hcmuaf.edu.vn'; // Replace with your actual email
       const password = '12345678'; // Replace with your actual password
       // load district
       $('#customer_shipping_province').on('change', function() {

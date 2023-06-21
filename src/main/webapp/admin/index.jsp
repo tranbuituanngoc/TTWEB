@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="service.ProductImageService" %>
+<%@ page import="service.ProductImportedService" %>
 <%
     User u = (User) session.getAttribute("user");
     if (u == null) {

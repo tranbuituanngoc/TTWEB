@@ -25,7 +25,8 @@
 
     <!-- page css -->
     <link href="admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <!-- Core css -->
     <link href="admin/assets/css/app.min.css" rel="stylesheet">
 </head>
@@ -46,6 +47,48 @@
 %>
 <jsp:include page="headerAd.jsp"/>
 <jsp:include page="menu.jsp"/>
+
+<%
+    String result = (String) request.getSession().getAttribute("res");
+    String msg = (String) request.getSession().getAttribute("msg");
+%>
+
+
+
+<% if (result != null && msg != null) {
+    if (result.equals("false")) {
+%>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<% } %>
+<% if (result.equals("true")) { %>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<%
+        }
+    }
+%>
+<% request.getSession().removeAttribute("res");
+    request.getSession().removeAttribute("msg");
+%>
 
 <!-- Page Container START -->
 <div class="page-container">

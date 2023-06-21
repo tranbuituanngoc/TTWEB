@@ -253,7 +253,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 
                     //insert product
                     ProductService.insert(p);
-                    request.setAttribute("err", "Thêm sản phẩm thành công");
+                    request.getSession().setAttribute("msg", "Thêm sản phẩm thành công!");
+                    request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListProductAd");
                 }
             }
@@ -385,7 +386,8 @@ public class AddOrUpdateProduct extends HttpServlet {
 
                     //update product
                     ProductService.updateProduct(id, p);
-                    request.setAttribute("err", "Chỉnh sửa thành công");
+                    request.getSession().setAttribute("msg", "Chỉnh sửa thành công!");
+                    request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListProductAd");
                 }
             }
@@ -393,14 +395,20 @@ public class AddOrUpdateProduct extends HttpServlet {
                 ProductService.deleteProduct(id);
                 ProductImportedService.delete(id);
                 ProductImageService.deleteImageProduct(id);
+                request.getSession().setAttribute("msg", "Xóa sản phẩm thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListProductAd");
             }
             if (action.equals("hide")) {
                 ProductService.hideProduct(id);
+                request.getSession().setAttribute("msg", "Cập nhật trạng thái sản phẩm thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListProductAd");
             }
             if (action.equals("show")) {
                 ProductService.nothideProduct(id);
+                request.getSession().setAttribute("msg", "Cập nhật trạng thái sản phẩm thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListProductAd");
             }
         }

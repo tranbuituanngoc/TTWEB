@@ -40,51 +40,51 @@ public class OrderService {
     }
 
     public static int updateQuantity(Order order){
-            int res = 0;
-            try {
-                Connection connection = JDBCUtil.getConnection();
-                String sql = "UPDATE productimported\n" +
-                        "SET inventoryQuantity = inventoryQuantity - (\n" +
-                        "  SELECT SUM(quantity)\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")\n" +
-                        "WHERE EXISTS (\n" +
-                        "  SELECT 1\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")\n" +
-                        "AND (inventoryQuantity - (\n" +
-                        "  SELECT SUM(quantity)\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")) >= 0;";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, order.getOrderID());
-                statement.setString(2, order.getOrderID());
-                statement.setString(3, order.getOrderID()); // add another parameter for the third occurrence of orderID
-                int rowsAffected = statement.executeUpdate();
-                if (rowsAffected > 0) {
-                    res = 1;
-                } else {
-                    res = -1; // set result to -1 if no rows were updated
-                }
-                JDBCUtil.disconection(connection);
-                statement.close();
-            } catch (SQLException e) {
-                res =-1;
-                throw new RuntimeException(e);
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE productimported\n" +
+                    "SET inventoryQuantity = inventoryQuantity - (\n" +
+                    "  SELECT SUM(quantity)\n" +
+                    "  FROM cart\n" +
+                    "  WHERE cart.id_size = productimported.id_size\n" +
+                    "    AND cart.id_color = productimported.id_color\n" +
+                    "    AND cart.id_product = productimported.id_product\n" +
+                    "    AND cart.id_order = ?\n" +
+                    ")\n" +
+                    "WHERE EXISTS (\n" +
+                    "  SELECT 1\n" +
+                    "  FROM cart\n" +
+                    "  WHERE cart.id_size = productimported.id_size\n" +
+                    "    AND cart.id_color = productimported.id_color\n" +
+                    "    AND cart.id_product = productimported.id_product\n" +
+                    "    AND cart.id_order = ?\n" +
+                    ")\n" +
+                    "AND (inventoryQuantity - (\n" +
+                    "  SELECT SUM(quantity)\n" +
+                    "  FROM cart\n" +
+                    "  WHERE cart.id_size = productimported.id_size\n" +
+                    "    AND cart.id_color = productimported.id_color\n" +
+                    "    AND cart.id_product = productimported.id_product\n" +
+                    "    AND cart.id_order = ?\n" +
+                    ")) >= 0;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, order.getOrderID());
+            statement.setString(2, order.getOrderID());
+            statement.setString(3, order.getOrderID()); // add another parameter for the third occurrence of orderID
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                res = 1;
+            } else {
+                res = -1; // set result to -1 if no rows were updated
             }
-            return res;
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            res =-1;
+            throw new RuntimeException(e);
+        }
+        return res;
     }
 
     public static List<Order> getAllOrder() {
@@ -236,7 +236,11 @@ public class OrderService {
     }
     public static void main(String[] args) {
 //        System.out.println(OrderService.getAllOrder());
-//        System.out.println(OrderService.getOrder("DH00683"));
+//        System.out.println(OrderService.getOrder("DH89386"));\
+        Order o = new Order();
+        o.setOrderID("DH77906");
+        System.out.println(OrderService.updateQuantity(o));
+
     }
 
 }

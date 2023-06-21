@@ -44,7 +44,8 @@
 
 <body>
 <!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
 <![endif]-->
 
 <!-- Main Wrapper Start Here -->
@@ -66,24 +67,29 @@
     <!-- LogIn Page Start -->
     <div class="log-in ptb-100 ptb-sm-60">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <!-- Returning Customer Start -->
                 <div class="col-md-6 center">
                     <div class="well">
                         <div class="return-customer">
                             <h3 class="mb-10 custom-title">Quên mật khẩu</h3>
                             <br>
-                            <form action="/nguoi-dung" method="post">
+                            <form action="/nguoi-dung" method="post"
+                                  onsubmit="return (regexForPass()&&checkComPass())">
                                 <input type="hidden" name="action" value="tao-lai-mat-khau">
                                 <input type="hidden" name="token" value="${token}">
                                 <div class="form-group">
                                     <label>Mật khẩu mới</label>
-                                    <input type="password" name="newPassword" id="input-password" class="form-control">
+                                    <input type="password" name="newPassword" id="pass" class="form-control"
+                                           onkeyup="regexForPass()">
                                 </div>
+                                <div id="error_pass"></div>
                                 <div class="form-group">
                                     <label>Nhập lại mật khẩu mới</label>
-                                    <input type="password" name="comNewPass" id="pwd-confirm" class="form-control">
+                                    <input type="password" name="comNewPass" id="comPass" class="form-control"
+                                           onkeyup="checkComPass()">
                                 </div>
+                                <div id="error_compass" style="color: #e31414;font-size: 12pt;"></div>
                                 <input type="submit" value="Đổi mật khẩu" class="return-customer-btn">
                                 <br/>
                             </form>
@@ -131,6 +137,8 @@
 <script src="js\plugins.js"></script>
 <!-- Main activaion js -->
 <script src="js\main.js"></script>
+<%--Custom script--%>
+<script src="js\script.js"></script>
 </body>
 
 </html>

@@ -53,12 +53,12 @@ let changeIcon = function (icon) {
 function signIn() {
     error = 0;
 
-    email = document.getElementById('username2').value;
+    uname = document.getElementById('username2').value;
     pass = document.getElementById('password2').value;
     error_email = document.getElementById('error_username2');
     error_password = document.getElementById('error_password2');
 
-    if (email.length == 0) {
+    if (uname.length == 0) {
         error += 1;
         error_email.innerHTML = '<span style="color: red">Vui lòng không để trống phần tên đăng nhập</span>';
     } else {

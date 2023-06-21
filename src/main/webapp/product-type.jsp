@@ -357,6 +357,7 @@
                             }
                         }
                         headerWishlist();
+                        checkWishlist();
                     } else {
                         // Xử lý lỗi nếu có
                         console.log('Có lỗi xảy ra.');

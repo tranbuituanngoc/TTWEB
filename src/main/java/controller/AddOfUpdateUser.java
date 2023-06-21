@@ -99,7 +99,8 @@ public class AddOfUpdateUser extends HttpServlet {
 
                     us.insert(user);
                     us.updateVerifyInfo(user);
-                    request.setAttribute("err", "Thêm tài khoản thành công");
+                    request.getSession().setAttribute("msg", "Thêm tài khoản thành công!");
+                    request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListUserAd");
                 }
             }
@@ -130,20 +131,27 @@ public class AddOfUpdateUser extends HttpServlet {
                     user.setUserName(username);
 
                     us.update( user);
-                    request.setAttribute("err", "Chỉnh sửa tài khoản thành công");
+                    request.getSession().setAttribute("msg", "Chỉnh sửa tài khoản thành công!");
+                    request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListUserAd");
                 }
             }
             if (action.equals("delete")) {
                 UserService.deleteUser(id);
+                request.getSession().setAttribute("msg", "Xóa tài khoản thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListUserAd");
             }
             if (action.equals("lock")) {
                 UserService.lockUser(id);
+                request.getSession().setAttribute("msg", "Khóa tài khoản thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListUserAd");
             }
             if (action.equals("unlock")) {
                 UserService.unlockUser(id);
+                request.getSession().setAttribute("msg", "Mở khóa tài khoản thành công!");
+                request.getSession().setAttribute("res", "true");
                 response.sendRedirect("ListUserAd");
             }
         }

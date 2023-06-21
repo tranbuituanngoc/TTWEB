@@ -284,47 +284,6 @@
         <div class="container banner-2">
             <div class="banner-box">
                 <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-1.jpg" alt="banner 3"></a>
-                </div>
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-2.jpg" alt="banner 3"></a>
-                </div>
-            </div>
-            <div class="banner-box">
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-3.jpg" alt="banner 3"></a>
-                </div>
-            </div>
-            <div class="banner-box">
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-4.jpg" alt="banner 3"></a>
-                </div>
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-5.jpg" alt="banner 3"></a>
-                </div>
-            </div>
-            <div class="banner-box">
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-6.jpg" alt="banner 3"></a>
-                </div>
-            </div>
-            <div class="banner-box">
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-7.jpg" alt="banner 3"></a>
-                </div>
-                <div class="col-img">
-                    <a href="#"><img src="img\banner\banner3-8.jpg" alt="banner 3"></a>
-                </div>
-            </div>
-        </div>
-        <!-- Container End -->
-    </div>
-    <!-- Big Banner End Here -->
-    <!-- Arrivals Products Area Start Here -->
-    <div class="big-banner mt-100 pb-85 mt-sm-60 pb-sm-45">
-        <div class="container banner-2">
-            <div class="banner-box">
-                <div class="col-img">
                     <a href="#"><img src="img/banner/banner1.png" alt="banner 3"></a>
                 </div>
                 <div class="col-img">
@@ -357,6 +316,295 @@
                     <a href="#"><img src="img/banner/banner8.png" alt="banner 3"></a>
                 </div>
             </div>
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Big Banner End Here -->
+    <!-- Arrivals Products Area Start Here -->
+    <div class="arrivals-product pb-85 pb-sm-45">
+        <div class="container">
+            <div class="main-product-tab-area">
+                <div class="tab-menu mb-25">
+                    <div class="section-ttitle">
+                        <h2>New Arrivals</h2>
+                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav tabs-area" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#fshion">Gạch giả gỗ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#kids">Gạch lát nền</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#electronics">Gạch ốp tường</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#beauty">Gạch trang trí</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tab Contetn Start -->
+                <div class="tab-content">
+                    <%--                    <c:set var="pCate1" value="${listCategoryProduct1}" />--%>
+                    <div id="fshion" class="tab-pane fade show active">
+                        <!-- Arrivals Product Activation Start Here -->
+                        <div class="electronics-pro-active owl-carousel">
+                            <c:forEach items="${listCategoryProduct1}" var="p">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p.productID}">
+                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
+                                        </a>
+                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
+                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p.salePrice>0}">
+                                                <div class="label-product l_sale">${p.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <c:if test="${sessionScope.user !=null}">
+                                                <div class="actions-secondary">
+                                                    <a href="javascript:void(0)" class="product ${p.productID}"
+                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
+                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <!-- Arrivals Product Activation End Here -->
+                    </div>
+                    <!-- #fshion End Here -->
+                    <div id="kids" class="tab-pane fade">
+                        <!-- Arrivals Product Activation Start Here -->
+                        <div class="electronics-pro-active owl-carousel">
+                            <c:forEach items="${listCategoryProduct2}" var="p">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p.productID}">
+                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
+                                        </a>
+                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
+                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p.salePrice>0}">
+                                                <div class="label-product l_sale">${p.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <c:if test="${sessionScope.user !=null}">
+                                                <div class="actions-secondary">
+                                                    <a href="javascript:void(0)" class="product ${p.productID}"
+                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
+                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <!-- Arrivals Product Activation End Here -->
+                    </div>
+                    <!-- #fshion End Here -->
+                    <div id="beauty" class="tab-pane fade">
+                        <!-- Arrivals Product Activation Start Here -->
+                        <div class="electronics-pro-active owl-carousel">
+                            <c:forEach items="${listCategoryProduct4}" var="p">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p.productID}">
+                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
+                                        </a>
+                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
+                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p.salePrice>0}">
+                                                <div class="label-product l_sale">${p.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <c:if test="${sessionScope.user !=null}">
+                                                <div class="actions-secondary">
+                                                    <a href="javascript:void(0)" class="product ${p.productID}"
+                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
+                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                            </c:forEach>
+
+                        </div>
+                        <!-- Arrivals Product Activation End Here -->
+                    </div>
+                    <!-- #beauty End Here -->
+                    <div id="electronics" class="tab-pane fade">
+                        <!-- Arrivals Product Activation Start Here -->
+                        <div class="electronics-pro-active owl-carousel">
+                            <c:forEach items="${listCategoryProduct3}" var="p">
+                                <!-- Single Product Start -->
+                                <div class="single-product">
+                                    <!-- Product Image Start -->
+                                    <div class="pro-img">
+                                        <a href="ProductDetail?productID=${p.productID}">
+                                            <img class="primary-img" src="${p.image[0].image}" alt="single-product">
+                                            <img class="secondary-img" src="${p.image[1].image}" style="height: 288px" alt="single-product">
+                                        </a>
+                                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
+                                           title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+                                    </div>
+                                    <!-- Product Image End -->
+                                    <!-- Product Content Start -->
+                                    <div class="pro-content">
+                                        <div class="pro-info">
+                                            <h4><a href="ProductDetail?productID=${p.productID}">${p.productName}</a>
+                                            </h4>
+                                            <p><span class="price"><fmt:formatNumber type="currency"
+                                                                                     currencySymbol=""
+                                                                                     minFractionDigits="0"
+                                                                                     value="${p.price-Math.round(p.price*(p.salePrice/100))}"/> VNĐ </span>
+                                                <c:if test="${p.salePrice>0}">
+                                                    <del class="prev-price"><fmt:formatNumber type="currency"
+                                                                                              currencySymbol=""
+                                                                                              minFractionDigits="0"
+                                                                                              value="${p.price}"/>
+                                                        VNĐ
+                                                    </del>
+                                                </c:if>
+                                            </p>
+                                            <c:if test="${p.salePrice>0}">
+                                                <div class="label-product l_sale">${p.salePrice}<span
+                                                        class="symbol-percent">%</span></div>
+                                            </c:if>
+
+                                        </div>
+                                        <div class="pro-actions">
+                                            <div class="actions-primary">
+                                                <c:url value="/addCart?productID=${p.productID}"
+                                                       var="addCart"/>
+                                                <a href="${addCart}" title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                            </div>
+                                            <c:if test="${sessionScope.user !=null}">
+                                                <div class="actions-secondary">
+                                                    <a href="javascript:void(0)" class="product ${p.productID}"
+                                                       data-product-id="${p.productID}" onclick="addToWishlist(event)">
+                                                        <i class="fa-regular fa-heart"></i> <span>Quan tâm</span>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <!-- Product Content End -->
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <!-- Arrivals Product Activation End Here -->
+                    </div>
+                    <!-- #electronics End Here -->
+                </div>
+                <!-- Tab Content End -->
+            </div>
+            <!-- main-product-tab-area-->
         </div>
         <!-- Container End -->
     </div>
@@ -799,6 +1047,7 @@
                         }
                     }
                     headerWishlist();
+                    checkWishlist();
                 } else {
                     // Xử lý lỗi nếu có
                     console.log('Có lỗi xảy ra.');

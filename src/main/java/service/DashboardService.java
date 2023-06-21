@@ -128,8 +128,8 @@ public class DashboardService {
                     ") AS subquery\n" +
                     "JOIN `orders` AS o ON subquery.id_order = o.id_order\n" +
                     "WHERE o.status_id = 1 AND o.transport_status_id = 2\n" +
-                    "GROUP BY order_month\n" +
-                    "ORDER BY o.orderDate DESC;";
+                    "GROUP BY order_month, o.orderDate\n" +
+                    "ORDER BY MAX(o.orderDate) DESC;";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet resultSet = statement.executeQuery();
@@ -174,8 +174,8 @@ public class DashboardService {
                     ") AS subquery\n" +
                     "JOIN `orders` AS o ON subquery.id_order = o.id_order\n" +
                     "WHERE o.status_id = 1 AND o.transport_status_id = 2\n" +
-                    "GROUP BY order_date\n" +
-                    "ORDER BY o.orderDate DESC;";
+                    "GROUP BY order_date, o.orderDate\n" +
+                    "ORDER BY MAX(o.orderDate) DESC;";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             ResultSet resultSet = statement.executeQuery();

@@ -44,6 +44,14 @@
                     <span class="title"> Quản lý đơn hàng</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="dropdown-toggle" href="ListLog">
+                        <span class="icon-holder">
+                            <i class="anticon anticon-file-text"></i>
+                        </span>
+                    <span class="title"> Quản lý logs</span>
+                </a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:void(0);">
                         <span class="icon-holder">

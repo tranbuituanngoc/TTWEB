@@ -1,8 +1,10 @@
 package controller;
 
+import bean.Log;
 import model.CartUser;
 import model.ShippingAdress;
 import model.User;
+import org.jdbi.v3.core.Jdbi;
 import service.ShippingAddressService;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @WebServlet(name = "CheckOut", value = "/CheckOut")
 public class CheckOut extends HttpServlet {
+    Jdbi jdbi = Jdbi.create("jdbc:mysql://vuphecan.mysql.database.azure.com:3306/gachmen_shop", "vuphecan", "AnhHo@ngDepTrai");
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CartUser c = (CartUser) request.getSession().getAttribute("cartUser");
@@ -26,7 +29,12 @@ public class CheckOut extends HttpServlet {
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getRequestDispatcher("checkout2.jsp").forward(request,response);
         }
+
+        // Ghi log
+        Log log = new Log(Log.INFO, user != null ? user.getId_User() : "-1", "CheckOut", "Tiến hành thanh toán", "success");
+        log.insert(jdbi);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -106,7 +106,7 @@
                                         <c:set value="${cart.product}" var="product"></c:set>
                                         <c:set value="${cartUser.getValue()[status.index]}" var="quantity"></c:set>
                                         <tr>
-                                            <td>${order.orderID}</td>
+                                            <td>${product.productID}</td>
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="d-flex align-items-center">

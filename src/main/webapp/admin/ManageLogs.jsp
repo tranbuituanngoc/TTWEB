@@ -48,9 +48,6 @@
                 <%-- Truy vấn danh sách Logs từ cơ sở dữ liệu --%>
                 <% List<Log> logs = Log.getAllLogs(); %>
 
-                <%-- Sắp xếp danh sách Logs theo thời gian tạo (create_at) giảm dần --%>
-                <% Collections.sort(logs, Comparator.comparing(Log::getCreate_at).reversed()); %>
-
                 <%-- Hiển thị danh sách Logs --%>
                 <div class="m-t-25">
                     <table id="data-table" class="table">

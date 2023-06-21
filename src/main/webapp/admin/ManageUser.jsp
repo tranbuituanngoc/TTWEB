@@ -30,7 +30,8 @@
 
     <!-- page css -->
     <link href="admin/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
     <!-- Core css -->
     <link href="admin/assets/css/app.min.css" rel="stylesheet">
 </head>
@@ -38,7 +39,46 @@
 <body>
 <jsp:include page="headerAd.jsp"/>
 <jsp:include page="menu.jsp"/>
+<%
+    String result = (String) request.getSession().getAttribute("res");
+    String msg = (String) request.getSession().getAttribute("msg");
+%>
 
+
+<% if (result != null && msg != null) {
+    if (result.equals("false")) {
+%>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<% } %>
+<% if (result.equals("true")) { %>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '<%= msg %>',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+</script>
+<%
+        }
+    }
+%>
+<% request.getSession().removeAttribute("res");
+    request.getSession().removeAttribute("msg");
+%>
 <!-- Page Container START -->
 <div class="page-container">
     <!-- Content Wrapper START -->
@@ -60,15 +100,15 @@
                         <span>Thêm tài khoản</span></button>
                 </a>
                 <div class="dropdown float-md-right">
-<%--                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
-<%--                        <span>Công cụ</span>--%>
-<%--                    </button>--%>
-<%--                    <div class="dropdown-menu">--%>
-<%--                        <a class="dropdown-item" href="#">In</a>--%>
-<%--                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>--%>
-<%--                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra--%>
-<%--                            Excel</a>--%>
-<%--                    </div>--%>
+                    <%--                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
+                    <%--                        <span>Công cụ</span>--%>
+                    <%--                    </button>--%>
+                    <%--                    <div class="dropdown-menu">--%>
+                    <%--                        <a class="dropdown-item" href="#">In</a>--%>
+                    <%--                        <a class="dropdown-item" id="exportPDF">Lưu file PDF</a>--%>
+                    <%--                        <a class="dropdown-item" onclick="exportTableToExcel('example2','products')" href="#">Xuất ra--%>
+                    <%--                            Excel</a>--%>
+                    <%--                    </div>--%>
                 </div>
                 <div class="m-t-25">
                     <table id="data-table" class="table">
@@ -88,7 +128,7 @@
                             <tr id="${user.id_User}">
                                 <td>${user.userName}</td>
                                 <td class="text-capitalize">
-                                    ${RoleService.getRoleName(user.id_User)}
+                                        ${RoleService.getRoleName(user.id_User)}
                                 </td>
                                 <td id="status">${user.status==true?"đang hoạt động":"đã ngừng hoạt động"}</td>
                                 <td id="lock-unlock">

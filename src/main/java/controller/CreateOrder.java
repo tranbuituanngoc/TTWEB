@@ -87,13 +87,14 @@ public class CreateOrder extends HttpServlet {
         if (user != null) {
             CartService.setCartOrder(user.getId_User(), order.getOrderID());
         }
-        if (OrderService.updateQuantity(order) == -1) {
+        int updateQuantityStatus = OrderService.updateQuantity(order);
+        if ( updateQuantityStatus == -1) {
             request.getSession().setAttribute("errorQuantity", true);
             CartService.removeCartOrder(order.getOrderID());
             response.sendRedirect("/CheckOut");
             return;
         }
-        if (OrderService.updateQuantity(order) == 1) {
+        if (updateQuantityStatus  == 1) {
             OrderService.addOrder(order);
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getSession().setAttribute("order", order);

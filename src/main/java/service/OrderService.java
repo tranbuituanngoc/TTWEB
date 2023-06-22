@@ -40,58 +40,72 @@ public class OrderService {
     }
 
     public static int updateQuantity(Order order){
-            int res = 0;
-            try {
-                Connection connection = JDBCUtil.getConnection();
-                String sql = "UPDATE productimported\n" +
-                        "SET inventoryQuantity = inventoryQuantity - (\n" +
-                        "  SELECT SUM(quantity)\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")\n" +
-                        "WHERE EXISTS (\n" +
-                        "  SELECT 1\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")\n" +
-                        "AND (inventoryQuantity - (\n" +
-                        "  SELECT SUM(quantity)\n" +
-                        "  FROM cart\n" +
-                        "  WHERE cart.id_size = productimported.id_size\n" +
-                        "    AND cart.id_color = productimported.id_color\n" +
-                        "    AND cart.id_product = productimported.id_product\n" +
-                        "    AND cart.id_order = ?\n" +
-                        ")) >= 0;";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, order.getOrderID());
-                statement.setString(2, order.getOrderID());
-                statement.setString(3, order.getOrderID()); // add another parameter for the third occurrence of orderID
-                int rowsAffected = statement.executeUpdate();
-                if (rowsAffected > 0) {
-                    res = 1;
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            // Tạo câu lệnh SELECT để kiểm tra hàng lỗi
+            String selectSql = "SELECT COUNT(*) AS count_error " +
+                    "FROM productimported pi " +
+                    "INNER JOIN cart c ON pi.id_product = c.id_product " +
+                    "AND pi.id_size = c.id_size " +
+                    "AND pi.id_color = c.id_color " +
+                    "WHERE c.id_order = ? " +
+                    "AND pi.inventoryQuantity - c.quantity < 0";
+
+            PreparedStatement statement = connection.prepareStatement(selectSql);
+            statement.setString(1, order.getOrderID());
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra kết quả của câu lệnh SELECT
+            if (resultSet.next()) {
+                int countError = resultSet.getInt("count_error");
+                if (countError > 0) {
+                    System.out.println("Không thể cập nhật. Có hàng lỗi.");
+                    res = -1;
                 } else {
-                    res = -1; // set result to -1 if no rows were updated
+                    // Tiếp tục thực hiện câu lệnh UPDATE nếu không có hàng lỗi
+                    String updateSql = "UPDATE productimported pi " +
+                            "INNER JOIN cart c ON pi.id_product = c.id_product " +
+                            "AND pi.id_size = c.id_size " +
+                            "AND pi.id_color = c.id_color " +
+                            "SET pi.inventoryQuantity = pi.inventoryQuantity - c.quantity " +
+                            "WHERE c.id_order = ?";
+
+                    // Tạo prepared statement cho câu lệnh UPDATE
+                    PreparedStatement updateStatement = connection.prepareStatement(updateSql);
+
+                    // Thiết lập giá trị tham số
+                    updateStatement.setString(1, order.getOrderID());
+
+                    // Thực thi câu lệnh UPDATE
+                    int rowsUpdated = updateStatement.executeUpdate();
+
+                    // Kiểm tra số dòng bị ảnh hưởng bởi câu lệnh UPDATE
+                    if (rowsUpdated > 0) {
+                        System.out.println("Cập nhật thành công. Số dòng bị ảnh hưởng: " + rowsUpdated);
+                        res = 1;
+                    } else {
+                        System.out.println("Không có dòng nào được cập nhật.");
+                        res =-1;
+                    }
+
+                    // Đóng kết nối và các tài nguyên
+                    updateStatement.close();
                 }
-                JDBCUtil.disconection(connection);
-                statement.close();
-            } catch (SQLException e) {
-                res =-1;
-                throw new RuntimeException(e);
             }
-            return res;
+            JDBCUtil.disconection(connection);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
     }
 
     public static List<Order> getAllOrder() {
         List<Order> listOrder = new LinkedList<>();
         try {
             Connection connection = JDBCUtil.getConnection();
-            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user";
+            String sql = "select id_order, u.id_user, payment_id, totalPrice,transport_status_id, status_id, shipping_cost, shipping_time, orderDate, voucher_code, idTransport, fullname from orders o join users u on o.id_user = u.id_user ORDER BY orderDate DESC;";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -236,7 +250,11 @@ public class OrderService {
     }
     public static void main(String[] args) {
 //        System.out.println(OrderService.getAllOrder());
-//        System.out.println(OrderService.getOrder("DH00683"));
+//        System.out.println(OrderService.getOrder("DH89386"));\
+//        Order o = new Order();
+//        o.setOrderID("DH79730");
+//        System.out.println(OrderService.updateQuantity(o));
+
     }
 
 }

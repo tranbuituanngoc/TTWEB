@@ -23,6 +23,10 @@ public class CreateOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Random rand = new Random();
         int randomNumber = rand.nextInt(100000);
         String newId = "DH" + String.format("%05d", randomNumber);
@@ -80,25 +84,22 @@ public class CreateOrder extends HttpServlet {
 //            System.out.println(shippingAdress);
             if (user != null) ShippingAddressService.addShippingAddress(shippingAdress);
         }
-        CartService.setCartOrder(user.getId_User(), order.getOrderID());
-        if (OrderService.updateQuantity(order) == -1) {
-            request.getSession().setAttribute("errorQuantity", true);
-            CartService.removeCartOrder(user.getId_User());
-            response.sendRedirect("/CheckOut");
+        if (user != null) {
+            CartService.setCartOrder(user.getId_User(), order.getOrderID());
         }
-        if (OrderService.updateQuantity(order) == 1) {
+        int updateQuantityStatus = OrderService.updateQuantity(order);
+        if ( updateQuantityStatus == -1) {
+            request.getSession().setAttribute("errorQuantity", true);
+            CartService.removeCartOrder(order.getOrderID());
+            response.sendRedirect("/CheckOut");
+            return;
+        }
+        if (updateQuantityStatus  == 1) {
             OrderService.addOrder(order);
             request.getSession().setAttribute("shippingAdress", shippingAdress);
             request.getSession().setAttribute("order", order);
             System.out.println("success");
             response.sendRedirect("/SuccessOrder");
         }
-
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

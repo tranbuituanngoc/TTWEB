@@ -107,7 +107,7 @@ public class CartService {
 
     public static void addCart(CartUser cartUser, Cart cart, int quantity) {
 //        CartService.deleteCart(cartUser.getIdUser());
-
+            System.out.println(quantity);
             try {
                 Product product = cart.getProduct();
                 Color color = cart.getColor();
@@ -161,7 +161,7 @@ public class CartService {
     public static void setCartOrder(String id_user, String id_order){
         try {
                 PreparedStatement pState = null;
-                String sql = "Update cart set id_order =?  WHERE id_user = ?";
+                String sql = "Update cart set id_order =?  WHERE id_user = ? AND id_order IS NULL";
                 pState = ConnectDB.connect(sql);
                 pState.setString(1, id_order);
                 pState.setString(2, id_user);
@@ -173,12 +173,12 @@ public class CartService {
             }
     }
 
-    public static void removeCartOrder(String id_user){
+    public static void removeCartOrder(String id_order){
         try {
                 PreparedStatement pState = null;
-                String sql = "Update cart set id_order =null WHERE id_user = ?";
+                String sql = "Update cart set id_order =null WHERE id_order = ?";
                 pState = ConnectDB.connect(sql);
-                pState.setString(1, id_user);
+                pState.setString(1, id_order);
                 pState.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);

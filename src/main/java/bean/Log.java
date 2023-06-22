@@ -152,7 +152,7 @@ public class Log extends AbLog implements Serializable {
 
         try {
             // Kết nối cơ sở dữ liệu và truy vấn danh sách Logs
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://vuphecan.mysql.database.azure.com:3306/gachmen_shop", "vuphecan", "AnhHo@ngDepTrai");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM logs");
 

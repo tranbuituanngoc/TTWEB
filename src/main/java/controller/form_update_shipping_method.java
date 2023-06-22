@@ -78,7 +78,7 @@ public class form_update_shipping_method extends HttpServlet {
             RequestBody requestBodyLeadTime = RequestBody.create(MediaType.parse("application/json"), json.toString());
             Request requestLeadTime = new Request.Builder()
                     .url(urlLeadTime)
-                    .header("Authorization", "Bearer "+bearerToken) // thay your_token_here bằng mã xác thực thực
+                    .header("Authorization", "Bearer "+bearerToken) // thay your_token_here bằng mã xác thực
                     .post(requestBodyLeadTime)
                     .build();
 
@@ -89,7 +89,7 @@ public class form_update_shipping_method extends HttpServlet {
             RequestBody requestBodyCalculateFee = RequestBody.create(MediaType.parse("application/json"), json.toString());
             Request requestCalculateFee = new Request.Builder()
                     .url(urlCalculateFee)
-                    .header("Authorization", "Bearer "+bearerToken) // thay your_token_here bằng mã xác thực thực
+                    .header("Authorization", "Bearer "+bearerToken) // thay your_token_here bằng mã xác thực
                     .post(requestBodyCalculateFee)
                     .build();
 

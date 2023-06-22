@@ -653,7 +653,7 @@
             <script>
               $("html, body").animate({ scrollTop: 0 }, "slow");
             </script>
-            <form action="CreateOrder" method="GET">
+            <form action="CreateOrder" method="POST">
 <%--              begin step--%>
             <div class="step">
               <div class="step-sections steps-onepage" step="1">
@@ -737,17 +737,10 @@
                   </div>
                   <div class="section-content">
                     <div class="fieldset">
-                      <form
-                        autocomplete="off"
-                        id="form_update_shipping_method"
-                        class="field default"
-                        accept-charset="UTF-8"
-                        method="post" action="form_update_shipping_method"
-                      >
+                      <div>
                         <input name="utf8" type="hidden" value="✓" />
                         <div class="content-box mt0">
                           <div
-                            id="form_update_location_customer_shipping"
                             class="order-checkout__loading radio-wrapper content-box-row content-box-row-padding content-box-row-secondary"
                             for="customer_pick_at_location_false"
                           >
@@ -907,7 +900,7 @@
                             </div>
                           </div>
                         </div>
-                      </form>
+                      </div>
                     </div>
                   </div>
 

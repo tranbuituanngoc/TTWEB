@@ -2426,7 +2426,9 @@ li.megamenu-img a {
     right: 0;
     left: auto;
 }
-.box-quantity.hot-product2 .actions-primary a {
+.box-quantity.hot-product2 .actions-primary a,
+.box-quantity.hot-product2 .actions-primary button
+{
   background: #e62e04 none repeat scroll 0 0;
   border-color: #e62e04;
   color: #fff;

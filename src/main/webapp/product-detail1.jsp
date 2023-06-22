@@ -196,7 +196,7 @@
                                 <b>Kích thước:</b> ${ProductSizeService.selectByID(product.productID)} <br>
                                 <b>Ứng dụng:</b> ${CategoryService.getCateByID(product.productID)}
                             </p>
-                            <form id="cart-form" action="/addCart" method="get">
+<%--                            <form id="cart-form" action="/addCart" method="get">--%>
                                 <input name="product_id" type="hidden" value="${product.productID}">
                                 <div class="product-size mb-20 clearfix">
                                     <label>Kích thước</label>
@@ -238,12 +238,17 @@
                                 <div class="box-quantity d-flex hot-product2">
                                     <input name="quantity" class="quantity mr-15" type="number" min="1" value="1"
                                            onchange="updateQuantityValue(this)">
-                                    <input name="quantity_value" value="1" type="hidden">
+<%--                                    <input name="quantity_value" value="1" type="hidden">--%>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
                                             <%--                                           <c:url value="addCart?productID=${product.productID}&color=${color_id}" var="addCart"/>--%>
-                                            <a href="addCart?product_id=${product.productID}&color_id=${color_id}&size=${size_id}"
-                                               title="" data-original-title="Thêm vào giỏ"> + Thêm vào giỏ</a>
+                                                <form action="addCart" method="post">
+                                                    <input name="quantity_value" value="1" type="hidden">
+                                                    <input type="hidden" name="productID" value="${product.productID}" >
+                                                    <input type="hidden" name="color" value="${color_id}" >
+                                                    <input type="hidden" name="size" value="${size_id}" >
+                                                    <button type="submit" >+ Thêm vào giỏ</button>
+                                                </form>
                                         </div>
                                         <c:if test="${sessionScope.user !=null}">
                                             <div class="actions-secondary">
@@ -257,7 +262,7 @@
                                         </c:if>
                                     </div>
                                 </div>
-                            </form>
+<%--                            </form>--%>
                             <div class="pro-ref mt-20">
                                 <p><span class="in-stock"><i class="ion-checkmark-round"></i> Còn sẵn ${quantity} sản phẩm</span>
                                 </p>

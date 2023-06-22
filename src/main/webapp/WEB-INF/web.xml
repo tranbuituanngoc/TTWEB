@@ -4,9 +4,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <display-name>GachMen Store</display-name>
-    <listener>
-        <listener-class>Util.MyServletContextListener</listener-class>
-    </listener>
     <filter>
         <filter-name>HomeFilter</filter-name>
         <filter-class>filter.HomeFilter</filter-class>

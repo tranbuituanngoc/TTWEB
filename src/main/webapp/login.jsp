@@ -116,7 +116,7 @@
                         title: "Xác Thực Không Thành Công!",
                         text: "<%=request.getAttribute("error")==null ?" ":request.getAttribute("error")%>",
                         <% String id_user= (String) request.getAttribute("id_user");
-                           String link = "https://riu-store.azurewebsites.net/nguoi-dung?action=xac-thuc-lai&id_user=" + id_user ; %>
+                           String link = "http://localhost:8080/nguoi-dung?action=xac-thuc-lai&id_user=" + id_user ; %>
                         icon: "warning",
                         buttons: {
                             cancel: 'Hủy',

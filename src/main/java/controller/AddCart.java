@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {
-    Jdbi jdbi = Jdbi.create("jdbc:mysql://vuphecan.mysql.database.azure.com:3306/gachmen_shop", "vuphecan", "AnhHo@ngDepTrai");
+    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("product_id");

@@ -5,6 +5,7 @@ import model.KeyUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class KeyUserService {
@@ -38,6 +39,28 @@ public class KeyUserService {
             st.setString(2, idUser);
             System.out.println(sql);
             res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public static String getPublicKeyWithUserID(String id) {
+        String res = null;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "SELECT public_key FROM key_user WHERE id_user=? AND is_active=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            statement.setBoolean(2, true);
+            System.out.println(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                res = resultSet.getString("public_key");
+                break;
+            }
+            JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

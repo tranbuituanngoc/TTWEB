@@ -16,6 +16,7 @@ public class Order implements Serializable {
     private int paymentMethodId;
     private String voucher_code;
     private String idTransport;
+    private String eSign;
 
     public Order() {
     }
@@ -116,6 +117,14 @@ public class Order implements Serializable {
         this.fullName= fullName;
     }
 
+    public String geteSign() {
+        return eSign;
+    }
+
+    public void seteSign(String eSign) {
+        this.eSign = eSign;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -131,6 +140,7 @@ public class Order implements Serializable {
                 ", paymentMethodId=" + paymentMethodId +
                 ", voucher_code='" + voucher_code + '\'' +
                 ", idTransport='" + idTransport + '\'' +
-                '}' + "\n";
+                ", eSign='" + eSign + '\'' +
+                '}';
     }
 }

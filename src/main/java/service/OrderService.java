@@ -3,6 +3,7 @@ package service;
 import database.ConnectDB;
 import database.JDBCUtil;
 import model.Order;
+import model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -216,7 +217,24 @@ public class OrderService {
             return "Lỗi xảy ra khi cập nhật.";
         }
     }
-
+    public static int updateE_SignOrder(String eSign,String id_order) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE orders " +
+                    " SET " +
+                    " e_signature=?"+
+                    " WHERE id_order=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, eSign);
+            st.setString(2, id_order);
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static List<Order> getOrderById(String idUser) {
         List<Order> listOrder = new LinkedList<>();
         try {
@@ -254,7 +272,7 @@ public class OrderService {
 //        Order o = new Order();
 //        o.setOrderID("DH79730");
 //        System.out.println(OrderService.updateQuantity(o));
-
+System.out.println("Tuấn Ngọc");
     }
 
 }

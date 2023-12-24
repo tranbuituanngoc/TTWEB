@@ -28,7 +28,7 @@ public class KeyUser {
         return Base64.getEncoder().encodeToString(privateKey.getEncoded());
     }
 
-    public PublicKey stringToPublicKey(String publicKeyString) {
+    public static PublicKey stringToPublicKey(String publicKeyString) {
         try {
             byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyString);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -40,17 +40,6 @@ public class KeyUser {
         }
     }
 
-    public PrivateKey stringToPrivateKey(String privateKeyString) {
-        try {
-            byte[] privateKeyBytes = Base64.getDecoder().decode(privateKeyString);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
-        } catch (Exception e) {
-            // Xử lý ngoại lệ khi chuyển đổi không thành công
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
     public KeyPair getKeyPair() {

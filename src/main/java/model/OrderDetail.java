@@ -9,6 +9,17 @@ public class OrderDetail implements Serializable {
     private int priceProduct;
     private int productQuantity;
     private int totalPrice;
+    private String eSign;
+
+    public OrderDetail(String productID, String orderID, String nameProduct, int priceProduct, int productQuantity, int totalPrice, String eSign) {
+        this.productID = productID;
+        this.orderID = orderID;
+        this.nameProduct = nameProduct;
+        this.priceProduct = priceProduct;
+        this.productQuantity = productQuantity;
+        this.totalPrice = totalPrice;
+        this.eSign = eSign;
+    }
 
     public OrderDetail(String productID, String orderID, String nameProduct, int priceProduct, int productQuantity, int totalPrice) {
         this.productID = productID;
@@ -65,5 +76,13 @@ public class OrderDetail implements Serializable {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String geteSign() {
+        return eSign;
+    }
+
+    public void seteSign(String eSign) {
+        this.eSign = eSign;
     }
 }

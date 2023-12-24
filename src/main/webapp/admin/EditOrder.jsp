@@ -192,6 +192,19 @@
 
                                     />
                                 </div>
+                                <div class="form-group col-md-12">
+                                    <label class="font-weight-semibold" for="fullAddress"
+                                    >Chữ ký đơn hàng:</label
+                                    >
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="e_signature"
+                                            disabled
+                                            value="${order.eSign}"
+                                            name="e_signature"
+                                    />
+                                </div>
                             </div>
                         </form>
                     </div>

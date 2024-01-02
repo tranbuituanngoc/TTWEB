@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Web_GachMen-sourceJSP" />
         <module name="GachMen_Store" />
-        <module name="TTWEB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

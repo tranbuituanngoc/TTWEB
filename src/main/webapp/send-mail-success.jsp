@@ -63,7 +63,7 @@
 
                             <div class="btn">
                                 <label>Thay đổi mật khẩu thành công!!!</label>
-                                <button class="form-btn mb-10" ><a href="http://localhost:8080//GachMen_Store_war/login.jsp"> Trở Về</a></button>
+                                <button class="form-btn mb-10" ><a href="https://riustore.shop/GachMen_Store_war/login.jsp"> Trở Về</a></button>
                             </div>
                         </form>
                     </div>

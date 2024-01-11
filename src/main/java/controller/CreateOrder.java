@@ -2,6 +2,7 @@ package controller;
 
 import Util.ElectronicSignature;
 import Util.Email;
+import database.DBProperties;
 import model.CartUser;
 import model.Order;
 import model.ShippingAdress;
@@ -168,6 +169,7 @@ public class CreateOrder extends HttpServlet {
     }
 
     public static String getSuccessEmail(String userName) {
+        String domain = DBProperties.getMainDomain();
         String content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                 "<html dir=\"ltr\" xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" lang=\"vi\">\n" +
                 "\n" +
@@ -546,7 +548,7 @@ public class CreateOrder extends HttpServlet {
                 "                                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                                                            <tr>\n" +
                 "                                                                <td align=\"center\" style=\"padding:0;Margin:0;font-size:0px\">\n" +
-                "                                                                    <a target=\"_blank\" href=\"http://localhost:8080/index.jsp\" style=\"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#666666;font-size:14px\"><img src=\"https://atiech.stripocdn.email/content/guids/CABINET_5e6436a83c38621a4bc4e7bbfea401c5/images/logotransparentpng.png\" alt=\"Logo\" style=\"display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic\"\n" +
+                "                                                                    <a target=\"_blank\" href=\"https://riustore.shop/index.jsp\" style=\"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#666666;font-size:14px\"><img src=\"https://atiech.stripocdn.email/content/guids/CABINET_5e6436a83c38621a4bc4e7bbfea401c5/images/logotransparentpng.png\" alt=\"Logo\" style=\"display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic\"\n" +
                 "                                                                            title=\"Logo\" width=\"199\" height=\"53\"></a>\n" +
                 "                                                                </td>\n" +
                 "                                                            </tr>\n" +

@@ -34,4 +34,10 @@ public class DBProperties {
     public static String getDbName() {
         return prop.get("db.databaseName").toString();
     }
+    public static String getMainDomain() {
+        return prop.get("db.mainDomain").toString();
+    }
+    public static String getSubDomain() {
+        return prop.get("db.subDomain").toString();
+    }
 }

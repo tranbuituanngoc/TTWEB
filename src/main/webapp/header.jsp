@@ -327,7 +327,7 @@
                      class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden ">
                     <ul>
                         <c:forEach items="${listCategory}" var="p1">
-                            <li><a href="ListByType?type=${p1.productID}&page=${1}"><span><img src="img\vertical-menu\icon.png"
+                            <li><a href="ListByType?type=${p1.id}&page=${1}"><span><img src="img\vertical-menu\icon.png"
                                                                                         alt="menu-icon"></span>${p1.description}
                             </a></li>
                         </c:forEach>
@@ -346,7 +346,7 @@
                     <nav>
                         <ul class="vertical-menu-list " style="display: none;">
                             <c:forEach items="${listCategory}" var="p1">
-                                <li><a href="ListByType?type=${p1.productID}&page=${1}"><span><img
+                                <li><a href="ListByType?type=${p1.id}&page=${1}"><span><img
                                         src="img\vertical-menu\icon.png" alt="menu-icon"></span>${p1.description}</a>
                                 </li>
                             </c:forEach>

@@ -35,7 +35,11 @@ public class ProductDetail extends HttpServlet {
                         sizeId = Integer.parseInt(sizeId_raw);
                 }
                 int price = ProductImportedService.getPrice(productID, sizeId, colorId);
-                List<Product> listHintForYou = ProductService.listHintForYou();
+
+                ProductService service = new ProductService();
+                List<Product> products  = service.getProducts();
+
+                List<Product> listHintForYou = products.subList(0, Math.min(10, products.size()));
                 List<Category> listCategory = CategoryService.getAllCategory();
                 int quantity = ProductImportedService.getQuantityDetail(productID, sizeId, colorId);
 

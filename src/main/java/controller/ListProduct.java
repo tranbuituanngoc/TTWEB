@@ -14,7 +14,8 @@ import java.util.List;
 public class ListProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product>list = ProductService.getAll();
+        ProductService service = new ProductService();
+        List<Product> list  = service.getProducts();
 //        System.out.println(list);
         int page,show=12;
         int size = list.size();;

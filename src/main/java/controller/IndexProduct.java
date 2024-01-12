@@ -21,21 +21,6 @@ import java.util.List;
 public class IndexProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        List<Product> list = ListProducts.getAllProduct();
-//        List<Product>listNewProduct= ProductService.listNewProduct();
-//        List<Product>listBestSeller=ProductService.listBestSeller();
-//        List<Product>listNewProduct= ProductService.list10NewProduct();
-//        List<Product>listBestSeller=ProductService.list10BestSeller();
-//        List<Product>listHintForYou=ProductService.listHintForYou();
-//        List<Category> listCategory = CategoryService.getAllCategory();
-//        List<Product> listCategoryProduct1 = ProductService.getCategory1();
-//        List<Product> listCategoryProduct2 = ProductService.getCategory2();
-//        List<Product> listCategoryProduct3 = ProductService.getCategory3();
-//        List<Product> listCategoryProduct4 = ProductService.getCategory4();
-//        List<Product> listSellerProduct1 = ProductService.getSeller1();
-//        List<Product> listSellerProduct2 = ProductService.getSeller2();
-//        List<Product> listSellerProduct3 = ProductService.getSeller3();
-//        List<Product> listSellerProduct4 = ProductService.getSeller4();
         ProductService service = new ProductService();
         List<Product> products  = service.getProducts();
         HttpSession session = request.getSession();
@@ -47,10 +32,11 @@ public class IndexProduct extends HttpServlet {
             request.getSession().setAttribute("cartUser",c);
             request.getSession().setAttribute("user", user);
         }
+        List<Category> listCategory = CategoryService.getAllCategory();
         request.setAttribute("listNewProduct", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listBestSeller", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listHintForYou", products.subList(0, Math.min(10, products.size())));
-        request.setAttribute("listCategory", products.subList(0, Math.min(10, products.size())));
+        request.setAttribute("listCategory", listCategory);
         request.setAttribute("listCategoryProduct1", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listCategoryProduct2", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listCategoryProduct3", products.subList(0, Math.min(10, products.size())));
@@ -59,17 +45,6 @@ public class IndexProduct extends HttpServlet {
         request.setAttribute("listSellerProduct2", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listSellerProduct3", products.subList(0, Math.min(10, products.size())));
         request.setAttribute("listSellerProduct4", products.subList(0, Math.min(10, products.size())));
-//        request.setAttribute("listBestSeller", listBestSeller);
-//        request.setAttribute("listHintForYou", listHintForYou);
-//        request.setAttribute("listCategory", listCategory);
-//        request.setAttribute("listCategoryProduct1", listCategoryProduct1);
-//        request.setAttribute("listCategoryProduct2", listCategoryProduct2);
-//        request.setAttribute("listCategoryProduct3", listCategoryProduct3);
-//        request.setAttribute("listCategoryProduct4", listCategoryProduct4);
-//        request.setAttribute("listSellerProduct1", listSellerProduct1);
-//        request.setAttribute("listSellerProduct2", listSellerProduct2);
-//        request.setAttribute("listSellerProduct3", listSellerProduct3);
-//        request.setAttribute("listSellerProduct4", listSellerProduct4);
 
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }

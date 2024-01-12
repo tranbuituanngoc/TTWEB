@@ -14,9 +14,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductService {
-    private List<Product> products;
+    private static List<Product> products;
     public ProductService() {
         if (products == null) {
             products = getAll();
@@ -80,7 +81,7 @@ public class ProductService {
 //                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
 //                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
 //                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-//                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
 
                 product.setThumb(rs.getString("image"));
                 product.setProductID(rs.getString("id_product"));
@@ -99,22 +100,18 @@ public class ProductService {
                         rs.getInt("min_width"),
                         rs.getInt("min_weight"),
                         rs.getString("size_description")));
-
-                listImage.add(new ImageProduct(rs.getInt("id_image"),rs.getString("image")));
                 int price = rs.getInt("min_price");
 
                 product.setColor(listColor);
                 product.setSize(listSize);
                 product.setImage(listImage);
                 product.setPrice(price);
-
                 listProducts.add(product);
             }
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(listProducts);
         return listProducts;
     }
 
@@ -288,6 +285,18 @@ public class ProductService {
         return product;
     }
 
+    public static List<Product> getListNewProduct() {
+// Filter products based on isNew and status
+        List<Product> newActiveProducts = products.stream()
+                .filter(product -> product.getIsNew() == 1 && product.getStatus() == 1)
+                .collect(Collectors.toList());
+
+        // Return at most 10 products (or all if there are fewer than 10)
+        return newActiveProducts.stream()
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
     public static List<Product> listNewProduct() {
         List<Product> listNewProduct;
         // List<Color> listColor;
@@ -332,7 +341,17 @@ public class ProductService {
         return listNewProduct;
 
     }
+    public List<Product> getNewActiveProductsByCategory(String categoryId) {
+        // Filter products based on isNew, status, and category
+        List<Product> newActiveProducts = products.stream()
+                .filter(product -> product.getIsNew() == 1 && product.getStatus() == 1 && product.getCategory().equals(categoryId))
+                .collect(Collectors.toList());
 
+        // Return at most 8 products (or all if there are fewer than 8)
+        return newActiveProducts.stream()
+                .limit(8)
+                .collect(Collectors.toList());
+    }
     public static List<Product> getByType(int type) {
         List<Product> list;
         List<Color> listColor;
@@ -484,6 +503,18 @@ public class ProductService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static List<Product> getListBestSeller() {
+// Filter products based on isNew and status
+        List<Product> newActiveProducts = products.stream()
+                .filter(product ->  product.getStatus() == 1)
+                .collect(Collectors.toList());
+
+        // Return at most 10 products (or all if there are fewer than 10)
+        return newActiveProducts.stream()
+                .limit(20)
+                .collect(Collectors.toList());
     }
 
     public static List<Product> listBestSeller() {
@@ -661,6 +692,18 @@ public class ProductService {
         }
         return listNewProduct;
 
+    }
+
+    public static List<Product> getListHintForYou() {
+// Filter products based on isNew and status
+        List<Product> newActiveProducts = products.stream()
+                .filter(product ->  product.getStatus() == 1)
+                .collect(Collectors.toList());
+
+        // Return at most 10 products (or all if there are fewer than 10)
+        return newActiveProducts.stream()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     public static List<Product> listHintForYou() {

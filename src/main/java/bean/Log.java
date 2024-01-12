@@ -1,5 +1,6 @@
 package bean;
 
+import database.DBProperties;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.jdbi.v3.core.Jdbi;
@@ -152,7 +153,9 @@ public class Log extends AbLog implements Serializable {
 
         try {
             // Kết nối cơ sở dữ liệu và truy vấn danh sách Logs
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+            String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName() + "?useSSL=false";
+            //    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+            Connection conn = DriverManager.getConnection(url, DBProperties.getUsername(), DBProperties.getPassword());
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM logs");
 

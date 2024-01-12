@@ -1,6 +1,7 @@
 package controller;
 
 import bean.Log;
+import database.DBProperties;
 import model.*;
 
 import org.jdbi.v3.core.Jdbi;
@@ -16,7 +17,9 @@ import java.io.IOException;
 
 @WebServlet(name = "AddCart", value = "/addCart")
 public class AddCart extends HttpServlet {
-    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+    String url = "jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName() + "?useSSL=false";
+    //    Jdbi jdbi = Jdbi.create("jdbc:mysql://localhost:3306/gachmen_shop", "root", "");
+    Jdbi jdbi = Jdbi.create(url, DBProperties.getUsername(), DBProperties.getPassword());
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("product_id");

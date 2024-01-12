@@ -132,7 +132,7 @@
                                                             var imgElement = document.createElement('div');
                                                             imgElement.className = 'cart-img';
                                                             var imgLink = document.createElement('a');
-                                                            imgLink.href = 'ProductDetail?productID=' + product.id;
+                                                            imgLink.href = 'ProductDetail?productID=' + product.productID;
                                                             var img = document.createElement('img');
                                                             img.src = product.thumb;
                                                             imgLink.appendChild(img);
@@ -144,7 +144,7 @@
                                                             contentElement.className = 'cart-content';
                                                             var productName = document.createElement('h6');
                                                             var productNameLink = document.createElement('a');
-                                                            productNameLink.href = 'ProductDetail?productID=' + product.id;
+                                                            productNameLink.href = 'ProductDetail?productID=' + product.productID;
                                                             productNameLink.textContent = product.name;
                                                             productName.appendChild(productNameLink);
                                                             contentElement.appendChild(productName);
@@ -327,7 +327,7 @@
                      class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden ">
                     <ul>
                         <c:forEach items="${listCategory}" var="p1">
-                            <li><a href="ListByType?type=${p1.id}&page=${1}"><span><img src="img\vertical-menu\icon.png"
+                            <li><a href="ListByType?type=${p1.productID}&page=${1}"><span><img src="img\vertical-menu\icon.png"
                                                                                         alt="menu-icon"></span>${p1.description}
                             </a></li>
                         </c:forEach>
@@ -346,7 +346,7 @@
                     <nav>
                         <ul class="vertical-menu-list " style="display: none;">
                             <c:forEach items="${listCategory}" var="p1">
-                                <li><a href="ListByType?type=${p1.id}&page=${1}"><span><img
+                                <li><a href="ListByType?type=${p1.productID}&page=${1}"><span><img
                                         src="img\vertical-menu\icon.png" alt="menu-icon"></span>${p1.description}</a>
                                 </li>
                             </c:forEach>

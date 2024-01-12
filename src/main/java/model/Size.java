@@ -11,6 +11,15 @@ public class Size {
     public Size() {
     }
 
+    public Size(int idSize, int height, int length, int width, int weight, String descrip) {
+        this.idSize = idSize;
+        this.height = height;
+        this.length = length;
+        this.width = width;
+        this.weight = weight;
+        this.descrip = descrip;
+    }
+
     public String getDescrip() {
         return descrip;
     }

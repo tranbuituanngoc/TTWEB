@@ -16,44 +16,105 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductService {
+    private List<Product> products;
+    public ProductService() {
+        if (products == null) {
+            products = getAll();
+        }
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
 
     public static List<Product> getAll() {
         List<Product> listProducts;
-        List<Color> listColor;
-        List<Size> listSize;
-        List<ImageProduct> listImage;
+        List<Color> listColor = new ArrayList<>();
+        List<Size> listSize = new ArrayList<>();
+        List<ImageProduct> listImage =new ArrayList<>();
 
         try {
             PreparedStatement pState = null;
             Connection connection = JDBCUtil.getConnection();
-            String sql = "select * from products";
+            String sql =
+                    "SELECT " +
+                            "p.id_product, " +
+                            "p.name, " +
+                            "p.description, " +
+                            "p.status, " +
+                            "p.isNew, " +
+                            "p.sale, " +
+                            "p.id_category, " +
+                            "MIN(pi.price) AS min_price, " +
+                            "MIN(pi.id_color) AS id_color, " +
+                            "MIN(pi.id_size) AS id_size, " +
+                            "MIN(c.descrip) AS color_description, " +
+                            "MIN(s.descrip) AS size_description, " +
+                            "MIN(s.height) AS min_height, " +
+                            "MIN(s.length) AS min_length, " +
+                            "MIN(s.width) AS min_width, " +
+                            "MIN(s.weight) AS min_weight, " +
+                            "i.image, " +
+                            "i.id_image,"+
+                            "i.type " +
+                            "FROM " +
+                            "products p " +
+                            "JOIN " +
+                            "productimported pi ON p.id_product = pi.id_product " +
+                            "JOIN " +
+                            "colors c ON c.id_color = pi.id_color " +
+                            "JOIN " +
+                            "sizes s ON s.id_size = pi.id_size " +
+                            "JOIN " +
+                            "imagesproduct i ON i.id_product = p.id_product " +
+                            "WHERE " +
+                            "i.type = 'thumb' " +
+                            "GROUP BY " +
+                            "p.id_product, p.name, p.description, p.status, p.isNew, p.sale, p.id_category, i.image ,i.id_image, i.type";
             pState = connection.prepareStatement(sql);
             ResultSet rs = pState.executeQuery();
             listProducts = new LinkedList<>();
             while (rs.next()) {
                 Product product = new Product();
-                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
-                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
-                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
-                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
-                product.setThumb(ProductImageService.getThumbProduct(rs.getString("id_product")));
+
+//                int price = ProductImportedService.getFirstPrice(rs.getString("id_product"));
+//                listColor = ProductImportedService.getColorProduct(rs.getString("id_product"));
+//                listSize = ProductImportedService.getSizeProduct(rs.getString("id_product"));
+//                listImage = ProductImageService.getAllImageProduct(rs.getString("id_product"));
+
+                product.setThumb(rs.getString("image"));
                 product.setProductID(rs.getString("id_product"));
                 product.setProductName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
                 product.setSalePrice(rs.getInt("sale"));
                 product.setIsNew(rs.getInt("isNew"));
                 product.setStatus(rs.getInt("status"));
+                product.setCategory(rs.getString("id_category"));
+
+                listColor.add(new Color(rs.getInt("id_color"),rs.getString("color_description")));
+                listSize.add(new Size(
+                        rs.getInt("id_size"),
+                        rs.getInt("min_height"),
+                        rs.getInt("min_length"),
+                        rs.getInt("min_width"),
+                        rs.getInt("min_weight"),
+                        rs.getString("size_description")));
+
+                listImage.add(new ImageProduct(rs.getInt("id_image"),rs.getString("image")));
+                int price = rs.getInt("min_price");
+
                 product.setColor(listColor);
                 product.setSize(listSize);
-                product.setCategory(rs.getString("id_category"));
                 product.setImage(listImage);
                 product.setPrice(price);
+
                 listProducts.add(product);
             }
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(listProducts);
         return listProducts;
     }
 

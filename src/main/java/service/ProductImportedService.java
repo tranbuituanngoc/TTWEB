@@ -248,6 +248,7 @@ public class ProductImportedService {
     public static int getFirstPrice(String idProduct){
         int res =0;
         try {
+
             Connection connection = JDBCUtil.getConnection();
             String sql = "SELECT price FROM productimported WHERE id_product=? ORDER BY id_productImported ASC\n" +
                     "LIMIT 1;";
@@ -260,6 +261,7 @@ public class ProductImportedService {
             }
             JDBCUtil.disconection(connection);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return res;

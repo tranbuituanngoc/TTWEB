@@ -137,12 +137,33 @@ public class CartService {
             pState.setInt(1, quantity);
             pState.setInt(2, idCart);
             pState.executeUpdate();
+            System.out.println("success");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static void updateQuantityProductInCart(int quantity, String idOrder, String idProduct, int idSize, int idColor) {
+        try {
+            PreparedStatement pState = null;
+            String sql = "Update cart set quantity =?  WHERE id_order= ? AND id_product=? AND id_size=? AND id_color=?";
+            pState = ConnectDB.connect(sql);
+            pState.setInt(1, quantity);
+            pState.setString(2, idOrder);
+            pState.setString(3, idProduct);
+            pState.setInt(4, idSize);
+            pState.setInt(5, idColor);
+            int affectedRows = pState.executeUpdate();
+            System.out.println("Row Affected: " + affectedRows);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static void deleteCart(int idCart){
         try {

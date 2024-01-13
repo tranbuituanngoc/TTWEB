@@ -239,6 +239,25 @@ public class OrderService {
         return res;
     }
 
+    public static int updateTotalPrice(int totalPrice, String id_order) {
+        int res = 0;
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            String sql = "UPDATE orders " +
+                    " SET " +
+                    " totalPrice=?" +
+                    " WHERE id_order=?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, totalPrice);
+            st.setString(2, id_order);
+            System.out.println(sql);
+            res = st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static List<Order> getOrderById(String idUser) {
         List<Order> listOrder = new LinkedList<>();
         try {

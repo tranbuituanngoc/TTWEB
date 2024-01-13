@@ -49,6 +49,7 @@ public class CreateOrder extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             request.getSession().setAttribute("userInvalid", true);
+            request.setAttribute("orderID", order.getOrderID());
             response.sendRedirect("/CheckOut");
         }
         String paymentMethod_raw = request.getParameter("payment-method");
@@ -94,7 +95,7 @@ public class CreateOrder extends HttpServlet {
             shippingAdress.setWardId(ward_id);
             if (user != null) shippingAdress.setUserId(user.getId_User());
 //            System.out.println(shippingAdress);
-            if (user != null) ShippingAddressService.addShippingAddress(shippingAdress);
+            if (user != null) ShippingAddressService.addShippingAddress(shippingAdress,order.getOrderID());
         }
         if (user != null) {
             CartService.setCartOrder(user.getId_User(), order.getOrderID());
@@ -103,6 +104,7 @@ public class CreateOrder extends HttpServlet {
         if (updateQuantityStatus == -1) {
             request.getSession().setAttribute("errorQuantity", true);
             CartService.removeCartOrder(order.getOrderID());
+            request.setAttribute("orderID", order.getOrderID());
 
             response.sendRedirect("/CheckOut");
             return;

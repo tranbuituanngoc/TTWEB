@@ -11,7 +11,7 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 24/12/2023 17:26:57
+ Date: 14/01/2024 01:42:56
 */
 
 SET NAMES utf8mb4;
@@ -32,37 +32,15 @@ CREATE TABLE `cart`  (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   `id_order` varchar(255) CHARACTER SET utf8 COLLATE utf8_vietnamese_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1252 CHARACTER SET = utf8 COLLATE = utf8_vietnamese_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1258 CHARACTER SET = utf8 COLLATE = utf8_vietnamese_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (1223, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-06-21 10:29:45', '2023-06-21 17:36:53', 'DH88601');
-INSERT INTO `cart` VALUES (1224, 'kh61550081', 'sp15653637', 10, 1, 1, '2023-06-21 10:29:48', '2023-06-21 17:36:53', 'DH88601');
-INSERT INTO `cart` VALUES (1225, 'kh61550081', 'sp13690420', 9, 1, 9999, '2023-06-21 17:36:10', '2023-06-21 17:36:53', 'DH88601');
-INSERT INTO `cart` VALUES (1227, 'kh02094306', 'sp17407009', 11, 7, 1, '2023-06-21 23:58:23', '2023-06-21 23:59:29', 'DH05963');
-INSERT INTO `cart` VALUES (1228, 'kh61550081', 'sp17218684', 11, 7, 1, '2023-06-22 01:13:03', '2023-06-22 01:13:25', 'DH70526');
-INSERT INTO `cart` VALUES (1229, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-06-22 09:09:22', '2023-06-22 10:32:54', 'DH37753');
-INSERT INTO `cart` VALUES (1231, 'kh61550081', 'sp15653637', 10, 1, 1, '2023-06-22 09:15:17', '2023-06-22 10:32:54', 'DH37753');
-INSERT INTO `cart` VALUES (1233, 'kh61550081', 'sp17218684', 11, 7, 99, '2023-06-22 10:20:08', '2023-06-22 10:32:54', 'DH37753');
-INSERT INTO `cart` VALUES (1234, 'kh61550081', 'sp13690420', 9, 1, 73, '2023-06-22 10:32:29', '2023-06-22 10:32:54', 'DH37753');
-INSERT INTO `cart` VALUES (1235, 'kh61550081', 'sp13690420', 9, 1, 73, '2023-06-22 10:33:20', '2023-06-22 10:33:39', 'DH95382');
-INSERT INTO `cart` VALUES (1236, 'kh02094306', 'sp13690420', 9, 1, 1, '2023-06-22 13:59:16', '2023-06-22 14:00:19', 'DH25162');
-INSERT INTO `cart` VALUES (1237, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-12-19 17:14:39', '2023-12-19 17:15:12', 'DH91630');
-INSERT INTO `cart` VALUES (1238, 'kh61550081', 'sp15653637', 10, 1, 1, '2023-12-19 17:14:43', '2023-12-19 17:15:12', 'DH91630');
-INSERT INTO `cart` VALUES (1239, 'kh61550081', 'sp17917426', 2, 5, 1, '2023-12-19 17:22:56', '2023-12-19 17:23:28', 'DH59301');
-INSERT INTO `cart` VALUES (1240, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-12-23 12:14:09', '2023-12-23 12:14:41', 'DH29711');
-INSERT INTO `cart` VALUES (1241, 'kh61550081', 'sp13690420', 9, 1, 4, '2023-12-23 13:13:45', '2023-12-23 13:14:46', 'DH20652');
-INSERT INTO `cart` VALUES (1242, 'kh61550081', 'sp15653637', 10, 1, 10, '2023-12-23 13:13:48', '2023-12-23 13:14:46', 'DH20652');
-INSERT INTO `cart` VALUES (1243, 'kh61550081', 'sp17218684', 11, 7, 1, '2023-12-23 13:13:51', '2023-12-23 13:14:46', 'DH20652');
-INSERT INTO `cart` VALUES (1244, 'kh61550081', 'sp13690420', 9, 1, 10, '2023-12-24 16:14:52', '2023-12-24 16:15:38', 'DH34893');
-INSERT INTO `cart` VALUES (1245, 'kh61550081', 'sp17218684', 11, 7, 10, '2023-12-24 16:14:55', '2023-12-24 16:15:38', 'DH34893');
-INSERT INTO `cart` VALUES (1246, 'kh61550081', 'sp13690420', 9, 1, 10, '2023-12-24 16:17:08', '2023-12-24 16:17:39', 'DH84816');
-INSERT INTO `cart` VALUES (1247, 'kh61550081', 'sp15653637', 10, 1, 10, '2023-12-24 16:17:11', '2023-12-24 16:17:39', 'DH84816');
-INSERT INTO `cart` VALUES (1248, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-12-24 16:50:47', '2023-12-24 16:51:21', 'DH99949');
-INSERT INTO `cart` VALUES (1249, 'kh61550081', 'sp15653637', 10, 1, 1, '2023-12-24 16:50:50', '2023-12-24 16:51:21', 'DH99949');
-INSERT INTO `cart` VALUES (1250, 'kh61550081', 'sp13690420', 9, 1, 1, '2023-12-24 17:10:24', '2023-12-24 17:10:45', 'DH56370');
-INSERT INTO `cart` VALUES (1251, 'kh61550081', 'sp15653637', 10, 1, 1, '2023-12-24 17:10:32', '2023-12-24 17:10:45', 'DH56370');
+INSERT INTO `cart` VALUES (1253, 'kh61550081', 'sp15653637', 10, 1, 12, '2024-01-13 18:59:15', '2024-01-14 01:27:02', 'DH81049');
+INSERT INTO `cart` VALUES (1254, 'kh61550081', 'sp13690420', 9, 1, 5, '2024-01-13 18:59:18', '2024-01-13 19:00:16', 'DH81049');
+INSERT INTO `cart` VALUES (1255, 'kh61550081', 'sp17407009', 11, 7, 15, '2024-01-13 18:59:22', '2024-01-13 19:00:16', 'DH81049');
+INSERT INTO `cart` VALUES (1257, 'kh61550081', 'sp13690420', 9, 1, 6, '2024-01-13 19:17:39', '2024-01-14 01:15:11', 'DH42832');
 
 -- ----------------------------
 -- Table structure for categories
@@ -472,54 +450,87 @@ CREATE TABLE `logs`  (
 -- Records of logs
 -- ----------------------------
 INSERT INTO `logs` VALUES (-6099038480537012977, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-19 20:43:15', 'success');
+INSERT INTO `logs` VALUES (10379046, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:05:41', 'success');
+INSERT INTO `logs` VALUES (10525924, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 22:05:30', 'success');
 INSERT INTO `logs` VALUES (11122281, 3, 'tuanngoc12345', 'UserController', 'Đăng nhập thất bại', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:15', 'failed');
+INSERT INTO `logs` VALUES (11347424, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:30:02', 'success');
 INSERT INTO `logs` VALUES (11359255, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 13:13:48', 'success');
 INSERT INTO `logs` VALUES (12161929, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:11:32', 'success');
+INSERT INTO `logs` VALUES (12430090, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:59:30', 'success');
+INSERT INTO `logs` VALUES (12495539, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:32:58', 'success');
 INSERT INTO `logs` VALUES (12839163, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:14:01', 'success');
 INSERT INTO `logs` VALUES (13159020, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:51:25', 'success');
+INSERT INTO `logs` VALUES (13405195, 1, 'kh02094306', 'CheckOut', 'Tiến hành thanh toán', '171.246.202.52', 'Chrome 8', '2024-01-13 19:16:14', 'success');
 INSERT INTO `logs` VALUES (13630016, 1, 'tuanngoc1234', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 16:52:27', 'success');
 INSERT INTO `logs` VALUES (13829097, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:42:58', 'success');
 INSERT INTO `logs` VALUES (13924442, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:44:07', 'failed');
 INSERT INTO `logs` VALUES (14817393, 1, 'tuanngoc123', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 16:43:29', 'success');
 INSERT INTO `logs` VALUES (14936727, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:16:08', 'success');
+INSERT INTO `logs` VALUES (15007043, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:17:39', 'success');
 INSERT INTO `logs` VALUES (15043620, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 12:33:25', 'success');
+INSERT INTO `logs` VALUES (15311578, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 16:42:42', 'success');
 INSERT INTO `logs` VALUES (15556841, 3, 'tuanngoc', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 21:56:53', 'failed');
+INSERT INTO `logs` VALUES (15984971, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:18:00', 'success');
 INSERT INTO `logs` VALUES (16199150, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:30:01', 'success');
 INSERT INTO `logs` VALUES (16431687, 1, 'tuanngoc1234567', 'UserController', 'Đăng ký thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:37:07', 'success');
+INSERT INTO `logs` VALUES (18017675, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:54:10', 'success');
 INSERT INTO `logs` VALUES (18496902, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:16:03', 'success');
+INSERT INTO `logs` VALUES (18575560, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:54:22', 'success');
 INSERT INTO `logs` VALUES (19131303, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:24:34', 'success');
+INSERT INTO `logs` VALUES (19446311, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:01:39', 'success');
+INSERT INTO `logs` VALUES (19884909, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:35:33', 'success');
 INSERT INTO `logs` VALUES (19996752, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:17:09', 'success');
 INSERT INTO `logs` VALUES (20394568, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:10:18', 'success');
 INSERT INTO `logs` VALUES (20656302, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 23:34:13', 'success');
 INSERT INTO `logs` VALUES (20866875, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:29:33', 'success');
+INSERT INTO `logs` VALUES (21058598, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 22:49:36', 'success');
+INSERT INTO `logs` VALUES (21537950, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:46:08', 'success');
 INSERT INTO `logs` VALUES (21557042, 1, 'kh02094306', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '27.65.196.161', 'Chrome 8', '2023-06-22 13:59:16', 'success');
+INSERT INTO `logs` VALUES (21801378, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 13:31:45', 'success');
+INSERT INTO `logs` VALUES (22520180, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 15:53:53', 'success');
 INSERT INTO `logs` VALUES (22795344, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:12:35', 'success');
+INSERT INTO `logs` VALUES (23135647, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:52:15', 'success');
 INSERT INTO `logs` VALUES (23506821, 1, 'kh55038582', 'UserController', 'Đã gửi Email xác thực tài khoản', '171.246.209.122', 'Chrome 8', '2023-06-20 16:57:23', 'success');
 INSERT INTO `logs` VALUES (23918297, 1, 'tuanngoc1234', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:50:05', 'success');
+INSERT INTO `logs` VALUES (23998940, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 16:51:52', 'success');
 INSERT INTO `logs` VALUES (24024726, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.233.166.202', 'Chrome 8', '2023-12-24 16:50:55', 'success');
 INSERT INTO `logs` VALUES (25246247, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 23:33:51', 'success');
+INSERT INTO `logs` VALUES (25871960, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:57:47', 'success');
 INSERT INTO `logs` VALUES (26408956, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:49', 'success');
 INSERT INTO `logs` VALUES (27421420, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 12:54:03', 'success');
+INSERT INTO `logs` VALUES (27688457, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 16:42:27', 'success');
 INSERT INTO `logs` VALUES (28714320, 1, 'adsdasd', 'UserController', 'Đăng ký thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 16:57:23', 'success');
 INSERT INTO `logs` VALUES (29748341, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:29:42', 'success');
+INSERT INTO `logs` VALUES (29842367, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 18:05:03', 'success');
 INSERT INTO `logs` VALUES (30250289, 1, 'kh56514155', 'forgetPass', 'Gửi email thay đổi mật khẩu thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:05:13', 'success');
 INSERT INTO `logs` VALUES (30564304, 1, 'tuanngoc1234', 'UserController', 'Đăng ký thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:40:49', 'success');
 INSERT INTO `logs` VALUES (30798648, 3, 'tuanngoc12345', 'UserController', 'Đăng nhập thất bại', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:24', 'failed');
+INSERT INTO `logs` VALUES (31217822, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:09:39', 'success');
+INSERT INTO `logs` VALUES (31378179, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 15:31:28', 'success');
 INSERT INTO `logs` VALUES (31441139, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.220.126', 'Chrome 8', '2023-12-19 17:22:34', 'success');
+INSERT INTO `logs` VALUES (31454873, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:22:37', 'success');
+INSERT INTO `logs` VALUES (31500846, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:46:38', 'success');
+INSERT INTO `logs` VALUES (31560824, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:59:32', 'success');
+INSERT INTO `logs` VALUES (31816787, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.202.52', 'Chrome 8', '2024-01-13 19:17:44', 'success');
 INSERT INTO `logs` VALUES (32011821, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:43', 'success');
 INSERT INTO `logs` VALUES (32903555, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:15', 'success');
+INSERT INTO `logs` VALUES (33638592, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 22:03:14', 'success');
 INSERT INTO `logs` VALUES (33659756, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-20 23:41:12', 'success');
+INSERT INTO `logs` VALUES (33856770, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:19:31', 'success');
 INSERT INTO `logs` VALUES (34790614, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:10:51', 'success');
 INSERT INTO `logs` VALUES (34865201, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-19 17:22:56', 'success');
 INSERT INTO `logs` VALUES (35227048, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 13:13:51', 'success');
 INSERT INTO `logs` VALUES (35309071, 1, 'tuanngoc1234', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 16:43:12', 'success');
+INSERT INTO `logs` VALUES (36380290, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:12:05', 'success');
 INSERT INTO `logs` VALUES (36941115, 4, 'kh61550081', 'ChangePass', 'Thay đổi mật khẩu thất bại', '171.246.220.126', 'Chrome 8', '2023-12-07 12:56:16', 'failed');
+INSERT INTO `logs` VALUES (37204227, 3, 'tuanngoc', 'UserController', 'Đăng nhập thất bại', '171.246.202.52', 'Chrome 8', '2024-01-12 16:42:26', 'failed');
 INSERT INTO `logs` VALUES (37225350, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:45:43', 'success');
 INSERT INTO `logs` VALUES (37554249, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:50:50', 'success');
 INSERT INTO `logs` VALUES (37666042, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:41:49', 'success');
 INSERT INTO `logs` VALUES (37802956, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 13:14:47', 'success');
 INSERT INTO `logs` VALUES (37942256, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:17:43', 'success');
 INSERT INTO `logs` VALUES (38390252, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 10:29:53', 'success');
+INSERT INTO `logs` VALUES (38783669, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:29:31', 'success');
 INSERT INTO `logs` VALUES (39364580, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:37:59', 'success');
 INSERT INTO `logs` VALUES (39541962, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 17:36:53', 'success');
 INSERT INTO `logs` VALUES (39605477, 3, 'tuanngoc', 'UserController', 'Đăng ký thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:55:05', 'failed');
@@ -527,34 +538,51 @@ INSERT INTO `logs` VALUES (40157133, 1, 'kh61550081', 'UserController', 'Đăng 
 INSERT INTO `logs` VALUES (40162233, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:22:53', 'success');
 INSERT INTO `logs` VALUES (41141917, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:28:25', 'success');
 INSERT INTO `logs` VALUES (41331099, 3, 'abcdedf', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-21 10:22:43', 'failed');
+INSERT INTO `logs` VALUES (42264759, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:17:46', 'success');
+INSERT INTO `logs` VALUES (42365769, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-14 01:26:44', 'success');
 INSERT INTO `logs` VALUES (42691868, 3, 'kh56514155', 'verifyAccount', 'Xác thực tài khoản thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 19:10:25', 'failed');
 INSERT INTO `logs` VALUES (42906734, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:29:49', 'success');
 INSERT INTO `logs` VALUES (43708719, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:10:49', 'success');
 INSERT INTO `logs` VALUES (44482616, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:15:34', 'success');
+INSERT INTO `logs` VALUES (44544619, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 14:01:29', 'success');
 INSERT INTO `logs` VALUES (44899560, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:30:07', 'success');
+INSERT INTO `logs` VALUES (45672799, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:54:39', 'success');
 INSERT INTO `logs` VALUES (45702412, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:23:03', 'success');
+INSERT INTO `logs` VALUES (45880220, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:17:47', 'success');
 INSERT INTO `logs` VALUES (46038159, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 12:14:10', 'success');
 INSERT INTO `logs` VALUES (46326882, 1, 'kh61550081', 'ChangePass', 'Thay đổi mật khẩu thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:52:05', 'success');
 INSERT INTO `logs` VALUES (46989385, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.220.126', 'Chrome 8', '2023-12-19 17:23:07', 'success');
+INSERT INTO `logs` VALUES (48667742, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:36:21', 'success');
+INSERT INTO `logs` VALUES (48909026, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:44:40', 'success');
 INSERT INTO `logs` VALUES (49302097, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:12:17', 'success');
 INSERT INTO `logs` VALUES (49443999, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:10:32', 'success');
+INSERT INTO `logs` VALUES (49517685, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:34:53', 'success');
+INSERT INTO `logs` VALUES (49581829, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:59:19', 'success');
 INSERT INTO `logs` VALUES (49922531, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:13:59', 'success');
 INSERT INTO `logs` VALUES (50120125, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:16:19', 'success');
+INSERT INTO `logs` VALUES (50156260, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:44:08', 'success');
 INSERT INTO `logs` VALUES (50214870, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:26:10', 'success');
 INSERT INTO `logs` VALUES (51139116, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:56:09', 'success');
 INSERT INTO `logs` VALUES (51588406, 1, 'kh27326792', 'UserController', 'Đã gửi Email xác thực tài khoản', '171.246.220.126', 'Chrome 8', '2023-12-07 12:35:31', 'success');
+INSERT INTO `logs` VALUES (52255787, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 16:42:36', 'success');
 INSERT INTO `logs` VALUES (52944931, 1, 'kh56514155', 'forgetPass', 'Mật khẩu đã được thay đổi thành công!', '171.246.209.122', 'Chrome 8', '2023-06-20 21:09:28', 'success');
 INSERT INTO `logs` VALUES (53046843, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 11:03:41', 'success');
 INSERT INTO `logs` VALUES (53174070, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.220.126', 'Chrome 8', '2023-12-23 13:14:04', 'success');
 INSERT INTO `logs` VALUES (53776595, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 23:21:12', 'success');
+INSERT INTO `logs` VALUES (53858531, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-14 00:24:22', 'success');
 INSERT INTO `logs` VALUES (53959796, 1, 'kh61550081', 'ChangePass', 'Thay đổi mật khẩu thành công', '', 'Chrome 8', '2023-06-20 21:12:49', 'success');
 INSERT INTO `logs` VALUES (53961585, 1, 'tuanngoc1234', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 16:58:24', 'success');
+INSERT INTO `logs` VALUES (54203639, 1, 'kh02094306', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:16:07', 'success');
 INSERT INTO `logs` VALUES (54367275, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 10:23:18', 'success');
+INSERT INTO `logs` VALUES (55026629, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:42:19', 'success');
 INSERT INTO `logs` VALUES (55167852, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:24:37', 'success');
 INSERT INTO `logs` VALUES (55305624, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 10:12:47', 'success');
+INSERT INTO `logs` VALUES (55494844, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:25:04', 'success');
 INSERT INTO `logs` VALUES (55653059, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:10:24', 'success');
+INSERT INTO `logs` VALUES (55805536, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 16:59:11', 'success');
 INSERT INTO `logs` VALUES (56547279, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:14:48', 'success');
 INSERT INTO `logs` VALUES (56568540, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:30:15', 'success');
+INSERT INTO `logs` VALUES (57265482, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:17:04', 'success');
 INSERT INTO `logs` VALUES (57476651, 1, '', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 16:36:06', 'success');
 INSERT INTO `logs` VALUES (57711923, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.233.166.202', 'Chrome 8', '2023-12-24 16:17:20', 'success');
 INSERT INTO `logs` VALUES (57986728, 3, 'tuanngoc123', 'UserController', 'Tài khoản chưa được xác thực.', '171.246.209.122', 'Chrome 8', '2023-06-20 16:40:03', 'failed');
@@ -563,21 +591,39 @@ INSERT INTO `logs` VALUES (58736126, 1, 'kh27420599', 'verifyAccount', 'Xác th�
 INSERT INTO `logs` VALUES (59208157, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 17:35:59', 'success');
 INSERT INTO `logs` VALUES (59373575, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:12:24', 'success');
 INSERT INTO `logs` VALUES (59639389, 3, '', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:36:06', 'failed');
+INSERT INTO `logs` VALUES (59977380, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:13:36', 'success');
 INSERT INTO `logs` VALUES (60081044, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 17:36:45', 'success');
+INSERT INTO `logs` VALUES (60221198, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:32:40', 'success');
+INSERT INTO `logs` VALUES (60747380, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:19:25', 'success');
 INSERT INTO `logs` VALUES (60941613, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-06 14:39:31', 'success');
 INSERT INTO `logs` VALUES (61469731, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 12:54:18', 'success');
+INSERT INTO `logs` VALUES (61625679, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 22:54:17', 'success');
+INSERT INTO `logs` VALUES (62062695, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:20:49', 'success');
 INSERT INTO `logs` VALUES (62171372, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 13:13:45', 'success');
 INSERT INTO `logs` VALUES (62399099, 1, 'kh02094306', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 18:20:19', 'success');
+INSERT INTO `logs` VALUES (62713618, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:18:15', 'success');
+INSERT INTO `logs` VALUES (62882286, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:46:01', 'success');
 INSERT INTO `logs` VALUES (63515381, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:03:09', 'success');
+INSERT INTO `logs` VALUES (64192950, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:56:14', 'success');
 INSERT INTO `logs` VALUES (64244496, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 10:24:58', 'success');
+INSERT INTO `logs` VALUES (64260532, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-14 00:01:36', 'success');
 INSERT INTO `logs` VALUES (64313833, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:13:41', 'success');
+INSERT INTO `logs` VALUES (64690244, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:03:49', 'success');
+INSERT INTO `logs` VALUES (64867599, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 15:56:30', 'success');
+INSERT INTO `logs` VALUES (66575176, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:02:40', 'success');
+INSERT INTO `logs` VALUES (67217789, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-14 01:14:44', 'success');
+INSERT INTO `logs` VALUES (67468002, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:57:05', 'success');
 INSERT INTO `logs` VALUES (67604037, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:38:06', 'failed');
+INSERT INTO `logs` VALUES (67839820, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:27:58', 'success');
 INSERT INTO `logs` VALUES (67850602, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:10:46', 'success');
 INSERT INTO `logs` VALUES (68252432, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 16:49:14', 'success');
+INSERT INTO `logs` VALUES (69610056, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 15:39:35', 'success');
 INSERT INTO `logs` VALUES (69692599, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 10:15:45', 'success');
+INSERT INTO `logs` VALUES (69991625, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 17:04:22', 'success');
 INSERT INTO `logs` VALUES (70006295, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:57:03', 'success');
 INSERT INTO `logs` VALUES (70112722, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 12:14:04', 'success');
 INSERT INTO `logs` VALUES (70214627, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:22:28', 'success');
+INSERT INTO `logs` VALUES (70339544, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:59:23', 'success');
 INSERT INTO `logs` VALUES (71458085, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:50:43', 'success');
 INSERT INTO `logs` VALUES (71644553, 1, 'kh27641389', 'verifyAccount', 'Xác thực tài khoản thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 12:41:30', 'success');
 INSERT INTO `logs` VALUES (72212049, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:58:01', 'success');
@@ -585,28 +631,43 @@ INSERT INTO `logs` VALUES (72247371, 1, 'kh61550081', 'SuccessOrder', 'Đặt h�
 INSERT INTO `logs` VALUES (72628741, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.233.166.202', 'Chrome 8', '2023-12-24 17:10:36', 'success');
 INSERT INTO `logs` VALUES (73152331, 1, 'tuanngoc123', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 16:39:30', 'success');
 INSERT INTO `logs` VALUES (73972317, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 23:27:32', 'success');
+INSERT INTO `logs` VALUES (74300127, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:32:47', 'success');
 INSERT INTO `logs` VALUES (74337495, 1, 'kh61550081', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:56:41', 'success');
 INSERT INTO `logs` VALUES (74561802, 1, 'kh02094306', 'CheckOut', 'Tiến hành thanh toán', '27.65.196.161', 'Chrome 8', '2023-06-22 13:59:42', 'success');
 INSERT INTO `logs` VALUES (75549731, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:43:58', 'failed');
+INSERT INTO `logs` VALUES (77532824, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:53:10', 'success');
 INSERT INTO `logs` VALUES (78259181, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:14:52', 'success');
+INSERT INTO `logs` VALUES (78260832, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.202.52', 'Chrome 8', '2024-01-13 18:59:45', 'success');
 INSERT INTO `logs` VALUES (79036203, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:15:25', 'success');
+INSERT INTO `logs` VALUES (79427324, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-14 01:18:45', 'success');
 INSERT INTO `logs` VALUES (79772307, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:24:06', 'success');
 INSERT INTO `logs` VALUES (80060297, 1, 'kh02094306', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 18:19:50', 'success');
+INSERT INTO `logs` VALUES (80080134, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:06:12', 'success');
+INSERT INTO `logs` VALUES (81140370, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:02:54', 'success');
 INSERT INTO `logs` VALUES (81161244, 1, 'kh02094306', 'CheckOut', 'Tiến hành thanh toán', '171.246.209.122', 'Chrome 8', '2023-06-21 18:20:23', 'success');
 INSERT INTO `logs` VALUES (81341262, 3, 'tuanngoc123456', 'UserController', 'Đăng ký thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:56:37', 'failed');
+INSERT INTO `logs` VALUES (81845064, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:30:41', 'success');
 INSERT INTO `logs` VALUES (81992941, 1, 'kh02094306', 'SuccessOrder', 'Đặt hàng thành công', '27.65.196.161', 'Chrome 8', '2023-06-22 14:00:19', 'success');
 INSERT INTO `logs` VALUES (82222716, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '27.65.196.161', 'Chrome 8', '2023-06-22 13:59:04', 'success');
 INSERT INTO `logs` VALUES (82270687, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 09:47:42', 'success');
 INSERT INTO `logs` VALUES (82593182, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:43:34', 'failed');
+INSERT INTO `logs` VALUES (82775823, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 22:27:39', 'success');
+INSERT INTO `logs` VALUES (82820079, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:21:37', 'success');
+INSERT INTO `logs` VALUES (83028695, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:59:09', 'success');
+INSERT INTO `logs` VALUES (83040405, 1, 'kh02094306', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-12 16:52:29', 'success');
 INSERT INTO `logs` VALUES (83171384, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 22:31:01', 'success');
+INSERT INTO `logs` VALUES (83188941, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:15:52', 'success');
 INSERT INTO `logs` VALUES (83543117, 1, 'kh27420599', 'UserController', 'Đã gửi Email xác thực tài khoản', '171.246.220.126', 'Chrome 8', '2023-12-07 12:37:03', 'success');
 INSERT INTO `logs` VALUES (83566557, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:43:23', 'failed');
+INSERT INTO `logs` VALUES (83780800, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:53:08', 'success');
 INSERT INTO `logs` VALUES (84582251, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 17:36:11', 'success');
 INSERT INTO `logs` VALUES (84809222, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 16:01:54', 'success');
 INSERT INTO `logs` VALUES (84881829, 1, 'tuanngoc1234', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-07 16:48:27', 'success');
+INSERT INTO `logs` VALUES (85238620, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:00:21', 'success');
 INSERT INTO `logs` VALUES (86115326, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:24:40', 'success');
 INSERT INTO `logs` VALUES (86900834, 4, 'kh61550081', 'ChangePass', 'Thay đổi mật khẩu thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 21:53:24', 'failed');
 INSERT INTO `logs` VALUES (87731512, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 12:14:42', 'success');
+INSERT INTO `logs` VALUES (88041791, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 17:25:30', 'success');
 INSERT INTO `logs` VALUES (88319692, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 21:41:36', 'success');
 INSERT INTO `logs` VALUES (88326836, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.246.220.126', 'Chrome 8', '2023-12-23 12:14:16', 'success');
 INSERT INTO `logs` VALUES (88439483, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 18:19:42', 'success');
@@ -622,15 +683,22 @@ INSERT INTO `logs` VALUES (91481196, 1, 'kh61550081', 'AddCart', 'Thêm sản ph
 INSERT INTO `logs` VALUES (91578545, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:11:59', 'success');
 INSERT INTO `logs` VALUES (91600019, 1, 'kh61550081', 'CheckOut', 'Tiến hành thanh toán', '171.233.166.202', 'Chrome 8', '2023-12-24 16:15:06', 'success');
 INSERT INTO `logs` VALUES (91656085, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:33', 'success');
+INSERT INTO `logs` VALUES (91991052, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:59:15', 'success');
 INSERT INTO `logs` VALUES (92403667, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:12:29', 'success');
+INSERT INTO `logs` VALUES (92582922, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 23:57:11', 'success');
 INSERT INTO `logs` VALUES (92632261, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:50:48', 'success');
+INSERT INTO `logs` VALUES (94414154, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 17:29:43', 'success');
 INSERT INTO `logs` VALUES (94482145, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:29:46', 'success');
 INSERT INTO `logs` VALUES (95162005, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 10:23:06', 'success');
 INSERT INTO `logs` VALUES (95375095, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.220.126', 'Chrome 8', '2023-12-23 13:13:41', 'success');
+INSERT INTO `logs` VALUES (95435927, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 18:31:00', 'success');
+INSERT INTO `logs` VALUES (95514130, 1, 'kh02094306', 'UserController', 'Đăng xuất thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:17:00', 'success');
 INSERT INTO `logs` VALUES (96644147, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.246.220.126', 'Chrome 8', '2023-12-19 17:14:40', 'success');
+INSERT INTO `logs` VALUES (96733083, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 19:17:35', 'success');
 INSERT INTO `logs` VALUES (97035977, 1, 'kh61550081', 'AddCart', 'Thêm sản phẩm vào giỏ thành công', '171.233.166.202', 'Chrome 8', '2023-12-24 16:17:11', 'success');
 INSERT INTO `logs` VALUES (97073105, 1, 'kh61550081', 'SuccessOrder', 'Đặt hàng thành công', '171.246.209.122', 'Chrome 8', '2023-06-20 23:56:34', 'success');
 INSERT INTO `logs` VALUES (97443185, 1, 'tuanngoc12345', 'UserController', 'Đăng nhập thành công', '171.246.209.122', 'Chrome 8', '2023-06-21 20:13:35', 'success');
+INSERT INTO `logs` VALUES (97454398, 1, 'tuanngoc', 'UserController', 'Đăng nhập thành công', '171.246.202.52', 'Chrome 8', '2024-01-13 14:47:40', 'success');
 INSERT INTO `logs` VALUES (97762483, 3, 'tuanngoc123', 'UserController', 'Đăng nhập thất bại', '171.246.209.122', 'Chrome 8', '2023-06-20 16:43:29', 'failed');
 INSERT INTO `logs` VALUES (99292470, 1, 'kh27641389', 'UserController', 'Đã gửi Email xác thực tài khoản', '171.246.220.126', 'Chrome 8', '2023-12-07 12:40:45', 'success');
 INSERT INTO `logs` VALUES (2766057296710209142, 1, 'tuanngoc', 'UserController', 'Đăng xuất thành công', '171.246.209.122', 'Chrome 8', '2023-06-19 20:44:43', 'success');
@@ -660,19 +728,8 @@ CREATE TABLE `orders`  (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES ('DH05963', 'kh02094306', 1002965974, 1861800, 2, 1, '2023-06-22 01:11:17', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH20652', 'kh61550081', 1002252882, 4655600, -1, 0, '2023-12-23 13:14:46', 0, '2023-12-26 13:14:46', 'TRUEMART50K', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH25162', 'kh02094306', 1002965974, 1787500, -1, 0, '2023-12-23 12:32:05', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH29711', 'kh61550081', 1002252882, 207000, -1, 0, '2023-12-23 12:14:41', 0, '2023-12-26 12:14:41', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH34893', 'kh61550081', 1002252882, 7276500, -1, 0, '2023-12-24 16:15:38', 1580500, '2023-12-27 16:15:38', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH37753', 'kh61550081', 1002965974, 17250000, -1, 0, '2023-06-22 10:32:54', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH56370', 'kh61550081', 1002252882, 2139000, -1, 0, '2023-12-24 17:10:48', 1580500, '2023-12-27 17:10:45', '', NULL, 'b361af442ebff583678d4cb294bffcde3ff9395e7c209d11e58b63aa898e2b4c');
-INSERT INTO `orders` VALUES ('DH70526', 'kh61550081', 1002965974, 1943100, 0, 1, '2023-06-22 01:14:22', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH84816', 'kh61550081', 1002252882, 7165500, -1, 0, '2023-12-24 16:17:42', 1580500, '2023-12-27 16:17:39', '', NULL, 'kGhG28TX4qoAdvtAU3aoaXoN9F58DOUzaPahO9miWUbHy9wtX5ADz8Roo5g+v5XLV42Zl8+TDajkgoGFa/HNiYqf2rXN+ByJIdZFfSc3nsyl3C4biYzd4u1lpf0wxKUtz7u88frDpCm93eoVlO581aHNBbzmfVDkejtnVQxPzirp/jkn28xklL++cEQQE6ylYZqPRywLtWdXSunWegAO/dJSFH7E4i9eRN4rKOijeEHebpNeLJzigUyskG/lPJtXzTidMskJyYpHhgzRwgLxab56kuCBpDA+Yq90m9trfs+OOEwxBJsL8EjHdGpXaZqu4//bSRbD+fhsvyYPfJo5Cw==');
-INSERT INTO `orders` VALUES ('DH88601', 'kh61550081', 1002252884, 2071373500, -1, 0, '2023-06-21 17:36:53', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH89386', 'kh61550081', 1002252882, 2139000, 2, 1, '2023-06-21 10:30:36', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH95382', 'kh61550081', 1002252882, 16691500, -1, 0, '2023-06-22 10:33:39', 1580500, '2023-06-28 06:59:59', '', NULL, NULL);
-INSERT INTO `orders` VALUES ('DH99949', 'kh61550081', 1002252882, 2139000, -1, 0, '2023-12-24 16:51:24', 1580500, '2023-12-27 16:51:21', '', NULL, 'p4mK9Bwz3lnCnY1PCRk/WJOgAvBQV5nnviIJa2xpZvUiZNkeu5XZmjFmmZX14+rs9+TmygAQ/w2xWoO1NZn1q0jVmFpAT7lUTUptyB6s8cD4yd0tMjMazI1bsB7TmvmUa7jp+8GI3IGH/wLgYyYnBRSBp9VfTizPs1KQp8HblzF9K6Iy1ixT+I2pmJwoPt5juipwF4ZHZw4bI0MwJtNI3axTGTpGNALsh6rcnTu1QHG608N92klRBj1BFKtQCguaWBcC1yiU4gAvShWqRfopHP94VgC4ot+UZXLWiQhv1d142C9au2yh41V+fGg8f989MA7cAu9qDTVi+oCq/ghgBA==');
+INSERT INTO `orders` VALUES ('DH42832', 'kh61550081', 1002252882, 1242000, 2, 3, '2024-01-14 01:15:56', 0, '2024-01-16 19:17:55', '', NULL, '9749f18099b36554827659fce97b40ec5f23664788a79d67fefbf90113cf1dc8');
+INSERT INTO `orders` VALUES ('DH81049', 'kh61550081', 1002252882, 9472500, 2, 3, '2024-01-14 01:27:29', 0, '2024-01-16 19:00:16', '', NULL, 'b59a3eb7bbdbeb00ca1d95043d814b5628aa945069583a5a0aac7ea5660e78fe');
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -727,16 +784,16 @@ CREATE TABLE `productimported`  (
 -- ----------------------------
 -- Records of productimported
 -- ----------------------------
-INSERT INTO `productimported` VALUES (7666, 9, 1, 'sp13690420', 6871, 7000, '2023-06-02 20:48:10', 230000, 120000);
+INSERT INTO `productimported` VALUES (7666, 9, 1, 'sp13690420', 6864, 7000, '2023-06-02 20:48:10', 230000, 120000);
 INSERT INTO `productimported` VALUES (7667, 10, 1, 'sp13690420', 4990, 5000, '2023-06-02 20:48:10', 350000, 200000);
 INSERT INTO `productimported` VALUES (7668, 11, 1, 'sp13690420', 2000, 2000, '2023-06-02 20:48:10', 290000, 140000);
 INSERT INTO `productimported` VALUES (7669, 14, 1, 'sp13690420', 3500, 3500, '2023-06-02 20:48:10', 320000, 170000);
-INSERT INTO `productimported` VALUES (7674, 10, 1, 'sp15653637', 2967, 3000, '2023-06-02 21:22:05', 370000, 190000);
+INSERT INTO `productimported` VALUES (7674, 10, 1, 'sp15653637', 2955, 3000, '2023-06-02 21:22:05', 370000, 190000);
 INSERT INTO `productimported` VALUES (7675, 10, 7, 'sp15653637', 2000, 2000, '2023-06-02 21:22:05', 350000, 180000);
 INSERT INTO `productimported` VALUES (7676, 11, 1, 'sp15653637', 1500, 1500, '2023-06-02 21:22:05', 260000, 120000);
 INSERT INTO `productimported` VALUES (7677, 11, 7, 'sp15653637', 1800, 1800, '2023-06-02 21:22:05', 270000, 120000);
 INSERT INTO `productimported` VALUES (7678, 11, 7, 'sp17218684', 2884, 3000, '2023-06-02 21:46:58', 370000, 200000);
-INSERT INTO `productimported` VALUES (7679, 11, 7, 'sp17407009', 2498, 2500, '2023-06-02 21:50:06', 290000, 140000);
+INSERT INTO `productimported` VALUES (7679, 11, 7, 'sp17407009', 2483, 2500, '2023-06-02 21:50:06', 290000, 140000);
 INSERT INTO `productimported` VALUES (7680, 2, 5, 'sp17917426', 1999, 2000, '2023-06-02 21:58:37', 300000, 150000);
 INSERT INTO `productimported` VALUES (7681, 3, 5, 'sp17917426', 1000, 1000, '2023-06-02 21:58:37', 280000, 130000);
 INSERT INTO `productimported` VALUES (7682, 11, 1, 'sp18097833', 2000, 2000, '2023-06-02 22:01:37', 370000, 200000);
@@ -1009,76 +1066,15 @@ CREATE TABLE `shipping_address`  (
   `province_id` int NULL DEFAULT NULL,
   `district_id` int NULL DEFAULT NULL,
   `ward_id` int NULL DEFAULT NULL,
+  `order_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`shipping_address_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 65 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shipping_address
 -- ----------------------------
-INSERT INTO `shipping_address` VALUES (1, 'kh54788800', '', '', NULL, '221/27 Đoàn Thị Điểm', 209, 1838, 420211);
-INSERT INTO `shipping_address` VALUES (2, NULL, '', '', NULL, '221/27 Đoàn Thị Điểm', 209, 1838, 420211);
-INSERT INTO `shipping_address` VALUES (3, 'kh85807527', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '12A, tổ 9, khu phố 1, Linh Trung', 266, 2267, 140813);
-INSERT INTO `shipping_address` VALUES (4, NULL, 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '12A, tổ 9, khu phố 1, Linh Trung', 202, 2090, 22406);
-INSERT INTO `shipping_address` VALUES (5, NULL, 'Trịnh Long Vũ', '0346328671', '20130471@st.hcmuaf.edu.vn', '12A, tổ 9, khu phố 1, Linh Trung', 263, 2047, 130326);
-INSERT INTO `shipping_address` VALUES (6, 'kh02079718', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '12A, tổ 9, khu phố 1, Linh Trung', 202, 1534, 22305);
-INSERT INTO `shipping_address` VALUES (7, 'kh02079718', 'Trịnh Long Vũ', '0346328671', '', '12A, tổ 9, khu phố 1, Linh Trung', 269, 2043, 80621);
-INSERT INTO `shipping_address` VALUES (8, 'kh03301210', 'Trịnh Long Vũ', '0346328671', 'longvu19112002@gmail.com', 'ghgdhhdfh', 269, 2043, 80620);
-INSERT INTO `shipping_address` VALUES (9, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220713);
-INSERT INTO `shipping_address` VALUES (10, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 266, 2267, 140811);
-INSERT INTO `shipping_address` VALUES (11, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220710);
-INSERT INTO `shipping_address` VALUES (12, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220711);
-INSERT INTO `shipping_address` VALUES (13, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 266, 2255, 141212);
-INSERT INTO `shipping_address` VALUES (14, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 265, 2123, 620713);
-INSERT INTO `shipping_address` VALUES (15, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 266, 2204, 140208);
-INSERT INTO `shipping_address` VALUES (16, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 264, 2006, 70420);
-INSERT INTO `shipping_address` VALUES (17, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (18, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 269, 2171, 80914);
-INSERT INTO `shipping_address` VALUES (19, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220713);
-INSERT INTO `shipping_address` VALUES (20, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220712);
-INSERT INTO `shipping_address` VALUES (21, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2163, 800050);
-INSERT INTO `shipping_address` VALUES (22, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 265, 2123, 620707);
-INSERT INTO `shipping_address` VALUES (23, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 266, 2267, 140811);
-INSERT INTO `shipping_address` VALUES (24, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2163, 800051);
-INSERT INTO `shipping_address` VALUES (25, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 265, 2170, 620908);
-INSERT INTO `shipping_address` VALUES (26, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2163, 800052);
-INSERT INTO `shipping_address` VALUES (27, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2270, 231008);
-INSERT INTO `shipping_address` VALUES (28, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 269, 2171, 80912);
-INSERT INTO `shipping_address` VALUES (29, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 268, 2194, 220712);
-INSERT INTO `shipping_address` VALUES (30, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2163, 800051);
-INSERT INTO `shipping_address` VALUES (31, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 266, 3266, 141106);
-INSERT INTO `shipping_address` VALUES (32, 'kh02079718', 'Pamela dsgsdf', '0346328671', 'l@gmail.c', '12A, tổ 9, khu phố 1, Linh Trung', 267, 2157, 230910);
-INSERT INTO `shipping_address` VALUES (33, 'kh54788800', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '221/27 Đoàn Thị Điểm', 269, 2171, 80915);
-INSERT INTO `shipping_address` VALUES (34, 'kh54788800', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '221/27 Đoàn Thị Điểm', 266, 2255, 141212);
-INSERT INTO `shipping_address` VALUES (35, 'kh54788800', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '221/27 Đoàn Thị Điểm', 267, 2270, 231013);
-INSERT INTO `shipping_address` VALUES (36, 'kh54788800', 'Trịnh Long Vũ', '0346328671', 'kizeykuriyama@gmail.com', '221/27 Đoàn Thị Điểm', 266, 2267, 140814);
-INSERT INTO `shipping_address` VALUES (37, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '+84363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (38, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1540, 440504);
-INSERT INTO `shipping_address` VALUES (39, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (40, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '+84363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (41, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (42, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (43, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (44, 'kh61550081', 'Nguyễn Văn A', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 245, 3242, 110511);
-INSERT INTO `shipping_address` VALUES (45, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1540, 440505);
-INSERT INTO `shipping_address` VALUES (46, 'kh61550081', 'Nguyễn Văn B', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (47, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 246, 3299, 60309);
-INSERT INTO `shipping_address` VALUES (48, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (49, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (50, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 246, 2041, 800230);
-INSERT INTO `shipping_address` VALUES (51, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 248, 1765, 180209);
-INSERT INTO `shipping_address` VALUES (52, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 248, 1965, 180513);
-INSERT INTO `shipping_address` VALUES (53, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 250, 3218, 640807);
-INSERT INTO `shipping_address` VALUES (54, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (55, 'kh02094306', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1746, 440702);
-INSERT INTO `shipping_address` VALUES (56, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 236, 3201, 300322);
-INSERT INTO `shipping_address` VALUES (57, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (58, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Lào cai', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (59, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 205, 1746, 440701);
-INSERT INTO `shipping_address` VALUES (60, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 0, 0, 0);
-INSERT INTO `shipping_address` VALUES (61, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (62, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 205, 1746, 440703);
-INSERT INTO `shipping_address` VALUES (63, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 205, 1746, 440701);
-INSERT INTO `shipping_address` VALUES (64, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'abc', 247, 3138, 100305);
+INSERT INTO `shipping_address` VALUES (65, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương', 205, 1746, 440703, 'DH81049');
+INSERT INTO `shipping_address` VALUES (67, 'kh61550081', 'Trần Bùi Tuấn Ngọc', '0363798362', 'tranbuituanngoc@gmail.com', 'Ấp Đồng Sến, Định An, Dầu Tiếng, Bình Dương, abc', 205, 1746, 440703, 'DH42832');
 
 -- ----------------------------
 -- Table structure for sizes

@@ -1,11 +1,15 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>404 || Tile Market Gạch men cao cấp</title>
+    <title>Hoàn Tiền || Tile Market Gạch men cao cấp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
     <link rel="shortcut icon" href="img\logo-transparent-png-icon.ico">
@@ -62,17 +66,29 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="error-wrapper text-center">
-                            <div class="error-text">
-                                <h1>404</h1>
-                                <h2>Opps! không tìm thấy trang</h2>
-                                <p>Xin lỗi nhưng trang bạn đang tìm không tồn tại, đã bị xóa, đổi tên hoặc tạm thời không có.</p>
-                            </div>
-                            <div class="search-error">
-                                <form id="search-form" action="#">
-                                    <input type="text" placeholder="Tìm kiếm">
-                                    <button><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
+                            <%
+                                boolean res= (boolean) request.getAttribute("msgRefund");
+                                String idOrder= (String) request.getAttribute("idOrder");
+                                if(res==true){
+                            %>
+                                <div class="error-text">
+                                    <h2>Thành Công!</h2>
+                                    <h4>Đơn hàng <b><%=idOrder%></b> của bạn đã được hoàn tiền thành công.</h4>
+                                    <p>Việc hoàn tiền đang được tiến hành và có thể sẽ mất từ 1 đến 2 ngày. Nếu có thắc mắc xin hãy liên hệ đến bộ phận chăm sóc khách hàng của chúng tôi.</p>
+                                    <p>Xin cảm ơn!</p>
+                                </div>
+                            <%
+                                }else{
+                            %>
+                                <div class="error-text">
+                                    <h2>Thất Bại!</h2>
+                                    <h4>Đơn hàng <b><%=idOrder%></b> của bạn hoàn tiền không thành công.</h4>
+                                    <p>Nếu có vấn đề gì hay thắc mắc vui lòng liên hệ đến bộ phận chăm sóc khách hàng của chúng tôi.</p>
+                                    <p>Xin cảm ơn!</p>
+                                </div>
+                            <%
+                                }
+                            %>
                             <div class="error-button">
                                 <a href="Home">Quay về trang chủ</a>
                             </div>

@@ -124,6 +124,11 @@
                                                 <div>Đã hủy</div>
                                             </div>
                                         </c:if>
+                                        <c:if test="${o.status ==3}">
+                                            <div class="d-flex align-items-center">
+                                                <div>Hoàn Tiền</div>
+                                            </div>
+                                        </c:if>
                                     </td>
                                     <td id="transportstatus">
                                         <c:if test="${o.transport_status ==0}">Chưa Vận chuyển</c:if>

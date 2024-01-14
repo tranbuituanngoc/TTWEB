@@ -10,6 +10,9 @@
 
 <jsp:useBean id="cart" class="model.Cart" scope="session"></jsp:useBean>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<%--Sweet alert notify--%>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Main Header Area Start Here -->
 <header>
     <!-- Header Middle Start Here -->
@@ -218,6 +221,9 @@
                                         <!-- Cart Box End -->
                                         <!-- Cart Box Start -->
                                         <div class="log-text">
+                                            <a href="#" id="generateKeyPairLink">Tạo khóa mới</a>
+                                        </div>
+                                        <div class="log-text">
                                             <a href="changePass.jsp">Đổi mật khẩu</a>
                                         </div>
                                         <div class="log-text">
@@ -226,6 +232,40 @@
                                     </li>
                                 </ul>
                             </li>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#generateKeyPairLink").click(function (e) {
+                                        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+                                        // Gọi hàm generateNewKeyPair
+                                        generateNewKeyPair();
+                                    });
+                                });
+
+                                function generateNewKeyPair() {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "nguoi-dung?action=tao-khoa-moi", // Thay thế bằng URL của servlet của bạn
+                                        success: function () {
+                                            swal({
+                                                title: "Congratulation!",
+                                                text: "Khóa mới đã được tạo. Vui lòng kiểm tra lại Email!",
+                                                icon: "success",
+                                                button: "Tiếp tục.",
+                                            })
+                                        },
+                                        error: function (){
+                                            swal({
+                                                title: "Error!",
+                                                text: "Gặp lỗi trong quá trình tạo khóa. Vui lòng thử lại!",
+                                                icon: "error",
+                                                button: "Thử lại!",
+                                            })
+                                        }
+                                    });
+                                }
+                            </script>
+
                             <%
                             } else if (user.getRole() != 2) {
                             %>

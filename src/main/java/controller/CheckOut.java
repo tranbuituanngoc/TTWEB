@@ -20,7 +20,9 @@ public class CheckOut extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CartUser c = (CartUser) request.getSession().getAttribute("cartUser");
         User user = (User) request.getSession().getAttribute("user");
-        ShippingAdress shippingAdress = ShippingAddressService.getShippingAddressUser(user);
+        String orderId= (String) request.getAttribute("orderID");
+
+        ShippingAdress shippingAdress = ShippingAddressService.getShippingAddressUser(user,orderId);
         if(c==null){
             response.sendRedirect("ProductLists");
         }else{

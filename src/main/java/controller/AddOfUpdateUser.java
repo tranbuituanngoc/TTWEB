@@ -1,8 +1,11 @@
 package controller;
 
+import Util.Email;
 import Util.Encode;
 import Util.SaltString;
+import model.KeyUser;
 import model.User;
+import service.KeyUserService;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -96,9 +99,22 @@ public class AddOfUpdateUser extends HttpServlet {
                     user.setFullname(fullname);
                     user.setStatus(status);
 
-
                     us.insert(user);
                     us.updateVerifyInfo(user);
+
+//                    Generate Key for user
+                    KeyUser keyUser = new KeyUser();
+                    try {
+                        keyUser.genKey();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    keyUser.setIdUser(id_user);
+                    keyUser.setActive(true);
+
+                    KeyUserService.insert(keyUser);
+                    Email.sendMailWithAttachment(user.getEmail(), "Khóa Bảo Mật Tại TileMarket", UserController.getContentKeyUser(user.getUserName()), keyUser.publicKeyToString(), keyUser.privateKeyToString());
+
                     request.getSession().setAttribute("msg", "Thêm tài khoản thành công!");
                     request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListUserAd");
@@ -130,7 +146,7 @@ public class AddOfUpdateUser extends HttpServlet {
                     user.setStatus(status);
                     user.setUserName(username);
 
-                    us.update( user);
+                    us.update(user);
                     request.getSession().setAttribute("msg", "Chỉnh sửa tài khoản thành công!");
                     request.getSession().setAttribute("res", "true");
                     response.sendRedirect("ListUserAd");
@@ -160,6 +176,6 @@ public class AddOfUpdateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
+        doGet(request, response);
     }
 }
